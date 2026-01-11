@@ -18,6 +18,9 @@ const Hero = () => {
       />
 
       <div className="container relative z-10 px-6 md:px-8">
+
+      <span className="text-muted-foreground">Web dev is so much more than front end.</span>
+
         <div className="max-w-3xl mx-auto text-center">
           {/* Greeting */}
           <p className="text-muted-foreground text-sm md:text-base tracking-widest uppercase mb-6 animate-fade-up font-body">
@@ -32,11 +35,7 @@ const Hero = () => {
 
           {/* Tagline */}
           <p className="text-lg md:text-xl lg:text-2xl text-secondary-foreground font-light mb-8 animate-fade-up-delay-2 font-body leading-relaxed">
-            Engineering student crafting thoughtful web experiences.
-            <br className="hidden md:block" />
-            <span className="text-muted-foreground">One year to graduation. Building every day.</span>
-            <br className="hidden md:block" />
-            <span className="text-muted-foreground">Web dev is so much more than front end.</span>
+            One year to graduation. Crafting thoughtful web experiences.            
             <br className="hidden md:block" />
             <span className="text-muted-foreground">Realize that everything connects to everything else.</span>
           </p>
