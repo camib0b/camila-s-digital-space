@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Dashboard from "@/components/Dashboard";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Books from "@/components/Books";
@@ -11,6 +12,7 @@ const Index = () => {
     <main className="min-h-screen">
       <Hero />
       <About />
+      <Dashboard />
       <Skills />
       <Experience />
       <Books />
