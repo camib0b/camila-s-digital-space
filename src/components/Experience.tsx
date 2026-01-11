@@ -5,21 +5,21 @@ const Experience = () => {
   const experiences = [
     {
       title: "Software Engineering Intern",
-      company: "Tech Company",
+      company: "Finapsys (health tech B2B SaaS)",
       period: "Summer 2024",
-      description: "Built frontend features for a B2B platform, improved page load times by 40%.",
+      description: "Built reactive frontend views and components in TypeScript + Vue.js.",
     },
     {
-      title: "Web Development Intern",
-      company: "Digital Agency",
+      title: "Asset Management Intern",
+      company: "A3 Property Investments",
       period: "Summer 2023",
       description: "Developed responsive landing pages and contributed to a React component library.",
     },
     {
-      title: "Junior Developer Intern",
-      company: "Startup",
-      period: "Summer 2022",
-      description: "First internship experience—learned Git workflows, code reviews, and agile practices.",
+      title: "Retail & E-commerce Intern",
+      company: "Visionary",
+      period: "Sabatical 2021",
+      description: "Owned e-commerce/PDV/distributor operations across Shopify + BSale; built sales & inventory forecasts and tracked core KPIs (conversion rate, avg. ticket, margin) to coordinate pricing, promos, and replenishment.",
     },
   ];
 
