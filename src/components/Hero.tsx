@@ -35,6 +35,10 @@ const Hero = () => {
             Engineering student crafting thoughtful web experiences.
             <br className="hidden md:block" />
             <span className="text-muted-foreground">One year to graduation. Building every day.</span>
+            <br className="hidden md:block" />
+            <span className="text-muted-foreground">Web dev is so much more than front end.</span>
+            <br className="hidden md:block" />
+            <span className="text-muted-foreground">Realize that everything connects to everything else.</span>
           </p>
 
           {/* CTA Buttons */}

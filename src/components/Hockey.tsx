@@ -7,7 +7,7 @@ const Hockey = () => {
     {
       year: "2009",
       title: "Started Playing",
-      description: "Began my hockey journey as a player in COGS",
+      description: "Began my hockey journey as a player",
     },
     {
       year: "2018",
