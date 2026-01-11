@@ -6,11 +6,13 @@ import Experience from "@/components/Experience";
 import Books from "@/components/Books";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Hockey from "@/components/Hockey";
 
 const Index = () => {
   return (
     <main className="min-h-screen">
       <Hero />
+      <Hockey />
       <About />
       <Dashboard />
       <Skills />
