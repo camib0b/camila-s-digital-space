@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Mail, Twitter } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -59,13 +59,22 @@ const Hero = () => {
               <Github className="w-5 h-5" />
             </a>
             <a 
-              href="https://linkedin.com" 
+              href="https://www.linkedin.com/in/camilaescudero/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors duration-300"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://x.com/ca1000u" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors duration-300"
+              aria-label="Twitter/X"
+            >
+              <Twitter className="w-5 h-5" />
             </a>
             <a 
               href="mailto:camilaescuderob@gmail.com"
