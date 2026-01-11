@@ -43,10 +43,10 @@ const Contact = () => {
                 <div>
                   <p className="text-sm text-muted-foreground font-body">Email</p>
                   <a 
-                    href="mailto:camila@example.com" 
+                    href="mailto:camilaescuderob@gmail.com" 
                     className="text-foreground font-body link-underline hover:text-primary transition-colors duration-300"
                   >
-                    camila@example.com
+                    camilaescuderob@gmail.com
                   </a>
                 </div>
               </div>
@@ -57,7 +57,7 @@ const Contact = () => {
                   Prefer email? Send me a message directly.
                 </p>
                 <Button variant="hero" size="lg" className="w-full sm:w-auto" asChild>
-                  <a href="mailto:camila@example.com">
+                  <a href="mailto:camilaescuderob@gmail.com">
                     <Send className="w-4 h-4 mr-2" />
                     Send Email
                   </a>
