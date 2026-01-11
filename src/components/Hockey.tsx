@@ -7,34 +7,45 @@ const Hockey = () => {
     {
       year: "2009",
       title: "Started Playing",
-      description: "Began my hockey journey as a player",
+      description: "Began my hockey journey as a player in COGS",
     },
     {
-      year: "2015",
-      title: "Competitive Level",
-      description: "Reached competitive playing standards",
+      year: "2018",
+      title: "Early retirement",
+      description: "Focused on university & then got trapped in the pandemic",
     },
     {
-      year: "2024",
-      title: "Ongoing",
+      year: "2022",
+      title: "Returned to playing and competing",
       description: "Continuing to play and develop skills",
     },
+    {
+        year: "2025",
+        title: "ACL rupture",
+        description: "Mid november. Expected return to competition: August 2026",
+      },
   ];
 
   // Hockey coaching trajectory
   const coachingMilestones = [
     {
       year: "2023",
-      title: "CDUC Coach",
-      description: "Started coaching at CDUC",
+      title: "Club Deportivo Universidad Católica",
+      description: "Sub-12 y Sub-16",
       period: "2023-2025",
     },
     {
       year: "2024",
-      title: "CHILE Coach",
-      description: "Started coaching at CHILE",
+      title: "Selección Nacional",
+      description: "Youth teams coaching assistant",
       period: "2024 - Present",
     },
+    {
+        year: "2025",
+        title: "Video Analyst",
+        description: "Ladies Junior World Cup in Santiago",
+        period: "December 2025",
+      },
   ];
 
   return (
@@ -50,7 +61,7 @@ const Hockey = () => {
             Playing & Coaching
           </h2>
           <p className="text-muted-foreground">
-            Two parallel paths — years on the ice as a player and now sharing that passion through coaching.
+            Two parallel paths — years on the pitch as a player and now sharing that passion through coaching.
           </p>
         </div>
 
