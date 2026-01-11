@@ -194,4 +194,32 @@
   .animate-pulse-soft {
     animation: pulse-soft 4s ease-in-out infinite;
   }
+
+  /* 3D Flip card utilities */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* Wave animation for books section */
+  @keyframes wave {
+    0%, 100% {
+      d: path(var(--wave-path));
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
 }
