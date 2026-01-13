@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -47,6 +48,12 @@ const Hero = () => {
             </Button>
             <Button variant="heroOutline" size="lg" asChild>
               <a href="#work">See My Work</a>
+            </Button>
+            <Button variant="heroOutline" size="lg" asChild>
+              <Link to="/cv" className="gap-2">
+                <FileText className="w-4 h-4" />
+                View CV
+              </Link>
             </Button>
           </div>
 

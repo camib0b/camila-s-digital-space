@@ -1,4 +1,5 @@
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -8,6 +9,17 @@ const Footer = () => {
       <div className="container px-6 md:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* Links */}
+            <div className="flex items-center gap-6">
+              <Link 
+                to="/cv"
+                className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm font-body flex items-center gap-2"
+              >
+                <FileText className="w-4 h-4" />
+                CV
+              </Link>
+            </div>
+
             {/* Copyright */}
             <p className="text-muted-foreground text-sm font-body">
               © {currentYear} Camila Escudero. Built with care.
