@@ -55,7 +55,7 @@ const BookCard = ({ book, index, t }: { book: Book; index: number; t: (key: stri
 
   return (
     <div
-      className="group perspective-1000 cursor-pointer"
+      className="group perspective-1000 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg"
       style={{
         transform: `translateY(${book.yOffset}px) rotate(${book.rotation}deg)`,
         animationDelay: `${index * 0.15}s`,

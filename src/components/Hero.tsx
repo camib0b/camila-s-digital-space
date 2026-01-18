@@ -113,7 +113,7 @@ const Hero = () => {
               href="https://github.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors duration-300"
+              className="text-muted-foreground hover:text-primary transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
@@ -122,7 +122,7 @@ const Hero = () => {
               href="https://www.linkedin.com/in/camilaescudero/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors duration-300"
+              className="text-muted-foreground hover:text-primary transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
@@ -131,14 +131,14 @@ const Hero = () => {
               href="https://x.com/ca1000u" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors duration-300"
+              className="text-muted-foreground hover:text-primary transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               aria-label="Twitter/X"
             >
               <Twitter className="w-5 h-5" />
             </a>
             <a 
               href="mailto:camilaescuderob@gmail.com"
-              className="text-muted-foreground hover:text-primary transition-colors duration-300"
+              className="text-muted-foreground hover:text-primary transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
               aria-label="Email"
             >
               <Mail className="w-5 h-5" />
