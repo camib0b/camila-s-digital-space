@@ -1,6 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
 
 const LanguageToggle = () => {
   const { language, setLanguage } = useLanguage();
@@ -9,29 +8,34 @@ const LanguageToggle = () => {
     { code: "en", label: "EN" },
     { code: "es", label: "ES" },
     { code: "fr", label: "FR" },
-  ];
+  ] as const;
 
-  // <Globe className="w-4 h-4 text-muted-foreground mr-1" />
   return (
-    <div className="flex items-center gap-1 bg-secondary/50 rounded-lg p-2">
-     
-      {languages.map((lang) => (
-        <Button
-          key={lang.code}
-          variant={language === lang.code ? "default" : "ghost"}
-          size="sm"
-          onClick={() => setLanguage(lang.code as "en" | "es" | "fr")}
-          className={`min-w-[2.5rem] h-7 text-xs font-medium uppercase tracking-wide transition-all duration-300 ${
-            language === lang.code
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-          }`}
-          aria-label={`Switch to ${lang.code === "en" ? "English" : lang.code === "es" ? "Spanish" : "French"}`}
-          aria-pressed={language === lang.code}
-        >
-          {lang.label}
-        </Button>
-      ))}
+    <div className="flex items-center gap-1" role="group" aria-label="Language">
+      {languages.map((lang) => {
+        const isActive = language === lang.code;
+
+        return (
+          <Button
+            key={lang.code}
+            type="button"
+            variant={isActive ? "secondary" : "ghost"}
+            size="sm"
+            onClick={() => setLanguage(lang.code)}
+            className={[
+              "h-8 px-3 min-w-[2.5rem]",
+              "text-[11px] font-medium tracking-[0.18em] uppercase",
+              isActive
+                ? "bg-secondary/70 text-foreground border border-border/60 shadow-none"
+                : "text-muted-foreground/90 hover:text-foreground hover:bg-accent/30",
+            ].join(" ")}
+            aria-pressed={isActive}
+            aria-label={`Switch to ${lang.code === "en" ? "English" : lang.code === "es" ? "Spanish" : "French"}`}
+          >
+            {lang.label}
+          </Button>
+        );
+      })}
     </div>
   );
 };
