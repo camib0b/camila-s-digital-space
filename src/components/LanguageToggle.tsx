@@ -11,9 +11,10 @@ const LanguageToggle = () => {
     { code: "fr", label: "FR" },
   ];
 
+  // <Globe className="w-4 h-4 text-muted-foreground mr-1" />
   return (
-    <div className="flex items-center gap-1 bg-secondary/50 rounded-lg p-1">
-      <Globe className="w-4 h-4 text-muted-foreground mr-1" />
+    <div className="flex items-center gap-1 bg-secondary/50 rounded-lg p-2">
+     
       {languages.map((lang) => (
         <Button
           key={lang.code}
