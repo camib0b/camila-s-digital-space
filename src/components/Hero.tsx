@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ArrowDown, Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -48,6 +49,14 @@ const Hero = () => {
       <span className="text-muted-foreground">{t("hero.note")}</span>
 
         <div className="max-w-3xl mx-auto text-center">
+          {/* Profile Picture */}
+          <div className="mb-8 animate-fade-up">
+            <Avatar className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto border-4 border-primary/20 shadow-lg">
+              <AvatarImage src="/cami-profile.png" alt="Camila Escudero" />
+              <AvatarFallback>CE</AvatarFallback>
+            </Avatar>
+          </div>
+
           {/* Greeting */}
           <p className="text-muted-foreground text-sm md:text-base tracking-widest uppercase mb-6 animate-fade-up font-body">
             {t("hero.location")}
