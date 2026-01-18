@@ -38,6 +38,15 @@
 
     --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
+
+    /* Light mode shadows (kept sane, but your site is dark-first) */
+    --shadow-elev-1: 0 1px 2px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
+    --shadow-elev-2: 0 10px 26px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.06);
+    --shadow-elev-3: 0 22px 60px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.08);
+    --shadow-ember: 0 26px 70px rgba(0,0,0,0.20), 0 0 0 1px rgba(199,163,91,0.14);
+
+    /* A tiny top highlight that reads "machined / glass" */
+    --highlight-inset: inset 0 1px 0 rgba(255,255,255,0.08);
   }
 
   /* Default to dark theme */
@@ -79,6 +88,30 @@
     --sidebar-accent-foreground: 40 20% 92%;
     --sidebar-border: 20 8% 18%;
     --sidebar-ring: 38 90% 55%;
+
+    /* Dark mode shadows: less opacity, more blur, plus highlight + hairline border */
+    --shadow-elev-1:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 10px 30px rgba(0,0,0,0.42),
+      0 0 0 1px rgba(255,255,255,0.06);
+
+    --shadow-elev-2:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 18px 55px rgba(0,0,0,0.50),
+      0 0 0 1px rgba(255,255,255,0.07);
+
+    --shadow-elev-3:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 30px 90px rgba(0,0,0,0.58),
+      0 0 0 1px rgba(255,255,255,0.08);
+
+    /* Warm "premium" edge: brass hairline only */
+    --shadow-ember:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 34px 100px rgba(0,0,0,0.62),
+      0 0 0 1px rgba(199,163,91,0.18);
+
+    --highlight-inset: inset 0 1px 0 rgba(255,255,255,0.09);
   }
 
   .theme-blue {
@@ -118,6 +151,29 @@
     --sidebar-accent-foreground: 210 15% 98%;
     --sidebar-border: 210 25% 35%;
     --sidebar-ring: 200 85% 70%;
+
+    /* Dark mode shadows for blue theme */
+    --shadow-elev-1:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 10px 30px rgba(0,0,0,0.42),
+      0 0 0 1px rgba(255,255,255,0.06);
+
+    --shadow-elev-2:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 18px 55px rgba(0,0,0,0.50),
+      0 0 0 1px rgba(255,255,255,0.07);
+
+    --shadow-elev-3:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 30px 90px rgba(0,0,0,0.58),
+      0 0 0 1px rgba(255,255,255,0.08);
+
+    --shadow-ember:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 34px 100px rgba(0,0,0,0.62),
+      0 0 0 1px rgba(199,163,91,0.18);
+
+    --highlight-inset: inset 0 1px 0 rgba(255,255,255,0.09);
   }
 
   .theme-negroni {
@@ -157,6 +213,29 @@
     --sidebar-accent-foreground: 28 97% 87%;
     --sidebar-border: 12 78% 25%;
     --sidebar-ring: 18 80% 42%;
+
+    /* Dark mode shadows for Negroni theme */
+    --shadow-elev-1:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 10px 30px rgba(0,0,0,0.42),
+      0 0 0 1px rgba(255,255,255,0.06);
+
+    --shadow-elev-2:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 18px 55px rgba(0,0,0,0.50),
+      0 0 0 1px rgba(255,255,255,0.07);
+
+    --shadow-elev-3:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 30px 90px rgba(0,0,0,0.58),
+      0 0 0 1px rgba(255,255,255,0.08);
+
+    --shadow-ember:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 34px 100px rgba(0,0,0,0.62),
+      0 0 0 1px rgba(199,163,91,0.18);
+
+    --highlight-inset: inset 0 1px 0 rgba(255,255,255,0.09);
   }
 }
 
@@ -176,6 +255,26 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] text-foreground;
+  }
+
+  h2 {
+    @apply text-2xl md:text-4xl font-semibold tracking-tight leading-[1.12] text-foreground;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-semibold tracking-tight leading-[1.2] text-foreground;
+  }
+
+  body {
+    @apply text-foreground/88;
+  }
+
+  p {
+    @apply text-foreground/88;
   }
 }
 

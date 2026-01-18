@@ -68,13 +68,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        // "Apple-like" subtle elevation
-        "elev-1": "0 1px 2px rgba(0,0,0,0.24), 0 0 0 1px rgba(0,0,0,0.08)",
-        "elev-2": "0 6px 18px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.08)",
-        "elev-3": "0 16px 40px rgba(0,0,0,0.26), 0 0 0 1px rgba(0,0,0,0.10)",
-        // A "warm" lift for your ember/brass vibe (still subtle)
-        // Use sparingly: hero cards, featured callouts
-        "ember": "0 18px 45px rgba(0,0,0,0.28), 0 0 0 1px rgba(199,163,91,0.18)",
+        "elev-1": "var(--shadow-elev-1)",
+        "elev-2": "var(--shadow-elev-2)",
+        "elev-3": "var(--shadow-elev-3)",
+        "ember": "var(--shadow-ember)",
       },
       keyframes: {
         "accordion-down": {
