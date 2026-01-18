@@ -188,8 +188,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     // About
     "about.label": "Sobre Mí",
-    "about.title": "Tecnología, pero muy humana.",
-    "about.description": "Tengo 26 años y estudio ingeniería en Santiago, a un año de graduarme. Cuando no estoy programando, estoy en la cancha jugando y entrenando hockey. Me gusta genuinamente trabajar, y abordo cada proyecto con la misma energía que llevo al juego: enfocada, colaborativa, y siempre buscando mejorar.",
+    "about.title": "Tecnología, pero humana.",
+    "about.description": "Tengo 26 años y estudio ingeniería en Santiago, a un año de graduarme. Cuando no estoy programando, estoy en la cancha jugando y entrenando hockey. Me gusta trabajar, y abordo cada proyecto con la misma energía que llevo al juego: enfocada, colaborativa, y siempre buscando mejorar.",
     "about.highlight1.title": "Desarrolladora Web",
     "about.highlight1.description": "Enfocada en construir interfaces limpias y eficientes con frameworks modernos.",
     "about.highlight2.title": "Trabajo en Equipo",
@@ -251,7 +251,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Books
     "books.label": "Lista de Lectura",
-    "books.title": "Libros Que Formaron Mi Pensamiento",
+    "books.title": "Libros en los que pienso frecuentemente",
     "books.description": "Haz clic en cualquier libro para leer mi reseña. Estos textos han influenciado cómo abordo problemas, entiendo sistemas y veo el mundo.",
     "books.myTake": "Mi Opinión",
     "books.book1.review": "Un texto fundacional que formó mi comprensión de la justicia y la sociedad ideal. Los diálogos de Platón te desafían a cuestionar todo — gobierno, verdad y la naturaleza de la realidad misma.",
@@ -263,12 +263,12 @@ const translations: Record<Language, Record<string, string>> = {
     "hockey.label": "Mi Camino en Hockey",
     "hockey.title": "Jugando y Entrenando",
     "hockey.description": "Dos caminos paralelos — años en la cancha como jugadora y ahora compartiendo esa pasión a través del entrenamiento.",
-    "hockey.playerTrajectory": "Trayectoria como Jugadora",
-    "hockey.coachingTrajectory": "Trayectoria como Entrenadora",
+    "hockey.playerTrajectory": "Trayectoria como jugadora",
+    "hockey.coachingTrajectory": "Trayectoria como entrenadora",
     "hockey.player1.title": "Empecé a Jugar",
     "hockey.player1.description": "Comencé mi camino en hockey como jugadora",
     "hockey.player2.title": "Retiro temprano",
-    "hockey.player2.description": "Me enfoqué en la universidad y luego quedé atrapada en la pandemia",
+    "hockey.player2.description": "Me enfoqué en la universidad y luego pandemia",
     "hockey.player3.title": "Volví a jugar y competir",
     "hockey.player3.description": "Continuando jugando y desarrollando habilidades",
     "hockey.player4.title": "Ruptura de LCA",
