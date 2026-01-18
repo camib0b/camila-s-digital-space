@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-type Theme = "dark" | "blue" | "negroni";
+type Theme = "dark" | "negroni";
 
 interface ThemeContextType {
   theme: Theme;
@@ -13,16 +13,19 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
     // Check localStorage first, then default to "dark"
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    return savedTheme || "dark";
+    // If "blue" is saved, convert it to "dark" since blue theme is removed
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "blue") {
+      localStorage.setItem("theme", "dark");
+      return "dark";
+    }
+    return (savedTheme as Theme) || "dark";
   });
 
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.remove("theme-dark", "theme-blue", "theme-negroni");
-    if (theme === "blue") {
-      root.classList.add("theme-blue");
-    } else if (theme === "negroni") {
+    root.classList.remove("theme-dark", "theme-negroni");
+    if (theme === "negroni") {
       root.classList.add("theme-negroni");
     } else {
       root.classList.add("theme-dark");
@@ -36,8 +39,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   const toggleTheme = () => {
     setThemeState((current) => {
-      if (current === "dark") return "blue";
-      if (current === "blue") return "negroni";
+      if (current === "dark") return "negroni";
       return "dark";
     });
   };

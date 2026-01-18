@@ -11,11 +11,11 @@ const ThemeToggle = () => {
       size="sm"
       onClick={toggleTheme}
       className="gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300"
-      aria-label={`Switch theme from ${theme}`}
+      aria-label={`Switch to ${theme === "dark" ? "negroni" : "dark"} theme`}
     >
       <Palette className="w-4 h-4" />
       <span className="font-medium text-xs uppercase tracking-wide">
-        {theme === "dark" ? "Blue" : theme === "blue" ? "Negroni" : "Dark"}
+        {theme === "dark" ? "Negroni" : "Dark"}
       </span>
     </Button>
   );
