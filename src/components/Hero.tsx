@@ -14,7 +14,7 @@ const Hero = () => {
   const bannerImages = [
     "/banner/camila-nomad-japan.png",
     "/banner/camila-nomad-sweden.png",
-    "banner/camila-chalk.png",
+    "/banner/camila-chalk.png",
     "/banner/camila-hockey-1.jpeg",
     "/banner/camila-hockey-2.jpeg",
   ];
@@ -48,6 +48,7 @@ const Hero = () => {
       <div className="container relative z-10 px-6 md:px-8">
 
       <span className="text-muted-foreground">{t("hero.note1")}</span>
+      <br/>
       <span className="text-muted-foreground">{t("hero.note2")}</span>
 
         <div className="max-w-3xl mx-auto text-center">
