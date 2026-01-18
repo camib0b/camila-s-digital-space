@@ -82,7 +82,7 @@
   }
 
   .theme-blue {
-    --background: 210 35% 18%;
+    --background: 210 35% 14%;
     --foreground: 210 15% 98%;
     --card: 210 30% 24%;
     --card-foreground: 210 15% 98%;
@@ -94,7 +94,7 @@
     --secondary-foreground: 210 10% 90%;
     --muted: 210 20% 32%;
     --muted-foreground: 210 12% 75%;
-    --accent: 220 75% 60%;
+    --accent: 220 75% 55%;
     --accent-foreground: 210 15% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 15% 98%;
@@ -103,7 +103,7 @@
     --ring: 200 85% 70%;
 
     /* Custom tokens for blue theme - Pearl Blue and Royal Blue (brighter, more luminous) */
-    --gradient-hero: linear-gradient(135deg, hsl(210 35% 18%) 0%, hsl(210 30% 22%) 50%, hsl(215 32% 20%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(210 35% 14%) 0%, hsl(210 30% 18%) 50%, hsl(215 32% 16%) 100%);
     --gradient-glow: radial-gradient(ellipse at center, hsl(200 85% 70% / 0.18) 0%, transparent 70%);
     --gradient-text: linear-gradient(135deg, hsl(210 15% 98%) 0%, hsl(200 85% 70%) 100%);
     
