@@ -1,10 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageToggle from "./LanguageToggle";
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-hero-gradient overflow-hidden">
+      {/* Language Toggle */}
+      <div className="absolute top-6 right-6 z-20">
+        <LanguageToggle />
+      </div>
+
       {/* Ambient glow effect */}
       <div className="absolute inset-0 bg-glow animate-pulse-soft" />
       
@@ -20,12 +29,12 @@ const Hero = () => {
 
       <div className="container relative z-10 px-6 md:px-8">
 
-      <span className="text-muted-foreground">Web dev is so much more than front end.</span>
+      <span className="text-muted-foreground">{t("hero.note")}</span>
 
         <div className="max-w-3xl mx-auto text-center">
           {/* Greeting */}
           <p className="text-muted-foreground text-sm md:text-base tracking-widest uppercase mb-6 animate-fade-up font-body">
-            Santiago, Chile
+            {t("hero.location")}
           </p>
 
           {/* Name */}
@@ -36,23 +45,23 @@ const Hero = () => {
 
           {/* Tagline */}
           <p className="text-lg md:text-xl lg:text-2xl text-secondary-foreground font-light mb-8 animate-fade-up-delay-2 font-body leading-relaxed">
-            One year to graduation. Crafting thoughtful web experiences.            
+            {t("hero.tagline")}            
             <br className="hidden md:block" />
-            <span className="text-muted-foreground">Realize that everything connects to everything else.</span>
+            <span className="text-muted-foreground">{t("hero.subtagline")}</span>
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-up-delay-3">
             <Button variant="hero" size="lg" asChild>
-              <a href="#contact">Get in Touch</a>
+              <a href="#contact">{t("hero.cta.contact")}</a>
             </Button>
             <Button variant="heroOutline" size="lg" asChild>
-              <a href="#work">See My Work</a>
+              <a href="#work">{t("hero.cta.work")}</a>
             </Button>
             <Button variant="heroOutline" size="lg" asChild>
               <Link to="/cv" className="gap-2">
                 <FileText className="w-4 h-4" />
-                View CV
+                {t("hero.cta.cv")}
               </Link>
             </Button>
           </div>

@@ -3,22 +3,26 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Mail, MapPin, Linkedin, Github, Download, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageToggle from "@/components/LanguageToggle";
 
 const CV = () => {
+  const { t } = useLanguage();
+
   const projects = [
     {
-      title: "Sports Video Analysis & Clips Workflow",
-      type: "Personal Project",
-      description: "Built a web app to upload game footage, tag key moments, and automatically generate highlight clips. Designed for coaches and players to streamline video review.",
-      impact: "Reduced video review time by 60% for my hockey team",
+      title: t("cv.project1.title"),
+      type: t("cv.project1.type"),
+      description: t("cv.project1.description"),
+      impact: t("cv.project1.impact"),
       technologies: ["React", "TypeScript", "FFmpeg", "Node.js", "PostgreSQL"],
       link: "#"
     },
     {
-      title: "Aircraft Fleet Engine Allocation Optimizer",
-      type: "Course Project — Optimization Methods",
-      description: "Developed an optimization tool to allocate engines across an aircraft fleet minimizing maintenance costs while meeting flight schedule constraints.",
-      impact: "Achieved 12% cost reduction vs. baseline heuristic in simulated scenarios",
+      title: t("cv.project2.title"),
+      type: t("cv.project2.type"),
+      description: t("cv.project2.description"),
+      impact: t("cv.project2.impact"),
       technologies: ["Python", "Linear Programming", "Gurobi", "Pandas", "Data Visualization"],
       link: "#"
     }
@@ -26,35 +30,35 @@ const CV = () => {
 
   const workExperience = [
     {
-      title: "Software Engineering Intern",
-      company: "Tech Company",
-      period: "Summer 2024",
+      title: t("cv.job1.title"),
+      company: t("cv.job1.company"),
+      period: t("cv.job1.period"),
       bullets: [
-        "Shipped 3 full-stack features for internal tools used by 200+ employees",
-        "Designed and implemented REST APIs handling 10k+ daily requests",
-        "Reduced page load time by 40% through code splitting and lazy loading"
+        t("cv.job1.bullet1"),
+        t("cv.job1.bullet2"),
+        t("cv.job1.bullet3")
       ],
       technologies: ["React", "TypeScript", "Node.js", "PostgreSQL"]
     },
     {
-      title: "Web Development Intern",
-      company: "Digital Agency",
-      period: "Summer 2023",
+      title: t("cv.job2.title"),
+      company: t("cv.job2.company"),
+      period: t("cv.job2.period"),
       bullets: [
-        "Built responsive client websites with 95+ Lighthouse performance scores",
-        "Implemented accessibility improvements reaching WCAG 2.1 AA compliance",
-        "Collaborated with designers to establish component library patterns"
+        t("cv.job2.bullet1"),
+        t("cv.job2.bullet2"),
+        t("cv.job2.bullet3")
       ],
       technologies: ["Vue.js", "Tailwind CSS", "PostgreSQL"]
     },
     {
-      title: "Frontend Developer Intern",
-      company: "Startup",
-      period: "Summer 2022",
+      title: t("cv.job3.title"),
+      company: t("cv.job3.company"),
+      period: t("cv.job3.period"),
       bullets: [
-        "Created reusable UI components adopted across 4 product teams",
-        "Integrated Figma design system reducing design-to-code handoff time",
-        "Wrote unit tests achieving 80% coverage on critical user flows"
+        t("cv.job3.bullet1"),
+        t("cv.job3.bullet2"),
+        t("cv.job3.bullet3")
       ],
       technologies: ["React", "Styled Components", "Jest", "Figma"]
     }
@@ -62,11 +66,11 @@ const CV = () => {
 
   const education = [
     {
-      degree: "Engineering Degree",
-      institution: "University",
-      period: "2020 – 2026 (Expected)",
-      details: "Focus: Software Engineering & Web Development",
-      coursework: "Optimization Methods, Data Structures, Databases, UI/UX Design"
+      degree: t("cv.education.degree"),
+      institution: t("cv.education.institution"),
+      period: t("cv.education.period"),
+      details: t("cv.education.details"),
+      coursework: t("cv.education.coursework")
     }
   ];
 
@@ -78,14 +82,14 @@ const CV = () => {
 
   const leadership = [
     {
-      role: "Field Hockey Coach",
-      organization: "Female U-14 National Team",
-      description: "Lead training sessions and game strategy for 20+ athletes. Coordinate with technical staff on player development."
+      role: t("cv.leadership1.role"),
+      organization: t("cv.leadership1.organization"),
+      description: t("cv.leadership1.description")
     },
     {
-      role: "Field Hockey Player",
-      organization: "Club & Regional Teams",
-      description: "Competitive player with 10+ years experience. Team captain roles developing communication and on-field leadership."
+      role: t("cv.leadership2.role"),
+      organization: t("cv.leadership2.organization"),
+      description: t("cv.leadership2.description")
     }
   ];
 
@@ -97,13 +101,16 @@ const CV = () => {
           <Link to="/">
             <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
               <ArrowLeft className="w-4 h-4" />
-              Back
+              {t("cv.back")}
             </Button>
           </Link>
-          <Button variant="outline" size="sm" className="gap-2">
-            <Download className="w-4 h-4" />
-            Download PDF
-          </Button>
+          <div className="flex items-center gap-4">
+            <LanguageToggle />
+            <Button variant="outline" size="sm" className="gap-2">
+              <Download className="w-4 h-4" />
+              {t("cv.downloadPdf")}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -112,7 +119,7 @@ const CV = () => {
         {/* 1. Header + Summary */}
         <section className="flex flex-col md:flex-row gap-8 items-start mb-10">
           <div className="w-28 h-28 md:w-36 md:h-36 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center flex-shrink-0 overflow-hidden">
-            <span className="text-muted-foreground text-xs text-center px-3">Photo</span>
+            <span className="text-muted-foreground text-xs text-center px-3">{t("cv.photo")}</span>
           </div>
 
           <div className="flex-1">
@@ -120,12 +127,10 @@ const CV = () => {
               Camila Escudero
             </h1>
             <p className="text-lg text-primary font-medium mb-3">
-              Software Engineering Intern · Web Developer
+              {t("cv.role")}
             </p>
             <p className="text-muted-foreground font-body leading-relaxed mb-5 max-w-2xl">
-              Engineering student with 3 internships building production web applications. 
-              I ship clean, user-focused code and bring the same discipline from coaching athletes to collaborating on technical teams.
-              Graduating 2026, seeking product engineering roles.
+              {t("cv.summary")}
             </p>
 
             <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
@@ -155,7 +160,7 @@ const CV = () => {
         <section className="mb-10">
           <h2 className="text-lg font-display font-semibold text-foreground mb-5 flex items-center gap-3">
             <span className="w-6 h-px bg-primary"></span>
-            Selected Projects
+            {t("cv.selectedProjects")}
           </h2>
 
           <div className="grid gap-4">
@@ -196,7 +201,7 @@ const CV = () => {
         <section className="mb-10">
           <h2 className="text-lg font-display font-semibold text-foreground mb-5 flex items-center gap-3">
             <span className="w-6 h-px bg-primary"></span>
-            Work Experience
+            {t("cv.workExperience")}
           </h2>
 
           <div className="space-y-4">
@@ -235,7 +240,7 @@ const CV = () => {
         <section className="mb-10">
           <h2 className="text-lg font-display font-semibold text-foreground mb-5 flex items-center gap-3">
             <span className="w-6 h-px bg-primary"></span>
-            Education
+            {t("cv.education")}
           </h2>
 
           {education.map((edu, index) => (
@@ -261,12 +266,12 @@ const CV = () => {
         <section className="mb-10">
           <h2 className="text-lg font-display font-semibold text-foreground mb-5 flex items-center gap-3">
             <span className="w-6 h-px bg-primary"></span>
-            Skills
+            {t("cv.skills")}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Languages</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">{t("cv.languages")}</p>
               <div className="flex flex-wrap gap-1.5">
                 {skills.languages.map((skill, i) => (
                   <span key={i} className="text-sm px-2.5 py-1 rounded-md bg-muted/30 text-muted-foreground border border-border/40">
@@ -276,7 +281,7 @@ const CV = () => {
               </div>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Frameworks</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">{t("cv.frameworks")}</p>
               <div className="flex flex-wrap gap-1.5">
                 {skills.frameworks.map((skill, i) => (
                   <span key={i} className="text-sm px-2.5 py-1 rounded-md bg-muted/30 text-muted-foreground border border-border/40">
@@ -286,7 +291,7 @@ const CV = () => {
               </div>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Tools</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">{t("cv.tools")}</p>
               <div className="flex flex-wrap gap-1.5">
                 {skills.tools.map((skill, i) => (
                   <span key={i} className="text-sm px-2.5 py-1 rounded-md bg-muted/30 text-muted-foreground border border-border/40">
@@ -302,7 +307,7 @@ const CV = () => {
         <section>
           <h2 className="text-lg font-display font-semibold text-foreground mb-5 flex items-center gap-3">
             <span className="w-6 h-px bg-primary"></span>
-            Leadership & Athletics
+            {t("cv.leadershipAthletics")}
           </h2>
 
           <div className="grid gap-3">
@@ -324,7 +329,7 @@ const CV = () => {
       {/* Footer */}
       <footer className="border-t border-border/40 py-6 mt-10">
         <div className="container px-6 text-center text-xs text-muted-foreground">
-          <p>Camila Escudero · Santiago, Chile · Available for Summer 2025 Internships</p>
+          <p>Camila Escudero · Santiago, Chile · {t("cv.availableFor")}</p>
         </div>
       </footer>
     </main>

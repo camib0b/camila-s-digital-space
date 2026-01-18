@@ -1,29 +1,32 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Trophy, Users } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Hockey = () => {
+  const { t } = useLanguage();
+
   // Hockey player trajectory milestones (since 2009)
   const playerMilestones = [
     {
       year: "2009",
-      title: "Started Playing",
-      description: "Began my hockey journey as a player",
+      title: t("hockey.player1.title"),
+      description: t("hockey.player1.description"),
     },
     {
       year: "2018",
-      title: "Early retirement",
-      description: "Focused on university & then got trapped in the pandemic",
+      title: t("hockey.player2.title"),
+      description: t("hockey.player2.description"),
     },
     {
       year: "2022",
-      title: "Returned to playing and competing",
-      description: "Continuing to play and develop skills",
+      title: t("hockey.player3.title"),
+      description: t("hockey.player3.description"),
     },
     {
-        year: "2025",
-        title: "ACL rupture",
-        description: "Mid november. Expected return to competition: August 2026",
-      },
+      year: "2025",
+      title: t("hockey.player4.title"),
+      description: t("hockey.player4.description"),
+    },
   ];
 
   // Hockey coaching trajectory
@@ -31,21 +34,21 @@ const Hockey = () => {
     {
       year: "2023",
       title: "Club Deportivo Universidad Católica",
-      description: "Sub-12 y Sub-16",
+      description: t("hockey.coaching1.description"),
       period: "2023-2025",
     },
     {
       year: "2024",
       title: "Selección Nacional",
-      description: "Youth teams coaching assistant",
+      description: t("hockey.coaching2.description"),
       period: "2024 - Present",
     },
     {
-        year: "2025",
-        title: "Video Analyst",
-        description: "Ladies Junior World Cup in Santiago",
-        period: "December 2025",
-      },
+      year: "2025",
+      title: "Video Analyst",
+      description: t("hockey.coaching3.description"),
+      period: "December 2025",
+    },
   ];
 
   return (
@@ -55,13 +58,13 @@ const Hockey = () => {
       <div className="container mx-auto px-6 relative">
         <div className="max-w-2xl mb-16 animate-fade-in">
           <span className="text-primary text-sm tracking-widest uppercase mb-4 block">
-            Hockey Journey
+            {t("hockey.label")}
           </span>
           <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-            Playing & Coaching
+            {t("hockey.title")}
           </h2>
           <p className="text-muted-foreground">
-            Two parallel paths — years on the pitch as a player and now sharing that passion through coaching.
+            {t("hockey.description")}
           </p>
         </div>
 
@@ -73,7 +76,7 @@ const Hockey = () => {
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                 <Trophy className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="font-display text-xl text-foreground">Player Trajectory</h3>
+              <h3 className="font-display text-xl text-foreground">{t("hockey.playerTrajectory")}</h3>
             </div>
 
             {/* Vertical timeline line */}
@@ -110,7 +113,7 @@ const Hockey = () => {
               <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
                 <Users className="w-5 h-5 text-accent" />
               </div>
-              <h3 className="font-display text-xl text-foreground">Coaching Trajectory</h3>
+              <h3 className="font-display text-xl text-foreground">{t("hockey.coachingTrajectory")}</h3>
             </div>
 
             {/* Vertical timeline line */}
