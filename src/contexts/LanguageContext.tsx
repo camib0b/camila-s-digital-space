@@ -200,7 +200,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Dashboard
     "dashboard.label": "Dashboard de Vida",
     "dashboard.title": "Métricas Importantes",
-    "dashboard.description": "Una foto de dónde estoy — equilibrando ingeniería, deporte y aprendizaje continuo.",
+    "dashboard.description": "Una foto de dónde estoy - equilibrando ingeniería, deporte y aprendizaje continuo.",
     "dashboard.stats.yearsCoding": "Años Programando",
     "dashboard.stats.booksThisYear": "Libros Este Año",
     "dashboard.stats.internships": "Prácticas",
@@ -210,7 +210,7 @@ const translations: Record<Language, Record<string, string>> = {
     "dashboard.skillFocus": "Foco de Habilidades",
     "dashboard.skillFocusDesc": "Niveles de competencia actuales",
     "dashboard.degreeProgress": "Avance Carrera",
-    "dashboard.degreeProgressDetail": "4to año / 5 años",
+    "dashboard.degreeProgressDetail": "430 créditos aprobados",
     "dashboard.internshipsLabel": "Prácticas",
     "dashboard.internshipsDetail": "3 completadas",
     "dashboard.hockeyYears": "Años de Hockey",
@@ -226,7 +226,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Skills
     "skills.label": "Habilidades",
-    "skills.title": "Con qué trabajo.",
+    "skills.title": "Con qué he trabajado",
     "skills.description": "Me enfoco en desarrollo web, construyendo aplicaciones responsivas y accesibles con herramientas y frameworks modernos.",
     "skills.frontend": "Frontend",
     "skills.backend": "Backend",
@@ -234,7 +234,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Experience
     "experience.label": "Experiencia",
-    "experience.title": "Donde he aprendido.",
+    "experience.title": "Dónde he aprendido",
     "experience.description": "Tres prácticas profesionales que formaron mi manera de pensar sobre código, colaboración y construcción de productos.",
     "experience.job1.title": "Práctica en Ingeniería de Software",
     "experience.job1.company": "Finapsys (health tech B2B SaaS)",
@@ -262,10 +262,10 @@ const translations: Record<Language, Record<string, string>> = {
     // Hockey
     "hockey.label": "Mi Camino en Hockey",
     "hockey.title": "Jugando y Entrenando",
-    "hockey.description": "Dos caminos paralelos — años en la cancha como jugadora y ahora compartiendo esa pasión a través del entrenamiento.",
+    "hockey.description": "Dos caminos paralelos - años en la cancha como jugadora y ahora compartiendo esa pasión a través del entrenamiento.",
     "hockey.playerTrajectory": "Trayectoria como jugadora",
     "hockey.coachingTrajectory": "Trayectoria como entrenadora",
-    "hockey.player1.title": "Empecé a Jugar",
+    "hockey.player1.title": "Empecé a jugar y a competir",
     "hockey.player1.description": "Comencé mi camino en hockey como jugadora",
     "hockey.player2.title": "Retiro temprano",
     "hockey.player2.description": "Me enfoqué en la universidad y luego pandemia",
@@ -279,8 +279,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Contact
     "contact.label": "Contacto",
-    "contact.title": "Conectemos.",
-    "contact.description": "¿Buscando prácticas, proyectos freelance, o simplemente quieres hablar sobre desarrollo web? Me encantaría saber de ti.",
+    "contact.title": "Conectemos",
+    "contact.description": "Personas, prácticas, proyectos. Hablar. Quiero saber de ti.",
     "contact.location": "Ubicación",
     "contact.email": "Email",
     "contact.preferEmail": "¿Prefieres email? Escríbeme directamente.",

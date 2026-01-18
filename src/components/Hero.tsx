@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,6 +8,17 @@ import ThemeToggle from "./ThemeToggle";
 
 const Hero = () => {
   const { t } = useLanguage();
+  
+  // Image banner state
+  const bannerImages = [
+    "/banner/camila-nomad-japan.png",
+    "/banner/camila-nomad-sweden.png",
+  ];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleBannerClick = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % bannerImages.length);
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-hero-gradient overflow-hidden">
@@ -51,6 +63,27 @@ const Hero = () => {
             <br className="hidden md:block" />
             <span className="text-muted-foreground">{t("hero.subtagline")}</span>
           </p>
+
+          {/* Image Banner */}
+          <div 
+            className="w-full max-w-4xl mx-auto mb-8 rounded-lg overflow-hidden cursor-pointer transition-opacity duration-300 hover:opacity-90 animate-fade-up-delay-2"
+            onClick={handleBannerClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleBannerClick();
+              }
+            }}
+            aria-label="Click to view next image"
+          >
+            <img
+              src={bannerImages[currentImageIndex]}
+              alt={currentImageIndex === 0 ? "Camila in Japan" : "Camila in Sweden"}
+              className="w-full h-48 md:h-64 object-cover"
+            />
+          </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-up-delay-3">
