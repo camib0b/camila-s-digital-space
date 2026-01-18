@@ -47,7 +47,8 @@ const Hero = () => {
 
       <div className="container relative z-10 px-6 md:px-8">
 
-      <span className="text-muted-foreground">{t("hero.note")}</span>
+      <span className="text-muted-foreground">{t("hero.note1")}</span>
+      <span className="text-muted-foreground">{t("hero.note2")}</span>
 
         <div className="max-w-3xl mx-auto text-center">
           {/* Greeting */}
