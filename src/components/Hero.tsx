@@ -67,6 +67,7 @@ const Hero = () => {
             {t("hero.note1")}
             <br />
             {t("hero.note2")}
+            <br />
           </p>
         </div>
 
