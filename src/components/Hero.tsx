@@ -13,6 +13,8 @@ const Hero = () => {
   const bannerImages = [
     "/banner/camila-nomad-japan.png",
     "/banner/camila-nomad-sweden.png",
+    "/banner/camila-hockey-1.jpeg",
+    "/banner/camila-hockey-2.jpeg",
   ];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 

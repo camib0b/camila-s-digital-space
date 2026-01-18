@@ -11,6 +11,7 @@ import Hockey from "@/components/Hockey";
 const Index = () => {
   return (
     <main className="min-h-screen">
+      <p>Don't bother children when skateboarding</p>
       <Hero />
       <Hockey />
       <About />

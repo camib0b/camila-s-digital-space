@@ -64,6 +64,7 @@ const Footer = () => {
                 <Mail className="w-5 h-5" />
               </a>
             </div>
+            <p>Don't bother children when skateboarding.</p>
           </div>
         </div>
       </div>
