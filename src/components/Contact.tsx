@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Mail, MapPin, Send } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="contact" className="py-24 md:py-32 bg-card">
       <div className="container px-6 md:px-8">
@@ -10,14 +13,13 @@ const Contact = () => {
           {/* Section header */}
           <div className="text-center mb-16">
             <p className="text-primary text-sm tracking-widest uppercase mb-4 font-body">
-              Contact
+              {t("contact.label")}
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-foreground mb-6">
-              Let's connect.
+              {t("contact.title")}
             </h2>
             <p className="text-lg text-muted-foreground font-body leading-relaxed max-w-xl mx-auto">
-              Looking for internships, freelance projects, or just want to chat about 
-              web development? I'd love to hear from you.
+              {t("contact.description")}
             </p>
           </div>
 
@@ -30,7 +32,7 @@ const Contact = () => {
                   <MapPin className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground font-body">Location</p>
+                  <p className="text-sm text-muted-foreground font-body">{t("contact.location")}</p>
                   <p className="text-foreground font-body">Santiago, Chile</p>
                 </div>
               </div>
@@ -41,7 +43,7 @@ const Contact = () => {
                   <Mail className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground font-body">Email</p>
+                  <p className="text-sm text-muted-foreground font-body">{t("contact.email")}</p>
                   <a 
                     href="mailto:camilaescuderob@gmail.com" 
                     className="text-foreground font-body link-underline hover:text-primary transition-colors duration-300"
@@ -54,12 +56,12 @@ const Contact = () => {
               {/* CTA */}
               <div className="pt-6 border-t border-border">
                 <p className="text-muted-foreground text-sm mb-4 font-body">
-                  Prefer email? Send me a message directly.
+                  {t("contact.preferEmail")}
                 </p>
                 <Button variant="hero" size="lg" className="w-full sm:w-auto" asChild>
                   <a href="mailto:camilaescuderob@gmail.com">
                     <Send className="w-4 h-4 mr-2" />
-                    Send Email
+                    {t("contact.sendEmail")}
                   </a>
                 </Button>
               </div>

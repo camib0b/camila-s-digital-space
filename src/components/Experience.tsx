@@ -1,25 +1,28 @@
 import { Card } from "@/components/ui/card";
 import { Briefcase, Calendar } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Experience = () => {
+  const { t } = useLanguage();
+
   const experiences = [
     {
-      title: "Software Engineering Intern",
-      company: "Finapsys (health tech B2B SaaS)",
-      period: "Summer 2024",
-      description: "Built reactive frontend views and components in TypeScript + Vue.js.",
+      title: t("experience.job1.title"),
+      company: t("experience.job1.company"),
+      period: t("experience.job1.period"),
+      description: t("experience.job1.description"),
     },
     {
-      title: "Asset Management Intern",
-      company: "A3 Property Investments",
-      period: "Summer 2023",
-      description: "Developed responsive landing pages and contributed to a React component library.",
+      title: t("experience.job2.title"),
+      company: t("experience.job2.company"),
+      period: t("experience.job2.period"),
+      description: t("experience.job2.description"),
     },
     {
-      title: "Retail & E-commerce Intern",
-      company: "Visionary",
-      period: "Sabatical 2021",
-      description: "Owned e-commerce/PDV/distributor operations across Shopify + BSale; built sales & inventory forecasts and tracked core KPIs (conversion rate, avg. ticket, margin) to coordinate pricing, promos, and replenishment.",
+      title: t("experience.job3.title"),
+      company: t("experience.job3.company"),
+      period: t("experience.job3.period"),
+      description: t("experience.job3.description"),
     },
   ];
 
@@ -30,13 +33,13 @@ const Experience = () => {
           {/* Section header */}
           <div className="mb-16">
             <p className="text-primary text-sm tracking-widest uppercase mb-4 font-body">
-              Experience
+              {t("experience.label")}
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-foreground mb-6">
-              Where I've learned.
+              {t("experience.title")}
             </h2>
             <p className="text-lg text-muted-foreground font-body leading-relaxed max-w-2xl">
-              Three summer internships that shaped how I think about code, collaboration, and building products.
+              {t("experience.description")}
             </p>
           </div>
 

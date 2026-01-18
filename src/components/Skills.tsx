@@ -1,17 +1,20 @@
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Skills = () => {
+  const { t } = useLanguage();
+
   const skillCategories = [
     {
-      title: "Frontend",
+      title: t("skills.frontend"),
       skills: ["React", "TypeScript", "Tailwind CSS", "Next.js", "HTML/CSS"],
     },
     {
-      title: "Backend",
+      title: t("skills.backend"),
       skills: ["Node.js", "Python", "PostgreSQL", "REST APIs"],
     },
     {
-      title: "Tools",
+      title: t("skills.tools"),
       skills: ["Git", "Figma", "VS Code", "Vercel"],
     },
   ];
@@ -23,14 +26,13 @@ const Skills = () => {
           {/* Section header */}
           <div className="mb-16">
             <p className="text-primary text-sm tracking-widest uppercase mb-4 font-body">
-              Skills
+              {t("skills.label")}
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-foreground mb-6">
-              What I work with.
+              {t("skills.title")}
             </h2>
             <p className="text-lg text-muted-foreground font-body leading-relaxed max-w-2xl">
-              I focus on web development, building responsive and accessible applications 
-              with modern tools and frameworks.
+              {t("skills.description")}
             </p>
           </div>
 

@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Book {
   id: number;
   title: string;
   author: string;
   cover: string;
-  review: string;
+  reviewKey: string;
   rotation: number;
   yOffset: number;
 }
@@ -16,7 +17,7 @@ const books: Book[] = [
     title: "The Republic",
     author: "Plato",
     cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=450&fit=crop",
-    review: "A foundational text that shaped my understanding of justice and the ideal society. Plato's dialogues challenge you to question everything — governance, truth, and the nature of reality itself.",
+    reviewKey: "books.book1.review",
     rotation: -2,
     yOffset: 0,
   },
@@ -25,7 +26,7 @@ const books: Book[] = [
     title: "El Mundo de Sofía",
     author: "Jostein Gaarder",
     cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300&h=450&fit=crop",
-    review: "Philosophy made accessible through storytelling. This book ignited my curiosity about the big questions when I was younger. A perfect gateway into Western philosophical thought.",
+    reviewKey: "books.book2.review",
     rotation: 1.5,
     yOffset: 12,
   },
@@ -34,7 +35,7 @@ const books: Book[] = [
     title: "Chuquicamata",
     author: "Pascale Bonnefoy",
     cover: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&h=450&fit=crop",
-    review: "Essential reading for understanding Chile's industrial history. Bonnefoy captures the human stories behind the world's largest open-pit copper mine — a lens into labor, community, and progress.",
+    reviewKey: "books.book3.review",
     rotation: -1,
     yOffset: 4,
   },
@@ -43,13 +44,13 @@ const books: Book[] = [
     title: "The Name of the Rose",
     author: "Umberto Eco",
     cover: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=300&h=450&fit=crop",
-    review: "A masterpiece of historical fiction wrapped in mystery. Eco weaves semiotics, medieval history, and detective narrative into something utterly captivating. Dense but rewarding.",
+    reviewKey: "books.book4.review",
     rotation: 2,
     yOffset: 8,
   },
 ];
 
-const BookCard = ({ book, index }: { book: Book; index: number }) => {
+const BookCard = ({ book, index, t }: { book: Book; index: number; t: (key: string) => string }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
@@ -110,11 +111,11 @@ const BookCard = ({ book, index }: { book: Book; index: number }) => {
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-1 h-6 bg-primary rounded-full" />
                 <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                  My Take
+                  {t("books.myTake")}
                 </span>
               </div>
               <p className="text-foreground/90 text-sm leading-relaxed">
-                {book.review}
+                {t(book.reviewKey)}
               </p>
             </div>
             <div className="pt-4 border-t border-border/30">
@@ -153,6 +154,8 @@ const WavePattern = () => (
 );
 
 const Books = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="books" className="py-24 md:py-32 relative overflow-hidden">
       <WavePattern />
@@ -160,20 +163,19 @@ const Books = () => {
       <div className="container mx-auto px-6 relative">
         <div className="max-w-2xl mb-16 animate-fade-in">
           <span className="text-primary text-sm tracking-widest uppercase mb-4 block">
-            Reading List
+            {t("books.label")}
           </span>
           <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-            Books That Shaped My Thinking
+            {t("books.title")}
           </h2>
           <p className="text-muted-foreground">
-            Click any book to read my review. These texts have influenced how I approach 
-            problems, understand systems, and see the world.
+            {t("books.description")}
           </p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto">
           {books.map((book, index) => (
-            <BookCard key={book.id} book={book} index={index} />
+            <BookCard key={book.id} book={book} index={index} t={t} />
           ))}
         </div>
       </div>

@@ -15,73 +15,76 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Code, Trophy, Briefcase, BookOpen, Zap, Target } from "lucide-react";
-
-const weeklyActivity = [
-  { day: "Mon", coding: 4, hockey: 2, study: 3 },
-  { day: "Tue", coding: 6, hockey: 0, study: 4 },
-  { day: "Wed", coding: 5, hockey: 2, study: 2 },
-  { day: "Thu", coding: 7, hockey: 0, study: 3 },
-  { day: "Fri", coding: 4, hockey: 2, study: 2 },
-  { day: "Sat", coding: 2, hockey: 3, study: 1 },
-  { day: "Sun", coding: 1, hockey: 2, study: 0 },
-];
-
-const skillsRadial = [
-  { name: "Frontend", value: 85, fill: "hsl(38 90% 55%)" },
-  { name: "Backend", value: 65, fill: "hsl(38 70% 45%)" },
-  { name: "Design", value: 70, fill: "hsl(38 50% 40%)" },
-];
-
-const metrics = [
-  {
-    label: "Degree Progress",
-    value: 80,
-    detail: "4th year / 5 years",
-    icon: Target,
-  },
-  {
-    label: "Internships",
-    value: 100,
-    detail: "3 completed",
-    icon: Briefcase,
-  },
-  {
-    label: "Hockey Years",
-    value: 75,
-    detail: "Playing & coaching",
-    icon: Trophy,
-  },
-  {
-    label: "Side Projects",
-    value: 60,
-    detail: "Always building",
-    icon: Zap,
-  },
-];
-
-const stats = [
-  { label: "Years Coding", value: "4+", icon: Code },
-  { label: "Books This Year", value: "12", icon: BookOpen },
-  { label: "Internships", value: "3", icon: Briefcase },
-  { label: "Projects", value: "8+", icon: Zap },
-];
-
-const chartConfig = {
-  coding: {
-    label: "Coding",
-    color: "hsl(38 90% 55%)",
-  },
-  hockey: {
-    label: "Hockey",
-    color: "hsl(38 70% 45%)",
-  },
-  study: {
-    label: "Study",
-    color: "hsl(38 50% 35%)",
-  },
-};
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Dashboard = () => {
+  const { t, language } = useLanguage();
+
+  const weeklyActivity = [
+    { day: language === "es" ? "Lun" : "Mon", coding: 4, hockey: 2, study: 3 },
+    { day: language === "es" ? "Mar" : "Tue", coding: 6, hockey: 0, study: 4 },
+    { day: language === "es" ? "Mié" : "Wed", coding: 5, hockey: 2, study: 2 },
+    { day: language === "es" ? "Jue" : "Thu", coding: 7, hockey: 0, study: 3 },
+    { day: language === "es" ? "Vie" : "Fri", coding: 4, hockey: 2, study: 2 },
+    { day: language === "es" ? "Sáb" : "Sat", coding: 2, hockey: 3, study: 1 },
+    { day: language === "es" ? "Dom" : "Sun", coding: 1, hockey: 2, study: 0 },
+  ];
+
+  const skillsRadial = [
+    { name: t("dashboard.frontend"), value: 85, fill: "hsl(38 90% 55%)" },
+    { name: t("dashboard.backend"), value: 65, fill: "hsl(38 70% 45%)" },
+    { name: t("dashboard.design"), value: 70, fill: "hsl(38 50% 40%)" },
+  ];
+
+  const metrics = [
+    {
+      label: t("dashboard.degreeProgress"),
+      value: 80,
+      detail: t("dashboard.degreeProgressDetail"),
+      icon: Target,
+    },
+    {
+      label: t("dashboard.internshipsLabel"),
+      value: 100,
+      detail: t("dashboard.internshipsDetail"),
+      icon: Briefcase,
+    },
+    {
+      label: t("dashboard.hockeyYears"),
+      value: 75,
+      detail: t("dashboard.hockeyYearsDetail"),
+      icon: Trophy,
+    },
+    {
+      label: t("dashboard.sideProjects"),
+      value: 60,
+      detail: t("dashboard.sideProjectsDetail"),
+      icon: Zap,
+    },
+  ];
+
+  const stats = [
+    { label: t("dashboard.stats.yearsCoding"), value: "4+", icon: Code },
+    { label: t("dashboard.stats.booksThisYear"), value: "12", icon: BookOpen },
+    { label: t("dashboard.stats.internships"), value: "3", icon: Briefcase },
+    { label: t("dashboard.stats.projects"), value: "8+", icon: Zap },
+  ];
+
+  const chartConfig = {
+    coding: {
+      label: t("dashboard.coding"),
+      color: "hsl(38 90% 55%)",
+    },
+    hockey: {
+      label: t("dashboard.hockey"),
+      color: "hsl(38 70% 45%)",
+    },
+    study: {
+      label: t("dashboard.study"),
+      color: "hsl(38 50% 35%)",
+    },
+  };
+
   return (
     <section id="dashboard" className="py-24 md:py-32 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
@@ -89,13 +92,13 @@ const Dashboard = () => {
       <div className="container mx-auto px-6 relative">
         <div className="max-w-2xl mb-16 animate-fade-in">
           <span className="text-primary text-sm tracking-widest uppercase mb-4 block">
-            Life Dashboard
+            {t("dashboard.label")}
           </span>
           <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-            Metrics That Matter
+            {t("dashboard.title")}
           </h2>
           <p className="text-muted-foreground">
-            A snapshot of where I am — balancing engineering, athletics, and continuous learning.
+            {t("dashboard.description")}
           </p>
         </div>
 
@@ -126,9 +129,9 @@ const Dashboard = () => {
           <Card className="md:col-span-2 bg-card/50 border-border/50 backdrop-blur-sm">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-display text-foreground">
-                Weekly Activity
+                {t("dashboard.weeklyActivity")}
               </CardTitle>
-              <p className="text-sm text-muted-foreground">Hours distribution across activities</p>
+              <p className="text-sm text-muted-foreground">{t("dashboard.weeklyActivityDesc")}</p>
             </CardHeader>
             <CardContent>
               <ChartContainer config={chartConfig} className="h-[250px] w-full">
@@ -192,9 +195,9 @@ const Dashboard = () => {
           <Card className="bg-card/50 border-border/50 backdrop-blur-sm">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-display text-foreground">
-                Skill Focus
+                {t("dashboard.skillFocus")}
               </CardTitle>
-              <p className="text-sm text-muted-foreground">Current proficiency levels</p>
+              <p className="text-sm text-muted-foreground">{t("dashboard.skillFocusDesc")}</p>
             </CardHeader>
             <CardContent className="flex flex-col items-center">
               <div className="h-[180px] w-full">
