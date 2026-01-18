@@ -62,11 +62,11 @@ const CV = () => {
 
   const education = [
     {
-      degree: "Engineering Degree",
-      institution: "University",
-      period: "2020 – 2026 (Expected)",
+      degree: "Industrial Engineering + IT Diploma",
+      institution: "Pontificia Universidad Católica de Chile",
+      period: "Graduación diciembre 2026",
       details: "Focus: Software Engineering & Web Development",
-      coursework: "Optimization Methods, Data Structures, Databases, UI/UX Design"
+      coursework: "Software Engineering, Data Structures & Algorithms, Optimization Methods, Stochastic Models"
     }
   ];
 
