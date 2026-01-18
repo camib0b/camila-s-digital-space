@@ -23,7 +23,8 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-hero-gradient overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden">
+
       {/* Toggles */}
       <div
         className={[
@@ -43,16 +44,31 @@ const Hero = () => {
         <LanguageToggle />
       </div>
 
+    {/* Hero background: neutral soot + subtle ember/brass light (NOT brown paint) */}
+    <div
+      className="pointer-events-none absolute inset-0"
+      style={{
+        background:
+          "radial-gradient(85% 55% at 22% 12%, hsl(var(--primary) / 0.08), transparent 60%)," +
+          "radial-gradient(65% 40% at 55% 0%, hsl(var(--gold) / 0.05), transparent 58%)," +
+          "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--card)) 55%, hsl(var(--background)) 100%)",
+      }}
+    />
 
-      {/* Controlled ambient glow (less “template-y”) */}
-      <div className="pointer-events-none absolute inset-0 bg-glow opacity-70" />
+      
+
+
+
+      {/* Very subtle glow; screen blend prevents “brown wash” */}
+      <div className="pointer-events-none absolute inset-0 bg-glow opacity-20 mix-blend-screen" />
+
 
       {/* Specular top sheen (Apple-like) */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] opacity-30 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.10),rgba(255,255,255,0))]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] opacity-20 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.10),rgba(255,255,255,0))]" />
 
       {/* Ultra-subtle grid (keep it, but make it nearly imperceptible) */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.012]"
+        className="pointer-events-none absolute inset-0 opacity-[0.015]"
         style={{
           backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
                            linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
@@ -118,7 +134,8 @@ const Hero = () => {
               <img
                 src={bannerImages[currentImageIndex]}
                 alt="Camila banner"
-                className="w-full h-52 md:h-72 object-cover"
+                className="w-full h-52 md:h-72 object-cover saturate-90"
+
               />
               <div className="pointer-events-none absolute inset-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.10)]" />
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_0%,rgba(199,163,91,0.12),rgba(0,0,0,0)_60%)]" />
