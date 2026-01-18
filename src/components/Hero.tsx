@@ -14,6 +14,7 @@ const Hero = () => {
   const bannerImages = [
     "/banner/camila-nomad-japan.png",
     "/banner/camila-nomad-sweden.png",
+    "banner/camila-chalk.png",
     "/banner/camila-hockey-1.jpeg",
     "/banner/camila-hockey-2.jpeg",
   ];
@@ -49,14 +50,6 @@ const Hero = () => {
       <span className="text-muted-foreground">{t("hero.note")}</span>
 
         <div className="max-w-3xl mx-auto text-center">
-          {/* Profile Picture */}
-          <div className="mb-8 animate-fade-up">
-            <Avatar className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto border-4 border-primary/20 shadow-lg">
-              <AvatarImage src="/cami-profile.png" alt="Camila Escudero" />
-              <AvatarFallback>CE</AvatarFallback>
-            </Avatar>
-          </div>
-
           {/* Greeting */}
           <p className="text-muted-foreground text-sm md:text-base tracking-widest uppercase mb-6 animate-fade-up font-body">
             {t("hero.location")}
