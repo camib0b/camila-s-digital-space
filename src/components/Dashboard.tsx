@@ -129,7 +129,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-2xl font-display text-foreground">{stat.value}</p>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  <p className="text-sm font-medium tracking-tightish text-muted-foreground">{stat.label}</p>
                 </div>
               </CardContent>
             </Card>
@@ -256,7 +256,7 @@ const Dashboard = () => {
             >
               <CardContent className="p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm text-muted-foreground">{metric.label}</span>
+                  <span className="text-sm font-medium tracking-tightish text-muted-foreground">{metric.label}</span>
                   <metric.icon className="w-4 h-4 text-primary/60 group-hover:text-primary transition-colors" />
                 </div>
                 <Progress 

@@ -32,7 +32,7 @@ const Contact = () => {
                   <MapPin className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground font-body">{t("contact.location")}</p>
+                  <p className="text-sm font-medium tracking-tightish text-muted-foreground font-body">{t("contact.location")}</p>
                   <p className="text-foreground font-body">Santiago, Chile</p>
                 </div>
               </div>
@@ -43,7 +43,7 @@ const Contact = () => {
                   <Mail className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground font-body">{t("contact.email")}</p>
+                  <p className="text-sm font-medium tracking-tightish text-muted-foreground font-body">{t("contact.email")}</p>
                   <a 
                     href="mailto:camilaescuderob@gmail.com" 
                     className="text-foreground font-body link-underline hover:text-primary transition-colors duration-300"
