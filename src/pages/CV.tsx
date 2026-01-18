@@ -5,6 +5,7 @@ import { ArrowLeft, Mail, MapPin, Linkedin, Github, Download, ExternalLink } fro
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const CV = () => {
   const { t } = useLanguage();
@@ -105,6 +106,7 @@ const CV = () => {
             </Button>
           </Link>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <LanguageToggle />
             <Button variant="outline" size="sm" className="gap-2">
               <Download className="w-4 h-4" />

@@ -36,28 +36,13 @@
 
     --radius: 0.5rem;
 
-    /* Custom tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(20 10% 5%) 0%, hsl(20 8% 10%) 50%, hsl(25 12% 8%) 100%);
-    --gradient-glow: radial-gradient(ellipse at center, hsl(38 90% 55% / 0.08) 0%, transparent 70%);
-    --gradient-text: linear-gradient(135deg, hsl(40 20% 92%) 0%, hsl(38 90% 55%) 100%);
-    
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 40px -10px hsl(38 90% 55% / 0.3);
-
     --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
-
-    --sidebar-background: 20 8% 8%;
-    --sidebar-foreground: 40 20% 92%;
-    --sidebar-primary: 38 90% 55%;
-    --sidebar-primary-foreground: 20 10% 5%;
-    --sidebar-accent: 20 8% 15%;
-    --sidebar-accent-foreground: 40 20% 92%;
-    --sidebar-border: 20 8% 18%;
-    --sidebar-ring: 38 90% 55%;
   }
 
-  .dark {
+  /* Default to dark theme */
+  :root,
+  .theme-dark {
     --background: 20 10% 5%;
     --foreground: 40 20% 92%;
     --card: 20 8% 8%;
@@ -77,6 +62,62 @@
     --border: 20 8% 18%;
     --input: 20 8% 15%;
     --ring: 38 90% 55%;
+
+    /* Custom tokens for dark theme */
+    --gradient-hero: linear-gradient(135deg, hsl(20 10% 5%) 0%, hsl(20 8% 10%) 50%, hsl(25 12% 8%) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(38 90% 55% / 0.08) 0%, transparent 70%);
+    --gradient-text: linear-gradient(135deg, hsl(40 20% 92%) 0%, hsl(38 90% 55%) 100%);
+    
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 40px -10px hsl(38 90% 55% / 0.3);
+
+    --sidebar-background: 20 8% 8%;
+    --sidebar-foreground: 40 20% 92%;
+    --sidebar-primary: 38 90% 55%;
+    --sidebar-primary-foreground: 20 10% 5%;
+    --sidebar-accent: 20 8% 15%;
+    --sidebar-accent-foreground: 40 20% 92%;
+    --sidebar-border: 20 8% 18%;
+    --sidebar-ring: 38 90% 55%;
+  }
+
+  .theme-blue {
+    --background: 210 40% 8%;
+    --foreground: 210 20% 95%;
+    --card: 210 35% 12%;
+    --card-foreground: 210 20% 95%;
+    --popover: 210 35% 12%;
+    --popover-foreground: 210 20% 95%;
+    --primary: 200 80% 65%;
+    --primary-foreground: 210 40% 8%;
+    --secondary: 210 30% 18%;
+    --secondary-foreground: 210 15% 80%;
+    --muted: 210 25% 20%;
+    --muted-foreground: 210 15% 65%;
+    --accent: 220 70% 55%;
+    --accent-foreground: 210 20% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 95%;
+    --border: 210 30% 25%;
+    --input: 210 25% 22%;
+    --ring: 200 80% 65%;
+
+    /* Custom tokens for blue theme - Pearl Blue and Royal Blue */
+    --gradient-hero: linear-gradient(135deg, hsl(210 40% 8%) 0%, hsl(210 35% 12%) 50%, hsl(215 38% 10%) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(200 80% 65% / 0.12) 0%, transparent 70%);
+    --gradient-text: linear-gradient(135deg, hsl(210 20% 95%) 0%, hsl(200 80% 65%) 100%);
+    
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 40px -10px hsl(200 80% 65% / 0.4);
+
+    --sidebar-background: 210 35% 12%;
+    --sidebar-foreground: 210 20% 95%;
+    --sidebar-primary: 200 80% 65%;
+    --sidebar-primary-foreground: 210 40% 8%;
+    --sidebar-accent: 210 25% 20%;
+    --sidebar-accent-foreground: 210 20% 95%;
+    --sidebar-border: 210 30% 25%;
+    --sidebar-ring: 200 80% 65%;
   }
 }
 

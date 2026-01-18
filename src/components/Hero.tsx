@@ -3,14 +3,16 @@ import { ArrowDown, Github, Linkedin, Mail, Twitter, FileText } from "lucide-rea
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
+import ThemeToggle from "./ThemeToggle";
 
 const Hero = () => {
   const { t } = useLanguage();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-hero-gradient overflow-hidden">
-      {/* Language Toggle */}
-      <div className="absolute top-6 right-6 z-20">
+      {/* Language and Theme Toggles */}
+      <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
+        <ThemeToggle />
         <LanguageToggle />
       </div>
 
