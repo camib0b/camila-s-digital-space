@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-type Theme = "dark" | "blue";
+type Theme = "dark" | "blue" | "negroni";
 
 interface ThemeContextType {
   theme: Theme;
@@ -19,12 +19,13 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const root = document.documentElement;
+    root.classList.remove("theme-dark", "theme-blue", "theme-negroni");
     if (theme === "blue") {
       root.classList.add("theme-blue");
-      root.classList.remove("theme-dark");
+    } else if (theme === "negroni") {
+      root.classList.add("theme-negroni");
     } else {
       root.classList.add("theme-dark");
-      root.classList.remove("theme-blue");
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
@@ -34,7 +35,11 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const toggleTheme = () => {
-    setThemeState((current) => (current === "dark" ? "blue" : "dark"));
+    setThemeState((current) => {
+      if (current === "dark") return "blue";
+      if (current === "blue") return "negroni";
+      return "dark";
+    });
   };
 
   return (

@@ -119,6 +119,45 @@
     --sidebar-border: 210 25% 35%;
     --sidebar-ring: 200 85% 70%;
   }
+
+  .theme-negroni {
+    --background: 12 61% 11%;
+    --foreground: 28 97% 87%;
+    --card: 12 55% 15%;
+    --card-foreground: 28 97% 87%;
+    --popover: 12 55% 15%;
+    --popover-foreground: 28 97% 87%;
+    --primary: 18 80% 42%;
+    --primary-foreground: 28 97% 87%;
+    --secondary: 12 65% 20%;
+    --secondary-foreground: 32 85% 62%;
+    --muted: 12 50% 18%;
+    --muted-foreground: 28 60% 65%;
+    --accent: 15 82% 34%;
+    --accent-foreground: 28 97% 87%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 28 97% 87%;
+    --border: 12 78% 25%;
+    --input: 12 60% 16%;
+    --ring: 18 80% 42%;
+
+    /* Custom tokens for Negroni theme */
+    --gradient-hero: linear-gradient(135deg, hsl(12 61% 11%) 0%, hsl(12 55% 15%) 50%, hsl(15 58% 13%) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(18 80% 42% / 0.12) 0%, transparent 70%);
+    --gradient-text: linear-gradient(135deg, hsl(28 97% 87%) 0%, hsl(18 80% 42%) 100%);
+    
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 40px -10px hsl(18 80% 42% / 0.4);
+
+    --sidebar-background: 12 55% 15%;
+    --sidebar-foreground: 28 97% 87%;
+    --sidebar-primary: 18 80% 42%;
+    --sidebar-primary-foreground: 28 97% 87%;
+    --sidebar-accent: 12 60% 18%;
+    --sidebar-accent-foreground: 28 97% 87%;
+    --sidebar-border: 12 78% 25%;
+    --sidebar-ring: 18 80% 42%;
+  }
 }
 
 @layer base {
