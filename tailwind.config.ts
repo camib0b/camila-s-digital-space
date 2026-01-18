@@ -50,6 +50,9 @@ export default {
         tighter: "-0.03em",
         tightish: "-0.015em",
       },
+      opacity: {
+        88: "0.88",
+      },
 
       fontSize: {
         xs: ["0.75rem", { lineHeight: "1.1rem" }],
