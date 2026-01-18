@@ -6,7 +6,25 @@ const LanguageToggle = () => {
   const { language, setLanguage } = useLanguage();
 
   const toggleLanguage = () => {
-    setLanguage(language === "en" ? "es" : "en");
+    if (language === "en") {
+      setLanguage("es");
+    } else if (language === "es") {
+      setLanguage("fr");
+    } else {
+      setLanguage("en");
+    }
+  };
+
+  const getNextLanguage = () => {
+    if (language === "en") return "Espagnol";
+    if (language === "es") return "Français";
+    return "Anglais";
+  };
+
+  const getLanguageCode = () => {
+    if (language === "en") return "ES";
+    if (language === "es") return "FR";
+    return "EN";
   };
 
   return (
@@ -15,11 +33,11 @@ const LanguageToggle = () => {
       size="sm"
       onClick={toggleLanguage}
       className="gap-2 text-muted-foreground hover:text-foreground transition-colors duration-300"
-      aria-label={`Switch to ${language === "en" ? "Spanish" : "English"}`}
+      aria-label={`Switch to ${getNextLanguage()}`}
     >
       <Globe className="w-4 h-4" />
       <span className="font-medium text-xs uppercase tracking-wide">
-        {language === "en" ? "ES" : "EN"}
+        {getLanguageCode()}
       </span>
     </Button>
   );

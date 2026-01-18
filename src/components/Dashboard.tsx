@@ -20,14 +20,27 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const Dashboard = () => {
   const { t, language } = useLanguage();
 
+  const getDayName = (index: number) => {
+    if (language === "es") {
+      const days = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+      return days[index];
+    } else if (language === "fr") {
+      const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+      return days[index];
+    } else {
+      const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      return days[index];
+    }
+  };
+
   const weeklyActivity = [
-    { day: language === "es" ? "Lun" : "Mon", coding: 4, hockey: 2, study: 3 },
-    { day: language === "es" ? "Mar" : "Tue", coding: 6, hockey: 0, study: 4 },
-    { day: language === "es" ? "Mié" : "Wed", coding: 5, hockey: 2, study: 2 },
-    { day: language === "es" ? "Jue" : "Thu", coding: 7, hockey: 0, study: 3 },
-    { day: language === "es" ? "Vie" : "Fri", coding: 4, hockey: 2, study: 2 },
-    { day: language === "es" ? "Sáb" : "Sat", coding: 2, hockey: 3, study: 1 },
-    { day: language === "es" ? "Dom" : "Sun", coding: 1, hockey: 2, study: 0 },
+    { day: getDayName(0), coding: 4, hockey: 2, study: 3 },
+    { day: getDayName(1), coding: 6, hockey: 0, study: 4 },
+    { day: getDayName(2), coding: 5, hockey: 2, study: 2 },
+    { day: getDayName(3), coding: 7, hockey: 0, study: 3 },
+    { day: getDayName(4), coding: 4, hockey: 2, study: 2 },
+    { day: getDayName(5), coding: 2, hockey: 3, study: 1 },
+    { day: getDayName(6), coding: 1, hockey: 2, study: 0 },
   ];
 
   const skillsRadial = [
