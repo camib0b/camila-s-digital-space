@@ -6,38 +6,45 @@
 
 @layer base {
   :root {
-    --background: 20 10% 5%;
-    --foreground: 40 20% 92%;
+    /* Light mode: parchment + espresso */
+    --background: 38 52% 96%; /* #FAF6EF */
+    --foreground: 23 33% 8%;  /* #1A120D */
 
-    --card: 20 8% 8%;
-    --card-foreground: 40 20% 92%;
+    --card: 38 100% 98%;      /* #FFFCF7 */
+    --card-foreground: 23 33% 8%;
 
-    --popover: 20 8% 8%;
-    --popover-foreground: 40 20% 92%;
+    --popover: 38 100% 98%;
+    --popover-foreground: 23 33% 8%;
 
-    --primary: 38 90% 55%;
-    --primary-foreground: 20 10% 5%;
+    --primary: 20 77% 44%;    /* #C4521A (Ember) */
+    --primary-foreground: 38 100% 98%;
 
-    --secondary: 20 8% 12%;
-    --secondary-foreground: 40 15% 75%;
+    --secondary: 33 46% 91%;  /* #F2E8DC */
+    --secondary-foreground: 23 33% 8%;
 
-    --muted: 20 6% 15%;
-    --muted-foreground: 40 10% 55%;
+    --muted: 33 46% 91%;      /* #F2E8DC */
+    --muted-foreground: 28 14% 38%; /* #6D5F53 */
 
-    --accent: 38 70% 45%;
-    --accent-foreground: 40 20% 92%;
+    --accent: 31 40% 84%;     /* #E6D6C5 (warm hover) */
+    --accent-foreground: 23 33% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 40 20% 92%;
+    --destructive: 5 67% 32%; /* #8A241B */
+    --destructive-foreground: 38 100% 98%;
 
-    --border: 20 8% 18%;
-    --input: 20 8% 15%;
-    --ring: 38 90% 55%;
+    --border: 31 40% 84%;     /* #E6D6C5 */
+    --input: 31 40% 84%;
+    --ring: 40 49% 57%;       /* #C7A35B (Brass) */
 
     --radius: 0.5rem;
 
     --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
+
+    /* Optional extra accents (handy for custom Tailwind utilities) */
+    --gold: 40 49% 57%;       /* #C7A35B */
+    --glow: 35 65% 50%;       /* #D18B2C */
+    --wine: 358 70% 21%;      /* #5A1012 */
+    --olive: 97 28% 33%;      /* #4E6A3C */
 
     /* Light mode shadows (kept sane, but your site is dark-first) */
     --shadow-elev-1: 0 1px 2px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
@@ -47,6 +54,67 @@
 
     /* A tiny top highlight that reads "machined / glass" */
     --highlight-inset: inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  .dark {
+    /* Dark mode: fireplace soot + bone text */
+    --background: 30 27% 4%;  /* #0E0B08 */
+    --foreground: 39 39% 93%; /* #F4EFE6 */
+
+    --card: 27 27% 6%;        /* #15100C */
+    --card-foreground: 39 39% 93%;
+
+    --popover: 27 27% 6%;
+    --popover-foreground: 39 39% 93%;
+
+    --primary: 20 77% 44%;    /* #C4521A (Ember) */
+    --primary-foreground: 39 39% 93%;
+
+    --secondary: 25 31% 11%;  /* #241A13 */
+    --secondary-foreground: 39 39% 93%;
+
+    --muted: 25 25% 9%;       /* #1E1712 */
+    --muted-foreground: 35 16% 68%; /* #B9AE9F */
+
+    --accent: 25 31% 11%;     /* #241A13 */
+    --accent-foreground: 39 39% 93%;
+
+    --destructive: 5 68% 28%; /* #7A1F17 */
+    --destructive-foreground: 39 39% 93%;
+
+    --border: 24 31% 13%;     /* #2A1E16 */
+    --input: 24 31% 13%;
+    --ring: 40 49% 57%;       /* #C7A35B (Brass) */
+
+    /* Optional extra accents */
+    --gold: 40 49% 57%;
+    --glow: 35 65% 50%;
+    --wine: 358 70% 21%;
+    --olive: 97 28% 33%;
+
+    /* Dark mode shadows: less opacity, more blur, plus highlight + hairline border */
+    --shadow-elev-1:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 10px 30px rgba(0,0,0,0.42),
+      0 0 0 1px rgba(255,255,255,0.06);
+
+    --shadow-elev-2:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 18px 55px rgba(0,0,0,0.50),
+      0 0 0 1px rgba(255,255,255,0.07);
+
+    --shadow-elev-3:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 30px 90px rgba(0,0,0,0.58),
+      0 0 0 1px rgba(255,255,255,0.08);
+
+    /* Warm "premium" edge: brass hairline only */
+    --shadow-ember:
+      0 1px 0 rgba(255,255,255,0.06),
+      0 34px 100px rgba(0,0,0,0.62),
+      0 0 0 1px rgba(199,163,91,0.18);
+
+    --highlight-inset: inset 0 1px 0 rgba(255,255,255,0.09);
   }
 
   /* Default to dark theme */
