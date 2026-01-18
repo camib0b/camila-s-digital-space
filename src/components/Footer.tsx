@@ -1,7 +1,9 @@
 import { Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -16,13 +18,13 @@ const Footer = () => {
                 className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm font-body flex items-center gap-2"
               >
                 <FileText className="w-4 h-4" />
-                CV
+                {t("footer.cv")}
               </Link>
             </div>
 
             {/* Copyright */}
             <p className="text-muted-foreground text-sm font-body">
-              © {currentYear} Camila Escudero. Built with care.
+              © {currentYear} Camila Escudero. {t("footer.builtWith")}
             </p>
 
             {/* Social Links */}

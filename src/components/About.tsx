@@ -1,22 +1,25 @@
 import { Card } from "@/components/ui/card";
 import { Code2, Users, Zap } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const About = () => {
+  const { t } = useLanguage();
+
   const highlights = [
     {
       icon: Code2,
-      title: "Web Developer",
-      description: "Focused on building clean, performant interfaces with modern frameworks.",
+      title: t("about.highlight1.title"),
+      description: t("about.highlight1.description"),
     },
     {
       icon: Users,
-      title: "Team Player",
-      description: "3 summer internships, collaborating with diverse teams on real projects.",
+      title: t("about.highlight2.title"),
+      description: t("about.highlight2.description"),
     },
     {
       icon: Zap,
-      title: "Always Building",
-      description: "Constantly seeking side projects to learn, experiment, and grow.",
+      title: t("about.highlight3.title"),
+      description: t("about.highlight3.description"),
     },
   ];
 
@@ -27,16 +30,13 @@ const About = () => {
           {/* Section header */}
           <div className="mb-16">
             <p className="text-primary text-sm tracking-widest uppercase mb-4 font-body">
-              About
+              {t("about.label")}
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-foreground mb-6">
-              Tech, but very human.
+              {t("about.title")}
             </h2>
             <p className="text-lg text-muted-foreground font-body leading-relaxed max-w-2xl">
-              I'm a 26-year-old engineering student in Santiago, one year away from graduation. 
-              When I'm not coding, I'm on the field—playing and coaching field hockey. 
-              I genuinely enjoy working, and I approach every project with the same energy 
-              I bring to the game: focused, collaborative, and always pushing to improve.
+              {t("about.description")}
             </p>
           </div>
 
