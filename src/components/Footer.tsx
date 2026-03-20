@@ -7,64 +7,33 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 bg-background border-t border-border">
+    <footer className="py-10 border-t border-border bg-background">
       <div className="container px-6 md:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            {/* Links */}
-            <div className="flex items-center gap-6">
-              <Link 
-                to="/cv"
-                className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm font-body flex items-center gap-2"
-              >
-                <FileText className="w-4 h-4" />
-                {t("footer.cv")}
-              </Link>
-            </div>
+        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground">
+            © {currentYear} Camila Escudero
+          </p>
 
-            {/* Copyright */}
-            <p className="text-muted-foreground text-sm font-body">
-              © {currentYear} Camila Escudero. {t("footer.builtWith")}
-            </p>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-6">
-              <a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/camilaescudero/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a 
-                href="https://x.com/ca1000u" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                aria-label="Twitter/X"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a 
-                href="mailto:camilaescuderob@gmail.com"
-                className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                aria-label="Email"
-              >
-                <Mail className="w-5 h-5" />
-              </a>
-            </div>
-            <p>Don't bother children when skateboarding.</p>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/cv"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+              aria-label="CV"
+            >
+              <FileText className="w-4 h-4" />
+            </Link>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="GitHub">
+              <Github className="w-4 h-4" />
+            </a>
+            <a href="https://www.linkedin.com/in/camilaescudero/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="LinkedIn">
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a href="https://x.com/ca1000u" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Twitter/X">
+              <Twitter className="w-4 h-4" />
+            </a>
+            <a href="mailto:camilaescuderob@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Email">
+              <Mail className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </div>

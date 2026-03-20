@@ -32,7 +32,6 @@ export default {
           "Apple Color Emoji",
           "Segoe UI Emoji",
         ],
-        display: ["Playfair Display", "serif"],
         mono: [
           "ui-monospace",
           "SFMono-Regular",
@@ -45,15 +44,6 @@ export default {
         ],
       },
 
-      letterSpacing: {
-        tightest: "-0.045em",
-        tighter: "-0.03em",
-        tightish: "-0.015em",
-      },
-      opacity: {
-        88: "0.88",
-      },
-
       fontSize: {
         xs: ["0.75rem", { lineHeight: "1.1rem" }],
         sm: ["0.875rem", { lineHeight: "1.35rem" }],
@@ -64,10 +54,8 @@ export default {
         "3xl": ["1.875rem", { lineHeight: "2.2rem" }],
         "4xl": ["2.25rem", { lineHeight: "2.55rem" }],
         "5xl": ["3rem", { lineHeight: "3.15rem" }],
-        "6xl": ["3.75rem", { lineHeight: "3.85rem" }],
       },
 
-      // use / <alpha-value> so text-foreground/88 etc. work
       colors: {
         border: "hsl(var(--border) / <alpha-value>)",
         input: "hsl(var(--input) / <alpha-value>)",
@@ -103,7 +91,6 @@ export default {
           DEFAULT: "hsl(var(--card) / <alpha-value>)",
           foreground: "hsl(var(--card-foreground) / <alpha-value>)",
         },
-
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background) / <alpha-value>)",
           foreground: "hsl(var(--sidebar-foreground) / <alpha-value>)",
@@ -114,14 +101,6 @@ export default {
           border: "hsl(var(--sidebar-border) / <alpha-value>)",
           ring: "hsl(var(--sidebar-ring) / <alpha-value>)",
         },
-
-        gold: "hsl(var(--gold) / <alpha-value>)",
-        glow: "hsl(var(--glow) / <alpha-value>)",
-        wine: "hsl(var(--wine) / <alpha-value>)",
-        olive: "hsl(var(--olive) / <alpha-value>)",
-
-        hairline: "rgba(255,255,255,0.06)",
-        highlight: "rgba(255,255,255,0.08)",
       },
 
       borderRadius: {
@@ -134,20 +113,6 @@ export default {
         "elev-1": "var(--shadow-elev-1)",
         "elev-2": "var(--shadow-elev-2)",
         "elev-3": "var(--shadow-elev-3)",
-        ember: "var(--shadow-ember)",
-      },
-
-      backgroundImage: {
-        "surface-sheen":
-          "linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0.00) 40%)",
-        "ember-wash":
-          "radial-gradient(80% 60% at 20% 10%, rgba(196,82,26,0.18), rgba(196,82,26,0.00) 55%)",
-        "brass-kiss":
-          "radial-gradient(60% 40% at 50% 0%, rgba(199,163,91,0.16), rgba(199,163,91,0.00) 60%)",
-      },
-
-      backdropBlur: {
-        xs: "2px",
       },
 
       keyframes: {
