@@ -81,6 +81,12 @@ const translations: Record<Language, Record<string, string>> = {
     "experience.job3.period": "Sabbatical 2021",
     "experience.job3.description": "Owned e-commerce/PDV/distributor operations across Shopify + BSale; built sales & inventory forecasts and tracked core KPIs (conversion rate, avg. ticket, margin) to coordinate pricing, promos, and replenishment.",
 
+    // Personal projects
+    "personalProjects.label": "Personal projects",
+    "personalProjects.item1": "Raycast extension",
+    "personalProjects.item2": "Video analysis app written in C++",
+    "personalProjects.item3": "Goal scoreboard hardware prototype",
+
     // Books
     "books.label": "Reading List",
     "books.title": "Books That Shaped My Thinking",
@@ -247,6 +253,12 @@ const translations: Record<Language, Record<string, string>> = {
     "experience.job3.period": "Sabático 2021",
     "experience.job3.description": "Manejé operaciones de e-commerce/PDV/distribuidor en Shopify + BSale; construí pronósticos de ventas e inventario y rastreé KPIs clave (tasa de conversión, ticket promedio, margen) para coordinar precios, promociones y reposición.",
 
+    // Personal projects
+    "personalProjects.label": "Proyectos personales",
+    "personalProjects.item1": "Extensión de Raycast",
+    "personalProjects.item2": "App de análisis de video en C++",
+    "personalProjects.item3": "Prototipo de hardware de marcador de goles",
+
     // Books
     "books.label": "Lista de Lectura",
     "books.title": "Libros en los que pienso frecuentemente",
@@ -412,6 +424,12 @@ const translations: Record<Language, Record<string, string>> = {
     "experience.job3.company": "Visionary",
     "experience.job3.period": "Sabbatique 2021",
     "experience.job3.description": "Géré les opérations e-commerce/PDV/distributeur sur Shopify + BSale ; construit des prévisions de ventes et d'inventaire et suivi les KPI clés (taux de conversion, ticket moyen, marge) pour coordonner les prix, promotions et réapprovisionnement.",
+
+    // Personal projects
+    "personalProjects.label": "Projets personnels",
+    "personalProjects.item1": "Extension Raycast",
+    "personalProjects.item2": "Application d'analyse vidéo en C++",
+    "personalProjects.item3": "Prototype matériel de tableau d'affichage des buts",
 
     // Books
     "books.label": "Liste de Lecture",
