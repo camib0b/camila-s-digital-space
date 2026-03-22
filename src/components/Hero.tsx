@@ -17,13 +17,6 @@ const Hero = () => {
 
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          {/* Notes */}
-          <p className="text-xs text-muted-foreground mb-8 animate-fade-up leading-relaxed">
-            {t("hero.note1")}
-            <br />
-            {t("hero.note2")}
-          </p>
-
           {/* Location */}
           <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 animate-fade-up">
             {t("hero.location")}
