@@ -13,7 +13,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.tagline": "One year to graduation. Crafting thoughtful web experiences.",
-    "hero.subtagline": "Realize that everything connects to everything else.",
+    "hero.subtagline": "Directioning my work towards a great & cool career",
     "hero.cta.contact": "Get in Touch",
     "hero.cta.work": "See My Work",
     "hero.cta.cv": "View CV",
@@ -179,7 +179,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.tagline": "A un año de graduarme. Creando experiencias web con propósito.",
-    "hero.subtagline": "Cada cosa está conectada con todo lo demás.",
+    "hero.subtagline": "Dirigiendo mi trabajo hacia una carrera genial y cool",
     "hero.cta.contact": "Contacto",
     "hero.cta.work": "Ver Mi Trabajo",
     "hero.cta.cv": "Ver CV",
@@ -345,7 +345,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Hero
     "hero.location": "Santiago, Chili",
     "hero.tagline": "Un an avant l'obtention du diplôme. Création d'expériences web réfléchies.",
-    "hero.subtagline": "Réaliser que tout est connecté à tout le reste.",
+    "hero.subtagline": "Orientant mon travail vers une carrière géniale et cool",
     "hero.cta.contact": "Me Contacter",
     "hero.cta.work": "Voir Mon Travail",
     "hero.cta.cv": "Voir le CV",
