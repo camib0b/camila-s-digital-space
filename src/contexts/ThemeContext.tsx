@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-type Theme = "dark" | "negroni";
+type Theme = "light" | "dark";
 
 interface ThemeContextType {
   theme: Theme;
@@ -10,38 +10,44 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function getSystemTheme(): Theme {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
-    // Check localStorage first, then default to "dark"
-    // If "blue" is saved, convert it to "dark" since blue theme is removed
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "blue") {
-      localStorage.setItem("theme", "dark");
-      return "dark";
-    }
-    return (savedTheme as Theme) || "dark";
+    const saved = localStorage.getItem("theme");
+    if (saved === "light" || saved === "dark") return saved;
+    // No valid saved preference — use system
+    return getSystemTheme();
   });
 
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.remove("theme-dark", "theme-negroni");
-    if (theme === "negroni") {
-      root.classList.add("theme-negroni");
-    } else {
-      root.classList.add("theme-dark");
+    root.classList.remove("dark");
+    if (theme === "dark") {
+      root.classList.add("dark");
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-  };
+  // Listen for system theme changes when no explicit preference was saved
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (e: MediaQueryListEvent) => {
+      const saved = localStorage.getItem("theme");
+      if (!saved || (saved !== "light" && saved !== "dark")) {
+        setThemeState(e.matches ? "dark" : "light");
+      }
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const setTheme = (newTheme: Theme) => setThemeState(newTheme);
 
   const toggleTheme = () => {
-    setThemeState((current) => {
-      if (current === "dark") return "negroni";
-      return "dark";
-    });
+    setThemeState((current) => (current === "dark" ? "light" : "dark"));
   };
 
   return (

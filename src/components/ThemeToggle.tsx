@@ -1,10 +1,10 @@
 import { useTheme } from "@/contexts/ThemeContext";
 import { Button } from "@/components/ui/button";
-import { Palette } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
-  const nextLabel = theme === "dark" ? "Negroni" : "Dark";
+  const isDark = theme === "dark";
 
   return (
     <Button
@@ -12,18 +12,10 @@ const ThemeToggle = () => {
       variant="ghost"
       size="sm"
       onClick={toggleTheme}
-      className={[
-        "h-8 px-3",
-        "gap-2",
-        "text-muted-foreground/90 hover:text-foreground",
-        "hover:bg-accent/30",
-      ].join(" ")}
-      aria-label={`Switch to ${nextLabel} theme`}
+      className="h-8 w-8 p-0 text-muted-foreground/90 hover:text-foreground hover:bg-accent/30"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
     >
-      <Palette className="w-4 h-4" />
-      <span className="text-[11px] font-medium tracking-[0.18em] uppercase">
-        {nextLabel}
-      </span>
+      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
     </Button>
   );
 };
