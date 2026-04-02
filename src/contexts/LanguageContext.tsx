@@ -12,9 +12,8 @@ const translations: Record<Language, Record<string, string>> = {
   en: {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.tagline": "One year to graduation. Crafting thoughtful web experiences.",
-    "hero.subtagline": "Directioning my work towards a great & cool career",
-    "hero.cta.contact": "Get in Touch",
+    "hero.tagline": "Eight months to graduation.",
+    "hero.subtagline": "Directioning my work towards a great career",
     "hero.cta.work": "See My Work",
     "hero.cta.cv": "View CV",
 
@@ -184,9 +183,8 @@ const translations: Record<Language, Record<string, string>> = {
   es: {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.tagline": "A un año de graduarme. Creando experiencias web con propósito.",
-    "hero.subtagline": "Dirigiendo mi trabajo hacia una carrera genial y cool",
-    "hero.cta.contact": "Contacto",
+    "hero.tagline": "A un año de graduarme.",
+    "hero.subtagline": "Dirigiendo mi trabajo hacia una carrera bacán",
     "hero.cta.work": "Ver Mi Trabajo",
     "hero.cta.cv": "Ver CV",
 
@@ -356,9 +354,8 @@ const translations: Record<Language, Record<string, string>> = {
   fr: {
     // Hero
     "hero.location": "Santiago, Chili",
-    "hero.tagline": "Un an avant l'obtention du diplôme. Création d'expériences web réfléchies.",
-    "hero.subtagline": "Orientant mon travail vers une carrière géniale et cool",
-    "hero.cta.contact": "Me Contacter",
+    "hero.tagline": "Huit mois avant l'obtention du diplôme.",
+    "hero.subtagline": "Orientant mon travail vers une carrière géniale",
     "hero.cta.work": "Voir Mon Travail",
     "hero.cta.cv": "Voir le CV",
 

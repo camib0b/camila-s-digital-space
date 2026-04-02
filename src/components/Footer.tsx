@@ -28,7 +28,7 @@ const Footer = () => {
             <a href="https://www.linkedin.com/in/camilaescudero/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="LinkedIn">
               <Linkedin className="w-4 h-4" />
             </a>
-            <a href="https://x.com/ca1000u" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Twitter/X">
+            <a href="https://x.com/camib0b" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Twitter/X">
               <Twitter className="w-4 h-4" />
             </a>
             <a href="mailto:camilaescuderob@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Email">

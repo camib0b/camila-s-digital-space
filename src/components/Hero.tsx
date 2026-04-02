@@ -45,12 +45,6 @@ const Hero = () => {
               {t("hero.cta.cv")}
             </Link>
             <a
-              href="#contact"
-              className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline"
-            >
-              {t("hero.cta.contact")}
-            </a>
-            <a
               href="#work"
               className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline"
             >
@@ -63,7 +57,7 @@ const Hero = () => {
             {[
               { href: "https://github.com", label: "GitHub", Icon: Github },
               { href: "https://www.linkedin.com/in/camilaescudero/", label: "LinkedIn", Icon: Linkedin },
-              { href: "https://x.com/ca1000u", label: "Twitter/X", Icon: Twitter },
+              { href: "https://x.com/camib0b", label: "Twitter/X", Icon: Twitter },
               { href: "mailto:camilaescuderob@gmail.com", label: "Email", Icon: Mail },
             ].map(({ href, label, Icon }) => (
               <a
