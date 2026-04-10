@@ -1,8 +1,15 @@
 {
-    "name": "camila-s-digital-space",
-    "compatibility_date": "2026-01-11",
-    "assets": {
-      "directory": "./dist"
-    }
-  }
-  
+	"name": "camila-s-digital-space",
+	"compatibility_date": "2026-01-11",
+	"assets": {
+		"directory": "./dist"
+	},
+	"d1_databases": [
+		{
+			"binding": "portfolio_holdings",
+			"database_name": "portfolio-holdings",
+			"database_id": "d483ec9f-1675-43db-ade5-f5d0cc05ab02",
+			"remote": true
+		}
+	]
+}
