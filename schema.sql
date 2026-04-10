@@ -29,3 +29,21 @@ INSERT INTO purchases (purchase_id, ticker, shares, buy_price, buy_date, total_c
 (15, 'NET', 0.025063745, 207.07, '2026-04-01', 5.19),
 (16, 'VOO', 0.165097688, 605.70, '2026-04-06', 100.00),
 (17, 'AAPL', 0.118126538, 260.82, '2026-04-06', 30.81);
+
+
+-- =============================================
+-- TABLA PARA TRACKING DE TOKENS DE IA
+-- =============================================
+CREATE TABLE IF NOT EXISTS ai_usage (
+  id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+  timestamp           TEXT DEFAULT CURRENT_TIMESTAMP,
+  provider            TEXT NOT NULL,           -- "Grok" o "OpenAI"
+  model               TEXT NOT NULL,
+  prompt_tokens       INTEGER NOT NULL,
+  completion_tokens   INTEGER NOT NULL,
+  total_tokens        INTEGER NOT NULL,
+  estimated_cost_usd  REAL                     -- calcularemos después
+);
+
+-- Índice para consultas rápidas
+CREATE INDEX IF NOT EXISTS idx_ai_usage_timestamp ON ai_usage(timestamp);
