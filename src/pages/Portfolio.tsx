@@ -39,8 +39,8 @@ interface PortfolioResponse {
   count: number;
 }
 
-// ==================== URL DE TU API (cámbiala por la tuya) ====================
-const API_URL = "https://portfolio-api.tu-subdominio.workers.dev/api/portfolio";   // ← CAMBIA ESTO
+// ==================== URL DE TU API  ====================
+const API_URL = "https://portfolio-api.camilaescuderob.workers.dev/api/portfolio";
 
 const Portfolio = () => {
   const { t } = useLanguage();
