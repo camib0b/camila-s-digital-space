@@ -28,12 +28,6 @@ const Hero = () => {
         : `${monthsRemaining} meses para el 15 de diciembre.`;
     }
 
-    if (language === "fr") {
-      return monthsRemaining === 1
-        ? "Un mois avant le 15 décembre."
-        : `${monthsRemaining} mois avant le 15 décembre.`;
-    }
-
     return monthsRemaining === 1
       ? "One month until December 15."
       : `${monthsRemaining} months until December 15.`;

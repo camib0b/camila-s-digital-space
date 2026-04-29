@@ -7,7 +7,6 @@ const LanguageToggle = () => {
   const languages = [
     { code: "en", label: "EN" },
     { code: "es", label: "ES" },
-    { code: "fr", label: "FR" },
   ] as const;
 
   return (
@@ -30,7 +29,7 @@ const LanguageToggle = () => {
                 : "text-muted-foreground/90 hover:text-foreground hover:bg-accent/30",
             ].join(" ")}
             aria-pressed={isActive}
-            aria-label={`Switch to ${lang.code === "en" ? "English" : lang.code === "es" ? "Spanish" : "French"}`}
+            aria-label={`Switch to ${lang.code === "en" ? "English" : "Spanish"}`}
           >
             {lang.label}
           </Button>

@@ -1,12 +1,13 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 const PersonalProjects = () => {
   const { t } = useLanguage();
 
   const items = [
-    t("personalProjects.item1"),
-    t("personalProjects.item2"),
-    t("personalProjects.item3"),
+    { text: t("personalProjects.item1") },
+    { text: t("personalProjects.item2"), href: "/ava" },
+    { text: t("personalProjects.item3") },
   ];
 
   return (
@@ -17,9 +18,17 @@ const PersonalProjects = () => {
             {t("personalProjects.label")}
           </h2>
           <ul className="space-y-6">
-            {items.map((text, index) => (
+            {items.map((item, index) => (
               <li key={index} className="text-sm text-muted-foreground leading-relaxed">
-                {text}
+                <span>{item.text}</span>
+                {item.href ? (
+                  <Link
+                    to={item.href}
+                    className="ml-3 inline-flex items-center rounded-md border border-border px-2.5 py-1 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200"
+                  >
+                    View project
+                  </Link>
+                ) : null}
               </li>
             ))}
           </ul>
