@@ -5,7 +5,39 @@ import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 
 const Hero = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+
+  const getMonthsUntilDecemberFifteenth = (): number => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const decemberFifteenthThisYear = new Date(currentYear, 11, 15);
+
+    const targetYear = now > decemberFifteenthThisYear ? currentYear + 1 : currentYear;
+    const targetMonthIndex = 11;
+    const currentMonthIndex = now.getMonth();
+
+    return (targetYear - currentYear) * 12 + (targetMonthIndex - currentMonthIndex);
+  };
+
+  const getHeroTagline = (): string => {
+    const monthsRemaining = getMonthsUntilDecemberFifteenth();
+
+    if (language === "es") {
+      return monthsRemaining === 1
+        ? "Un mes para el 15 de diciembre."
+        : `${monthsRemaining} meses para el 15 de diciembre.`;
+    }
+
+    if (language === "fr") {
+      return monthsRemaining === 1
+        ? "Un mois avant le 15 décembre."
+        : `${monthsRemaining} mois avant le 15 décembre.`;
+    }
+
+    return monthsRemaining === 1
+      ? "One month until December 15."
+      : `${monthsRemaining} months until December 15.`;
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-background">
@@ -29,7 +61,7 @@ const Hero = () => {
 
           {/* Tagline */}
           <p className="text-base text-muted-foreground mb-4 animate-fade-up-delay-2 leading-relaxed max-w-lg">
-            {t("hero.tagline")}
+            {getHeroTagline()}
           </p>
           <p className="text-sm text-muted-foreground/70 mb-10 animate-fade-up-delay-2">
             {t("hero.subtagline")}
