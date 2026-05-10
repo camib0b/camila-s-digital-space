@@ -5,6 +5,12 @@ const Experience = () => {
 
   const experiences = [
     {
+      title: t("experience.job4.title"),
+      company: t("experience.job4.company"),
+      period: t("experience.job4.period"),
+      description: t("experience.job4.description"),
+    },
+    {
       title: t("experience.job1.title"),
       company: t("experience.job1.company"),
       period: t("experience.job1.period"),

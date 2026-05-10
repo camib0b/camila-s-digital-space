@@ -5,9 +5,10 @@ const PersonalProjects = () => {
   const { t } = useLanguage();
 
   const items = [
-    { text: t("personalProjects.item1") },
+    { text: t("personalProjects.item1"), externalUrl: "https://www.raycast.com/camib0b/zodme" },
     { text: t("personalProjects.item2"), href: "/ava" },
     { text: t("personalProjects.item3") },
+    { text: t("personalProjects.item4"), externalUrl: "https://carpeta.cl/" },
   ];
 
   return (
@@ -21,13 +22,23 @@ const PersonalProjects = () => {
             {items.map((item, index) => (
               <li key={index} className="text-sm text-muted-foreground leading-relaxed">
                 <span>{item.text}</span>
-                {item.href ? (
+                {"href" in item && item.href ? (
                   <Link
                     to={item.href}
                     className="ml-3 inline-flex items-center rounded-md border border-border px-2.5 py-1 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200"
                   >
                     View project
                   </Link>
+                ) : null}
+                {"externalUrl" in item && item.externalUrl ? (
+                  <a
+                    href={item.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-3 inline-flex items-center rounded-md border border-border px-2.5 py-1 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200"
+                  >
+                    View project
+                  </a>
                 ) : null}
               </li>
             ))}

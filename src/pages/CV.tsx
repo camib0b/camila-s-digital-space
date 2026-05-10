@@ -26,6 +26,13 @@ const CV = () => {
 
   const workExperience = [
     {
+      title: t("cv.job4.title"),
+      company: t("cv.job4.company"),
+      period: t("cv.job4.period"),
+      bullets: [t("cv.job4.bullet1"), t("cv.job4.bullet2"), t("cv.job4.bullet3")],
+      technologies: ["Looker", "LookML", "SQL", "Python"],
+    },
+    {
       title: t("cv.job1.title"),
       company: t("cv.job1.company"),
       period: t("cv.job1.period"),
@@ -61,7 +68,7 @@ const CV = () => {
   const skills = {
     languages: ["TypeScript", "JavaScript", "Python", "SQL", "HTML/CSS"],
     frameworks: ["React", "Node.js", "Vue.js", "Tailwind CSS"],
-    tools: ["Git", "PostgreSQL", "Figma", "REST APIs", "Vite"],
+    tools: ["Git", "PostgreSQL", "Looker", "LookML", "Figma", "REST APIs", "Vite"],
   };
 
   const leadership = [
