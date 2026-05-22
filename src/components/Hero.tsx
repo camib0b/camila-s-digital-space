@@ -24,13 +24,19 @@ const Hero = () => {
 
     if (language === "es") {
       return monthsRemaining === 1
-        ? "Un mes para el 15 de diciembre."
-        : `${monthsRemaining} meses para el 15 de diciembre.`;
+        ? "Un mes para graduarme."
+        : `${monthsRemaining} meses para graduarme.`;
+    }
+
+    if (language === "fr") {
+      return monthsRemaining === 1
+        ? "Un mois avant l'obtention du diplôme."
+        : `${monthsRemaining} mois avant l'obtention du diplôme.`;
     }
 
     return monthsRemaining === 1
-      ? "One month until December 15."
-      : `${monthsRemaining} months until December 15.`;
+      ? "One month until graduation."
+      : `${monthsRemaining} months until graduation.`;
   };
 
   return (
