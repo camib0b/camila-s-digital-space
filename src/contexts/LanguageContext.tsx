@@ -229,6 +229,14 @@ const translations: Record<Language, Record<string, string>> = {
     "ava.cta.description": "AVA is in early development. Reach out if you'd like early access or want to collaborate.",
     "ava.cta.final": "Request Early Access",
     "ava.footer": "field hockey video analysis",
+
+    // Portfolio
+    "portfolio.aiInsight.label": "AI insight",
+    "portfolio.aiInsight.model": "Model",
+    "portfolio.aiInsight.generate": "Generate insight",
+    "portfolio.aiInsight.generating": "Generating…",
+    "portfolio.aiInsight.placeholder": "Generate an insight about your portfolio (AI is not called on page load).",
+    "portfolio.aiInsight.via": "via",
   },
   es: {
     // Hero
@@ -451,6 +459,14 @@ const translations: Record<Language, Record<string, string>> = {
     "ava.cta.description": "AVA está en desarrollo temprano. Escríbeme si quieres acceso anticipado o colaborar.",
     "ava.cta.final": "Solicitar Acceso Anticipado",
     "ava.footer": "análisis de video de hockey césped",
+
+    // Portfolio
+    "portfolio.aiInsight.label": "Insight de IA",
+    "portfolio.aiInsight.model": "Modelo",
+    "portfolio.aiInsight.generate": "Generar insight",
+    "portfolio.aiInsight.generating": "Generando…",
+    "portfolio.aiInsight.placeholder": "Genera un insight sobre tu portafolio (la IA no se llama al cargar la página).",
+    "portfolio.aiInsight.via": "vía",
   },
 };
 

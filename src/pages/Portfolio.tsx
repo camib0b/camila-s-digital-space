@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, TrendingUp, TrendingDown, RefreshCw, Sparkles } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
+import AiInsightContent from "@/components/AiInsightContent";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   ChartContainer,
   ChartTooltip,
@@ -64,12 +66,7 @@ const API_URL = "https://portfolio-api.camilaescuderob.workers.dev/api/portfolio
 const HISTORY_URL = `${API_URL}/history`;
 const AI_INSIGHT_URL = `${API_URL}/ai-insight`;
 
-const AI_MODEL_STORAGE_KEY = "portfolio-preferred-ai-model";
-
-const DEFAULT_AI_MODELS: AiModelOption[] = [
-  { id: "grok", label: "Grok (xAI)" },
-  { id: "openai", label: "GPT-4o mini (OpenAI)" },
-];
+const DEFAULT_AI_MODELS: AiModelOption[] = [{ id: "grok", label: "Grok (xAI)" }];
 
 const performanceChartConfig = {
   value: { label: "Portfolio value", color: "hsl(220 14% 28%)" },
@@ -99,26 +96,23 @@ function formatCurrency(value: number) {
 }
 
 const Portfolio = () => {
+  const { language, t } = useLanguage();
+
   const [portfolio, setPortfolio] = useState<PortfolioResponse | null>(null);
   const [history, setHistory] = useState<PortfolioHistoryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [historyLoading, setHistoryLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [historyError, setHistoryError] = useState<string | null>(null);
-  const [selectedAiModel, setSelectedAiModel] = useState<string>(() => {
-    if (typeof window === "undefined") return "grok";
-    return window.localStorage.getItem(AI_MODEL_STORAGE_KEY) || "grok";
-  });
   const [aiInsightLoading, setAiInsightLoading] = useState(false);
   const [aiInsightError, setAiInsightError] = useState<string | null>(null);
+  const [insightProvider, setInsightProvider] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(AI_MODEL_STORAGE_KEY, selectedAiModel);
-    } catch {
-      /* ignore quota / private mode */
-    }
-  }, [selectedAiModel]);
+    setPortfolio((previous) => (previous ? { ...previous, aiInsight: null } : previous));
+    setInsightProvider(null);
+    setAiInsightError(null);
+  }, [language]);
 
   const fetchPortfolio = async (showLoading = false) => {
     try {
@@ -168,7 +162,7 @@ const Portfolio = () => {
       const response = await fetch(AI_INSIGHT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: selectedAiModel }),
+        body: JSON.stringify({ model: "grok", language }),
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) {
@@ -176,6 +170,8 @@ const Portfolio = () => {
       }
       const aiInsightText = payload.aiInsight as string;
       const insightLastUpdated = payload.lastUpdated as string | undefined;
+      const provider = typeof payload.provider === "string" ? payload.provider : null;
+      setInsightProvider(provider);
       setPortfolio((previous) =>
         previous
           ? {
@@ -246,6 +242,9 @@ const Portfolio = () => {
 
   const totalReturnPct = parseFloat(portfolio.totalReturnPct);
   const totalReturnLabel = `${totalReturnPct >= 0 ? "+" : ""}${totalReturnPct}%`;
+  const availableAiModels =
+    portfolio.aiModels && portfolio.aiModels.length > 0 ? portfolio.aiModels : DEFAULT_AI_MODELS;
+  const showModelSelector = availableAiModels.length > 1;
 
   return (
     <main className="min-h-screen bg-background relative">
@@ -446,25 +445,25 @@ const Portfolio = () => {
 
         <div className="mb-12 bg-card rounded-lg ring-1 ring-border p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-3">
-            <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground">AI insight</p>
+            <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground">{t("portfolio.aiInsight.label")}</p>
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-              <label className="flex flex-col gap-1 text-[10px] uppercase tracking-wider text-muted-foreground sm:min-w-[200px]">
-                Modelo
-                <select
-                  value={selectedAiModel}
-                  onChange={(event) => setSelectedAiModel(event.target.value)}
-                  disabled={aiInsightLoading}
-                  className="text-xs font-normal normal-case tracking-normal h-9 rounded-md border border-border bg-background px-2 text-foreground"
-                >
-                  {(portfolio.aiModels && portfolio.aiModels.length > 0 ? portfolio.aiModels : DEFAULT_AI_MODELS).map(
-                    (option) => (
+              {showModelSelector && (
+                <label className="flex flex-col gap-1 text-[10px] uppercase tracking-wider text-muted-foreground sm:min-w-[200px]">
+                  {t("portfolio.aiInsight.model")}
+                  <select
+                    value={selectedAiModel}
+                    onChange={(event) => setSelectedAiModel(event.target.value)}
+                    disabled={aiInsightLoading}
+                    className="text-xs font-normal normal-case tracking-normal h-9 rounded-md border border-border bg-background px-2 text-foreground"
+                  >
+                    {availableAiModels.map((option) => (
                       <option key={option.id} value={option.id}>
                         {option.label}
                       </option>
-                    )
-                  )}
-                </select>
-              </label>
+                    ))}
+                  </select>
+                </label>
+              )}
               <button
                 type="button"
                 onClick={fetchAiInsight}
@@ -474,21 +473,30 @@ const Portfolio = () => {
                 {aiInsightLoading ? (
                   <>
                     <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                    Generando…
+                    {t("portfolio.aiInsight.generating")}
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-3.5 h-3.5" />
-                    Generar insight
+                    {t("portfolio.aiInsight.generate")}
                   </>
                 )}
               </button>
             </div>
           </div>
           {aiInsightError && <p className="text-sm text-red-600 dark:text-red-400 mb-3">{aiInsightError}</p>}
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            {portfolio.aiInsight ?? "Elige un modelo y empieza."}
-          </p>
+          {portfolio.aiInsight ? (
+            <div className="space-y-3">
+              <AiInsightContent content={portfolio.aiInsight} />
+              {insightProvider && (
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  {t("portfolio.aiInsight.via")} {insightProvider}
+                </p>
+              )}
+            </div>
+          ) : (
+            <p className="text-sm leading-relaxed text-muted-foreground">{t("portfolio.aiInsight.placeholder")}</p>
+          )}
         </div>
 
         <section className="mb-12">
