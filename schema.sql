@@ -1,49 +1,55 @@
--- schema.sql
-DROP TABLE IF EXISTS purchases;
+-- Synced from portfolio-api/data/camila-stock-portfolio.csv (single source of truth)
 
-CREATE TABLE purchases (
-  purchase_id  INTEGER PRIMARY KEY,
-  ticker       TEXT NOT NULL,
-  shares       REAL NOT NULL,
-  buy_price    REAL NOT NULL,
-  buy_date     TEXT NOT NULL,   -- formato YYYY-MM-DD
-  total_cost   REAL NOT NULL
+DROP TABLE IF EXISTS purchases;
+DROP TABLE IF EXISTS transactions;
+
+CREATE TABLE transactions (
+  transaction_id   INTEGER PRIMARY KEY,
+  ticker           TEXT NOT NULL,
+  trade_date       TEXT NOT NULL,
+  price            REAL NOT NULL,
+  quantity         REAL NOT NULL,
+  transaction_type TEXT NOT NULL CHECK (transaction_type IN ('BUY', 'SELL')),
+  total_amount     REAL NOT NULL
 );
 
--- === TUS 17 COMPRAS (ya limpiadas y estandarizadas) ===
-INSERT INTO purchases (purchase_id, ticker, shares, buy_price, buy_date, total_cost) VALUES
-(1, 'VOO', 0.070264017, 639.73, '2026-01-13', 44.95),
-(2, 'VOO', 0.008727342, 625.62, '2026-02-17', 5.46),
-(3, 'TSM', 0.083314818, 360.08, '2026-02-17', 30.00),
-(4, 'MELI', 0.012655728, 1975.39, '2026-02-17', 25.00),
-(5, 'AAPL', 0.077507363, 258.04, '2026-02-17', 20.00),
-(6, 'NET', 0.169891166, 194.24, '2026-03-06', 33.00),
-(7, 'COIN', 0.105592135, 197.74, '2026-03-06', 20.88),
-(8, 'AAPL', 0.058045042, 258.42, '2026-03-12', 15.00),
-(9, 'NET', 0.073101758, 212.17, '2026-03-12', 15.51),
-(10, 'VOO', 0.072902828, 617.26, '2026-03-12', 45.00),
-(11, 'QQQ', 0.149285915, 602.87, '2026-03-12', 90.00),
-(12, 'COKE', 0.099954021, 200.09, '2026-04-01', 20.00),
-(13, 'SNDK', 0.018341449, 695.69, '2026-04-01', 12.76),
-(14, 'OCC', 2.464294517, 8.93, '2026-04-01', 22.01),
-(15, 'NET', 0.025063745, 207.07, '2026-04-01', 5.19),
-(16, 'VOO', 0.165097688, 605.70, '2026-04-06', 100.00),
-(17, 'AAPL', 0.118126538, 260.82, '2026-04-06', 30.81);
+INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES
+(1,  'VOO',  '2026-03-12', 617.26,  0.072903,  'BUY',  45.00000078),
+(2,  'VOO',  '2026-04-06', 605.70,  0.165098,  'BUY',  99.9998586),
+(3,  'VOO',  '2026-04-10', 624.32,  0.088096,  'BUY',  54.99999872),
+(4,  'ILF',  '2026-04-10', 37.80,   4.116016,  'BUY',  155.5854048),
+(5,  'ILF',  '2026-04-13', 37.62,   1.329151,  'BUY',  50.00266162),
+(6,  'ILF',  '2026-04-13', 38.08,   0.889408,  'BUY',  33.86865664),
+(7,  'VOO',  '2026-04-20', 651.37,  0.300000,  'SELL', 195.411),
+(8,  'NET',  '2026-04-20', 201.41,  0.055360,  'BUY',  11.1500576),
+(9,  'NET',  '2026-04-22', 207.59,  0.167924,  'BUY',  34.85933716),
+(10, 'TSLA', '2026-04-22', 388.99,  0.077124,  'BUY',  30.00035676),
+(11, 'ILF',  '2026-05-05', 36.46,   0.960009,  'BUY',  35.00192814),
+(12, 'ILF',  '2026-05-06', 36.76,   0.647222,  'BUY',  23.79188072),
+(13, 'NET',  '2026-05-05', 242.84,  0.123540,  'BUY',  30.0004536),
+(14, 'TSLA', '2026-05-05', 391.42,  0.081856,  'BUY',  32.04007552),
+(15, 'ASML', '2026-06-05', 1644.37, 0.021029,  'BUY',  34.57999673),
+(16, 'BND',  '2026-06-05', 72.89,   0.754582,  'BUY',  55.00149398),
+(17, 'SOXX', '2026-06-05', 539.77,  0.049623,  'BUY',  26.78500671),
+(18, 'SOXX', '2026-06-05', 558.21,  0.036068,  'BUY',  20.13353028),
+(19, 'SHOP', '2026-06-05', 109.42,  0.365571,  'BUY',  40.00077882),
+(20, 'NET',  '2026-06-05', 251.72,  0.054387,  'BUY',  13.69029564),
+(21, 'ASML', '2026-06-09', 1806.70, 0.009409,  'BUY',  16.9992103),
+(22, 'NET',  '2026-06-09', 239.63,  0.070944,  'SELL', 17.00031072),
+(23, 'VOO',  '2026-06-15', 695.22,  0.100688,  'BUY',  70.00019136),
+(24, 'TSLA', '2026-06-15', 411.40,  0.048614,  'BUY',  20.0006996),
+(25, 'ASML', '2026-06-15', 1908.95, 0.011404,  'BUY',  21.7696658);
 
-
--- =============================================
--- TABLA PARA TRACKING DE TOKENS DE IA
--- =============================================
 CREATE TABLE IF NOT EXISTS ai_usage (
   id                  INTEGER PRIMARY KEY AUTOINCREMENT,
   timestamp           TEXT DEFAULT CURRENT_TIMESTAMP,
-  provider            TEXT NOT NULL,           -- "Grok" o "OpenAI"
+  provider            TEXT NOT NULL,
   model               TEXT NOT NULL,
   prompt_tokens       INTEGER NOT NULL,
   completion_tokens   INTEGER NOT NULL,
   total_tokens        INTEGER NOT NULL,
-  estimated_cost_usd  REAL                     -- calcularemos después
+  estimated_cost_usd  REAL
 );
 
--- Índice para consultas rápidas
 CREATE INDEX IF NOT EXISTS idx_ai_usage_timestamp ON ai_usage(timestamp);
+CREATE INDEX IF NOT EXISTS idx_transactions_trade_date ON transactions(trade_date);
