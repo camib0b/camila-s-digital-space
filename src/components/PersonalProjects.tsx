@@ -9,6 +9,7 @@ const PersonalProjects = () => {
     { text: t("personalProjects.item2"), href: "/ava" },
     { text: t("personalProjects.item3") },
     { text: t("personalProjects.item4"), externalUrl: "https://carpeta.cl/" },
+    { text: t("personalProjects.item5"), href: "/capital" },
   ];
 
   return (

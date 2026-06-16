@@ -90,6 +90,8 @@ const translations: Record<Language, Record<string, string>> = {
     "personalProjects.item2": "Video analysis app written in C++",
     "personalProjects.item3": "Goal scoreboard hardware prototype",
     "personalProjects.item4": "Browsable library of field-hockey match clips for coaching and game analysis. Clips are generated using AVA.",
+    "personalProjects.item5":
+      "Live investment portfolio dashboard with stock holdings, Finnhub price data, and on-demand AI insights via a Cloudflare Workers API.",
 
     // Books
     "books.label": "Reading List",
@@ -310,6 +312,8 @@ const translations: Record<Language, Record<string, string>> = {
     "personalProjects.item3": "Prototipo de hardware de marcador de goles",
     "personalProjects.item4":
       "Biblioteca navegable de clips de partidos de hockey para coaching y análisis de juego. Clips los genero con AVA.",
+    "personalProjects.item5":
+      "Panel de portafolio de inversión en vivo con holdings, precios de Finnhub e insights de IA bajo demanda vía una API en Cloudflare Workers.",
 
     // Books
     "books.label": "Lista de Lectura",
