@@ -305,9 +305,52 @@ const Portfolio = () => {
           ))}
         </div>
 
+        <section className="mb-12">
+          <h2 className="text-sm font-medium mb-1">holdings</h2>
+          <p className="text-xs text-muted-foreground mb-4">Tus acciones en tiempo real</p>
+          <div className="bg-card rounded-lg ring-1 ring-border overflow-hidden">
+            <div className="grid grid-cols-5 text-[10px] tracking-[0.1em] uppercase text-muted-foreground px-4 py-2.5 border-b border-border bg-muted/30">
+              <span>Ticker</span>
+              <span className="text-right">Shares</span>
+              <span className="text-right">Value</span>
+              <span className="text-right">Return %</span>
+              <span className="text-right">Trend</span>
+            </div>
+            {holdingsWithAllocation.map((holding, index) => (
+              <div
+                key={holding.ticker}
+                className={`grid grid-cols-5 items-center px-4 py-3 text-sm ${
+                  index < holdingsWithAllocation.length - 1 ? "border-b border-border/50" : ""
+                }`}
+              >
+                <span className="font-medium text-xs">{holding.ticker}</span>
+                <span className="text-right text-xs text-muted-foreground">{holding.shares.toFixed(4)}</span>
+                <span className="text-right text-xs font-medium">${holding.currentValue.toFixed(2)}</span>
+                <span
+                  className={`text-right text-xs font-medium ${
+                    parseFloat(holding.gainPct) >= 0
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
+                  }`}
+                >
+                  {parseFloat(holding.gainPct) >= 0 ? "+" : ""}
+                  {holding.gainPct}%
+                </span>
+                <span className="flex justify-end">
+                  {parseFloat(holding.gainPct) >= 0 ? (
+                    <TrendingUp className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
+                  ) : (
+                    <TrendingDown className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
+                  )}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="mb-12 space-y-6">
           <div className="bg-card rounded-lg ring-1 ring-border p-6">
-            <h2 className="text-sm font-medium mb-1">portfolio performance</h2>
+            <h2 className="text-sm font-medium mb-1">portfolio value</h2>
             <p className="text-xs text-muted-foreground mb-4">Valor total del portafolio con precios históricos de Finnhub</p>
             {historyLoading ? (
               <div className="h-[220px] flex items-center justify-center text-sm text-muted-foreground">
@@ -498,49 +541,6 @@ const Portfolio = () => {
             <p className="text-sm leading-relaxed text-muted-foreground">{t("portfolio.aiInsight.placeholder")}</p>
           )}
         </div>
-
-        <section className="mb-12">
-          <h2 className="text-sm font-medium mb-1">holdings</h2>
-          <p className="text-xs text-muted-foreground mb-4">Tus acciones en tiempo real</p>
-          <div className="bg-card rounded-lg ring-1 ring-border overflow-hidden">
-            <div className="grid grid-cols-5 text-[10px] tracking-[0.1em] uppercase text-muted-foreground px-4 py-2.5 border-b border-border bg-muted/30">
-              <span>Ticker</span>
-              <span className="text-right">Shares</span>
-              <span className="text-right">Value</span>
-              <span className="text-right">Return %</span>
-              <span className="text-right">Trend</span>
-            </div>
-            {holdingsWithAllocation.map((holding, index) => (
-              <div
-                key={holding.ticker}
-                className={`grid grid-cols-5 items-center px-4 py-3 text-sm ${
-                  index < holdingsWithAllocation.length - 1 ? "border-b border-border/50" : ""
-                }`}
-              >
-                <span className="font-medium text-xs">{holding.ticker}</span>
-                <span className="text-right text-xs text-muted-foreground">{holding.shares.toFixed(4)}</span>
-                <span className="text-right text-xs font-medium">${holding.currentValue.toFixed(2)}</span>
-                <span
-                  className={`text-right text-xs font-medium ${
-                    parseFloat(holding.gainPct) >= 0
-                      ? "text-green-600 dark:text-green-400"
-                      : "text-red-600 dark:text-red-400"
-                  }`}
-                >
-                  {parseFloat(holding.gainPct) >= 0 ? "+" : ""}
-                  {holding.gainPct}%
-                </span>
-                <span className="flex justify-end">
-                  {parseFloat(holding.gainPct) >= 0 ? (
-                    <TrendingUp className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
-                  ) : (
-                    <TrendingDown className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-                  )}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
 
         <div className="border-t border-border pt-6 text-center">
           <button
