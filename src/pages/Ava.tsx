@@ -1,14 +1,47 @@
+import { BarChart3, Clock, Play, Scissors, Users, Video } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Play, BarChart3, Scissors, Clock, Users, Video } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
-import ThemeToggle from "@/components/ThemeToggle";
-import LanguageToggle from "@/components/LanguageToggle";
+import type { TranslationKey } from "@/i18n/types";
 
-const features = [
-  { icon: Video, titleKey: "ava.feature1.title", descKey: "ava.feature1.desc" },
-  { icon: Scissors, titleKey: "ava.feature2.title", descKey: "ava.feature2.desc" },
-  { icon: BarChart3, titleKey: "ava.feature3.title", descKey: "ava.feature3.desc" },
-  { icon: Clock, titleKey: "ava.feature4.title", descKey: "ava.feature4.desc" },
+const features: {
+  icon: typeof Video;
+  titleKey: TranslationKey;
+  descriptionKey: TranslationKey;
+}[] = [
+  {
+    icon: Video,
+    titleKey: "ava.feature1.title",
+    descriptionKey: "ava.feature1.description",
+  },
+  {
+    icon: Scissors,
+    titleKey: "ava.feature2.title",
+    descriptionKey: "ava.feature2.description",
+  },
+  {
+    icon: BarChart3,
+    titleKey: "ava.feature3.title",
+    descriptionKey: "ava.feature3.description",
+  },
+  {
+    icon: Clock,
+    titleKey: "ava.feature4.title",
+    descriptionKey: "ava.feature4.description",
+  },
+];
+
+const steps: { titleKey: TranslationKey; descriptionKey: TranslationKey }[] = [
+  { titleKey: "ava.step1.title", descriptionKey: "ava.step1.description" },
+  { titleKey: "ava.step2.title", descriptionKey: "ava.step2.description" },
+  { titleKey: "ava.step3.title", descriptionKey: "ava.step3.description" },
+];
+
+const audienceTags: TranslationKey[] = [
+  "ava.audience.tag1",
+  "ava.audience.tag2",
+  "ava.audience.tag3",
+  "ava.audience.tag4",
 ];
 
 const Ava = () => {
@@ -16,24 +49,12 @@ const Ava = () => {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link
-            to="/"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-1.5"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            {t("ava.back")}
-          </Link>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LanguageToggle />
-          </div>
-        </div>
-      </nav>
+      <PageHeader
+        backLabel={t("ava.back")}
+        stickyClassName="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border"
+        containerClassName="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between"
+      />
 
-      {/* Hero */}
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 animate-fade-up">
@@ -65,7 +86,6 @@ const Ava = () => {
         </div>
       </section>
 
-      {/* Demo placeholder */}
       <section className="pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           <div className="w-full aspect-video rounded-lg border border-border bg-muted/30 flex items-center justify-center animate-fade-up">
@@ -77,41 +97,41 @@ const Ava = () => {
         </div>
       </section>
 
-      {/* Features */}
       <section id="features" className="pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           <h2 className="mb-2">{t("ava.features.title")}</h2>
           <p className="text-sm text-muted-foreground mb-10">{t("ava.features.subtitle")}</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {features.map(({ icon: Icon, titleKey, descKey }) => (
+            {features.map(({ icon: Icon, titleKey, descriptionKey }) => (
               <div key={titleKey} className="group">
                 <div className="w-9 h-9 rounded-md border border-border flex items-center justify-center mb-3 group-hover:border-foreground/20 transition-colors duration-200">
                   <Icon className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-200" />
                 </div>
                 <h3 className="text-sm font-medium mb-1">{t(titleKey)}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t(descKey)}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {t(descriptionKey)}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How it works */}
       <section className="pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           <h2 className="mb-2">{t("ava.how.title")}</h2>
           <p className="text-sm text-muted-foreground mb-10">{t("ava.how.subtitle")}</p>
 
           <div className="space-y-6">
-            {[1, 2, 3].map((step) => (
-              <div key={step} className="flex gap-4 items-start">
+            {steps.map((step, index) => (
+              <div key={step.titleKey} className="flex gap-4 items-start">
                 <span className="text-xs font-medium text-muted-foreground border border-border rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  {step}
+                  {index + 1}
                 </span>
                 <div>
-                  <p className="text-sm font-medium mb-0.5">{t(`ava.step${step}.title`)}</p>
-                  <p className="text-sm text-muted-foreground">{t(`ava.step${step}.desc`)}</p>
+                  <p className="text-sm font-medium mb-0.5">{t(step.titleKey)}</p>
+                  <p className="text-sm text-muted-foreground">{t(step.descriptionKey)}</p>
                 </div>
               </div>
             ))}
@@ -119,7 +139,6 @@ const Ava = () => {
         </div>
       </section>
 
-      {/* Built for coaches */}
       <section className="pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           <div className="border border-border rounded-lg p-8">
@@ -131,12 +150,12 @@ const Ava = () => {
               {t("ava.audience.description")}
             </p>
             <div className="flex flex-wrap gap-2">
-              {["ava.audience.tag1", "ava.audience.tag2", "ava.audience.tag3", "ava.audience.tag4"].map((key) => (
+              {audienceTags.map((tagKey) => (
                 <span
-                  key={key}
+                  key={tagKey}
                   className="text-xs px-3 py-1 rounded-full border border-border text-muted-foreground"
                 >
-                  {t(key)}
+                  {t(tagKey)}
                 </span>
               ))}
             </div>
@@ -144,7 +163,6 @@ const Ava = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="pb-24 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="mb-3">{t("ava.cta.title")}</h2>
@@ -158,11 +176,13 @@ const Ava = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-border py-6 px-6">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <p className="text-xs text-muted-foreground">ava · {t("ava.footer")}</p>
-          <Link to="/" className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200">
+          <Link
+            to="/"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
+          >
             camila escudero
           </Link>
         </div>

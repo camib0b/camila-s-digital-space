@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @layer base {
   :root {
@@ -38,16 +38,6 @@
     --input: 220 10% 90%;
     --ring: 220 14% 28%;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 14% 10%;
-    --sidebar-primary: 220 14% 28%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 10% 95%;
-    --sidebar-accent-foreground: 220 14% 10%;
-    --sidebar-border: 220 10% 90%;
-    --sidebar-ring: 220 14% 28%;
-
-    --shadow-elev-1: 0 1px 3px rgba(0,0,0,0.06);
     --shadow-elev-2: 0 4px 12px rgba(0,0,0,0.08);
     --shadow-elev-3: 0 8px 24px rgba(0,0,0,0.10);
   }
@@ -83,16 +73,6 @@
     --input: 220 8% 16%;
     --ring: 220 14% 75%;
 
-    --sidebar-background: 220 14% 7%;
-    --sidebar-foreground: 220 14% 93%;
-    --sidebar-primary: 220 14% 75%;
-    --sidebar-primary-foreground: 220 14% 4%;
-    --sidebar-accent: 220 8% 14%;
-    --sidebar-accent-foreground: 220 14% 93%;
-    --sidebar-border: 220 8% 18%;
-    --sidebar-ring: 220 14% 75%;
-
-    --shadow-elev-1: 0 1px 3px rgba(0,0,0,0.2);
     --shadow-elev-2: 0 4px 12px rgba(0,0,0,0.3);
     --shadow-elev-3: 0 8px 24px rgba(0,0,0,0.4);
   }

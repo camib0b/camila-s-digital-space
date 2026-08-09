@@ -1,26 +1,160 @@
-import { fromHono } from "chanfana";
-import { Hono } from "hono";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
+import { AI_MODELS, buildAiPrompt, runAiInsight, type StockSnapshot } from "./aiInsight";
+import { CORS_HEADERS, PORTFOLIO_PATHS } from "./cors";
+import { computeHoldings, getTransactions } from "./holdings";
+import { buildPortfolioHistory } from "./history";
+import { fetchQuote } from "./quotes";
 
-// Start a Hono app
-const app = new Hono<{ Bindings: Env }>();
+async function getPortfolioSnapshot(env: Env) {
+  const transactions = await getTransactions(env);
+  const holdings = computeHoldings(transactions);
 
-// Setup OpenAPI registry
-const openapi = fromHono(app, {
-	docs_url: "/",
-});
+  const stocks: StockSnapshot[] = [];
+  for (const [ticker, holding] of holdings.entries()) {
+    const quote = await fetchQuote(ticker, env.FINNHUB_API_KEY);
+    const currentValue = holding.shares * quote.currentPrice;
+    stocks.push({
+      ticker,
+      shares: holding.shares,
+      totalCost: holding.totalCost,
+      currentPrice: quote.currentPrice,
+      changePercent: quote.changePercent,
+      currentValue,
+    });
+    await new Promise((resolve) => setTimeout(resolve, 120));
+  }
 
-// Register OpenAPI endpoints
-openapi.get("/api/tasks", TaskList);
-openapi.post("/api/tasks", TaskCreate);
-openapi.get("/api/tasks/:taskSlug", TaskFetch);
-openapi.delete("/api/tasks/:taskSlug", TaskDelete);
+  stocks.sort((left, right) => right.currentValue - left.currentValue);
 
-// You may also register routes for non OpenAPI directly on Hono
-// app.get('/test', (c) => c.text('Hono!'))
+  let totalValue = 0;
+  let totalInvested = 0;
+  for (const stock of stocks) {
+    totalValue += stock.currentValue;
+    totalInvested += stock.totalCost;
+  }
 
-// Export the Hono app
-export default app;
+  const totalGain = totalValue - totalInvested;
+  const totalReturnPct = totalInvested > 0 ? (totalGain / totalInvested) * 100 : 0;
+
+  return {
+    totalValue,
+    totalInvested,
+    totalGain,
+    totalReturnPct,
+    stocks,
+    count: stocks.length,
+    transactions,
+  };
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+
+    if (request.method === "OPTIONS") {
+      if (PORTFOLIO_PATHS.includes(url.pathname)) {
+        return new Response(null, { headers: CORS_HEADERS });
+      }
+      return new Response("Not found", { status: 404 });
+    }
+
+    try {
+      if (url.pathname === "/api/portfolio" && request.method === "GET") {
+        const snapshot = await getPortfolioSnapshot(env);
+
+        return Response.json(
+          {
+            totalValue: snapshot.totalValue.toFixed(2),
+            totalInvested: snapshot.totalInvested.toFixed(2),
+            totalGain: snapshot.totalGain.toFixed(2),
+            totalReturnPct: snapshot.totalReturnPct.toFixed(2),
+            stocks: snapshot.stocks,
+            aiInsight: null,
+            lastUpdated: new Date().toISOString(),
+            count: snapshot.count,
+            aiModels: [{ id: "grok", label: "Grok (xAI)" }],
+          },
+          { headers: CORS_HEADERS }
+        );
+      }
+
+      if (url.pathname === "/api/portfolio/history" && request.method === "GET") {
+        const transactions = await getTransactions(env);
+        const history = await buildPortfolioHistory(env, transactions);
+
+        return Response.json(
+          {
+            ...history,
+            lastUpdated: new Date().toISOString(),
+          },
+          { headers: CORS_HEADERS }
+        );
+      }
+
+      if (url.pathname === "/api/portfolio/ai-insight" && request.method === "POST") {
+        let body: { model?: string; language?: string } = {};
+        try {
+          body = (await request.json()) as { model?: string; language?: string };
+        } catch {
+          return Response.json(
+            { error: "Invalid JSON body" },
+            { status: 400, headers: CORS_HEADERS }
+          );
+        }
+
+        const modelKey =
+          typeof body.model === "string" ? body.model.trim().toLowerCase() : "";
+        if (!(modelKey in AI_MODELS)) {
+          return Response.json(
+            { error: "Invalid model", allowed: Object.keys(AI_MODELS) },
+            { status: 400, headers: CORS_HEADERS }
+          );
+        }
+
+        const language = body.language === "es" ? "es" : "en";
+        const snapshot = await getPortfolioSnapshot(env);
+        const aiPrompt = buildAiPrompt(snapshot.stocks, snapshot.totalValue, language);
+        const result = await runAiInsight(env, modelKey, aiPrompt);
+
+        if (result.ok === false) {
+          return Response.json(
+            { error: result.error },
+            { status: result.status, headers: CORS_HEADERS }
+          );
+        }
+
+        if (result.usage.total_tokens > 0) {
+          await env.DB.prepare(`
+          INSERT INTO ai_usage (provider, model, prompt_tokens, completion_tokens, total_tokens, estimated_cost_usd)
+          VALUES (?, ?, ?, ?, ?, ?)
+        `)
+            .bind(
+              result.provider,
+              result.modelId,
+              result.usage.prompt_tokens,
+              result.usage.completion_tokens,
+              result.usage.total_tokens,
+              0
+            )
+            .run();
+        }
+
+        return Response.json(
+          {
+            aiInsight: result.aiInsight,
+            provider: result.provider,
+            model: result.modelId,
+            aiUsage: result.usage,
+            lastUpdated: new Date().toISOString(),
+          },
+          { headers: CORS_HEADERS }
+        );
+      }
+
+      return new Response("Not found", { status: 404 });
+    } catch (error) {
+      console.error("Worker Error:", error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return Response.json({ error: message }, { status: 500, headers: CORS_HEADERS });
+    }
+  },
+};

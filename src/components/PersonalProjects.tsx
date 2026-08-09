@@ -1,16 +1,9 @@
-import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { personalProjects } from "@/content/personalProjects";
 
 const PersonalProjects = () => {
   const { t } = useLanguage();
-
-  const items = [
-    { text: t("personalProjects.item1"), externalUrl: "https://www.raycast.com/camib0b/zodme" },
-    { text: t("personalProjects.item2"), href: "/ava" },
-    { text: t("personalProjects.item3") },
-    { text: t("personalProjects.item4"), externalUrl: "https://carpeta.cl/" },
-    { text: t("personalProjects.item5"), href: "/capital" },
-  ];
 
   return (
     <section id="personal-projects" className="py-20 md:py-28 bg-background">
@@ -20,25 +13,25 @@ const PersonalProjects = () => {
             {t("personalProjects.label")}
           </h2>
           <ul className="space-y-6">
-            {items.map((item, index) => (
-              <li key={index} className="text-sm text-muted-foreground leading-relaxed">
-                <span>{item.text}</span>
-                {"href" in item && item.href ? (
+            {personalProjects.map((project) => (
+              <li key={project.id} className="text-sm text-muted-foreground leading-relaxed">
+                <span>{t(project.textKey)}</span>
+                {project.link.kind === "internal" ? (
                   <Link
-                    to={item.href}
+                    to={project.link.path}
                     className="ml-3 inline-flex items-center rounded-md border border-border px-2.5 py-1 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200"
                   >
-                    View project
+                    {t("personalProjects.view")}
                   </Link>
                 ) : null}
-                {"externalUrl" in item && item.externalUrl ? (
+                {project.link.kind === "external" ? (
                   <a
-                    href={item.externalUrl}
+                    href={project.link.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="ml-3 inline-flex items-center rounded-md border border-border px-2.5 py-1 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200"
                   >
-                    View project
+                    {t("personalProjects.view")}
                   </a>
                 ) : null}
               </li>

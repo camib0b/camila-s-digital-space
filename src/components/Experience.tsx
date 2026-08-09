@@ -1,34 +1,8 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { experienceRoles } from "@/content/experience";
 
 const Experience = () => {
   const { t } = useLanguage();
-
-  const experiences = [
-    {
-      title: t("experience.job4.title"),
-      company: t("experience.job4.company"),
-      period: t("experience.job4.period"),
-      description: t("experience.job4.description"),
-    },
-    {
-      title: t("experience.job1.title"),
-      company: t("experience.job1.company"),
-      period: t("experience.job1.period"),
-      description: t("experience.job1.description"),
-    },
-    {
-      title: t("experience.job2.title"),
-      company: t("experience.job2.company"),
-      period: t("experience.job2.period"),
-      description: t("experience.job2.description"),
-    },
-    {
-      title: t("experience.job3.title"),
-      company: t("experience.job3.company"),
-      period: t("experience.job3.period"),
-      description: t("experience.job3.description"),
-    },
-  ];
 
   return (
     <section id="experience" className="py-20 md:py-28 bg-background">
@@ -39,19 +13,21 @@ const Experience = () => {
           </h2>
 
           <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <div key={index} className="group">
+            {experienceRoles.map((role, index) => (
+              <div key={role.id} className="group">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
                   <div>
-                    <p className="font-medium text-foreground">{exp.title}</p>
-                    <p className="text-sm text-muted-foreground">{exp.company}</p>
+                    <p className="font-medium text-foreground">{t(role.titleKey)}</p>
+                    <p className="text-sm text-muted-foreground">{t(role.companyKey)}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground font-mono shrink-0">{exp.period}</p>
+                  <p className="text-xs text-muted-foreground font-mono shrink-0">
+                    {t(role.periodKey)}
+                  </p>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mt-2">
-                  {exp.description}
+                  {t(role.descriptionKey)}
                 </p>
-                {index < experiences.length - 1 && (
+                {index < experienceRoles.length - 1 && (
                   <div className="border-b border-border/60 mt-8" />
                 )}
               </div>

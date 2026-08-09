@@ -1,37 +1,35 @@
 import { Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { GRADUATION_DATE } from "@/content/graduation";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 
 const Hero = () => {
   const { language, t } = useLanguage();
 
-  const getMonthsUntilDecemberFifteenth = (): number => {
+  const getMonthsUntilGraduation = (): number => {
     const now = new Date();
     const currentYear = now.getFullYear();
-    const decemberFifteenthThisYear = new Date(currentYear, 11, 15);
+    const graduationThisYear = new Date(
+      currentYear,
+      GRADUATION_DATE.monthIndex,
+      GRADUATION_DATE.day
+    );
 
-    const targetYear = now > decemberFifteenthThisYear ? currentYear + 1 : currentYear;
-    const targetMonthIndex = 11;
+    const targetYear = now > graduationThisYear ? currentYear + 1 : currentYear;
     const currentMonthIndex = now.getMonth();
 
-    return (targetYear - currentYear) * 12 + (targetMonthIndex - currentMonthIndex);
+    return (targetYear - currentYear) * 12 + (GRADUATION_DATE.monthIndex - currentMonthIndex);
   };
 
   const getHeroTagline = (): string => {
-    const monthsRemaining = getMonthsUntilDecemberFifteenth();
+    const monthsRemaining = getMonthsUntilGraduation();
 
     if (language === "es") {
       return monthsRemaining === 1
         ? "Un mes para graduarme."
         : `${monthsRemaining} meses para graduarme.`;
-    }
-
-    if (language === "fr") {
-      return monthsRemaining === 1
-        ? "Un mois avant l'obtention du diplôme."
-        : `${monthsRemaining} mois avant l'obtention du diplôme.`;
     }
 
     return monthsRemaining === 1
@@ -41,7 +39,6 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-background">
-      {/* Toggles */}
       <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
         <ThemeToggle />
         <LanguageToggle />
@@ -49,17 +46,12 @@ const Hero = () => {
 
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          {/* Location */}
           <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 animate-fade-up">
             {t("hero.location")}
           </p>
 
-          {/* Name */}
-          <h1 className="mb-4 animate-fade-up-delay-1">
-            camila escudero
-          </h1>
+          <h1 className="mb-4 animate-fade-up-delay-1">camila escudero</h1>
 
-          {/* Tagline */}
           <p className="text-base text-muted-foreground mb-4 animate-fade-up-delay-2 leading-relaxed max-w-lg">
             {getHeroTagline()}
           </p>
@@ -67,7 +59,6 @@ const Hero = () => {
             {t("hero.subtagline")}
           </p>
 
-          {/* Links row */}
           <div className="flex items-center gap-5 animate-fade-up-delay-3 mb-6">
             <Link
               to="/cv"
@@ -77,18 +68,21 @@ const Hero = () => {
               {t("hero.cta.cv")}
             </Link>
             <a
-              href="#work"
+              href="#skills"
               className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline"
             >
               {t("hero.cta.work")}
             </a>
           </div>
 
-          {/* Social icons */}
           <div className="flex items-center gap-4 animate-fade-up-delay-4">
             {[
               { href: "https://github.com", label: "GitHub", Icon: Github },
-              { href: "https://www.linkedin.com/in/camilaescudero/", label: "LinkedIn", Icon: Linkedin },
+              {
+                href: "https://www.linkedin.com/in/camilaescudero/",
+                label: "LinkedIn",
+                Icon: Linkedin,
+              },
               { href: "https://x.com/camib0b", label: "Twitter/X", Icon: Twitter },
               { href: "mailto:camilaescuderob@gmail.com", label: "Email", Icon: Mail },
             ].map(({ href, label, Icon }) => (
