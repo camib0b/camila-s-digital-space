@@ -14,9 +14,9 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
-      <LanguageProvider>
-        <TooltipProvider>
-          <BrowserRouter>
+      <BrowserRouter>
+        <LanguageProvider>
+          <TooltipProvider>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/cv" element={<CV />} />
@@ -24,9 +24,9 @@ const App = () => (
               <Route path="/capital" element={<Portfolio />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </LanguageProvider>
+          </TooltipProvider>
+        </LanguageProvider>
+      </BrowserRouter>
     </ThemeProvider>
   </QueryClientProvider>
 );
