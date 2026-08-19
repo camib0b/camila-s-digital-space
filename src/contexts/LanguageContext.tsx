@@ -1,7 +1,10 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 import en from "@/i18n/en";
 import es from "@/i18n/es";
 import type { Language, TranslationKey } from "@/i18n/types";
+
+const LANGUAGE_STORAGE_KEY = "language";
 
 interface LanguageContextType {
   language: Language;
@@ -16,8 +19,40 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+function isLanguage(value: string | null): value is Language {
+  return value === "en" || value === "es";
+}
+
+function readSavedLanguage(): Language | null {
+  const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  return isLanguage(saved) ? saved : null;
+}
+
+function defaultLanguageForPath(pathname: string): Language {
+  return pathname.startsWith("/ava") ? "es" : "en";
+}
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>("en");
+  const location = useLocation();
+  const [language, setLanguageState] = useState<Language>(
+    () => readSavedLanguage() ?? defaultLanguageForPath(window.location.pathname)
+  );
+
+  const setLanguage = (nextLanguage: Language) => {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
+    setLanguageState(nextLanguage);
+  };
+
+  useEffect(() => {
+    if (readSavedLanguage()) {
+      return;
+    }
+    setLanguageState(defaultLanguageForPath(location.pathname));
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const t = (key: TranslationKey): string => {
     return translations[language][key] ?? key;
