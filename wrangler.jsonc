@@ -17,6 +17,9 @@
 			"remote": true
 		}
 	],
+	"vars": {
+		"SITE_URL": "https://camilaescudero.cl"
+	},
 	"observability": {
 		"enabled": false,
 		"head_sampling_rate": 1,

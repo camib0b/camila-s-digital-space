@@ -30,6 +30,10 @@ The site Worker (`worker/index.ts`) also exposes:
 - `POST /api/checkout` — creates a dynamic Fintoc Checkout Session and returns `redirect_url`
 - `POST /api/webhooks/fintoc` — verifies `Fintoc-Signature` and records payment events
 
+Production webhook endpoint (enabled in the Fintoc Dashboard):
+
+`https://camilaescudero.cl/api/webhooks/fintoc`
+
 For Payment Links, listen for `payment_intent.succeeded`. `/payment/success` and `/payment/cancel` are return URLs only when using Checkout Sessions. **Do not treat the success page as paid** — webhooks are the source of truth.
 
 ### Local development
@@ -67,7 +71,11 @@ npx wrangler secret put FINTOC_WEBHOOK_SECRET
 npm run db:payments:remote
 ```
 
-4. After deploy, register `https://<your-domain>/api/webhooks/fintoc` in the Fintoc Dashboard for at least:
+4. After deploy, the webhook endpoint is:
+
+`https://camilaescudero.cl/api/webhooks/fintoc`
+
+Subscribe it in the Fintoc Dashboard for at least:
 
 - `payment_intent.succeeded`
 - `payment_intent.failed`
@@ -75,6 +83,6 @@ npm run db:payments:remote
 
 Fintoc shows the webhook signing secret **once** when the endpoint is created. Put that value in `FINTOC_WEBHOOK_SECRET`.
 
-5. Optional: `npx wrangler secret put SITE_URL` (or a Wrangler `vars.SITE_URL`) if Checkout Session success/cancel URLs should not use the request origin.
+5. `SITE_URL` is set to `https://camilaescudero.cl` in `wrangler.jsonc` `vars` for Checkout Session success/cancel URLs.
 
 6. Test with Fintoc’s Chile test bank login: RUT `41614850-3`, password `jonsnow`, account `422159212`.
