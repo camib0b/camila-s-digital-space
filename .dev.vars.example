@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local `wrangler dev`. Never commit real keys.
+# Get test keys from https://dashboard.fintoc.com
+FINTOC_SECRET_KEY=sk_test_replace_me
+FINTOC_WEBHOOK_SECRET=whsec_replace_me
+# Optional. If unset, success/cancel URLs use the incoming request origin.
+# SITE_URL=https://example.com

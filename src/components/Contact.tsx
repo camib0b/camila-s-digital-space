@@ -1,4 +1,5 @@
-import { Mail, MapPin } from "lucide-react";
+import { CreditCard, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
@@ -28,6 +29,13 @@ const Contact = () => {
               <Mail className="w-3.5 h-3.5" />
               camilaescuderob@gmail.com
             </a>
+            <Link
+              to="/pay"
+              className="flex items-center gap-2 text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline"
+            >
+              <CreditCard className="w-3.5 h-3.5" />
+              {t("contact.pay")}
+            </Link>
           </div>
         </div>
       </div>

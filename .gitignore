@@ -16,6 +16,13 @@ dist-ssr
 bun.lock
 bun.lockb
 
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Cloudflare Wrangler local state and secrets
+.dev.vars
+.wrangler
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

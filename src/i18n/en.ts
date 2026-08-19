@@ -119,6 +119,7 @@ const en = {
     "contact.email": "Email",
     "contact.preferEmail": "Prefer email? Send me a message directly.",
     "contact.sendEmail": "Send Email",
+    "contact.pay": "Make a payment",
 
     // Footer
     "footer.builtWith": "Built with care.",
@@ -264,6 +265,30 @@ const en = {
     "portfolio.aiInsight.generating": "Generating…",
     "portfolio.aiInsight.placeholder": "Generate an insight about your portfolio (AI is not called on page load).",
     "portfolio.aiInsight.via": "via",
+
+    // Payments
+    "pay.back": "Back",
+    "pay.label": "Payments",
+    "pay.title": "Pay with Fintoc",
+    "pay.description": "Pay in Chilean pesos by bank transfer or card through Fintoc Checkout.",
+    "pay.form.title": "Checkout",
+    "pay.form.description": "Enter your email and an amount in CLP. You will be redirected to Fintoc to complete the payment.",
+    "pay.email": "Email",
+    "pay.email.placeholder": "you@example.com",
+    "pay.email.invalid": "Enter a valid email address.",
+    "pay.amount": "Amount (CLP)",
+    "pay.amount.invalid": "Enter a whole-peso amount between $100 and $10.000.000 CLP.",
+    "pay.presets.label": "Quick amounts",
+    "pay.submit": "Pay",
+    "pay.submitting": "Processing...",
+    "payment.success.title": "Thanks",
+    "payment.success.description": "We're confirming your payment. If it succeeds, Fintoc will email a receipt.",
+    "payment.success.note": "This page means checkout finished — it is not proof that the charge has cleared yet.",
+    "payment.success.home": "Return home",
+    "payment.cancel.title": "Payment cancelled",
+    "payment.cancel.description": "The checkout was cancelled. You can try again whenever you're ready.",
+    "payment.cancel.note": "No payment was completed.",
+    "payment.cancel.retry": "Try again",
   } as const;
 
 export default en;

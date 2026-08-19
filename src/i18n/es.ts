@@ -122,6 +122,7 @@ const es: Record<TranslationKey, string> = {
     "contact.email": "Email",
     "contact.preferEmail": "¿Prefieres email? Escríbeme directamente.",
     "contact.sendEmail": "Enviar Email",
+    "contact.pay": "Hacer un pago",
 
     // Footer
     "footer.builtWith": "Hecho con cariño.",
@@ -267,6 +268,30 @@ const es: Record<TranslationKey, string> = {
     "portfolio.aiInsight.generating": "Generando…",
     "portfolio.aiInsight.placeholder": "Genera un insight sobre tu portafolio (la IA no se llama al cargar la página).",
     "portfolio.aiInsight.via": "vía",
+
+    // Payments
+    "pay.back": "Volver",
+    "pay.label": "Pagos",
+    "pay.title": "Pagar con Fintoc",
+    "pay.description": "Paga en pesos chilenos por transferencia o tarjeta a través de Fintoc Checkout.",
+    "pay.form.title": "Checkout",
+    "pay.form.description": "Ingresa tu email y un monto en CLP. Te redirigiremos a Fintoc para completar el pago.",
+    "pay.email": "Email",
+    "pay.email.placeholder": "tucorreo@ejemplo.com",
+    "pay.email.invalid": "Ingresa un email válido.",
+    "pay.amount": "Monto (CLP)",
+    "pay.amount.invalid": "Ingresa un monto entero entre $100 y $10.000.000 CLP.",
+    "pay.presets.label": "Montos rápidos",
+    "pay.submit": "Pagar",
+    "pay.submitting": "Procesando...",
+    "payment.success.title": "Gracias",
+    "payment.success.description": "Estamos confirmando tu pago. Si se concreta, Fintoc enviará el comprobante por email.",
+    "payment.success.note": "Esta página significa que el checkout terminó — todavía no es prueba de que el cobro se haya acreditado.",
+    "payment.success.home": "Volver al inicio",
+    "payment.cancel.title": "Pago cancelado",
+    "payment.cancel.description": "El checkout se canceló. Puedes intentarlo de nuevo cuando quieras.",
+    "payment.cancel.note": "No se completó ningún pago.",
+    "payment.cancel.retry": "Intentar de nuevo",
   };
 
 export default es;
