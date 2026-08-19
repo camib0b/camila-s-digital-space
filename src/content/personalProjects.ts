@@ -13,19 +13,9 @@ export interface PersonalProject {
 
 export const personalProjects: PersonalProject[] = [
   {
-    id: "raycast",
-    textKey: "personalProjects.raycast",
-    link: { kind: "external", url: "https://www.raycast.com/camib0b/zodme" },
-  },
-  {
     id: "video-analysis",
     textKey: "personalProjects.videoAnalysis",
     link: { kind: "internal", path: "/ava" },
-  },
-  {
-    id: "scoreboard",
-    textKey: "personalProjects.scoreboard",
-    link: { kind: "none" },
   },
   {
     id: "clip-library",
@@ -37,4 +27,9 @@ export const personalProjects: PersonalProject[] = [
     textKey: "personalProjects.capital",
     link: { kind: "internal", path: "/capital" },
   },
+  {
+    id: "raycast",
+    textKey: "personalProjects.raycast",
+    link: { kind: "external", url: "https://www.raycast.com/camib0b/zodme" },
+  }
 ];

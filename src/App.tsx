@@ -21,7 +21,6 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/cv" element={<CV />} />
               <Route path="/ava" element={<Ava />} />
-              {/* Public path for the portfolio / capital dashboard */}
               <Route path="/capital" element={<Portfolio />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

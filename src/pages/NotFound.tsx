@@ -27,6 +27,9 @@ const NotFound = () => {
           <p className="mb-4 text-muted-foreground">
             You've reached the limbo of missing pages.
           </p>
+          <p className="mb-4 text-muted-foreground">
+            Error "404" means that this error is your fault for trying to access a page that does not exist.
+          </p>
         </CardContent>
         <CardFooter className="justify-center">
           <Button asChild variant="default">
