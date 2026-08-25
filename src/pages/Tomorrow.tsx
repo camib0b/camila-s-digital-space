@@ -39,7 +39,7 @@ const morningBlocks: Block[] = [
     time: "07:30 – 09:30",
     title: "Work from home",
     detail: "Focused block before classes.",
-    location: "Av Vitacura 4747, Vitacura",
+    location: "Home",
     kind: "work",
   },
   {
@@ -52,7 +52,7 @@ const morningBlocks: Block[] = [
     time: "09:55 – 11:00",
     title: "Commute to campus",
     detail: "~55–60 min public transport from doorstep to classroom.",
-    location: "Ingeniería UC, Macul",
+    location: "University",
     kind: "transit",
   },
 ];
@@ -62,14 +62,14 @@ const dayBlocks: Block[] = [
     time: "11:00 – 17:20",
     title: "Clases",
     detail: "11:00 BDD · 12:20 Innovación · 14:50 ETI",
-    location: "Ingeniería UC, Benito Rebolledo 1872–1976, Macul",
+    location: "University",
     kind: "class",
   },
   {
     time: "17:00 – 19:00",
     title: "Sub-12 grupo azul",
     detail: "Hockey training — overlaps end of classes; plan exit accordingly.",
-    location: "Chile Hockey · Centro Claudia Schüler, Av. Marathón 1420, Ñuñoa",
+    location: "Hockey venue",
     kind: "sport",
   },
 ];
