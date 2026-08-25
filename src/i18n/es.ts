@@ -6,7 +6,6 @@ const es: Record<TranslationKey, string> = {
     "hero.subtagline": "Ingeniería en Santiago. Hockey también. Mis ideas llegan aquí.",
     "hero.cta.work": "Ver Trabajo",
     "hero.cta.cv": "CV",
-    "hero.cta.tomorrow": "Mañana",
 
     // Dashboard
     "dashboard.label": "Dashboard de Vida",
@@ -72,8 +71,13 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.clipLibrary":
       "Biblioteca navegable de clips de partidos de hockey para coaching y análisis de juego. Clips los genero con AVA.",
     "personalProjects.view": "Ver proyecto",
+    "personalProjects.learningLab.label": "Laboratorio de aprendizaje",
+    "personalProjects.learningLab.description":
+      "Experimentos prácticos para explorar nuevas herramientas y flujos de desarrollo.",
+    "personalProjects.tomorrow":
+      "Planificador de rutina agéntico que usa MCP para obtener mis eventos de Google Calendar y habilidades reutilizables para planificar el día. Lo construí como mi primer ejercicio de desarrollo agéntico y se ejecuta automáticamente todos los días a las 9:30.",
     "personalProjects.capital":
-      "Panel de portafolio de inversión en vivo con holdings, precios de Finnhub e insights de IA bajo demanda vía una API en Cloudflare Workers.",
+      "Ejercicio de portafolio en vivo construido para aprender a conectar datos de precios de mercado con un LLM para generar texto bajo demanda.",
 
     // GitHub
     "github.label": "Contribuciones",
