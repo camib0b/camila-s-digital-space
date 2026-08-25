@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   books,
@@ -5,8 +6,13 @@ import {
   GOODREADS_PROFILE_URL,
 } from "@/content/books";
 
+const MOBILE_COLLAPSED_BOOK_COUNT = 5;
+const DESKTOP_COLLAPSED_BOOK_COUNT = 6;
+const BOOK_INDEX_ID = "reading-list-index";
+
 const Books = () => {
   const { t } = useLanguage();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <section id="books" className="py-20 md:py-28 bg-background">
@@ -27,24 +33,42 @@ const Books = () => {
             {t("books.goodreads")}
           </a>
 
-          <div className="space-y-6">
+          <div
+            id={BOOK_INDEX_ID}
+            className="grid grid-cols-1 md:grid-cols-2 md:gap-x-8"
+          >
             {books.map((book, index) => (
-              <div key={book.id}>
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                  <div>
-                    <p className="font-medium text-foreground">{book.title}</p>
-                    <p className="text-sm text-muted-foreground">{book.author}</p>
-                  </div>
-                  <p className="text-xs text-muted-foreground shrink-0">
-                    {t(BOOK_CATEGORY_LABEL_KEYS[book.category])}
-                  </p>
-                </div>
-                {index < books.length - 1 && (
-                  <div className="border-b border-border/60 mt-6" />
-                )}
+              <div
+                key={book.id}
+                className={[
+                  "border-b border-border/60 py-4",
+                  !isExpanded && index === MOBILE_COLLAPSED_BOOK_COUNT
+                    ? "hidden md:block"
+                    : "",
+                  !isExpanded && index >= DESKTOP_COLLAPSED_BOOK_COUNT
+                    ? "hidden"
+                    : "",
+                ].join(" ")}
+              >
+                <p className="font-medium text-foreground leading-snug">{book.title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {book.author}
+                  <span aria-hidden="true"> · </span>
+                  {t(BOOK_CATEGORY_LABEL_KEYS[book.category])}
+                </p>
               </div>
             ))}
           </div>
+
+          <button
+            type="button"
+            onClick={() => setIsExpanded((currentValue) => !currentValue)}
+            aria-expanded={isExpanded}
+            aria-controls={BOOK_INDEX_ID}
+            className="mt-6 inline-flex items-center rounded-md border border-border px-3 py-1.5 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200"
+          >
+            {t(isExpanded ? "books.showFewer" : "books.showAll")}
+          </button>
         </div>
       </div>
     </section>

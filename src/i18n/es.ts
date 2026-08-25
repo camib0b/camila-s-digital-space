@@ -93,6 +93,8 @@ const es: Record<TranslationKey, string> = {
     "books.title": "Libros que disfruto haber leído",
     "books.description": "Textos que han formado cómo pienso — sobre justicia, trabajo, sistemas y el mundo.",
     "books.goodreads": "Estantería completa en Goodreads",
+    "books.showAll": "Mostrar todos los libros",
+    "books.showFewer": "Mostrar menos",
     "books.category.philosophy": "Filosofía",
     "books.category.history": "Historia",
     "books.category.literature": "Literatura",

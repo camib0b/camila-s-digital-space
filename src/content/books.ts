@@ -42,6 +42,15 @@ const CATEGORY_SORT_ORDER: Record<BookCategory, number> = {
   biography: 6,
 };
 
+export const CURATED_BOOK_IDS = [
+  "sophies-world",
+  "nicomachean-ethics",
+  "prophet-of-innovation",
+  "casa-de-campo",
+  "expulsion-of-the-triumphant-beast",
+  "essay-concerning-human-understanding",
+] as const;
+
 const catalog: Book[] = [
   {
     id: "republic",
@@ -135,7 +144,7 @@ const catalog: Book[] = [
   },
 ];
 
-export const books: Book[] = [...catalog].sort((left, right) => {
+const categorySortedBooks = [...catalog].sort((left, right) => {
   const categoryDelta = CATEGORY_SORT_ORDER[left.category] - CATEGORY_SORT_ORDER[right.category];
   if (categoryDelta !== 0) {
     return categoryDelta;
@@ -143,3 +152,20 @@ export const books: Book[] = [...catalog].sort((left, right) => {
 
   return left.title.localeCompare(right.title, "en", { sensitivity: "base" });
 });
+
+const booksById = new Map(categorySortedBooks.map((book) => [book.id, book]));
+const curatedBookIdSet = new Set<string>(CURATED_BOOK_IDS);
+
+const curatedBooks = CURATED_BOOK_IDS.map((bookId) => {
+  const book = booksById.get(bookId);
+  if (!book) {
+    throw new Error(`Curated book "${bookId}" is missing from the catalog.`);
+  }
+
+  return book;
+});
+
+export const books: Book[] = [
+  ...curatedBooks,
+  ...categorySortedBooks.filter((book) => !curatedBookIdSet.has(book.id)),
+];

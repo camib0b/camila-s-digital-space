@@ -90,6 +90,8 @@ const en = {
     "books.title": "Books I'm glad to have read",
     "books.description": "Texts that have shaped how I think — about justice, work, systems, and the world.",
     "books.goodreads": "Full shelf on Goodreads",
+    "books.showAll": "Show all books",
+    "books.showFewer": "Show fewer",
     "books.category.philosophy": "Philosophy",
     "books.category.history": "History",
     "books.category.literature": "Literature",
