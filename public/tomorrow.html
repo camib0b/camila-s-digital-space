@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mañana · Camila Escudero</title>
+  <meta name="description" content="Plan de mañana y agenda del miércoles 26 de agosto de 2026" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafafa;
+      --fg: #16181d;
+      --muted: #6b7280;
+      --card: #f4f5f7;
+      --border: #e5e7eb;
+      --sky: #0ea5e9;
+      --amber: #d97706;
+      --violet: #7c3aed;
+      --emerald: #059669;
+      --slate: #64748b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0b0d;
+        --fg: #e8eaed;
+        --muted: #9ca3af;
+        --card: #14161a;
+        --border: #272a30;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .wrap { max-width: 42rem; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    header { margin-bottom: 2rem; }
+    .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 500; margin-bottom: 0.35rem; }
+    .date { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .sub { font-size: 0.875rem; color: var(--muted); max-width: 36rem; }
+    .tip {
+      display: flex; gap: 0.75rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 0.5rem;
+      padding: 0.85rem 1rem;
+      margin-bottom: 2.25rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .tip strong { color: var(--amber); }
+    section { margin-bottom: 2.5rem; }
+    h2 {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    ul.timeline { list-style: none; }
+    .item {
+      border-left: 2px solid var(--border);
+      padding: 0.75rem 0 0.75rem 1rem;
+    }
+    .item.routine { border-left-color: var(--sky); }
+    .item.work { border-left-color: var(--amber); }
+    .item.class { border-left-color: var(--violet); }
+    .item.sport { border-left-color: var(--emerald); }
+    .item.transit { border-left-color: var(--slate); }
+    .meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+      margin-bottom: 0.2rem;
+    }
+    .time { font-size: 0.75rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+    .badge {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem;
+      background: var(--card);
+      color: var(--muted);
+    }
+    .item.routine .badge { color: var(--sky); }
+    .item.work .badge { color: var(--amber); }
+    .item.class .badge { color: var(--violet); }
+    .item.sport .badge { color: var(--emerald); }
+    .title { font-size: 0.9rem; font-weight: 500; }
+    .detail { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
+    .loc { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+    .checklist { list-style: none; }
+    .checklist li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding: 0.3rem 0;
+      padding-left: 0.9rem;
+      position: relative;
+    }
+    .checklist li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: var(--fg);
+      opacity: 0.35;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      opacity: 0.8;
+    }
+    a.back {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-flex;
+      margin-bottom: 1.5rem;
+    }
+    a.back:hover { color: var(--fg); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="/">← camilaescudero.cl</a>
+
+    <header>
+      <p class="label">Agenda</p>
+      <h1>Mañana</h1>
+      <p class="date">Miércoles 26 de agosto de 2026</p>
+      <p class="sub">Plan completo de la mañana + overview del día desde Google Calendar</p>
+    </header>
+
+    <div class="tip">
+      <span><strong>⚠</strong></span>
+      <span>Sal de casa ~55–60 min antes de la clase de las 11:00. WFH termina 9:30 → buffer para ir a Macul. Hockey 17:00 se solapa con el final de clases.</span>
+    </div>
+
+    <section>
+      <h2>☀ Secuencia de la mañana</h2>
+      <ul class="timeline">
+        <li class="item routine">
+          <div class="meta"><span class="time">06:15</span><span class="badge">Routine</span></div>
+          <p class="title">Alarma · despertar</p>
+          <p class="detail">400–500 ml de agua de inmediato. Arranque suave.</p>
+        </li>
+        <li class="item routine">
+          <div class="meta"><span class="time">06:15 – 06:45</span><span class="badge">Routine</span></div>
+          <p class="title">Rutina de mañana</p>
+          <p class="detail">Baño, cara, estiramiento liviano. Ropa lista la noche anterior.</p>
+        </li>
+        <li class="item routine">
+          <div class="meta"><span class="time">06:45 – 07:15</span><span class="badge">Routine</span></div>
+          <p class="title">Desayuno + prep</p>
+          <p class="detail">Desayuno con proteína. Armar mochila uni + notas WFH.</p>
+        </li>
+        <li class="item routine">
+          <div class="meta"><span class="time">07:15 – 07:30</span><span class="badge">Routine</span></div>
+          <p class="title">Buffer · acomodarse</p>
+          <p class="detail">Abrir laptop, limpiar escritorio, ambiente de trabajo.</p>
+        </li>
+        <li class="item work">
+          <div class="meta"><span class="time">07:30 – 09:30</span><span class="badge">Work</span></div>
+          <p class="title">Work from home</p>
+          <p class="detail">Bloque enfocado antes de clases.</p>
+          <p class="loc">📍 Av Vitacura 4747, Vitacura</p>
+        </li>
+        <li class="item transit">
+          <div class="meta"><span class="time">09:30 – 09:55</span><span class="badge">Transit</span></div>
+          <p class="title">Cerrar WFH · salir a la uni</p>
+          <p class="detail">Cerrar laptop, agarrar mochila. Ideal salir ~09:55.</p>
+        </li>
+        <li class="item transit">
+          <div class="meta"><span class="time">09:55 – 11:00</span><span class="badge">Transit</span></div>
+          <p class="title">Trayecto al campus</p>
+          <p class="detail">~55–60 min transporte público puerta a sala.</p>
+          <p class="loc">📍 Ingeniería UC, Macul</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>📅 Eventos del calendario</h2>
+      <ul class="timeline">
+        <li class="item work">
+          <div class="meta"><span class="time">07:30 – 09:30</span><span class="badge">Work</span></div>
+          <p class="title">work from home</p>
+          <p class="loc">📍 Av Vitacura 4747, Vitacura, Región Metropolitana, Chile</p>
+        </li>
+        <li class="item class">
+          <div class="meta"><span class="time">11:00 – 17:20</span><span class="badge">Class</span></div>
+          <p class="title">clases</p>
+          <p class="detail">11:00 BDD · 12:20 Innovación · 14:50 ETI</p>
+          <p class="loc">📍 Ingeniería UC, Benito Rebolledo 1872–1976, Macul</p>
+        </li>
+        <li class="item sport">
+          <div class="meta"><span class="time">17:00 – 19:00</span><span class="badge">Hockey</span></div>
+          <p class="title">Sub-12 grupo azul</p>
+          <p class="detail">Se solapa con el final de clases — planificar la salida.</p>
+          <p class="loc">📍 Chile Hockey · Centro Claudia Schüler, Av. Marathón 1420, Ñuñoa</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>☾ La noche anterior</h2>
+      <ul class="checklist">
+        <li>Dejar ropa lista (WFH + uni + bolsa hockey si aplica)</li>
+        <li>Armar mochila uni (laptop, cargadores, apuntes)</li>
+        <li>Preparar desayuno / botella de agua en el refri</li>
+        <li>Alarma 06:15 (+ backup +10 min)</li>
+        <li>Cargar teléfono y laptop</li>
+        <li>Apagar luces ~22:30–23:00 para 7.5–8 h de sueño</li>
+      </ul>
+    </section>
+
+    <footer>
+      Snapshot from Google Calendar · camilaescudero.cl/tomorrow
+    </footer>
+  </div>
+</body>
+</html>
