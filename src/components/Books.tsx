@@ -1,57 +1,9 @@
-import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { books, type Book } from "@/content/books";
-
-const BookCard = ({ book }: { book: Book }) => {
-  const { t } = useLanguage();
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  return (
-    <div
-      className="group perspective-1000 cursor-pointer"
-      onClick={() => setIsFlipped(!isFlipped)}
-      onKeyDown={(event) => event.key === "Enter" && setIsFlipped(!isFlipped)}
-      tabIndex={0}
-      role="button"
-      aria-label={`${book.title} by ${book.author}`}
-    >
-      <div
-        className={`relative w-full aspect-[2/3] transition-transform duration-700 transform-style-3d ${
-          isFlipped ? "rotate-y-180" : ""
-        }`}
-      >
-        <div className="absolute inset-0 backface-hidden rounded-md overflow-hidden border border-border">
-          <img
-            src={book.cover}
-            alt={`${book.title} cover`}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-background/90 to-transparent">
-            <p className="text-sm font-medium text-foreground leading-tight">{book.title}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{book.author}</p>
-          </div>
-        </div>
-
-        <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-md overflow-hidden bg-card border border-border">
-          <div className="h-full p-4 flex flex-col justify-between">
-            <div>
-              <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
-                {t("books.myTake")}
-              </p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {t(book.reviewKey)}
-              </p>
-            </div>
-            <div className="pt-3 border-t border-border">
-              <p className="text-sm font-medium text-foreground">{book.title}</p>
-              <p className="text-xs text-muted-foreground">{book.author}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import {
+  books,
+  BOOK_CATEGORY_LABEL_KEYS,
+  GOODREADS_PROFILE_URL,
+} from "@/content/books";
 
 const Books = () => {
   const { t } = useLanguage();
@@ -63,15 +15,36 @@ const Books = () => {
           <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-2">
             {t("books.label")}
           </h2>
-          <p className="text-base text-muted-foreground leading-relaxed mb-10">
+          <p className="text-base text-muted-foreground leading-relaxed mb-3">
             {t("books.description")}
           </p>
-        </div>
+          <a
+            href={GOODREADS_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline inline-block mb-10"
+          >
+            {t("books.goodreads")}
+          </a>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-          {books.map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
+          <div className="space-y-6">
+            {books.map((book, index) => (
+              <div key={book.id}>
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+                  <div>
+                    <p className="font-medium text-foreground">{book.title}</p>
+                    <p className="text-sm text-muted-foreground">{book.author}</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground shrink-0">
+                    {t(BOOK_CATEGORY_LABEL_KEYS[book.category])}
+                  </p>
+                </div>
+                {index < books.length - 1 && (
+                  <div className="border-b border-border/60 mt-6" />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
