@@ -5,6 +5,7 @@ const en = {
     "hero.subtagline": "Directioning my work towards a great career",
     "hero.cta.work": "See My Work",
     "hero.cta.cv": "View CV",
+    "hero.cta.tomorrow": "Tomorrow",
 
     // About
     "about.label": "About",
@@ -119,6 +120,9 @@ const en = {
     "contact.email": "Email",
     "contact.preferEmail": "Prefer email? Send me a message directly.",
     "contact.sendEmail": "Send Email",
+    "contact.showEmail": "Show email",
+    "contact.copyEmail": "Copy email",
+    "contact.copied": "Copied",
 
     // Footer
     "footer.builtWith": "Built with care.",

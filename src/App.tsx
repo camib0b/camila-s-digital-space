@@ -8,6 +8,7 @@ import CV from "./pages/CV";
 import Ava from "./pages/Ava";
 import Portfolio from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
+import Tomorrow from "./pages/Tomorrow";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
               <Route path="/cv" element={<CV />} />
               <Route path="/ava" element={<Ava />} />
               <Route path="/capital" element={<Portfolio />} />
+              <Route path="/tomorrow" element={<Tomorrow />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>

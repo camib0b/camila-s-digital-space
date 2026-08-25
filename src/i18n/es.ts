@@ -7,6 +7,7 @@ const es: Record<TranslationKey, string> = {
     "hero.subtagline": "Dirigiendo mi trabajo hacia una carrera bacán",
     "hero.cta.work": "Ver Mi Trabajo",
     "hero.cta.cv": "Ver CV",
+    "hero.cta.tomorrow": "Mañana",
 
     // About
     "about.label": "Sobre Mí",
@@ -122,6 +123,9 @@ const es: Record<TranslationKey, string> = {
     "contact.email": "Email",
     "contact.preferEmail": "¿Prefieres email? Escríbeme directamente.",
     "contact.sendEmail": "Enviar Email",
+    "contact.showEmail": "Mostrar email",
+    "contact.copyEmail": "Copiar email",
+    "contact.copied": "Copiado",
 
     // Footer
     "footer.builtWith": "Hecho con cariño.",
