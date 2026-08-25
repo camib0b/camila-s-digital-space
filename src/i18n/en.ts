@@ -100,12 +100,15 @@ const en = {
     // Books
     "books.label": "Reading List",
     "books.title": "Books I'm glad to have read",
-    "books.description": "Click any book to read my review. These texts have influenced how I approach problems, understand systems, and see the world.",
-    "books.myTake": "My Take",
-    "books.republic.review": "A foundational text that shaped my understanding of justice and the ideal society. Plato's dialogues challenge you to question everything — governance, truth, and the nature of reality itself.",
-    "books.sophiesWorld.review": "Philosophy made accessible through storytelling. This book ignited my curiosity about the big questions when I was younger. A perfect gateway into Western philosophical thought.",
-    "books.chuquicamata.review": "Essential reading for understanding Chile's industrial history. Bonnefoy captures the human stories behind the world's largest open-pit copper mine — a lens into labor, community, and progress.",
-    "books.nameOfTheRose.review": "A masterpiece of historical fiction wrapped in mystery. Eco weaves semiotics, medieval history, and detective narrative into something utterly captivating. Dense but rewarding.",
+    "books.description": "Texts that have shaped how I think — about justice, work, systems, and the world.",
+    "books.goodreads": "Full shelf on Goodreads",
+    "books.category.philosophy": "Philosophy",
+    "books.category.history": "History",
+    "books.category.literature": "Literature",
+    "books.category.law": "Law",
+    "books.category.management": "Management",
+    "books.category.psychology": "Psychology",
+    "books.category.biography": "Biography",
 
     // Hockey
     "hockey.label": "Hockey Journey",

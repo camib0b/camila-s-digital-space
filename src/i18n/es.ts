@@ -103,12 +103,15 @@ const es: Record<TranslationKey, string> = {
     // Books
     "books.label": "Lista de Lectura",
     "books.title": "Libros que disfruto haber leído",
-    "books.description": "Haz clic en cualquier libro para leer mi reseña. Estos textos han influenciado cómo abordo problemas, entiendo sistemas y veo el mundo.",
-    "books.myTake": "Mi Opinión",
-    "books.republic.review": "Un texto fundacional que formó mi comprensión de la justicia y la sociedad ideal. Los diálogos de Platón te desafían a cuestionar todo — gobierno, verdad y la naturaleza de la realidad misma.",
-    "books.sophiesWorld.review": "Filosofía accesible a través de la narrativa. Este libro encendió mi curiosidad sobre las grandes preguntas cuando era más joven. Una puerta perfecta al pensamiento filosófico occidental.",
-    "books.chuquicamata.review": "Lectura esencial para entender la historia industrial de Chile. Bonnefoy captura las historias humanas detrás de la mina de cobre a cielo abierto más grande del mundo — una lente hacia el trabajo, la comunidad y el progreso.",
-    "books.nameOfTheRose.review": "Una obra maestra de ficción histórica envuelta en misterio. Eco teje semiótica, historia medieval y narrativa detectivesca en algo completamente cautivador. Denso pero gratificante.",
+    "books.description": "Textos que han formado cómo pienso — sobre justicia, trabajo, sistemas y el mundo.",
+    "books.goodreads": "Estantería completa en Goodreads",
+    "books.category.philosophy": "Filosofía",
+    "books.category.history": "Historia",
+    "books.category.literature": "Literatura",
+    "books.category.law": "Derecho",
+    "books.category.management": "Administración",
+    "books.category.psychology": "Psicología",
+    "books.category.biography": "Biografía",
 
     // Hockey
     "hockey.label": "Mi Camino en Hockey",
