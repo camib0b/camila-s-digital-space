@@ -3,7 +3,6 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import PersonalProjects from "@/components/PersonalProjects";
-import GitHubContributions from "@/components/GitHubContributions";
 import Books from "@/components/Books";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -16,7 +15,6 @@ const Index = () => {
       <Hero />
       <div id="after-hero">
         <PersonalProjects />
-        <GitHubContributions />
         <Experience />
         <About />
         <Hockey />

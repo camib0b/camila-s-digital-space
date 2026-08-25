@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { personalProjects } from "@/content/personalProjects";
+import GitHubContributions from "@/components/GitHubContributions";
 
 const PersonalProjects = () => {
   const { t } = useLanguage();
@@ -37,6 +38,7 @@ const PersonalProjects = () => {
               </li>
             ))}
           </ul>
+          <GitHubContributions />
         </div>
       </div>
     </section>

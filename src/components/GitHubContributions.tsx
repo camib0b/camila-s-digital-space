@@ -62,148 +62,144 @@ const GitHubContributions = () => {
     : [{ label: "", span: SKELETON_WEEK_COUNT }];
 
   return (
-    <section id="github" className="py-20 md:py-28 bg-background">
-      <div className="container px-6 md:px-8">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-8">
-            {t("github.label")}
-          </h2>
+    <div id="github" className="mt-12">
+      <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        {t("github.label")}
+      </h3>
 
-          {error && !loading ? (
-            <p className="text-sm text-muted-foreground">{t("github.error")}</p>
-          ) : (
-            <>
-              <div className="flex gap-2">
-                <div className="flex shrink-0 flex-col" aria-hidden="true">
-                  <div style={{ height: MONTH_ROW_HEIGHT_PX, marginBottom: 2 }} />
+      {error && !loading ? (
+        <p className="text-sm text-muted-foreground">{t("github.error")}</p>
+      ) : (
+        <>
+          <div className="flex gap-2">
+            <div className="flex shrink-0 flex-col" aria-hidden="true">
+              <div style={{ height: MONTH_ROW_HEIGHT_PX, marginBottom: 2 }} />
+              <div
+                className="grid text-[10px] leading-none text-muted-foreground"
+                style={{
+                  gridTemplateRows: `repeat(7, ${CELL_SIZE_PX}px)`,
+                  rowGap: CELL_GAP_PX,
+                }}
+              >
+                {Array.from({ length: 7 }, (_, rowIndex) => {
+                  const label = WEEKDAY_LABELS.find((entry) => entry.gridRow === rowIndex + 1);
+                  return (
+                    <span key={rowIndex} className="flex items-center pr-1">
+                      {label ? t(label.key) : ""}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div
+              className="min-w-0 flex-1 overflow-x-auto pb-1"
+              role="region"
+              aria-label={t("github.label")}
+              aria-busy={loading}
+              onScroll={hideTooltip}
+            >
+              <div
+                className="inline-block"
+                style={{
+                  minWidth: weekCount * CELL_SIZE_PX + Math.max(0, weekCount - 1) * CELL_GAP_PX,
+                }}
+              >
+                <div
+                  className="mb-[2px] grid text-[10px] leading-none text-muted-foreground"
+                  style={{
+                    height: MONTH_ROW_HEIGHT_PX,
+                    gridTemplateColumns: `repeat(${weekCount}, ${CELL_SIZE_PX}px)`,
+                    columnGap: CELL_GAP_PX,
+                  }}
+                >
+                  {monthCells.map((cell, index) => (
+                    <span
+                      key={`${cell.label}-${index}`}
+                      className="truncate"
+                      style={{ gridColumn: `span ${cell.span}` }}
+                    >
+                      {cell.label}
+                    </span>
+                  ))}
+                </div>
+
+                {loading || !data ? (
                   <div
-                    className="grid text-[10px] leading-none text-muted-foreground"
+                    className="grid grid-flow-col"
                     style={{
                       gridTemplateRows: `repeat(7, ${CELL_SIZE_PX}px)`,
-                      rowGap: CELL_GAP_PX,
+                      gridAutoColumns: CELL_SIZE_PX,
+                      gap: CELL_GAP_PX,
                     }}
                   >
-                    {Array.from({ length: 7 }, (_, rowIndex) => {
-                      const label = WEEKDAY_LABELS.find((entry) => entry.gridRow === rowIndex + 1);
-                      return (
-                        <span key={rowIndex} className="flex items-center pr-1">
-                          {label ? t(label.key) : ""}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div
-                  className="min-w-0 flex-1 overflow-x-auto pb-1"
-                  role="region"
-                  aria-label={t("github.label")}
-                  aria-busy={loading}
-                  onScroll={hideTooltip}
-                >
-                  <div
-                    className="inline-block"
-                    style={{
-                      minWidth: weekCount * CELL_SIZE_PX + Math.max(0, weekCount - 1) * CELL_GAP_PX,
-                    }}
-                  >
-                    <div
-                      className="mb-[2px] grid text-[10px] leading-none text-muted-foreground"
-                      style={{
-                        height: MONTH_ROW_HEIGHT_PX,
-                        gridTemplateColumns: `repeat(${weekCount}, ${CELL_SIZE_PX}px)`,
-                        columnGap: CELL_GAP_PX,
-                      }}
-                    >
-                      {monthCells.map((cell, index) => (
-                        <span
-                          key={`${cell.label}-${index}`}
-                          className="truncate"
-                          style={{ gridColumn: `span ${cell.span}` }}
-                        >
-                          {cell.label}
-                        </span>
-                      ))}
-                    </div>
-
-                    {loading || !data ? (
-                      <div
-                        className="grid grid-flow-col"
-                        style={{
-                          gridTemplateRows: `repeat(7, ${CELL_SIZE_PX}px)`,
-                          gridAutoColumns: CELL_SIZE_PX,
-                          gap: CELL_GAP_PX,
-                        }}
-                      >
-                        {Array.from({ length: SKELETON_WEEK_COUNT * 7 }, (_, index) => (
-                          <span
-                            key={index}
-                            className="block animate-pulse rounded-[2px] bg-[hsl(var(--contrib-empty))]"
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div
-                        className="grid grid-flow-col"
-                        style={{
-                          gridTemplateRows: `repeat(7, ${CELL_SIZE_PX}px)`,
-                          gridAutoColumns: CELL_SIZE_PX,
-                          gap: CELL_GAP_PX,
-                        }}
-                      >
-                        {data.weeks.map((week) =>
-                          week.contributionDays.map((day) => {
-                            const tooltipText = formatDayTooltip(day.date, day.contributionCount, t);
-                            return (
-                              <button
-                                key={day.date}
-                                type="button"
-                                title={tooltipText}
-                                aria-label={tooltipText}
-                                className={cn(
-                                  "h-full w-full cursor-default rounded-[2px] border-0 p-0 appearance-none",
-                                  CONTRIBUTION_LEVEL_CLASS[day.contributionLevel],
-                                  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-                                  "hover:ring-1 hover:ring-foreground/25"
-                                )}
-                                style={{ gridRow: contributionGridRow(day.weekday) }}
-                                onMouseEnter={(event) => showTooltip(event, tooltipText)}
-                                onMouseLeave={hideTooltip}
-                                onFocus={(event) => showTooltip(event, tooltipText)}
-                                onBlur={hideTooltip}
-                              />
-                            );
-                          })
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {data && !loading ? (
-                <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-xs text-muted-foreground">
-                    {interpolateTemplate(t("github.summary"), data.totalContributions)}
-                  </p>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <span>{t("github.less")}</span>
-                    {CONTRIBUTION_LEVELS.map((level) => (
+                    {Array.from({ length: SKELETON_WEEK_COUNT * 7 }, (_, index) => (
                       <span
-                        key={level}
-                        className={cn("inline-block rounded-[2px]", CONTRIBUTION_LEVEL_CLASS[level])}
-                        style={{ width: CELL_SIZE_PX, height: CELL_SIZE_PX }}
-                        aria-hidden="true"
+                        key={index}
+                        className="block animate-pulse rounded-[2px] bg-[hsl(var(--contrib-empty))]"
                       />
                     ))}
-                    <span>{t("github.more")}</span>
                   </div>
-                </div>
-              ) : null}
-            </>
-          )}
-        </div>
-      </div>
+                ) : (
+                  <div
+                    className="grid grid-flow-col"
+                    style={{
+                      gridTemplateRows: `repeat(7, ${CELL_SIZE_PX}px)`,
+                      gridAutoColumns: CELL_SIZE_PX,
+                      gap: CELL_GAP_PX,
+                    }}
+                  >
+                    {data.weeks.map((week) =>
+                      week.contributionDays.map((day) => {
+                        const tooltipText = formatDayTooltip(day.date, day.contributionCount, t);
+                        return (
+                          <button
+                            key={day.date}
+                            type="button"
+                            title={tooltipText}
+                            aria-label={tooltipText}
+                            className={cn(
+                              "h-full w-full cursor-default appearance-none rounded-[2px] border-0 p-0",
+                              CONTRIBUTION_LEVEL_CLASS[day.contributionLevel],
+                              "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+                              "hover:ring-1 hover:ring-foreground/25"
+                            )}
+                            style={{ gridRow: contributionGridRow(day.weekday) }}
+                            onMouseEnter={(event) => showTooltip(event, tooltipText)}
+                            onMouseLeave={hideTooltip}
+                            onFocus={(event) => showTooltip(event, tooltipText)}
+                            onBlur={hideTooltip}
+                          />
+                        );
+                      })
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {data && !loading ? (
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-xs text-muted-foreground">
+                {interpolateTemplate(t("github.summary"), data.totalContributions)}
+              </p>
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <span>{t("github.less")}</span>
+                {CONTRIBUTION_LEVELS.map((level) => (
+                  <span
+                    key={level}
+                    className={cn("inline-block rounded-[2px]", CONTRIBUTION_LEVEL_CLASS[level])}
+                    style={{ width: CELL_SIZE_PX, height: CELL_SIZE_PX }}
+                    aria-hidden="true"
+                  />
+                ))}
+                <span>{t("github.more")}</span>
+              </div>
+            </div>
+          ) : null}
+        </>
+      )}
 
       {tooltip ? (
         <div
@@ -214,7 +210,7 @@ const GitHubContributions = () => {
           {tooltip.text}
         </div>
       ) : null}
-    </section>
+    </div>
   );
 };
 
