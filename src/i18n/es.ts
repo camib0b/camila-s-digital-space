@@ -7,6 +7,7 @@ const es: Record<TranslationKey, string> = {
     "hero.subtagline": "Dirigiendo mi trabajo hacia una carrera bacán",
     "hero.cta.work": "Ver Mi Trabajo",
     "hero.cta.cv": "Ver CV",
+    "hero.cta.tomorrow": "Mañana",
 
     // About
     "about.label": "Sobre Mí",
