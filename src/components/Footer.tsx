@@ -1,9 +1,8 @@
-import { Github, Linkedin, Mail, Twitter, FileText } from "lucide-react";
+import { Github, Linkedin, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
+import EmailContactControl from "./EmailContactControl";
 
 const Footer = () => {
-  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -31,9 +30,7 @@ const Footer = () => {
             <a href="https://x.com/camib0b" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Twitter/X">
               <Twitter className="w-4 h-4" />
             </a>
-            <a href="mailto:camilaescuderob@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Email">
-              <Mail className="w-4 h-4" />
-            </a>
+            <EmailContactControl />
           </div>
         </div>
       </div>

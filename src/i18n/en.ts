@@ -120,6 +120,9 @@ const en = {
     "contact.email": "Email",
     "contact.preferEmail": "Prefer email? Send me a message directly.",
     "contact.sendEmail": "Send Email",
+    "contact.showEmail": "Show email",
+    "contact.copyEmail": "Copy email",
+    "contact.copied": "Copied",
 
     // Footer
     "footer.builtWith": "Built with care.",
