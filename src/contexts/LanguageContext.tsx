@@ -29,7 +29,7 @@ function readSavedLanguage(): Language | null {
 }
 
 function defaultLanguageForPath(pathname: string): Language {
-  return pathname.startsWith("/ava") ? "es" : "en";
+  return pathname.startsWith("/ava") || pathname.startsWith("/tomorrow") ? "es" : "en";
 }
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
