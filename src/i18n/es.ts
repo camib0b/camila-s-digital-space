@@ -44,7 +44,7 @@ const es: Record<TranslationKey, string> = {
     "skills.tools": "Herramientas",
 
     // Experience
-    "experience.label": "Experiencia",
+    "experience.label": "Experiencia en Oficina",
     "experience.title": "Dónde he aprendido",
     "experience.description": "Roles y prácticas que formaron mi manera de pensar sobre código, datos, colaboración y construcción de productos.",
     "experience.acfin.title": "Desarrolladora BI",
