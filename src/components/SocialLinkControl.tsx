@@ -10,9 +10,14 @@ type SocialLinkControlProps = {
   Icon: SocialIcon;
 };
 
+function formatDisplayUrl(href: string): string {
+  return href.replace(/^https?:\/\/(www\.)?/i, "");
+}
+
 const SocialLinkControl = ({ href, label, Icon }: SocialLinkControlProps) => {
   const { t } = useLanguage();
   const [isExpanded, setIsExpanded] = useState(false);
+  const displayUrl = formatDisplayUrl(href);
 
   useEffect(() => {
     if (!isExpanded) {
@@ -50,7 +55,7 @@ const SocialLinkControl = ({ href, label, Icon }: SocialLinkControlProps) => {
       {isExpanded && (
         <div className="flex items-center gap-1.5">
           <span className="text-xs text-muted-foreground select-all whitespace-nowrap">
-            {href}
+            {displayUrl}
           </span>
           <a
             href={href}
