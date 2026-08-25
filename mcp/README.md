@@ -67,6 +67,8 @@ That command deploys the Worker and attaches the Custom Domain `mcp.camilaescude
 
 No Worker secrets are required. OAuth state lives in the `OAUTH_KV` namespace.
 
+Wrangler must be authenticated to the Cloudflare account that owns `camilaescudero.cl`. After `wrangler login` (or `CLOUDFLARE_API_TOKEN`), create the KV namespace, replace `REPLACE_WITH_OAUTH_KV_ID` in `wrangler.jsonc`, and deploy.
+
 ## Endpoints
 
 | Path | Role |

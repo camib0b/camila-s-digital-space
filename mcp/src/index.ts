@@ -23,6 +23,7 @@ export default new OAuthProvider({
   tokenEndpoint: "/oauth/token",
   clientRegistrationEndpoint: "/oauth/register",
   clientIdMetadataDocumentEnabled: true,
+  allowPlainPKCE: false,
   scopesSupported: ["mcp:read"],
   resourceMetadata: {
     resource: MCP_URL,

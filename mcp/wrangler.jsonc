@@ -13,6 +13,7 @@
   "kv_namespaces": [
     {
       "binding": "OAUTH_KV",
+      // Create with: npx wrangler kv namespace create OAUTH_KV
       "id": "REPLACE_WITH_OAUTH_KV_ID"
     }
   ]
