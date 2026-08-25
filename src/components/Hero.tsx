@@ -2,7 +2,9 @@ import { Github, Linkedin, Twitter, FileText, CalendarDays } from "lucide-react"
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { GRADUATION_DATE } from "@/content/graduation";
+import { SOCIAL_LINKS } from "@/content/social";
 import EmailContactControl from "./EmailContactControl";
+import SocialLinkControl from "./SocialLinkControl";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 
@@ -76,7 +78,7 @@ const Hero = () => {
               {t("hero.cta.tomorrow")}
             </Link>
             <a
-              href="#skills"
+              href="#after-hero"
               className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline"
             >
               {t("hero.cta.work")}
@@ -84,26 +86,9 @@ const Hero = () => {
           </div>
 
           <div className="flex items-center gap-4 animate-fade-up-delay-4">
-            {[
-              { href: "https://github.com/camib0b", label: "GitHub", Icon: Github },
-              {
-                href: "https://www.linkedin.com/in/camilaescudero/",
-                label: "LinkedIn",
-                Icon: Linkedin,
-              },
-              { href: "https://x.com/camib0b", label: "Twitter/X", Icon: Twitter },
-            ].map(({ href, label, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                aria-label={label}
-              >
-                <Icon className="w-4 h-4" />
-              </a>
-            ))}
+            <SocialLinkControl href={SOCIAL_LINKS.github} label="GitHub" Icon={Github} />
+            <SocialLinkControl href={SOCIAL_LINKS.linkedin} label="LinkedIn" Icon={Linkedin} />
+            <SocialLinkControl href={SOCIAL_LINKS.x} label="Twitter/X" Icon={Twitter} />
             <EmailContactControl />
           </div>
         </div>

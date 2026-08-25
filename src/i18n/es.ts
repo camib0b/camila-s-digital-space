@@ -139,6 +139,8 @@ const es: Record<TranslationKey, string> = {
     "contact.showEmail": "Mostrar email",
     "contact.copyEmail": "Copiar email",
     "contact.copied": "Copiado",
+    "social.showLink": "Mostrar enlace",
+    "social.openInNewTab": "Abrir en una pestaña nueva",
 
     // Footer
     "footer.builtWith": "Hecho con cariño.",
