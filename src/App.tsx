@@ -7,8 +7,8 @@ import Index from "./pages/Index";
 import CV from "./pages/CV";
 import Ava from "./pages/Ava";
 import Portfolio from "./pages/Portfolio";
-import Tomorrow from "./pages/Tomorrow";
 import NotFound from "./pages/NotFound";
+import Tomorrow from "./pages/Tomorrow";
 
 const queryClient = new QueryClient();
 
