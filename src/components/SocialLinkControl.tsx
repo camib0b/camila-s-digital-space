@@ -1,4 +1,4 @@
-import { useEffect, useState, type ComponentType, type SVGProps } from "react";
+import { useEffect, type ComponentType, type SVGProps } from "react";
 import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -8,15 +8,24 @@ type SocialLinkControlProps = {
   href: string;
   label: string;
   Icon: SocialIcon;
+  isExpanded: boolean;
+  onClose: () => void;
+  onToggle: () => void;
 };
 
 function formatDisplayUrl(href: string): string {
   return href.replace(/^https?:\/\/(www\.)?/i, "");
 }
 
-const SocialLinkControl = ({ href, label, Icon }: SocialLinkControlProps) => {
+const SocialLinkControl = ({
+  href,
+  label,
+  Icon,
+  isExpanded,
+  onClose,
+  onToggle,
+}: SocialLinkControlProps) => {
   const { t } = useLanguage();
-  const [isExpanded, setIsExpanded] = useState(false);
   const displayUrl = formatDisplayUrl(href);
 
   useEffect(() => {
@@ -26,7 +35,7 @@ const SocialLinkControl = ({ href, label, Icon }: SocialLinkControlProps) => {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsExpanded(false);
+        onClose();
       }
     };
 
@@ -34,17 +43,13 @@ const SocialLinkControl = ({ href, label, Icon }: SocialLinkControlProps) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isExpanded]);
-
-  const handleToggle = () => {
-    setIsExpanded((previous) => !previous);
-  };
+  }, [isExpanded, onClose]);
 
   return (
     <div className="flex items-center gap-2">
       <button
         type="button"
-        onClick={handleToggle}
+        onClick={onToggle}
         className="text-muted-foreground hover:text-foreground transition-colors duration-200"
         aria-label={isExpanded ? label : t("social.showLink")}
         aria-expanded={isExpanded}
@@ -54,14 +59,19 @@ const SocialLinkControl = ({ href, label, Icon }: SocialLinkControlProps) => {
 
       {isExpanded && (
         <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground select-all whitespace-nowrap">
-            {displayUrl}
-          </span>
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="text-xs text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200 select-all whitespace-nowrap"
+          >
+            {displayUrl}
+          </a>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200"
             aria-label={t("social.openInNewTab")}
           >
             <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />

@@ -1,3 +1,6 @@
+/** Inclusive start of the contributions heatmap (YYYY-MM-DD). */
+export const CONTRIBUTION_CALENDAR_START_DATE = "2025-12-01";
+
 export const CONTRIBUTION_LEVELS = [
   "NONE",
   "FIRST_QUARTILE",

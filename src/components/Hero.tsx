@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { Github, Linkedin, Twitter, FileText, CalendarDays } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { GRADUATION_DATE } from "@/content/graduation";
 import { SOCIAL_LINKS } from "@/content/social";
 import EmailContactControl from "./EmailContactControl";
 import SocialLinkControl from "./SocialLinkControl";
@@ -9,35 +9,11 @@ import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 
 const Hero = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
+  const [activeContactItem, setActiveContactItem] = useState<string | null>(null);
 
-  const getMonthsUntilGraduation = (): number => {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const graduationThisYear = new Date(
-      currentYear,
-      GRADUATION_DATE.monthIndex,
-      GRADUATION_DATE.day
-    );
-
-    const targetYear = now > graduationThisYear ? currentYear + 1 : currentYear;
-    const currentMonthIndex = now.getMonth();
-
-    return (targetYear - currentYear) * 12 + (GRADUATION_DATE.monthIndex - currentMonthIndex);
-  };
-
-  const getHeroTagline = (): string => {
-    const monthsRemaining = getMonthsUntilGraduation();
-
-    if (language === "es") {
-      return monthsRemaining === 1
-        ? "Un mes para graduarme."
-        : `${monthsRemaining} meses para graduarme.`;
-    }
-
-    return monthsRemaining === 1
-      ? "One month until graduation."
-      : `${monthsRemaining} months until graduation.`;
+  const toggleContactItem = (itemId: string) => {
+    setActiveContactItem((currentItemId) => (currentItemId === itemId ? null : itemId));
   };
 
   return (
@@ -55,10 +31,7 @@ const Hero = () => {
 
           <h1 className="mb-4 animate-fade-up-delay-1">camila escudero</h1>
 
-          <p className="text-base text-muted-foreground mb-4 animate-fade-up-delay-2 leading-relaxed max-w-lg">
-            {getHeroTagline()}
-          </p>
-          <p className="text-sm text-muted-foreground/70 mb-10 animate-fade-up-delay-2">
+          <p className="text-base text-muted-foreground mb-10 animate-fade-up-delay-2 leading-relaxed max-w-lg">
             {t("hero.subtagline")}
           </p>
 
@@ -86,10 +59,35 @@ const Hero = () => {
           </div>
 
           <div className="flex items-center gap-4 animate-fade-up-delay-4">
-            <SocialLinkControl href={SOCIAL_LINKS.github} label="GitHub" Icon={Github} />
-            <SocialLinkControl href={SOCIAL_LINKS.linkedin} label="LinkedIn" Icon={Linkedin} />
-            <SocialLinkControl href={SOCIAL_LINKS.x} label="Twitter/X" Icon={Twitter} />
-            <EmailContactControl />
+            <SocialLinkControl
+              href={SOCIAL_LINKS.github}
+              label="GitHub"
+              Icon={Github}
+              isExpanded={activeContactItem === "github"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("github")}
+            />
+            <SocialLinkControl
+              href={SOCIAL_LINKS.linkedin}
+              label="LinkedIn"
+              Icon={Linkedin}
+              isExpanded={activeContactItem === "linkedin"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("linkedin")}
+            />
+            <SocialLinkControl
+              href={SOCIAL_LINKS.x}
+              label="Twitter/X"
+              Icon={Twitter}
+              isExpanded={activeContactItem === "x"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("x")}
+            />
+            <EmailContactControl
+              isExpanded={activeContactItem === "email"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("email")}
+            />
           </div>
         </div>
       </div>

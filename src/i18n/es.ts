@@ -3,22 +3,10 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.tagline": "A un año de graduarme.",
-    "hero.subtagline": "Dirigiendo mi trabajo hacia una carrera bacán",
-    "hero.cta.work": "Ver Mi Trabajo",
-    "hero.cta.cv": "Ver CV",
+    "hero.subtagline": "Ingeniería en Santiago. Hockey también. Mis ideas llegan aquí.",
+    "hero.cta.work": "Ver Trabajo",
+    "hero.cta.cv": "CV",
     "hero.cta.tomorrow": "Mañana",
-
-    // About
-    "about.label": "Sobre Mí",
-    "about.title": "Tecnología, pero humana.",
-    "about.description": "Tengo 26 años y estudio ingeniería en Santiago, a un año de graduarme. Cuando no estoy programando, estoy en la cancha jugando y entrenando hockey. Me gusta trabajar, y abordo cada proyecto con la misma energía que llevo al juego: enfocada, colaborativa, y siempre buscando mejorar.",
-    "about.highlight1.title": "Desarrolladora Web",
-    "about.highlight1.description": "Enfocada en construir interfaces limpias y eficientes con frameworks modernos.",
-    "about.highlight2.title": "Trabajo en Equipo",
-    "about.highlight2.description": "Varias prácticas y roles en ingeniería, analítica y operaciones.",
-    "about.highlight3.title": "Siempre Construyendo",
-    "about.highlight3.description": "Constantemente buscando proyectos paralelos para aprender, experimentar y crecer.",
 
     // Dashboard
     "dashboard.label": "Dashboard de Vida",
@@ -56,10 +44,10 @@ const es: Record<TranslationKey, string> = {
     "skills.tools": "Herramientas",
 
     // Experience
-    "experience.label": "Experiencia",
+    "experience.label": "Experiencia Laboral",
     "experience.title": "Dónde he aprendido",
-    "experience.description": "Roles y prácticas que formaron mi manera de pensar sobre código, datos, colaboración y construcción de productos.",
-    "experience.acfin.title": "Pasante en Análisis de Datos",
+    "experience.description": "Roles y prácticas.",
+    "experience.acfin.title": "Desarrolladora BI",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Actualidad",
     "experience.acfin.description": "Dashboards en Looker para portafolios de crédito estructurado orientados a inversionistas; reporting y analítica con SQL.",
@@ -103,12 +91,15 @@ const es: Record<TranslationKey, string> = {
     // Books
     "books.label": "Lista de Lectura",
     "books.title": "Libros que disfruto haber leído",
-    "books.description": "Haz clic en cualquier libro para leer mi reseña. Estos textos han influenciado cómo abordo problemas, entiendo sistemas y veo el mundo.",
-    "books.myTake": "Mi Opinión",
-    "books.republic.review": "Un texto fundacional que formó mi comprensión de la justicia y la sociedad ideal. Los diálogos de Platón te desafían a cuestionar todo — gobierno, verdad y la naturaleza de la realidad misma.",
-    "books.sophiesWorld.review": "Filosofía accesible a través de la narrativa. Este libro encendió mi curiosidad sobre las grandes preguntas cuando era más joven. Una puerta perfecta al pensamiento filosófico occidental.",
-    "books.chuquicamata.review": "Lectura esencial para entender la historia industrial de Chile. Bonnefoy captura las historias humanas detrás de la mina de cobre a cielo abierto más grande del mundo — una lente hacia el trabajo, la comunidad y el progreso.",
-    "books.nameOfTheRose.review": "Una obra maestra de ficción histórica envuelta en misterio. Eco teje semiótica, historia medieval y narrativa detectivesca en algo completamente cautivador. Denso pero gratificante.",
+    "books.description": "Textos que han formado cómo pienso — sobre justicia, trabajo, sistemas y el mundo.",
+    "books.goodreads": "Estantería completa en Goodreads",
+    "books.category.philosophy": "Filosofía",
+    "books.category.history": "Historia",
+    "books.category.literature": "Literatura",
+    "books.category.law": "Derecho",
+    "books.category.management": "Administración",
+    "books.category.psychology": "Psicología",
+    "books.category.biography": "Biografía",
 
     // Hockey
     "hockey.label": "Mi Camino en Hockey",
@@ -131,7 +122,6 @@ const es: Record<TranslationKey, string> = {
     // Contact
     "contact.label": "Contacto",
     "contact.title": "Conectemos",
-    "contact.description": "Personas, prácticas, proyectos. Hablar. Quiero saber de ti.",
     "contact.location": "Ubicación",
     "contact.email": "Email",
     "contact.preferEmail": "¿Prefieres email? Escríbeme directamente.",
@@ -139,6 +129,7 @@ const es: Record<TranslationKey, string> = {
     "contact.showEmail": "Mostrar email",
     "contact.copyEmail": "Copiar email",
     "contact.copied": "Copiado",
+    "contact.emailCopied": "Email copiado al portapapeles",
     "social.showLink": "Mostrar enlace",
     "social.openInNewTab": "Abrir en una pestaña nueva",
 
@@ -169,7 +160,7 @@ const es: Record<TranslationKey, string> = {
     "cv.fleetOptimizer.type": "Proyecto de Curso — Métodos de Optimización",
     "cv.fleetOptimizer.description": "Desarrollé una herramienta de optimización para asignar motores a través de una flota de aeronaves minimizando costos de mantenimiento mientras cumple restricciones de horarios de vuelo.",
     "cv.fleetOptimizer.impact": "Logró 12% de reducción de costos vs. heurística base en escenarios simulados",
-    "cv.acfin.title": "Pasante en Análisis de Datos",
+    "cv.acfin.title": "Desarrolladora BI",
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Actualidad",
     "cv.acfin.bullet1": "Construyo y mantengo dashboards y explores en Looker/LookML con analítica de portafolios de crédito estructurado para inversionistas.",

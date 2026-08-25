@@ -1,22 +1,10 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.tagline": "Eight months to graduation.",
-    "hero.subtagline": "Directioning my work towards a great career",
+    "hero.subtagline": "Engineering in Santiago. Hockey on the side. Ideas end up here.",
     "hero.cta.work": "See My Work",
     "hero.cta.cv": "View CV",
     "hero.cta.tomorrow": "Tomorrow",
-
-    // About
-    "about.label": "About",
-    "about.title": "Tech, but very human.",
-    "about.description": "I'm a 26-year-old engineering student in Santiago, one year away from graduation. When I'm not coding, I'm on the field—playing and coaching field hockey. I eager working, and I approach every project with the same energy I bring to the game: focused, collaborative, and always pushing to improve.",
-    "about.highlight1.title": "Web Developer",
-    "about.highlight1.description": "Focused on building clean, performant interfaces with modern frameworks.",
-    "about.highlight2.title": "Team Player",
-    "about.highlight2.description": "Multiple internships and roles across engineering, analytics, and operations.",
-    "about.highlight3.title": "Always Building",
-    "about.highlight3.description": "Constantly seeking side projects to learn, experiment, and grow.",
 
     // Dashboard
     "dashboard.label": "Life Dashboard",
@@ -54,10 +42,10 @@ const en = {
     "skills.tools": "Tools",
 
     // Experience
-    "experience.label": "Experience",
+    "experience.label": "In-Office Experience",
     "experience.title": "Where I've learned.",
     "experience.description": "Roles and internships that shaped how I think about code, data, collaboration, and building products.",
-    "experience.acfin.title": "Data Analytics Intern",
+    "experience.acfin.title": "BI Developer",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Present",
     "experience.acfin.description": "Ship investor-facing Looker dashboards for structured credit portfolios; SQL-heavy reporting and investor analytics.",
@@ -100,12 +88,15 @@ const en = {
     // Books
     "books.label": "Reading List",
     "books.title": "Books I'm glad to have read",
-    "books.description": "Click any book to read my review. These texts have influenced how I approach problems, understand systems, and see the world.",
-    "books.myTake": "My Take",
-    "books.republic.review": "A foundational text that shaped my understanding of justice and the ideal society. Plato's dialogues challenge you to question everything — governance, truth, and the nature of reality itself.",
-    "books.sophiesWorld.review": "Philosophy made accessible through storytelling. This book ignited my curiosity about the big questions when I was younger. A perfect gateway into Western philosophical thought.",
-    "books.chuquicamata.review": "Essential reading for understanding Chile's industrial history. Bonnefoy captures the human stories behind the world's largest open-pit copper mine — a lens into labor, community, and progress.",
-    "books.nameOfTheRose.review": "A masterpiece of historical fiction wrapped in mystery. Eco weaves semiotics, medieval history, and detective narrative into something utterly captivating. Dense but rewarding.",
+    "books.description": "Texts that have shaped how I think — about justice, work, systems, and the world.",
+    "books.goodreads": "Full shelf on Goodreads",
+    "books.category.philosophy": "Philosophy",
+    "books.category.history": "History",
+    "books.category.literature": "Literature",
+    "books.category.law": "Law",
+    "books.category.management": "Management",
+    "books.category.psychology": "Psychology",
+    "books.category.biography": "Biography",
 
     // Hockey
     "hockey.label": "Hockey Journey",
@@ -128,7 +119,6 @@ const en = {
     // Contact
     "contact.label": "Contact",
     "contact.title": "Let's connect.",
-    "contact.description": "Looking for internships, freelance projects, or just want to chat about web development? I'd love to hear from you.",
     "contact.location": "Location",
     "contact.email": "Email",
     "contact.preferEmail": "Prefer email? Send me a message directly.",
@@ -136,6 +126,7 @@ const en = {
     "contact.showEmail": "Show email",
     "contact.copyEmail": "Copy email",
     "contact.copied": "Copied",
+    "contact.emailCopied": "Email copied to clipboard",
     "social.showLink": "Show link",
     "social.openInNewTab": "Open in new tab",
 
@@ -166,7 +157,7 @@ const en = {
     "cv.fleetOptimizer.type": "Course Project — Optimization Methods",
     "cv.fleetOptimizer.description": "Developed an optimization tool to allocate engines across an aircraft fleet minimizing maintenance costs while meeting flight schedule constraints.",
     "cv.fleetOptimizer.impact": "Achieved 12% cost reduction vs. baseline heuristic in simulated scenarios",
-    "cv.acfin.title": "Data Analytics Intern",
+    "cv.acfin.title": "BI Developer",
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Present",
     "cv.acfin.bullet1": "Build and maintain Looker/LookML dashboards and explores that deliver structured-credit portfolio analytics to investors.",

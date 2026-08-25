@@ -1,0 +1,22 @@
+{
+  "name": "camilaescudero-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^0.8.1",
+    "@modelcontextprotocol/server": "2.0.0",
+    "agents": "^0.21.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.81.1"
+  }
+}

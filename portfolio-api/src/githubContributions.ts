@@ -5,6 +5,8 @@ export const GITHUB_CONTRIBUTIONS_CACHE_MAX_AGE_SECONDS = 6 * 60 * 60;
 const DEFAULT_GITHUB_USERNAME = "camib0b";
 const GITHUB_GRAPHQL_URL = "https://api.github.com/graphql";
 const GITHUB_USER_AGENT = "camila-s-digital-space (https://camilaescudero.cl)";
+/** Inclusive start of the public heatmap (GitHub's default is the trailing year). */
+const CONTRIBUTION_CALENDAR_START_DATE = "2025-12-01";
 
 const CONTRIBUTION_LEVELS = [
   "NONE",
@@ -42,9 +44,9 @@ export interface GithubContributionsPayload {
 }
 
 const CONTRIBUTION_CALENDAR_QUERY = `
-query($login: String!) {
+query($login: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $login) {
-    contributionsCollection {
+    contributionsCollection(from: $from, to: $to) {
       contributionCalendar {
         totalContributions
         colors
@@ -110,6 +112,7 @@ export async function handleGithubContributionsRequest(
 function githubContributionsCacheKey(request: Request): Request {
   const url = new URL(GITHUB_CONTRIBUTIONS_PATH, request.url);
   url.search = "";
+  url.searchParams.set("from", CONTRIBUTION_CALENDAR_START_DATE);
   return new Request(url.toString(), { method: "GET" });
 }
 
@@ -157,7 +160,10 @@ async function fetchContributionCalendar(env: Env): Promise<GithubContributionsP
     },
     body: JSON.stringify({
       query: CONTRIBUTION_CALENDAR_QUERY,
-      variables: { login },
+      variables: {
+        login,
+        ...contributionCalendarRange(),
+      },
     }),
   });
 
@@ -182,11 +188,13 @@ async function fetchContributionCalendar(env: Env): Promise<GithubContributionsP
     throw new GithubContributionsError("GitHub user not found", 404);
   }
 
+  const clippedCalendar = clipCalendarToStartDate(calendar);
+
   return {
-    totalContributions: calendar.totalContributions,
+    totalContributions: clippedCalendar.totalContributions,
     generatedAt: new Date().toISOString(),
-    months: calendar.months,
-    weeks: calendar.weeks,
+    months: clippedCalendar.months,
+    weeks: clippedCalendar.weeks,
   };
 }
 
@@ -213,6 +221,49 @@ function firstGraphqlErrorMessage(errors: unknown[]): string {
     }
   }
   return "GitHub request failed";
+}
+
+function contributionCalendarRange(): { from: string; to: string } {
+  return {
+    from: `${CONTRIBUTION_CALENDAR_START_DATE}T00:00:00.000Z`,
+    to: new Date().toISOString(),
+  };
+}
+
+function clipCalendarToStartDate(
+  calendar: Omit<GithubContributionsPayload, "generatedAt">
+): Omit<GithubContributionsPayload, "generatedAt"> {
+  const weeks: GithubContributionWeek[] = [];
+
+  for (const week of calendar.weeks) {
+    const contributionDays = week.contributionDays.filter(
+      (day) => day.date >= CONTRIBUTION_CALENDAR_START_DATE
+    );
+    if (contributionDays.length === 0) {
+      continue;
+    }
+    weeks.push({
+      firstDay: contributionDays[0].date,
+      contributionDays,
+    });
+  }
+
+  const months = calendar.months.filter(
+    (month) => month.firstDay >= CONTRIBUTION_CALENDAR_START_DATE
+  );
+
+  const totalContributions = weeks.reduce(
+    (sum, week) =>
+      sum +
+      week.contributionDays.reduce((weekSum, day) => weekSum + day.contributionCount, 0),
+    0
+  );
+
+  return {
+    totalContributions,
+    months,
+    weeks,
+  };
 }
 
 function readContributionCalendar(data: unknown): Omit<GithubContributionsPayload, "generatedAt"> | null {

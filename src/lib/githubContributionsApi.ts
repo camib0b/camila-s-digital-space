@@ -1,5 +1,6 @@
 import { PORTFOLIO_API_BASE } from "@/lib/portfolioApi";
 import {
+  CONTRIBUTION_CALENDAR_START_DATE,
   isContributionLevel,
   type GithubContributionDay,
   type GithubContributionMonth,
@@ -42,11 +43,46 @@ function parseGithubContributionsPayload(value: unknown): GithubContributionsPay
     return null;
   }
 
-  return {
+  return clipCalendarToStartDate({
     totalContributions: record.totalContributions,
     generatedAt: record.generatedAt,
     months: record.months.map(parseMonth).filter(isPresent),
     weeks: record.weeks.map(parseWeek).filter(isPresent),
+  });
+}
+
+function clipCalendarToStartDate(payload: GithubContributionsPayload): GithubContributionsPayload {
+  const weeks: GithubContributionWeek[] = [];
+
+  for (const week of payload.weeks) {
+    const contributionDays = week.contributionDays.filter(
+      (day) => day.date >= CONTRIBUTION_CALENDAR_START_DATE
+    );
+    if (contributionDays.length === 0) {
+      continue;
+    }
+    weeks.push({
+      firstDay: contributionDays[0].date,
+      contributionDays,
+    });
+  }
+
+  const months = payload.months.filter(
+    (month) => month.firstDay >= CONTRIBUTION_CALENDAR_START_DATE
+  );
+
+  const totalContributions = weeks.reduce(
+    (sum, week) =>
+      sum +
+      week.contributionDays.reduce((weekSum, day) => weekSum + day.contributionCount, 0),
+    0
+  );
+
+  return {
+    totalContributions,
+    generatedAt: payload.generatedAt,
+    months,
+    weeks,
   };
 }
 
