@@ -6,9 +6,14 @@ import { copyTextToClipboard } from "@/lib/utils";
 
 const COPY_FEEDBACK_MS = 1500;
 
-const EmailContactControl = () => {
+type EmailContactControlProps = {
+  isExpanded: boolean;
+  onClose: () => void;
+  onToggle: () => void;
+};
+
+const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactControlProps) => {
   const { t } = useLanguage();
-  const [isExpanded, setIsExpanded] = useState(false);
   const [hasCopied, setHasCopied] = useState(false);
   const copyResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -19,7 +24,7 @@ const EmailContactControl = () => {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsExpanded(false);
+        onClose();
       }
     };
 
@@ -27,7 +32,7 @@ const EmailContactControl = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isExpanded]);
+  }, [isExpanded, onClose]);
 
   useEffect(() => {
     return () => {
@@ -36,10 +41,6 @@ const EmailContactControl = () => {
       }
     };
   }, []);
-
-  const handleToggle = () => {
-    setIsExpanded((previous) => !previous);
-  };
 
   const handleCopy = async () => {
     const didCopy = await copyTextToClipboard(CONTACT_EMAIL);
@@ -60,7 +61,7 @@ const EmailContactControl = () => {
     <div className="flex items-center gap-2">
       <button
         type="button"
-        onClick={handleToggle}
+        onClick={onToggle}
         className="text-muted-foreground hover:text-foreground transition-colors duration-200"
         aria-label={isExpanded ? t("contact.email") : t("contact.showEmail")}
         aria-expanded={isExpanded}
@@ -85,6 +86,16 @@ const EmailContactControl = () => {
               <Copy className="w-3.5 h-3.5" aria-hidden="true" />
             )}
           </button>
+        </div>
+      )}
+
+      {hasCopied && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full border border-border bg-background px-4 py-2 text-xs text-foreground shadow-elev-2"
+        >
+          {t("contact.emailCopied")}
         </div>
       )}
     </div>

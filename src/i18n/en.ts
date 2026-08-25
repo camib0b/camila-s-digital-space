@@ -126,6 +126,7 @@ const en = {
     "contact.showEmail": "Show email",
     "contact.copyEmail": "Copy email",
     "contact.copied": "Copied",
+    "contact.emailCopied": "Email copied to clipboard",
     "social.showLink": "Show link",
     "social.openInNewTab": "Open in new tab",
 

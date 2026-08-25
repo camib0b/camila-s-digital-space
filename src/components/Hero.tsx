@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Github, Linkedin, Twitter, FileText, CalendarDays } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,6 +10,11 @@ import ThemeToggle from "./ThemeToggle";
 
 const Hero = () => {
   const { t } = useLanguage();
+  const [activeContactItem, setActiveContactItem] = useState<string | null>(null);
+
+  const toggleContactItem = (itemId: string) => {
+    setActiveContactItem((currentItemId) => (currentItemId === itemId ? null : itemId));
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-background">
@@ -53,10 +59,35 @@ const Hero = () => {
           </div>
 
           <div className="flex items-center gap-4 animate-fade-up-delay-4">
-            <SocialLinkControl href={SOCIAL_LINKS.github} label="GitHub" Icon={Github} />
-            <SocialLinkControl href={SOCIAL_LINKS.linkedin} label="LinkedIn" Icon={Linkedin} />
-            <SocialLinkControl href={SOCIAL_LINKS.x} label="Twitter/X" Icon={Twitter} />
-            <EmailContactControl />
+            <SocialLinkControl
+              href={SOCIAL_LINKS.github}
+              label="GitHub"
+              Icon={Github}
+              isExpanded={activeContactItem === "github"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("github")}
+            />
+            <SocialLinkControl
+              href={SOCIAL_LINKS.linkedin}
+              label="LinkedIn"
+              Icon={Linkedin}
+              isExpanded={activeContactItem === "linkedin"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("linkedin")}
+            />
+            <SocialLinkControl
+              href={SOCIAL_LINKS.x}
+              label="Twitter/X"
+              Icon={Twitter}
+              isExpanded={activeContactItem === "x"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("x")}
+            />
+            <EmailContactControl
+              isExpanded={activeContactItem === "email"}
+              onClose={() => setActiveContactItem(null)}
+              onToggle={() => toggleContactItem("email")}
+            />
           </div>
         </div>
       </div>
