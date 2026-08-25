@@ -1,0 +1,24 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "camilaescudero-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-08-25",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"routes": [
+		{
+			"pattern": "mcp.camilaescudero.cl",
+			"custom_domain": true
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "OAUTH_KV",
+			// Create with: npx wrangler kv namespace create OAUTH_KV
+			"id": "61b2ed5184a04ebba54871d45e5dca7c",
+			"remote": true
+		}
+	]
+}
