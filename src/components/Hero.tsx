@@ -85,7 +85,7 @@ const Hero = () => {
 
           <div className="flex items-center gap-4 animate-fade-up-delay-4">
             {[
-              { href: "https://github.com", label: "GitHub", Icon: Github },
+              { href: "https://github.com/camib0b", label: "GitHub", Icon: Github },
               {
                 href: "https://www.linkedin.com/in/camilaescudero/",
                 label: "LinkedIn",
