@@ -123,6 +123,9 @@ const es: Record<TranslationKey, string> = {
     "contact.email": "Email",
     "contact.preferEmail": "¿Prefieres email? Escríbeme directamente.",
     "contact.sendEmail": "Enviar Email",
+    "contact.showEmail": "Mostrar email",
+    "contact.copyEmail": "Copiar email",
+    "contact.copied": "Copiado",
 
     // Footer
     "footer.builtWith": "Hecho con cariño.",

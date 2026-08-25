@@ -1,7 +1,8 @@
-import { Github, Linkedin, Mail, Twitter, FileText, CalendarDays } from "lucide-react";
+import { Github, Linkedin, Twitter, FileText, CalendarDays } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { GRADUATION_DATE } from "@/content/graduation";
+import EmailContactControl from "./EmailContactControl";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 
@@ -91,19 +92,19 @@ const Hero = () => {
                 Icon: Linkedin,
               },
               { href: "https://x.com/camib0b", label: "Twitter/X", Icon: Twitter },
-              { href: "mailto:camilaescuderob@gmail.com", label: "Email", Icon: Mail },
             ].map(({ href, label, Icon }) => (
               <a
                 key={label}
                 href={href}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
                 aria-label={label}
               >
                 <Icon className="w-4 h-4" />
               </a>
             ))}
+            <EmailContactControl />
           </div>
         </div>
       </div>
