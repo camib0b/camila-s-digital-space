@@ -76,7 +76,7 @@ const Hero = () => {
               {t("hero.cta.tomorrow")}
             </Link>
             <a
-              href="#skills"
+              href="#personal-projects"
               className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline"
             >
               {t("hero.cta.work")}
