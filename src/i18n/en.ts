@@ -123,6 +123,8 @@ const en = {
     "contact.showEmail": "Show email",
     "contact.copyEmail": "Copy email",
     "contact.copied": "Copied",
+    "social.showLink": "Show link",
+    "social.openInNewTab": "Open in new tab",
 
     // Footer
     "footer.builtWith": "Built with care.",
