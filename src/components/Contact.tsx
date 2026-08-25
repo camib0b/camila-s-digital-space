@@ -42,10 +42,6 @@ const Contact = () => {
             {t("contact.label")}
           </h2>
 
-          <p className="text-base text-muted-foreground leading-relaxed mb-6">
-            {t("contact.description")}
-          </p>
-
           <div className="space-y-3 text-sm">
             <p className="flex items-center gap-2 text-muted-foreground">
               <MapPin className="w-3.5 h-3.5" />

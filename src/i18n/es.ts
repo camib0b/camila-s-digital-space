@@ -3,22 +3,10 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.tagline": "A un año de graduarme.",
-    "hero.subtagline": "Dirigiendo mi trabajo hacia una carrera bacán",
+    "hero.subtagline": "Ingeniería en Santiago. Hockey al lado. Las ideas terminan aquí.",
     "hero.cta.work": "Ver Mi Trabajo",
     "hero.cta.cv": "Ver CV",
     "hero.cta.tomorrow": "Mañana",
-
-    // About
-    "about.label": "Sobre Mí",
-    "about.title": "Tecnología, pero humana.",
-    "about.description": "Tengo 26 años y estudio ingeniería en Santiago, a un año de graduarme. Cuando no estoy programando, estoy en la cancha jugando y entrenando hockey. Me gusta trabajar, y abordo cada proyecto con la misma energía que llevo al juego: enfocada, colaborativa, y siempre buscando mejorar.",
-    "about.highlight1.title": "Desarrolladora Web",
-    "about.highlight1.description": "Enfocada en construir interfaces limpias y eficientes con frameworks modernos.",
-    "about.highlight2.title": "Trabajo en Equipo",
-    "about.highlight2.description": "Varias prácticas y roles en ingeniería, analítica y operaciones.",
-    "about.highlight3.title": "Siempre Construyendo",
-    "about.highlight3.description": "Constantemente buscando proyectos paralelos para aprender, experimentar y crecer.",
 
     // Dashboard
     "dashboard.label": "Dashboard de Vida",
@@ -59,7 +47,7 @@ const es: Record<TranslationKey, string> = {
     "experience.label": "Experiencia",
     "experience.title": "Dónde he aprendido",
     "experience.description": "Roles y prácticas que formaron mi manera de pensar sobre código, datos, colaboración y construcción de productos.",
-    "experience.acfin.title": "Pasante en Análisis de Datos",
+    "experience.acfin.title": "Desarrolladora BI",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Actualidad",
     "experience.acfin.description": "Dashboards en Looker para portafolios de crédito estructurado orientados a inversionistas; reporting y analítica con SQL.",
@@ -131,7 +119,6 @@ const es: Record<TranslationKey, string> = {
     // Contact
     "contact.label": "Contacto",
     "contact.title": "Conectemos",
-    "contact.description": "Personas, prácticas, proyectos. Hablar. Quiero saber de ti.",
     "contact.location": "Ubicación",
     "contact.email": "Email",
     "contact.preferEmail": "¿Prefieres email? Escríbeme directamente.",
@@ -169,7 +156,7 @@ const es: Record<TranslationKey, string> = {
     "cv.fleetOptimizer.type": "Proyecto de Curso — Métodos de Optimización",
     "cv.fleetOptimizer.description": "Desarrollé una herramienta de optimización para asignar motores a través de una flota de aeronaves minimizando costos de mantenimiento mientras cumple restricciones de horarios de vuelo.",
     "cv.fleetOptimizer.impact": "Logró 12% de reducción de costos vs. heurística base en escenarios simulados",
-    "cv.acfin.title": "Pasante en Análisis de Datos",
+    "cv.acfin.title": "Desarrolladora BI",
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Actualidad",
     "cv.acfin.bullet1": "Construyo y mantengo dashboards y explores en Looker/LookML con analítica de portafolios de crédito estructurado para inversionistas.",
