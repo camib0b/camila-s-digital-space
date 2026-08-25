@@ -1,6 +1,8 @@
 import { Github, Linkedin, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SOCIAL_LINKS } from "@/content/social";
 import EmailContactControl from "./EmailContactControl";
+import SocialLinkControl from "./SocialLinkControl";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -21,15 +23,9 @@ const Footer = () => {
             >
               <FileText className="w-4 h-4" />
             </Link>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="GitHub">
-              <Github className="w-4 h-4" />
-            </a>
-            <a href="https://www.linkedin.com/in/camilaescudero/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="LinkedIn">
-              <Linkedin className="w-4 h-4" />
-            </a>
-            <a href="https://x.com/camib0b" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors duration-200" aria-label="Twitter/X">
-              <Twitter className="w-4 h-4" />
-            </a>
+            <SocialLinkControl href={SOCIAL_LINKS.github} label="GitHub" Icon={Github} />
+            <SocialLinkControl href={SOCIAL_LINKS.linkedin} label="LinkedIn" Icon={Linkedin} />
+            <SocialLinkControl href={SOCIAL_LINKS.x} label="Twitter/X" Icon={Twitter} />
             <EmailContactControl />
           </div>
         </div>
