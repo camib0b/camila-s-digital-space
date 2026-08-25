@@ -5,6 +5,7 @@ const en = {
     "hero.subtagline": "Directioning my work towards a great career",
     "hero.cta.work": "See My Work",
     "hero.cta.cv": "View CV",
+    "hero.cta.tomorrow": "Tomorrow",
 
     // About
     "about.label": "About",
