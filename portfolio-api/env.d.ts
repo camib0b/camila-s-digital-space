@@ -4,6 +4,6 @@ interface Env {
   XAI_API_KEY?: string;
   /** Fine-grained PAT (user profile read) or classic PAT with `read:user`. */
   GITHUB_TOKEN?: string;
-  /** Defaults to camib0b when unset. */
+  /** Plaintext Worker var from wrangler.jsonc; defaults to camib0b. */
   GITHUB_USERNAME?: string;
 }

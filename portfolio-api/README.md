@@ -23,7 +23,7 @@ npx wrangler secret put GITHUB_TOKEN
 
 `GITHUB_TOKEN` is required for `/api/github/contributions`. Use a fine-grained PAT with user profile read access, or a classic PAT with `read:user`. Never send this token to the client.
 
-Optional Worker variable `GITHUB_USERNAME` (defaults to `camib0b`).
+`GITHUB_USERNAME` is a plaintext Worker var in [`wrangler.jsonc`](wrangler.jsonc) (`vars.GITHUB_USERNAME`), defaulting to `camib0b`. Override it there, in the dashboard, or locally in `.dev.vars` if you need a different login. It is not a secret.
 
 For local development, copy [`.dev.vars.example`](.dev.vars.example) to `.dev.vars` and fill in values. Do not commit `.dev.vars`.
 

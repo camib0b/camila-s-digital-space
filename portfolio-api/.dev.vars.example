@@ -7,5 +7,5 @@
 FINNHUB_API_KEY=
 XAI_API_KEY=
 GITHUB_TOKEN=
-# Optional. Defaults to camib0b.
-GITHUB_USERNAME=camib0b
+# Optional override. Default is vars.GITHUB_USERNAME in wrangler.jsonc (camib0b).
+# GITHUB_USERNAME=camib0b
