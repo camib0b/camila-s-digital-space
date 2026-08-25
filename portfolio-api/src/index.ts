@@ -1,5 +1,6 @@
 import { AI_MODELS, buildAiPrompt, runAiInsight, type StockSnapshot } from "./aiInsight";
-import { CORS_HEADERS, PORTFOLIO_PATHS } from "./cors";
+import { CORS_HEADERS, GITHUB_CONTRIBUTIONS_PATH, PORTFOLIO_PATHS } from "./cors";
+import { handleGithubContributionsRequest } from "./githubContributions";
 import { computeHoldings, getTransactions } from "./holdings";
 import { buildPortfolioHistory } from "./history";
 import { fetchQuote } from "./quotes";
@@ -47,7 +48,7 @@ async function getPortfolioSnapshot(env: Env) {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
@@ -58,6 +59,10 @@ export default {
     }
 
     try {
+      if (url.pathname === GITHUB_CONTRIBUTIONS_PATH && request.method === "GET") {
+        return handleGithubContributionsRequest(request, env, ctx);
+      }
+
       if (url.pathname === "/api/portfolio" && request.method === "GET") {
         const snapshot = await getPortfolioSnapshot(env);
 

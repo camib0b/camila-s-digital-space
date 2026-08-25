@@ -14,5 +14,9 @@
 
   "ai": {
     "binding": "AI"
+  },
+
+  "vars": {
+    "GITHUB_USERNAME": "camib0b"
   }
 }

@@ -84,6 +84,19 @@ const en = {
     "personalProjects.capital":
       "Live investment portfolio dashboard with stock holdings, Finnhub price data, and on-demand AI insights via a Cloudflare Workers API.",
 
+    // GitHub
+    "github.label": "Contributions",
+    "github.summary": "{n} contributions in the last year",
+    "github.less": "less",
+    "github.more": "more",
+    "github.error": "couldn't load github activity",
+    "github.emptyDay": "no contributions",
+    "github.oneContribution": "1 contribution",
+    "github.nContributions": "{n} contributions",
+    "github.weekdayMon": "mon",
+    "github.weekdayWed": "wed",
+    "github.weekdayFri": "fri",
+
     // Books
     "books.label": "Reading List",
     "books.title": "Books I'm glad to have read",

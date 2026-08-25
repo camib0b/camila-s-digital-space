@@ -40,6 +40,12 @@
 
     --shadow-elev-2: 0 4px 12px rgba(0,0,0,0.08);
     --shadow-elev-3: 0 8px 24px rgba(0,0,0,0.10);
+
+    --contrib-empty: 220 10% 93%;
+    --contrib-q1: 172 30% 82%;
+    --contrib-q2: 172 38% 62%;
+    --contrib-q3: 172 45% 42%;
+    --contrib-q4: 172 50% 26%;
   }
 
   .dark {
@@ -75,6 +81,12 @@
 
     --shadow-elev-2: 0 4px 12px rgba(0,0,0,0.3);
     --shadow-elev-3: 0 8px 24px rgba(0,0,0,0.4);
+
+    --contrib-empty: 220 8% 16%;
+    --contrib-q1: 172 35% 16%;
+    --contrib-q2: 172 40% 24%;
+    --contrib-q3: 172 45% 36%;
+    --contrib-q4: 172 50% 48%;
   }
 
   * {
