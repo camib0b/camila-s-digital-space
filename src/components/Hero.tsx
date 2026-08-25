@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Github, Linkedin, Twitter, FileText, CalendarDays } from "lucide-react";
+import { Github, Linkedin, Twitter, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SOCIAL_LINKS } from "@/content/social";
@@ -42,13 +42,6 @@ const Hero = () => {
             >
               <FileText className="w-3.5 h-3.5" />
               {t("hero.cta.cv")}
-            </Link>
-            <Link
-              to="/tomorrow"
-              className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline flex items-center gap-1.5"
-            >
-              <CalendarDays className="w-3.5 h-3.5" />
-              {t("hero.cta.tomorrow")}
             </Link>
             <a
               href="#after-hero"

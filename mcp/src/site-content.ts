@@ -64,6 +64,7 @@ export const projects = [
   {
     id: "video-analysis",
     name: "AVA",
+    category: "personal-project",
     description:
       "Video analysis app written in C++. AVA is a field-hockey video analysis tool: load a match recording, tag key moments with one keystroke, and share highlight clips.",
     url: `${SITE_URL}/ava`,
@@ -71,22 +72,33 @@ export const projects = [
   {
     id: "clip-library",
     name: "Clip library",
+    category: "personal-project",
     description:
       "Browsable library of field-hockey match clips for coaching and game analysis. Clips are generated using AVA.",
     url: "https://carpeta.cl/",
   },
   {
-    id: "capital",
-    name: "Capital",
-    description:
-      "Live investment portfolio dashboard with stock holdings, Finnhub price data, and on-demand AI insights via a Cloudflare Workers API.",
-    url: `${SITE_URL}/capital`,
-  },
-  {
     id: "raycast",
     name: "Raycast extension",
+    category: "personal-project",
     description: "Raycast extension published as camib0b/zodme.",
     url: "https://www.raycast.com/camib0b/zodme",
+  },
+  {
+    id: "tomorrow",
+    name: "Agentic routine planner",
+    category: "learning-lab",
+    description:
+      "Agentic routine planner that uses MCP to fetch Google Calendar events and reusable skills to plan the day. Built as a first agentic development exercise, it runs automatically every day at 9:30 AM.",
+    url: `${SITE_URL}/tomorrow`,
+  },
+  {
+    id: "capital",
+    name: "Capital",
+    category: "learning-lab",
+    description:
+      "Live portfolio exercise built to learn how to connect market pricing data with an LLM for on-demand text generation.",
+    url: `${SITE_URL}/capital`,
   },
 ] as const;
 

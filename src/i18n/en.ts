@@ -4,7 +4,6 @@ const en = {
     "hero.subtagline": "Engineering in Santiago. Hockey on the side. Ideas end up here.",
     "hero.cta.work": "See My Work",
     "hero.cta.cv": "View CV",
-    "hero.cta.tomorrow": "Tomorrow",
 
     // Dashboard
     "dashboard.label": "Life Dashboard",
@@ -69,8 +68,13 @@ const en = {
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
     "personalProjects.clipLibrary": "Browsable library of field-hockey match clips for coaching and game analysis. Clips are generated using AVA.",
     "personalProjects.view": "View project",
+    "personalProjects.learningLab.label": "Learning Lab",
+    "personalProjects.learningLab.description":
+      "Practical experiments for exploring new tools and development workflows.",
+    "personalProjects.tomorrow":
+      "Agentic routine planner that uses MCP to fetch my Google Calendar events and reusable skills to plan the day. Built as my first agentic development exercise, it runs automatically every day at 9:30 AM.",
     "personalProjects.capital":
-      "Live investment portfolio dashboard with stock holdings, Finnhub price data, and on-demand AI insights via a Cloudflare Workers API.",
+      "Live portfolio exercise built to learn how to connect market pricing data with an LLM for on-demand text generation.",
 
     // GitHub
     "github.label": "Contributions",
