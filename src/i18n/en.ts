@@ -42,7 +42,7 @@ const en = {
     "skills.tools": "Tools",
 
     // Experience
-    "experience.label": "Experience",
+    "experience.label": "In-Office Experience",
     "experience.title": "Where I've learned.",
     "experience.description": "Roles and internships that shaped how I think about code, data, collaboration, and building products.",
     "experience.acfin.title": "BI Developer",
