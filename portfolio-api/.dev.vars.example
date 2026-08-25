@@ -1,0 +1,11 @@
+# Copy to .dev.vars for local `wrangler dev`. Do not commit real values.
+# Production secrets:
+#   npx wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put FINNHUB_API_KEY
+#   npx wrangler secret put XAI_API_KEY
+
+FINNHUB_API_KEY=
+XAI_API_KEY=
+GITHUB_TOKEN=
+# Optional. Defaults to camib0b.
+GITHUB_USERNAME=camib0b

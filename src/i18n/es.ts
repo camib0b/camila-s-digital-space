@@ -87,6 +87,19 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.capital":
       "Panel de portafolio de inversión en vivo con holdings, precios de Finnhub e insights de IA bajo demanda vía una API en Cloudflare Workers.",
 
+    // GitHub
+    "github.label": "Contribuciones",
+    "github.summary": "{n} contribuciones en el último año",
+    "github.less": "menos",
+    "github.more": "más",
+    "github.error": "no se pudo cargar la actividad de github",
+    "github.emptyDay": "sin contribuciones",
+    "github.oneContribution": "1 contribución",
+    "github.nContributions": "{n} contribuciones",
+    "github.weekdayMon": "lun",
+    "github.weekdayWed": "mié",
+    "github.weekdayFri": "vie",
+
     // Books
     "books.label": "Lista de Lectura",
     "books.title": "Libros que disfruto haber leído",
