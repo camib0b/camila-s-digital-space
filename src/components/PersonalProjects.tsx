@@ -6,7 +6,7 @@ const PersonalProjects = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="personal-projects" className="py-20 md:py-28 bg-background">
+    <section id="personal-projects" className="pt-20 md:pt-28 pb-8 md:pb-10 bg-background">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-8">

@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 import type { TranslationKey } from "@/i18n/types";
 import {
+  CONTRIBUTION_CALENDAR_START_DATE,
   CONTRIBUTION_LEVELS,
   type ContributionLevel,
   type GithubContributionMonth,
@@ -12,8 +13,8 @@ import {
 
 const CELL_SIZE_PX = 11;
 const CELL_GAP_PX = 3;
-const SKELETON_WEEK_COUNT = 53;
 const MONTH_ROW_HEIGHT_PX = 14;
+const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
 
 const CONTRIBUTION_LEVEL_CLASS: Record<ContributionLevel, string> = {
   NONE: "bg-[hsl(var(--contrib-empty))]",
@@ -56,13 +57,13 @@ const GitHubContributions = () => {
     });
   };
 
-  const weekCount = data?.weeks.length ?? SKELETON_WEEK_COUNT;
+  const weekCount = data?.weeks.length ?? skeletonWeekCount();
   const monthCells = data
     ? monthLabelCells(data.months, data.weeks, language)
-    : [{ label: "", span: SKELETON_WEEK_COUNT }];
+    : [{ label: "", span: skeletonWeekCount() }];
 
   return (
-    <section id="github" className="py-20 md:py-28 bg-background">
+    <section id="github" className="pt-8 md:pt-10 pb-20 md:pb-28 bg-background">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-8">
@@ -135,7 +136,7 @@ const GitHubContributions = () => {
                           gap: CELL_GAP_PX,
                         }}
                       >
-                        {Array.from({ length: SKELETON_WEEK_COUNT * 7 }, (_, index) => (
+                        {Array.from({ length: skeletonWeekCount() * 7 }, (_, index) => (
                           <span
                             key={index}
                             className="block animate-pulse rounded-[2px] bg-[hsl(var(--contrib-empty))]"
@@ -217,6 +218,15 @@ const GitHubContributions = () => {
     </section>
   );
 };
+
+function skeletonWeekCount(): number {
+  const start = Date.parse(`${CONTRIBUTION_CALENDAR_START_DATE}T00:00:00Z`);
+  if (Number.isNaN(start)) {
+    return 1;
+  }
+  const elapsedMilliseconds = Math.max(0, Date.now() - start);
+  return Math.max(1, Math.ceil(elapsedMilliseconds / MS_PER_WEEK));
+}
 
 function contributionGridRow(weekday: number): number {
   if (weekday === 7) {
