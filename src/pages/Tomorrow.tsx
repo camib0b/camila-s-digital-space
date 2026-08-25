@@ -1,245 +1,232 @@
-import { Calendar, Clock, MapPin, Moon, Sun, AlertTriangle } from "lucide-react";
+import { Clock, MapPin, Moon } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  STATS,
+  durationLabel,
+  laterBlocks,
+  mapsUrl,
+  morningBlocks,
+  nightBefore,
+  pageCopy,
+  type Lang,
+  type ScheduleBlock,
+} from "@/content/tomorrow";
 
-type Block = {
-  time: string;
-  title: string;
-  detail?: string;
-  location?: string;
-  kind: "routine" | "work" | "class" | "sport" | "transit" | "note";
-};
+function BlockCard({
+  block,
+  lang,
+  last,
+}: {
+  block: ScheduleBlock;
+  lang: Lang;
+  last?: boolean;
+}) {
+  const transit = block.kind === "transit";
+  const plan = block.kind === "plan";
+  const dur = block.end ? durationLabel(block.start, block.end, lang) : "";
 
-const morningBlocks: Block[] = [
-  {
-    time: "06:15",
-    title: "Alarm · wake up",
-    detail: "400–500 ml water right away. Soft start — no rush.",
-    kind: "routine",
-  },
-  {
-    time: "06:15 – 06:45",
-    title: "Morning routine",
-    detail: "Bathroom, face, light stretch. Clothes ready the night before.",
-    kind: "routine",
-  },
-  {
-    time: "06:45 – 07:15",
-    title: "Breakfast + prep",
-    detail: "Protein-forward breakfast. Pack bag for uni + any WFH notes.",
-    kind: "routine",
-  },
-  {
-    time: "07:15 – 07:30",
-    title: "Buffer · settle in",
-    detail: "Open laptop, clear desk, start work environment.",
-    kind: "routine",
-  },
-  {
-    time: "07:30 – 09:30",
-    title: "Work from home",
-    detail: "Focused block before classes.",
-    location: "Home",
-    kind: "work",
-  },
-  {
-    time: "09:30 – 09:55",
-    title: "Wrap WFH · leave for uni",
-    detail: "Close laptop, grab bag, head out. Aim to leave by ~09:55.",
-    kind: "transit",
-  },
-  {
-    time: "09:55 – 11:00",
-    title: "Commute to campus",
-    detail: "~55–60 min public transport from doorstep to classroom.",
-    location: "University",
-    kind: "transit",
-  },
-];
-
-const dayBlocks: Block[] = [
-  {
-    time: "11:00 – 17:20",
-    title: "Clases",
-    detail: "11:00 BDD · 12:20 Innovación · 14:50 ETI",
-    location: "University",
-    kind: "class",
-  },
-  {
-    time: "17:00 – 19:00",
-    title: "Sub-12 grupo azul",
-    detail: "Hockey training — overlaps end of classes; plan exit accordingly.",
-    location: "Hockey venue",
-    kind: "sport",
-  },
-];
-
-const nightBefore = [
-  "Lay out clothes for WFH + uni + hockey bag if needed",
-  "Pack uni backpack (laptop, chargers, notes)",
-  "Prep breakfast items / water bottle in fridge",
-  "Set alarm for 06:15 (and a backup +10 min)",
-  "Charge phone + laptop",
-  "Lights out aiming for ~22:30–23:00 for 7.5–8 h sleep",
-];
-
-const kindStyles: Record<
-  Block["kind"],
-  { border: string; badge: string; label: string }
-> = {
-  routine: {
-    border: "border-l-sky-500/70",
-    badge: "bg-sky-500/10 text-sky-700 dark:text-sky-300",
-    label: "Routine",
-  },
-  work: {
-    border: "border-l-amber-500/70",
-    badge: "bg-amber-500/10 text-amber-800 dark:text-amber-300",
-    label: "Work",
-  },
-  class: {
-    border: "border-l-violet-500/70",
-    badge: "bg-violet-500/10 text-violet-800 dark:text-violet-300",
-    label: "Class",
-  },
-  sport: {
-    border: "border-l-emerald-500/70",
-    badge: "bg-emerald-500/10 text-emerald-800 dark:text-emerald-300",
-    label: "Hockey",
-  },
-  transit: {
-    border: "border-l-slate-400/70",
-    badge: "bg-slate-500/10 text-slate-700 dark:text-slate-300",
-    label: "Transit",
-  },
-  note: {
-    border: "border-l-muted-foreground/40",
-    badge: "bg-muted text-muted-foreground",
-    label: "Note",
-  },
-};
-
-function TimelineItem({ block }: { block: Block }) {
-  const style = kindStyles[block.kind];
   return (
-    <li
-      className={`relative pl-4 border-l-2 ${style.border} py-3 first:pt-0 last:pb-0`}
-    >
-      <div className="flex flex-wrap items-center gap-2 mb-1">
-        <span className="text-xs font-medium tabular-nums text-foreground flex items-center gap-1">
-          <Clock className="w-3 h-3 text-muted-foreground" />
-          {block.time}
-        </span>
-        <span
-          className={`text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded ${style.badge}`}
-        >
-          {style.label}
-        </span>
+    <article className="grid grid-cols-[4.5rem_1fr] gap-4 sm:grid-cols-[5.5rem_1fr] sm:gap-6">
+      <div className="pt-1 text-right font-mono tabular-nums">
+        <div className="text-[0.8125rem] font-medium text-foreground">{block.start}</div>
+        {block.end ? (
+          <div className="mt-0.5 text-[0.6875rem] text-muted-foreground">{block.end}</div>
+        ) : null}
       </div>
-      <p className="text-sm font-medium text-foreground">{block.title}</p>
-      {block.detail && (
-        <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-          {block.detail}
-        </p>
-      )}
-      {block.location && (
-        <p className="text-xs text-muted-foreground mt-1 flex items-start gap-1">
-          <MapPin className="w-3 h-3 mt-0.5 shrink-0" />
-          <span>{block.location}</span>
-        </p>
-      )}
-    </li>
+      <div className={`relative min-w-0 pl-5 ${last ? "pb-0" : "pb-6"}`}>
+        <span
+          className={`absolute left-0 top-2.5 size-2 rounded-full ${
+            transit || plan ? "border border-border bg-background" : "bg-foreground"
+          }`}
+        />
+        {!last ? (
+          <span className="absolute bottom-1 left-[3.5px] top-5 w-px bg-border" />
+        ) : null}
+        <div
+          className={`rounded-[10px] p-4 ${
+            transit
+              ? "border border-dashed border-border bg-transparent"
+              : "border border-border bg-card"
+          }`}
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-border px-2 py-0.5 text-[0.625rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+              {block.tag[lang]}
+            </span>
+            {dur ? (
+              <span className="font-mono text-[0.6875rem] tabular-nums text-muted-foreground">
+                {dur}
+              </span>
+            ) : null}
+          </div>
+          <h2 className="mt-2 text-[1.0625rem] font-medium tracking-tight text-foreground">
+            {block.title[lang]}
+          </h2>
+          {block.detail ? (
+            <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-muted-foreground">
+              {block.detail[lang]}
+            </p>
+          ) : null}
+          {block.location ? (
+            <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+              <span className="inline-flex items-start gap-1.5">
+                <MapPin className="mt-0.5 size-3 shrink-0" strokeWidth={1.75} />
+                {block.location[lang]}
+              </span>
+              {block.mapQuery ? (
+                <a
+                  href={mapsUrl(block.mapQuery)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground/70 transition-colors duration-200 hover:text-foreground"
+                >
+                  {pageCopy.map[lang]}
+                </a>
+              ) : null}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </article>
   );
 }
 
 const Tomorrow = () => {
-  const { t, language } = useLanguage();
-
-  const dateLabel =
-    language === "es"
-      ? "Miércoles 26 de agosto de 2026"
-      : "Wednesday, 26 August 2026";
+  const { language } = useLanguage();
+  const lang: Lang = language === "es" ? "es" : "en";
 
   return (
     <main className="min-h-screen bg-background">
       <PageHeader
-        backLabel={t("tomorrow.back")}
+        backLabel={pageCopy.back[lang]}
         stickyClassName="border-b border-border sticky top-0 z-50 bg-background/90 backdrop-blur-sm"
         containerClassName="container px-6 py-3 flex items-center justify-between max-w-3xl mx-auto"
       />
 
-      <div className="container px-6 py-10 max-w-3xl mx-auto">
-        <header className="mb-10">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5" />
-            {t("tomorrow.label")}
+      <div className="container px-6 max-w-3xl mx-auto">
+        <header className="pb-10 pt-16 sm:pt-20">
+          <p className="mb-4 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            {pageCopy.kicker[lang]}
           </p>
-          <h1 className="text-2xl md:text-3xl font-medium text-foreground mb-2">
-            {t("tomorrow.title")}
+          <h1 className="mb-4 text-3xl md:text-5xl font-medium tracking-tight leading-[1.1]">
+            {pageCopy.title[lang]}
           </h1>
-          <p className="text-sm text-muted-foreground mb-1">{dateLabel}</p>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            {t("tomorrow.subtitle")}
+          <p className="mb-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            {pageCopy.subtitle[lang]}
           </p>
+          <p className="text-xs text-muted-foreground">{pageCopy.timezone[lang]}</p>
+
+          <dl className="mt-10 grid grid-cols-2 gap-4 border-y border-border py-5 sm:grid-cols-4">
+            <div>
+              <dt className="text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+                {pageCopy.blocksLabel[lang]}
+              </dt>
+              <dd className="mt-1 font-mono text-lg tabular-nums text-foreground">
+                {STATS.blocks}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+                {pageCopy.committed[lang]}
+              </dt>
+              <dd className="mt-1 font-mono text-lg tabular-nums text-foreground">
+                {STATS.committed}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+                {pageCopy.transit[lang]}
+              </dt>
+              <dd className="mt-1 font-mono text-lg tabular-nums text-foreground">
+                {STATS.transit}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+                {pageCopy.first[lang]}
+              </dt>
+              <dd className="mt-1 font-mono text-lg tabular-nums text-foreground">
+                {STATS.first}
+              </dd>
+            </div>
+          </dl>
         </header>
 
-        <div className="mb-10 rounded-lg border border-border bg-card px-4 py-3 flex gap-3">
-          <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            {t("tomorrow.tip")}
-          </p>
+        <div className="mb-10 rounded-[10px] border border-border bg-card px-4 py-3">
+          <p className="text-xs leading-relaxed text-muted-foreground">{pageCopy.note[lang]}</p>
         </div>
 
-        <section className="mb-12">
-          <div className="flex items-center gap-2 mb-5">
-            <Sun className="w-4 h-4 text-amber-500" />
-            <h2 className="text-sm font-medium uppercase tracking-wide text-foreground">
-              {t("tomorrow.morning")}
-            </h2>
-          </div>
-          <ul className="space-y-0">
-            {morningBlocks.map((b) => (
-              <TimelineItem key={b.time + b.title} block={b} />
-            ))}
-          </ul>
+        <section className="mb-4">
+          {morningBlocks.map((block, i) => (
+            <BlockCard
+              key={block.id}
+              block={block}
+              lang={lang}
+              last={i === morningBlocks.length - 1}
+            />
+          ))}
         </section>
 
-        <section className="mb-12">
-          <div className="flex items-center gap-2 mb-5">
-            <Calendar className="w-4 h-4 text-violet-500" />
-            <h2 className="text-sm font-medium uppercase tracking-wide text-foreground">
-              {t("tomorrow.calendar")}
-            </h2>
+        <section className="mb-16 mt-6 rounded-[10px] border border-border bg-card p-5">
+          <div className="mb-2 flex items-center gap-2">
+            <Clock className="size-3.5 text-muted-foreground" strokeWidth={1.75} />
+            <h3 className="text-[0.625rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              {pageCopy.later[lang]}
+            </h3>
           </div>
-          <ul className="space-y-0">
-            {dayBlocks.map((b) => (
-              <TimelineItem key={b.time + b.title} block={b} />
-            ))}
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <div className="flex items-center gap-2 mb-5">
-            <Moon className="w-4 h-4 text-indigo-400" />
-            <h2 className="text-sm font-medium uppercase tracking-wide text-foreground">
-              {t("tomorrow.nightBefore")}
-            </h2>
-          </div>
-          <ul className="space-y-2">
-            {nightBefore.map((item) => (
+          <p className="max-w-lg text-sm leading-relaxed text-muted-foreground">
+            {pageCopy.laterBody[lang]}
+          </p>
+          <ul className="mt-5">
+            {laterBlocks.map((block) => (
               <li
-                key={item}
-                className="text-sm text-muted-foreground flex gap-2 leading-relaxed"
+                key={block.id}
+                className="mt-4 flex items-start justify-between gap-4 border-t border-border pt-4 first:mt-0 first:border-t-0 first:pt-0"
               >
-                <span className="text-foreground/40 select-none">·</span>
-                <span>{item}</span>
+                <div>
+                  <div className="font-mono text-xs tabular-nums text-muted-foreground">
+                    {block.start}–{block.end}
+                  </div>
+                  <div className="mt-1 text-sm font-medium text-foreground">
+                    {block.title[lang]}
+                  </div>
+                  {block.location ? (
+                    <p className="mt-1.5 max-w-md text-xs text-muted-foreground">
+                      {block.location[lang]}
+                    </p>
+                  ) : null}
+                </div>
+                <span className="shrink-0 rounded-full border border-border px-2 py-0.5 text-[0.625rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                  {block.tag[lang]}
+                </span>
               </li>
             ))}
           </ul>
         </section>
 
-        <p className="text-[11px] text-muted-foreground/70 border-t border-border pt-6">
-          Snapshot from Google Calendar · generated for camilaescudero.cl/tomorrow
+        <section className="mb-16">
+          <div className="mb-4 flex items-center gap-2">
+            <Moon className="size-3.5 text-muted-foreground" strokeWidth={1.75} />
+            <h3 className="text-[0.625rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              {pageCopy.night[lang]}
+            </h3>
+          </div>
+          <ul className="space-y-2">
+            {nightBefore.map((item) => (
+              <li
+                key={item.es}
+                className="flex gap-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                <span className="select-none text-foreground/35">·</span>
+                <span>{item[lang]}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <p className="text-[11px] text-muted-foreground/70 border-t border-border pt-6 pb-10">
+          {pageCopy.source[lang]}
         </p>
       </div>
     </main>

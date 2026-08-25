@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mañana · Camila Escudero</title>
     <meta name="description" content="Agenda de la mañana — miércoles 26 de agosto 2026." />
+    <link rel="canonical" href="https://camilaescudero.cl/tomorrow" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,11 +29,11 @@
       }
       * { box-sizing: border-box; }
       html, body { margin: 0; min-height: 100%; }
+      html { -webkit-font-smoothing: antialiased; }
       body {
         background: var(--bg);
         color: var(--fg);
         font-family: var(--font);
-        -webkit-font-smoothing: antialiased;
       }
       a { color: inherit; }
       button {
@@ -43,7 +44,7 @@
         cursor: pointer;
       }
       .wrap { max-width: 48rem; margin: 0 auto; padding: 0 1.5rem; }
-      header {
+      header.top {
         position: sticky;
         top: 0;
         z-index: 20;
@@ -86,17 +87,21 @@
         letter-spacing: -0.03em;
         line-height: 1.1;
         margin: 0 0 1rem;
+        text-wrap: balance;
       }
       .lede { max-width: 36rem; color: var(--muted); line-height: 1.6; margin: 0 0 0.5rem; }
       .tz { font-size: 0.75rem; color: var(--muted); margin: 0; }
       .stats {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.75rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
         border-top: 1px solid var(--line);
         border-bottom: 1px solid var(--line);
         padding: 1.25rem 0;
         margin-top: 2.5rem;
+      }
+      @media (min-width: 640px) {
+        .stats { grid-template-columns: repeat(4, 1fr); }
       }
       .stats dt {
         font-size: 0.625rem;
@@ -110,6 +115,16 @@
         font-size: 1.125rem;
         font-variant-numeric: tabular-nums;
       }
+      .note {
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        margin: 0 0 2.25rem;
+        font-size: 0.75rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
       .block {
         display: grid;
         grid-template-columns: 4.5rem 1fr;
@@ -122,6 +137,7 @@
       .time .start { font-size: 0.8125rem; font-weight: 500; }
       .time .end { margin-top: 0.15rem; font-size: 0.6875rem; color: var(--muted); }
       .rail { position: relative; min-width: 0; padding: 0 0 1.5rem 1.25rem; }
+      .block:last-of-type .rail { padding-bottom: 0; }
       .rail::before {
         content: "";
         position: absolute;
@@ -131,6 +147,7 @@
         width: 1px;
         background: var(--line);
       }
+      .block:last-of-type .rail::before { display: none; }
       .dot {
         position: absolute;
         left: -3.5px;
@@ -177,7 +194,7 @@
         background: var(--card);
         border-radius: 10px;
         padding: 1.25rem;
-        margin: 0.5rem 0 4rem;
+        margin: 1.5rem 0 0;
       }
       .later h3 {
         margin: 0;
@@ -201,6 +218,25 @@
       .later .when { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
       .later .name { margin: 0.15rem 0 0; font-size: 0.875rem; font-weight: 500; }
       .later .place { margin: 0.35rem 0 0; font-size: 0.75rem; color: var(--muted); }
+      .night { margin: 3rem 0 4rem; }
+      .night h3 {
+        margin: 0 0 1rem;
+        font-size: 0.625rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .night ul { margin: 0; padding: 0; list-style: none; }
+      .night li {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--muted);
+        padding: 0.25rem 0;
+      }
+      .night li span.dotmark { color: color-mix(in srgb, var(--fg) 35%, transparent); }
       footer {
         border-top: 1px solid var(--line);
         padding: 1.5rem 0;
@@ -216,7 +252,7 @@
     </style>
   </head>
   <body>
-    <header>
+    <header class="top">
       <div class="wrap bar">
         <a class="back" href="/">← <span data-i18n="back">Volver</span></a>
         <div class="controls">
@@ -230,12 +266,12 @@
       <section class="hero">
         <p class="kicker" data-i18n="kicker">miércoles 26 de agosto</p>
         <h1 data-i18n="title">Mañana</h1>
-        <p class="lede" data-i18n="subtitle">Agenda completa hasta el mediodía, leída de tu calendario.</p>
+        <p class="lede" data-i18n="subtitle">Agenda completa hasta el mediodía, leída de tu calendario — con el trayecto y el arranque alrededor del primer bloque.</p>
         <p class="tz" data-i18n="timezone">Santiago · UTC−4</p>
         <dl class="stats">
           <div>
             <dt data-i18n="blocksLabel">Bloques</dt>
-            <dd>3</dd>
+            <dd>7</dd>
           </div>
           <div>
             <dt data-i18n="committed">En calendario</dt>
@@ -245,8 +281,63 @@
             <dt data-i18n="transit">Traslado</dt>
             <dd>1h 30m</dd>
           </div>
+          <div>
+            <dt data-i18n="first">Primer bloque</dt>
+            <dd>07:30</dd>
+          </div>
         </dl>
       </section>
+
+      <p class="note" data-i18n="note">WFH cierra a las 09:30 en Vitacura. Deja ~55–60 min para llegar a Ingeniería UC (Macul) a las 11:00. Hockey a las 17:00 se solapa 20 min con el fin del bloque de clases.</p>
+
+      <article class="block">
+        <div class="time"><div class="start">06:15</div><div class="end">06:45</div></div>
+        <div class="rail">
+          <span class="dot hollow"></span>
+          <div class="card transit">
+            <div class="meta">
+              <span class="chip" data-i18n="tagPlan">Plan</span>
+              <span class="dur">30 min</span>
+            </div>
+            <h2 data-i18n="wakeTitle">Despertar · rutina</h2>
+            <p class="detail" data-i18n="wakeDetail">Agua, baño, cara, estiramiento liviano. Ropa lista de anoche.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="block">
+        <div class="time"><div class="start">06:45</div><div class="end">07:15</div></div>
+        <div class="rail">
+          <span class="dot hollow"></span>
+          <div class="card transit">
+            <div class="meta">
+              <span class="chip" data-i18n="tagPlan">Plan</span>
+              <span class="dur">30 min</span>
+            </div>
+            <h2 data-i18n="breakfastTitle">Desayuno + prep</h2>
+            <p class="detail" data-i18n="breakfastDetail">Desayuno con proteína. Revisar mochila uni y notas del bloque WFH.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="block">
+        <div class="time"><div class="start">07:15</div><div class="end">07:30</div></div>
+        <div class="rail">
+          <span class="dot hollow"></span>
+          <div class="card transit">
+            <div class="meta">
+              <span class="chip" data-i18n="tagPlan">Plan</span>
+              <span class="dur">15 min</span>
+            </div>
+            <h2 data-i18n="settleTitle">Acomodarse</h2>
+            <p class="detail" data-i18n="settleDetail">Abrir laptop, escritorio listo, ambiente de trabajo.</p>
+            <p class="loc">
+              <span data-i18n="wfhLoc">Av. Vitacura 4747, Vitacura</span>
+              <a href="https://www.google.com/maps/search/?api=1&query=Av%20Vitacura%204747%2C%20Vitacura%2C%20Chile" target="_blank" rel="noopener noreferrer" data-i18n="map">Mapa</a>
+            </p>
+          </div>
+        </div>
+      </article>
 
       <article class="block">
         <div class="time"><div class="start">07:30</div><div class="end">09:30</div></div>
@@ -254,11 +345,11 @@
           <span class="dot"></span>
           <div class="card">
             <div class="meta">
-              <span class="chip" data-i18n="tagWork">Trabajo</span>
+              <span class="chip" data-i18n="tagCal">Calendario</span>
               <span class="dur">2h</span>
             </div>
             <h2 data-i18n="wfhTitle">Trabajo desde casa</h2>
-            <p class="detail" data-i18n="wfhDetail">Bloque de deep work antes de salir a campus.</p>
+            <p class="detail" data-i18n="wfhDetail">Bloque de deep work antes de salir a campus. Del calendario.</p>
             <p class="loc">
               <span data-i18n="wfhLoc">Av. Vitacura 4747, Vitacura</span>
               <a href="https://www.google.com/maps/search/?api=1&query=Av%20Vitacura%204747%2C%20Vitacura%2C%20Chile" target="_blank" rel="noopener noreferrer" data-i18n="map">Mapa</a>
@@ -277,7 +368,7 @@
               <span class="dur">1h 30m</span>
             </div>
             <h2 data-i18n="commuteTitle">Camino a campus</h2>
-            <p class="detail" data-i18n="commuteDetail">Vitacura → San Joaquín. Ventana libre en el calendario — úsala para traslado y llegada.</p>
+            <p class="detail" data-i18n="commuteDetail">Vitacura → San Joaquín. Ventana libre en el calendario — salir ~09:50 para ~55–60 min de trayecto.</p>
             <p class="loc">
               <span data-i18n="commuteLoc">Hacia Ingeniería UC, Macul</span>
               <a href="https://www.google.com/maps/search/?api=1&query=Ingenier%C3%ADa%20UC%2C%20Benito%20Rebolledo%201872%2C%20Macul%2C%20Chile" target="_blank" rel="noopener noreferrer" data-i18n="map">Mapa</a>
@@ -292,11 +383,11 @@
           <span class="dot"></span>
           <div class="card">
             <div class="meta">
-              <span class="chip" data-i18n="tagClass">Clases</span>
+              <span class="chip" data-i18n="tagCal">Calendario</span>
               <span class="dur">1h 20m</span>
             </div>
             <h2 data-i18n="bddTitle">Bases de datos</h2>
-            <p class="detail" data-i18n="bddDetail">Primera clase del bloque «clases». Módulo de 80 minutos.</p>
+            <p class="detail" data-i18n="bddDetail">Primera sesión del bloque «clases» (11:00 bdd).</p>
             <p class="loc">
               <span data-i18n="bddLoc">Ingeniería UC, Benito Rebolledo 1872–1976, Macul</span>
               <a href="https://www.google.com/maps/search/?api=1&query=Ingenier%C3%ADa%20UC%2C%20Benito%20Rebolledo%201872%2C%20Macul%2C%20Chile" target="_blank" rel="noopener noreferrer" data-i18n="map">Mapa</a>
@@ -311,11 +402,11 @@
           <span class="dot"></span>
           <div class="card">
             <div class="meta">
-              <span class="chip" data-i18n="tagClass">Clases</span>
+              <span class="chip" data-i18n="tagCal">Calendario</span>
               <span class="dur">1h 20m</span>
             </div>
             <h2 data-i18n="innTitle">Innovación</h2>
-            <p class="detail" data-i18n="innDetail">Cierra la mañana en campus. El bloque «clases» del calendario sigue hasta las 17:20.</p>
+            <p class="detail" data-i18n="innDetail">Cierra la mañana en campus (12:20 innovación). El bloque «clases» sigue hasta las 17:20.</p>
             <p class="loc">
               <span data-i18n="innLoc">Ingeniería UC, Campus San Joaquín</span>
               <a href="https://www.google.com/maps/search/?api=1&query=Ingenier%C3%ADa%20UC%2C%20Benito%20Rebolledo%201872%2C%20Macul%2C%20Chile" target="_blank" rel="noopener noreferrer" data-i18n="map">Mapa</a>
@@ -326,7 +417,7 @@
 
       <section class="later">
         <h3 data-i18n="later">Más tarde</h3>
-        <p data-i18n="laterBody">El bloque de clases en campus sigue hasta las 17:20. Después, hockey.</p>
+        <p data-i18n="laterBody">El bloque «clases» en campus sigue hasta las 17:20. Después, hockey en Ñuñoa.</p>
         <ul>
           <li>
             <div>
@@ -334,7 +425,7 @@
               <div class="name">ETI</div>
               <p class="place" data-i18n="etiLoc">Ingeniería UC, Macul</p>
             </div>
-            <span class="chip" data-i18n="tagClass">Clases</span>
+            <span class="chip" data-i18n="tagCal">Calendario</span>
           </li>
           <li>
             <div>
@@ -342,8 +433,20 @@
               <div class="name" data-i18n="hockeyTitle">Sub-12 grupo azul</div>
               <p class="place" data-i18n="hockeyLoc">Chile Hockey · Centro Claudia Schüler, Av. Marathón 1420, Ñuñoa</p>
             </div>
-            <span class="chip">Hockey</span>
+            <span class="chip" data-i18n="tagCal">Calendario</span>
           </li>
+        </ul>
+      </section>
+
+      <section class="night">
+        <h3 data-i18n="night">La noche anterior</h3>
+        <ul>
+          <li><span class="dotmark">·</span><span data-i18n="n1">Dejar ropa lista para WFH + uni, y la bolsa de hockey</span></li>
+          <li><span class="dotmark">·</span><span data-i18n="n2">Armar mochila: laptop, cargadores, apuntes</span></li>
+          <li><span class="dotmark">·</span><span data-i18n="n3">Preparar desayuno y botella de agua en el refri</span></li>
+          <li><span class="dotmark">·</span><span data-i18n="n4">Alarma 06:15, con un backup a las 06:25</span></li>
+          <li><span class="dotmark">·</span><span data-i18n="n5">Cargar teléfono y laptop</span></li>
+          <li><span class="dotmark">·</span><span data-i18n="n6">Luces apagadas ~22:30–23:00 para 7.5–8 h de sueño</span></li>
         </ul>
       </section>
     </main>
@@ -361,31 +464,46 @@
           back: "Volver",
           kicker: "miércoles 26 de agosto",
           title: "Mañana",
-          subtitle: "Agenda completa hasta el mediodía, leída de tu calendario.",
+          subtitle: "Agenda completa hasta el mediodía, leída de tu calendario — con el trayecto y el arranque alrededor del primer bloque.",
           timezone: "Santiago · UTC−4",
           blocksLabel: "Bloques",
           committed: "En calendario",
           transit: "Traslado",
-          tagWork: "Trabajo",
+          first: "Primer bloque",
+          note: "WFH cierra a las 09:30 en Vitacura. Deja ~55–60 min para llegar a Ingeniería UC (Macul) a las 11:00. Hockey a las 17:00 se solapa 20 min con el fin del bloque de clases.",
+          tagPlan: "Plan",
+          tagCal: "Calendario",
           tagTransit: "Traslados",
-          tagClass: "Clases",
+          wakeTitle: "Despertar · rutina",
+          wakeDetail: "Agua, baño, cara, estiramiento liviano. Ropa lista de anoche.",
+          breakfastTitle: "Desayuno + prep",
+          breakfastDetail: "Desayuno con proteína. Revisar mochila uni y notas del bloque WFH.",
+          settleTitle: "Acomodarse",
+          settleDetail: "Abrir laptop, escritorio listo, ambiente de trabajo.",
           wfhTitle: "Trabajo desde casa",
-          wfhDetail: "Bloque de deep work antes de salir a campus.",
+          wfhDetail: "Bloque de deep work antes de salir a campus. Del calendario.",
           wfhLoc: "Av. Vitacura 4747, Vitacura",
           commuteTitle: "Camino a campus",
-          commuteDetail: "Vitacura → San Joaquín. Ventana libre en el calendario — úsala para traslado y llegada.",
+          commuteDetail: "Vitacura → San Joaquín. Ventana libre en el calendario — salir ~09:50 para ~55–60 min de trayecto.",
           commuteLoc: "Hacia Ingeniería UC, Macul",
           bddTitle: "Bases de datos",
-          bddDetail: "Primera clase del bloque «clases». Módulo de 80 minutos.",
+          bddDetail: "Primera sesión del bloque «clases» (11:00 bdd).",
           bddLoc: "Ingeniería UC, Benito Rebolledo 1872–1976, Macul",
           innTitle: "Innovación",
-          innDetail: "Cierra la mañana en campus. El bloque «clases» del calendario sigue hasta las 17:20.",
+          innDetail: "Cierra la mañana en campus (12:20 innovación). El bloque «clases» sigue hasta las 17:20.",
           innLoc: "Ingeniería UC, Campus San Joaquín",
           later: "Más tarde",
-          laterBody: "El bloque de clases en campus sigue hasta las 17:20. Después, hockey.",
+          laterBody: "El bloque «clases» en campus sigue hasta las 17:20. Después, hockey en Ñuñoa.",
           etiLoc: "Ingeniería UC, Macul",
           hockeyTitle: "Sub-12 grupo azul",
           hockeyLoc: "Chile Hockey · Centro Claudia Schüler, Av. Marathón 1420, Ñuñoa",
+          night: "La noche anterior",
+          n1: "Dejar ropa lista para WFH + uni, y la bolsa de hockey",
+          n2: "Armar mochila: laptop, cargadores, apuntes",
+          n3: "Preparar desayuno y botella de agua en el refri",
+          n4: "Alarma 06:15, con un backup a las 06:25",
+          n5: "Cargar teléfono y laptop",
+          n6: "Luces apagadas ~22:30–23:00 para 7.5–8 h de sueño",
           source: "Desde Google Calendar · 25 ago 2026",
           map: "Mapa",
         },
@@ -393,31 +511,46 @@
           back: "Back",
           kicker: "wednesday 26 august",
           title: "Morning",
-          subtitle: "Full morning laid out from your calendar.",
+          subtitle: "Full morning laid out from your calendar — plus the commute and the start around the first block.",
           timezone: "Santiago · UTC−4",
           blocksLabel: "Blocks",
           committed: "On the calendar",
           transit: "Transit",
-          tagWork: "Work",
+          first: "First block",
+          note: "WFH ends at 09:30 in Vitacura. Leave ~55–60 min to reach Ingeniería UC (Macul) by 11:00. Hockey at 17:00 overlaps the last 20 min of the class block.",
+          tagPlan: "Plan",
+          tagCal: "Calendar",
           tagTransit: "Transit",
-          tagClass: "Class",
+          wakeTitle: "Wake · morning routine",
+          wakeDetail: "Water, bathroom, face, light stretch. Clothes laid out last night.",
+          breakfastTitle: "Breakfast + prep",
+          breakfastDetail: "Protein-forward breakfast. Check uni bag and notes for the WFH block.",
+          settleTitle: "Settle in",
+          settleDetail: "Open the laptop, clear the desk, start the work environment.",
           wfhTitle: "Work from home",
-          wfhDetail: "Deep-work block before heading to campus.",
+          wfhDetail: "Deep-work block before heading to campus. From the calendar.",
           wfhLoc: "Av. Vitacura 4747, Vitacura",
           commuteTitle: "Travel to campus",
-          commuteDetail: "Vitacura → San Joaquín. Open calendar window — commute and arrive.",
+          commuteDetail: "Vitacura → San Joaquín. Open calendar window — leave ~09:50 for a ~55–60 min ride.",
           commuteLoc: "To Ingeniería UC, Macul",
           bddTitle: "Databases",
-          bddDetail: "First session in the campus «clases» block. 80-minute module.",
+          bddDetail: "First session in the campus «clases» block (11:00 bdd).",
           bddLoc: "Ingeniería UC, Benito Rebolledo 1872–1976, Macul",
           innTitle: "Innovation",
-          innDetail: "Closes the morning on campus. The calendar «clases» block continues until 17:20.",
+          innDetail: "Closes the morning on campus (12:20 innovación). The «clases» block continues until 17:20.",
           innLoc: "Ingeniería UC, San Joaquín campus",
           later: "Later today",
-          laterBody: "The campus class block continues until 17:20. Then hockey.",
+          laterBody: "The campus «clases» block continues until 17:20. Then hockey in Ñuñoa.",
           etiLoc: "Ingeniería UC, Macul",
           hockeyTitle: "U-12 blue group",
           hockeyLoc: "Chile Hockey · Centro Claudia Schüler, Av. Marathón 1420, Ñuñoa",
+          night: "The night before",
+          n1: "Lay out clothes for WFH + campus, and the hockey bag",
+          n2: "Pack the backpack: laptop, chargers, notes",
+          n3: "Prep breakfast and a water bottle in the fridge",
+          n4: "Alarm at 06:15, with a backup at 06:25",
+          n5: "Charge phone and laptop",
+          n6: "Lights out ~22:30–23:00 for 7.5–8 h of sleep",
           source: "From Google Calendar · 25 Aug 2026",
           map: "Map",
         },
