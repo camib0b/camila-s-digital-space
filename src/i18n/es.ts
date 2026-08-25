@@ -3,9 +3,9 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.subtagline": "Ingeniería en Santiago. Hockey al lado. Las ideas terminan aquí.",
-    "hero.cta.work": "Ver Mi Trabajo",
-    "hero.cta.cv": "Ver CV",
+    "hero.subtagline": "Ingeniería en Santiago. Hockey también. Mis ideas llegan aquí.",
+    "hero.cta.work": "Ver Trabajo",
+    "hero.cta.cv": "CV",
     "hero.cta.tomorrow": "Mañana",
 
     // Dashboard
@@ -44,9 +44,9 @@ const es: Record<TranslationKey, string> = {
     "skills.tools": "Herramientas",
 
     // Experience
-    "experience.label": "Experiencia en Oficina",
+    "experience.label": "Experiencia Laboral",
     "experience.title": "Dónde he aprendido",
-    "experience.description": "Roles y prácticas que formaron mi manera de pensar sobre código, datos, colaboración y construcción de productos.",
+    "experience.description": "Roles y prácticas.",
     "experience.acfin.title": "Desarrolladora BI",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Actualidad",
