@@ -1,6 +1,6 @@
-export const TOMORROW_DATE = "2026-08-30";
+export const TOMORROW_DATE = "2026-08-31";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-08-29T08:41:00-04:00";
+export const SOURCED_AT = "2026-08-30T08:42:00-04:00";
 
 export type Lang = "en" | "es";
 
@@ -22,11 +22,11 @@ export interface ScheduleBlock {
 
 export const pageCopy = {
   back: { es: "Volver", en: "Back" } satisfies Copy,
-  kicker: { es: "domingo 30 de agosto", en: "sunday 30 august" } satisfies Copy,
+  kicker: { es: "lunes 31 de agosto", en: "monday 31 august" } satisfies Copy,
   title: { es: "Mañana", en: "Morning" } satisfies Copy,
   subtitle: {
-    es: "Calendario vacío el domingo. Mañana recomendada: gym con buffers, volver a Home, y guardar la tarde por si llueve.",
-    en: "Empty calendar on Sunday. Recommended morning: gym with buffers, back to Home, keep the afternoon flexible if rain shows up.",
+    es: "University a las 11:00 (bdd, luego innovación). Sin gym en el calendario — la mañana sale de Home hacia University. Math tutor a las 16:00.",
+    en: "University at 11:00 (bdd, then innovación). No gym on the calendar — morning runs Home to University. Math tutor at 16:00.",
   } satisfies Copy,
   timezone: { es: "Santiago · UTC−4", en: "Santiago · UTC−4" } satisfies Copy,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies Copy,
@@ -34,46 +34,46 @@ export const pageCopy = {
   transit: { es: "Traslado", en: "Transit" } satisfies Copy,
   first: { es: "Primer bloque", en: "First block" } satisfies Copy,
   note: {
-    es: "Ningún evento en Google Calendar el domingo. El gym es plan, no compromiso. 25 min en auto cada tramo. Sesión ~75 min + ducha 30 min + proteína/carbos en el gym. Mañana fresca (~6–9 °C), máxima ~15–17 °C; lluvia más probable después del mediodía — capa impermeable en la mochila.",
-    en: "No Google Calendar events on Sunday. Gym is a plan, not a commitment. 25 min drive each way. ~75 min session + 30 min shower + protein/carbs at the gym. Cool morning (~6–9 °C), high ~15–17 °C; rain more likely after midday — pack a light waterproof layer.",
+    es: "Dos eventos en Google Calendar. Clase 11:00–13:30 en University; Math tutor 16:00–17:30. Transporte público: salir de Home 55–60 min antes (10:00). Mañana fresca (~8–12 °C), máxima ~18–19 °C; posible resto de chubascos temprano — impermeable liviano. Gym no entra: el despertar a las 06:30 para encajar ida + sesión + ducha + vuelta antes de las 10:00 comprime el sueño y el clima no ayuda.",
+    en: "Two Google Calendar events. Class 11:00–13:30 at University; Math tutor 16:00–17:30. Public transport: leave Home 55–60 min before class (10:00). Cool morning (~8–12 °C), high ~18–19 °C; leftover showers possible early — light waterproof. Gym stays out: a 06:30 wake to fit drive + session + shower + return before 10:00 would compress sleep, and the weather does not help.",
   } satisfies Copy,
   later: { es: "Más tarde", en: "Later today" } satisfies Copy,
   laterBody: {
-    es: "Tarde libre. Lunes sí hay University (11:00) y Math tutor (16:00), así que no dejes la noche del domingo tarde. Si el cielo se cierra, quédate en Home.",
-    en: "Open afternoon. Monday does have University (11:00) and Math tutor (16:00), so do not make Sunday night late. If the sky closes in, stay at Home.",
+    es: "Después de innovación (~13:30), almuerzo y un rato en University o Home antes de Math tutor a las 16:00. No es entrenamiento: no aplica el protocolo post-gym.",
+    en: "After innovación (~13:30), lunch and a stretch at University or Home before Math tutor at 16:00. That block is not training: skip the post-gym protocol.",
   } satisfies Copy,
   night: { es: "La noche anterior", en: "The night before" } satisfies Copy,
   source: {
-    es: "Desde Google Calendar · 29 ago 2026, 08:41",
-    en: "From Google Calendar · 29 Aug 2026, 08:41",
+    es: "Desde Google Calendar · 30 ago 2026, 08:42",
+    en: "From Google Calendar · 30 Aug 2026, 08:42",
   } satisfies Copy,
   map: { es: "Mapa", en: "Map" } satisfies Copy,
 };
 
 export const nightBefore: Copy[] = [
   {
-    es: "Hoy (sábado) I1 arqui termina 10:30. Almuerzo real al volver a Home. Si entrenas sábado tarde, proteína + carbos al terminar",
-    en: "Today (Saturday) I1 arqui ends 10:30. Real lunch once you are Home. If you train Saturday afternoon, protein + carbs as soon as you finish",
+    es: "Armar mochila de University: cuaderno/laptop, cargador, botella, colación. Notas a mano para bdd (11:00) e innovación (12:20)",
+    en: "Pack the University bag: notebook/laptop, charger, bottle, snack. Notes ready for bdd (11:00) and innovación (12:20)",
   },
   {
-    es: "Armar bolsa de gym: toalla, ropa de entrenamiento, set limpio para después de la ducha. El gym pone jabón y shampoo",
-    en: "Pack the gym bag: towel, training clothes, clean set for after the shower. Gym provides soap and shampoo",
+    es: "Desayuno real en Home — no hay gym antes de clase. Dejar algo fácil listo (yogur + fruta, tostadas, huevos)",
+    en: "Real breakfast at Home — no gym before class. Leave something easy ready (yogurt + fruit, toast, eggs)",
   },
   {
-    es: "Dejar shake o snack de proteína + carbos rápido listo para llevar — se come en el gym al terminar el último set",
-    en: "Prep a shake or fast protein + carb snack to take — eat it at the gym after the last set",
+    es: "Capas para ~8–12 °C al salir y ~18 °C al mediodía: base manga larga + polar o hoodie + chaqueta liviana. Impermeable compacto por si queda llovizna. En University te sacas la capa de abrigo",
+    en: "Layers for ~8–12 °C on the way out and ~18 °C by midday: long-sleeve base + fleece or hoodie + light jacket. Compact waterproof if drizzle lingers. Shed the warm layer at University",
   },
   {
-    es: "Capas para ~6–9 °C al salir: base manga larga + mid + chaqueta. Impermeable liviano por si la lluvia se adelanta",
-    en: "Layers for ~6–9 °C on the way out: long-sleeve base + mid + jacket. Light waterproof in case rain comes early",
+    es: "Alarma 09:15, backup 09:25. Sales de Home a las 10:00. Botella llena, teléfono cargado, tarjeta de transporte",
+    en: "Alarm 09:15, backup 09:25. Leave Home at 10:00. Bottle filled, phone charged, transit card",
   },
   {
-    es: "Alarma 07:30, backup 07:40. Sales de Home a las 08:15. Botella llena, teléfono cargado",
-    en: "Alarm 07:30, backup 07:40. Leave Home at 08:15. Bottle filled, phone charged",
+    es: "Confirmar hora y materiales de Math tutor (16:00) para no decidir eso a las 15:00",
+    en: "Confirm time and materials for Math tutor (16:00) so you are not deciding that at 15:00",
   },
   {
-    es: "Luces apagadas ~23:00–23:15 para ~8–8.5 h. El primer despertar cuesta — no comprimas el sueño",
-    en: "Lights out ~23:00–23:15 for ~8–8.5 h. First alarm is hard — do not compress sleep",
+    es: "Luces apagadas ~23:15–23:30. El primer despertar cuesta — no comprimas el sueño aunque la alarma sea más tarde que un día de gym",
+    en: "Lights out ~23:15–23:30. First alarm is hard — do not compress sleep even though the alarm is later than a gym day",
   },
 ];
 
@@ -81,83 +81,70 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "wake",
     kind: "plan",
-    start: "07:30",
-    end: "08:15",
+    start: "09:15",
+    end: "10:00",
     title: { es: "Despertar · salir", en: "Wake · leave" },
     detail: {
-      es: "400–500 ml de agua al despertar. Baño, cara, capas de anoche. Solo agua o snack mínimo antes de entrenar. Hidratar hasta ~600–800 ml. Bolsa ya armada.",
-      en: "400–500 ml water on waking. Bathroom, face, layers from last night. Water only or a tiny snack before training. Sip to ~600–800 ml. Bag already packed.",
+      es: "400–500 ml de agua al despertar. Baño, cara, capas de anoche. Desayuno real. Hidratar hasta ~600–800 ml. Mochila ya armada. Buffer de 45 min porque el primer despertar se atrasa.",
+      en: "400–500 ml water on waking. Bathroom, face, layers from last night. Real breakfast. Sip to ~600–800 ml. Bag already packed. 45 min buffer because the first alarm slips.",
     },
     location: { es: "Home", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "drive-gym",
+    id: "transit-uni",
     kind: "transit",
-    start: "08:15",
-    end: "08:40",
-    title: { es: "Auto al gym", en: "Drive to gym" },
-    detail: {
-      es: "25 min desde Home. Auto ida y vuelta; después del gym vuelves a Home.",
-      en: "25 min from Home. Car both ways; you return Home after the gym.",
-    },
-    location: { es: "Hacia el gym", en: "To the gym" },
-    tag: { es: "Traslados", en: "Transit" },
-  },
-  {
-    id: "gym",
-    kind: "plan",
-    start: "08:40",
-    end: "10:00",
-    title: { es: "Gym", en: "Gym" },
-    detail: {
-      es: "Sesión ~75 min con descansos reales, no el tiempo teórico. Sigue tomando agua. Esto sí cuenta como entrenamiento.",
-      en: "~75 min session with real rest, not theoretical times. Keep sipping water. This counts as training.",
-    },
-    location: { es: "Gym", en: "Gym" },
-    tag: { es: "Plan", en: "Plan" },
-  },
-  {
-    id: "post-gym",
-    kind: "plan",
     start: "10:00",
-    end: "10:40",
-    title: { es: "Proteína · ducha · cambio", en: "Protein · shower · change" },
+    end: "10:55",
+    title: { es: "Transporte a University", en: "Transit to University" },
     detail: {
-      es: "Proteína + carbos rápidos en los 5–15 min post último set, todavía en el gym. Ducha (jabón/shampoo del gym), secar, ropa limpia. Café del gym si quieres, de salida.",
-      en: "Protein + fast carbs within 5–15 min of the last set, still at the gym. Shower (gym soap/shampoo), dry off, clean clothes. Gym coffee on the way out if you want it.",
+      es: "55 min puerta a sala. Salir a las 10:00, no a las 10:10. Si quedó humedad en la calle, la chaqueta impermeable va puesta, no en la mochila.",
+      en: "55 min door to classroom. Leave at 10:00, not 10:10. If the street is still wet, the waterproof jacket is on, not in the bag.",
     },
-    location: { es: "Gym", en: "Gym" },
-    tag: { es: "Plan", en: "Plan" },
+    location: { es: "Hacia University", en: "To University" },
+    tag: { es: "Traslados", en: "Transit" },
   },
   {
-    id: "drive-home",
-    kind: "transit",
-    start: "10:40",
-    end: "11:05",
-    title: { es: "Auto a Home", en: "Drive home" },
+    id: "clases",
+    kind: "event",
+    start: "11:00",
+    end: "13:30",
+    title: { es: "Clases", en: "Classes" },
     detail: {
-      es: "25 min de vuelta. Sin clase detrás — no hay que apurar el cierre.",
-      en: "25 min back. No class behind this — no need to rush the close.",
+      es: "11:00 bdd · 12:20 innovación. Bloque continuo hasta 13:30. Agua a mano; no dejes el almuerzo para las 16:00.",
+      en: "11:00 bdd · 12:20 innovación. Continuous block until 13:30. Water on hand; do not push lunch to 16:00.",
     },
-    location: { es: "Hacia Home", en: "To Home" },
-    tag: { es: "Traslados", en: "Transit" },
+    location: { es: "University", en: "University" },
+    tag: { es: "Calendario", en: "Calendar" },
   },
 ];
 
 export const laterBlocks: ScheduleBlock[] = [
   {
-    id: "open-sunday",
+    id: "lunch",
     kind: "plan",
-    start: "11:05",
-    end: "21:00",
-    title: { es: "Domingo libre", en: "Open Sunday" },
+    start: "13:30",
+    end: "15:15",
+    title: { es: "Almuerzo · respiro", en: "Lunch · reset" },
     detail: {
-      es: "Almuerzo real en Home. Tarde abierta; lluvia más probable después del mediodía.",
-      en: "Real lunch at Home. Open afternoon; rain more likely after midday.",
+      es: "Comida real después de innovación. Luego University o Home, según te alcance el tiempo antes del tutor.",
+      en: "Real meal after innovación. Then University or Home, depending on how much time you have before the tutor.",
     },
-    location: { es: "Home", en: "Home" },
+    location: { es: "University o Home", en: "University or Home" },
     tag: { es: "Plan", en: "Plan" },
+  },
+  {
+    id: "tutor",
+    kind: "event",
+    start: "16:00",
+    end: "17:30",
+    title: { es: "Math tutor", en: "Math tutor" },
+    detail: {
+      es: "Bloque de calendario 16:00–17:30. No es entrenamiento: sin protocolo de proteína post-gym.",
+      en: "Calendar block 16:00–17:30. Not training: no post-gym protein protocol.",
+    },
+    location: { es: "Math tutor", en: "Math tutor" },
+    tag: { es: "Calendario", en: "Calendar" },
   },
 ];
 
@@ -186,7 +173,7 @@ export function mapsUrl(query: string): string {
 
 export const STATS = {
   blocks: String(morningBlocks.length),
-  committed: "0",
-  transit: "50m",
-  first: "—",
+  committed: "2",
+  transit: "55m",
+  first: "11:00",
 };
