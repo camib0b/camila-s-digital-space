@@ -111,7 +111,7 @@ export const cvLeadership: CvLeadership[] = [
 ];
 
 export const cvSkills = {
-  languages: ["TypeScript", "JavaScript", "Python", "SQL", "HTML/CSS"],
-  frameworks: ["React", "Node.js", "Vue.js", "Tailwind CSS"],
-  tools: ["Git", "PostgreSQL", "Looker", "LookML", "Figma", "REST APIs", "Vite"],
+  languages: ["TypeScript", "Python", "SQL", "C++"],
+  frameworks: ["Vue.js", "React", "Tailwind CSS"],
+  tools: ["Looker", "LookML", "BigQuery", "Git", "Firebase"],
 };
