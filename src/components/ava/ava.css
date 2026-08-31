@@ -1,0 +1,782 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap");
+
+.ava-root {
+  /* Product surface is always the dark instrument, independent of site theme. */
+  --ava-bg: #070708;
+  --ava-fg: #eceae4;
+  --ava-muted: #c4c1b8;
+  --ava-faint: #7a7872;
+  --ava-rule: rgba(236, 234, 228, 0.14);
+  --ava-rule-strong: rgba(236, 234, 228, 0.34);
+  --ava-invert: #eceae4;
+  --ava-invert-fg: #070708;
+  --ava-font: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ava-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ava-pad: clamp(1.25rem, 4vw, 3.25rem);
+  --ava-max: 76rem;
+
+  background: var(--ava-bg);
+  color: var(--ava-fg);
+  font-family: var(--ava-font);
+  font-weight: 400;
+  letter-spacing: -0.011em;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.ava-root *,
+.ava-root *::before,
+.ava-root *::after {
+  border-color: var(--ava-rule);
+}
+
+.ava-root h1,
+.ava-root h2,
+.ava-root h3,
+.ava-root p {
+  color: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+.ava-shell {
+  width: min(100%, var(--ava-max));
+  margin-inline: auto;
+  padding-inline: var(--ava-pad);
+}
+
+.ava-rule {
+  height: 1px;
+  background: var(--ava-rule);
+  border: 0;
+}
+
+.ava-kicker {
+  margin: 0;
+  font-family: var(--ava-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ava-muted);
+}
+
+.ava-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.25rem;
+  padding-inline: var(--ava-pad);
+  border-bottom: 1px solid var(--ava-rule);
+  background: color-mix(in srgb, var(--ava-bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.ava-wordmark {
+  font-family: var(--ava-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ava-fg);
+  text-decoration: none;
+}
+
+.ava-chrome-end {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ava-site-link {
+  font-family: var(--ava-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: var(--ava-muted);
+  text-decoration: none;
+}
+
+.ava-site-link:hover {
+  color: var(--ava-fg);
+}
+
+.ava-chrome button {
+  color: var(--ava-muted);
+  border-radius: 0;
+}
+
+.ava-chrome button:hover {
+  color: var(--ava-fg);
+  background: transparent;
+}
+
+.ava-chrome [aria-pressed="true"] {
+  color: var(--ava-fg);
+  background: transparent;
+  border-color: var(--ava-rule-strong);
+  box-shadow: none;
+}
+
+.ava-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: calc(100vh - 3.25rem);
+  border-bottom: 1px solid var(--ava-rule);
+}
+
+@media (min-width: 960px) {
+  .ava-hero {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  }
+}
+
+.ava-hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(3rem, 8vh, 6rem) var(--ava-pad) clamp(2.5rem, 6vh, 4.5rem);
+  border-bottom: 1px solid var(--ava-rule);
+}
+
+@media (min-width: 960px) {
+  .ava-hero-copy {
+    border-bottom: 0;
+    border-right: 1px solid var(--ava-rule);
+    padding-right: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+.ava-hero h1 {
+  margin: 1.25rem 0 0;
+  max-width: 14ch;
+  font-size: clamp(2.75rem, 8vw, 5.75rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.ava-lede {
+  margin: 1.5rem 0 0;
+  max-width: 28ch;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.4;
+  color: var(--ava-fg);
+}
+
+.ava-hero-body {
+  margin: 1.25rem 0 0;
+  max-width: 38ch;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ava-muted);
+}
+
+.ava-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1.25rem 1.75rem;
+  margin-top: 2.25rem;
+}
+
+.ava-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.7rem 1.15rem;
+  border: 1px solid var(--ava-fg);
+  background: transparent;
+  color: var(--ava-fg);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ava-cta:focus-visible,
+.ava-text-link:focus-visible,
+.ava-access-mail:focus-visible,
+.ava-site-link:focus-visible,
+.ava-wordmark:focus-visible {
+  outline: 1px solid var(--ava-fg);
+  outline-offset: 4px;
+}
+
+.ava-text-link {
+  font-size: 0.875rem;
+  color: var(--ava-fg);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ava-rule-strong);
+  padding-bottom: 0.12rem;
+}
+
+.ava-text-link:hover {
+  border-bottom-color: var(--ava-fg);
+}
+
+.ava-meta {
+  margin: 2rem 0 0;
+  font-family: var(--ava-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ava-faint);
+}
+
+.ava-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 28rem;
+  background:
+    radial-gradient(120% 80% at 70% 20%, color-mix(in srgb, var(--ava-fg) 6%, transparent), transparent 55%),
+    var(--ava-bg);
+  overflow: hidden;
+}
+
+.ava-stage-field {
+  flex: 1;
+  width: 100%;
+  min-height: 18rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.ava-stage-field svg {
+  width: 100%;
+  height: 100%;
+  min-height: 16rem;
+}
+
+.ava-pitch-line {
+  fill: none;
+  stroke: var(--ava-fg);
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.42;
+}
+
+.ava-pitch-line.is-strong {
+  opacity: 0.7;
+  stroke-width: 1.35;
+}
+
+.ava-pitch-mark {
+  fill: var(--ava-fg);
+}
+
+.ava-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--ava-fg) 7%, transparent) 48%,
+    transparent 52%
+  );
+  mix-blend-mode: soft-light;
+  animation: ava-scan 18s linear infinite;
+}
+
+.ava-stage-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem var(--ava-pad);
+  border-top: 1px solid var(--ava-rule);
+  font-family: var(--ava-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ava-muted);
+}
+
+.ava-timeline {
+  border-bottom: 1px solid var(--ava-rule);
+  padding: 1.35rem var(--ava-pad) 1.6rem;
+}
+
+.ava-timeline-rail {
+  position: relative;
+  height: 4.5rem;
+}
+
+.ava-timeline-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1.55rem;
+  height: 1px;
+  background: var(--ava-rule-strong);
+}
+
+.ava-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0.4rem;
+  width: 1px;
+  background: var(--ava-fg);
+  animation: ava-playhead 22s linear infinite;
+}
+
+.ava-playhead::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  background: var(--ava-fg);
+}
+
+.ava-mark {
+  position: absolute;
+  top: 1.15rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+}
+
+.ava-mark span:first-child {
+  width: 5px;
+  height: 5px;
+  border-radius: 0;
+  background: var(--ava-fg);
+}
+
+.ava-mark span:last-child {
+  margin-top: 0.7rem;
+  font-family: var(--ava-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ava-muted);
+  white-space: nowrap;
+}
+
+.ava-timeline-ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.15rem;
+  font-family: var(--ava-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  color: var(--ava-faint);
+}
+
+@media (max-width: 719px) {
+  .ava-mark span:last-child {
+    display: none;
+  }
+
+  .ava-timeline-rail {
+    height: 2.75rem;
+  }
+}
+
+.ava-section {
+  padding: clamp(3.5rem, 9vh, 6.5rem) 0;
+  border-bottom: 1px solid var(--ava-rule);
+}
+
+.ava-section-head {
+  margin-bottom: clamp(2rem, 5vh, 3.25rem);
+}
+
+.ava-section h2 {
+  margin: 0.85rem 0 0;
+  max-width: 16ch;
+  font-size: clamp(1.85rem, 4.5vw, 3.15rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.ava-section-body {
+  margin: 1rem 0 0;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ava-muted);
+}
+
+.ava-events {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--ava-rule);
+}
+
+@media (min-width: 720px) {
+  .ava-events {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+
+.ava-event {
+  padding: 1.15rem 0.9rem 1.25rem;
+  border-right: 1px solid var(--ava-rule);
+  border-bottom: 1px solid var(--ava-rule);
+}
+
+.ava-event dt {
+  font-family: var(--ava-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ava-fg);
+}
+
+.ava-event dd {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ava-muted);
+}
+
+.ava-follow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ava-rule);
+}
+
+@media (min-width: 720px) {
+  .ava-follow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ava-follow li {
+  list-style: none;
+  padding: 1.25rem var(--ava-pad);
+  border-bottom: 1px solid var(--ava-rule);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .ava-follow li {
+    border-bottom: 0;
+    border-right: 1px solid var(--ava-rule);
+  }
+
+  .ava-follow li:last-child {
+    border-right: 0;
+  }
+}
+
+.ava-follow b {
+  display: block;
+  font-family: var(--ava-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.ava-modes {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .ava-modes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ava-mode {
+  padding: 0.25rem 0 2rem;
+  border-bottom: 1px solid var(--ava-rule);
+}
+
+@media (min-width: 860px) {
+  .ava-mode {
+    padding: 0.25rem var(--ava-pad) 0 0;
+    border-bottom: 0;
+    border-right: 1px solid var(--ava-rule);
+  }
+
+  .ava-mode:not(:first-child) {
+    padding-left: var(--ava-pad);
+  }
+
+  .ava-mode:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+}
+
+.ava-mode h3 {
+  margin: 0.7rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.ava-mode p {
+  margin: 0.85rem 0 0;
+  max-width: 28ch;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ava-muted);
+}
+
+.ava-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .ava-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ava-step {
+  position: relative;
+  padding: 1.75rem 0 2.25rem;
+  border-top: 1px solid var(--ava-rule);
+}
+
+@media (min-width: 860px) {
+  .ava-step {
+    padding: 2rem var(--ava-pad) 0 0;
+    border-top: 0;
+    border-right: 1px solid var(--ava-rule);
+    min-height: 22rem;
+  }
+
+  .ava-step:not(:first-child) {
+    padding-left: var(--ava-pad);
+  }
+
+  .ava-step:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+}
+
+.ava-step-index {
+  display: block;
+  font-family: var(--ava-mono);
+  font-size: clamp(2.75rem, 6vw, 4.25rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  color: color-mix(in srgb, var(--ava-fg) 22%, transparent);
+}
+
+.ava-step h3 {
+  margin: 1.25rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.ava-step p {
+  margin: 0.85rem 0 0;
+  max-width: 28ch;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ava-muted);
+}
+
+.ava-clip {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  padding-top: clamp(2rem, 5vh, 3rem);
+  border-top: 1px solid var(--ava-rule);
+}
+
+.ava-clip-window {
+  position: relative;
+  margin-top: 1.75rem;
+  height: 5.5rem;
+}
+
+.ava-clip-span {
+  position: absolute;
+  left: 8%;
+  right: 18%;
+  top: 1.65rem;
+  height: 1px;
+  background: var(--ava-fg);
+}
+
+.ava-clip-span::before,
+.ava-clip-span::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 9px;
+  background: var(--ava-fg);
+}
+
+.ava-clip-span::before {
+  left: 0;
+}
+
+.ava-clip-span::after {
+  right: 0;
+}
+
+.ava-clip-mark {
+  position: absolute;
+  left: 42%;
+  top: 1.15rem;
+  width: 9px;
+  height: 9px;
+  background: var(--ava-fg);
+  transform: translateX(-50%);
+}
+
+.ava-clip-labels {
+  position: absolute;
+  left: 8%;
+  right: 18%;
+  top: 2.35rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--ava-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ava-muted);
+}
+
+.ava-clip-center {
+  position: absolute;
+  left: 42%;
+  top: 3.35rem;
+  transform: translateX(-50%);
+  font-family: var(--ava-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ava-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0;
+  margin-top: 1.5rem;
+}
+
+.ava-stats span {
+  font-family: var(--ava-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ava-fg);
+  padding-right: 1rem;
+  margin-right: 1rem;
+  border-right: 1px solid var(--ava-rule);
+}
+
+.ava-stats span:last-child {
+  border-right: 0;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.ava-origin {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 860px) {
+  .ava-origin {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 4rem;
+    align-items: end;
+  }
+}
+
+.ava-origin p {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.4vw, 1.65rem);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  max-width: 28ch;
+}
+
+.ava-access h2 {
+  max-width: 12ch;
+}
+
+.ava-access-mail {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: var(--ava-mono);
+  font-size: clamp(1.05rem, 2.4vw, 1.65rem);
+  letter-spacing: -0.02em;
+  color: var(--ava-fg);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ava-rule-strong);
+}
+
+.ava-access-mail:hover {
+  border-bottom-color: var(--ava-fg);
+}
+
+.ava-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: 1.35rem var(--ava-pad) 1.75rem;
+  font-family: var(--ava-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ava-muted);
+}
+
+.ava-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ava-footer a:hover {
+  color: var(--ava-fg);
+}
+
+@keyframes ava-playhead {
+  from {
+    left: 0%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes ava-scan {
+  from {
+    transform: translateX(-30%);
+  }
+  to {
+    transform: translateX(30%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ava-playhead,
+  .ava-scan {
+    animation: none;
+  }
+
+  .ava-playhead {
+    left: 42%;
+  }
+}
