@@ -1,19 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import LanguageToggle from "@/components/LanguageToggle";
-import ThemeToggle from "@/components/ThemeToggle";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
-import {
-  AVA_ACCESS_EMAIL,
-  AVA_ACCESS_SUBJECT,
-  AVA_EVENTS,
-  AVA_FOLLOW_UPS,
-  AVA_STATS,
-} from "@/content/ava";
+import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_STATS } from "@/content/ava";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const accessMailto = `mailto:${AVA_ACCESS_EMAIL}?subject=${encodeURIComponent(AVA_ACCESS_SUBJECT)}`;
 
 const STEPS = [
   {
@@ -62,7 +53,6 @@ const Ava = () => {
       <header className="ava-chrome">
         <span className="ava-wordmark">AVA</span>
         <div className="ava-chrome-end">
-          <ThemeToggle />
           <LanguageToggle />
           <Link to="/" className="ava-site-link">
             {t("ava.nav.home")}
@@ -78,9 +68,6 @@ const Ava = () => {
             <p className="ava-lede">{t("ava.lede")}</p>
             <p className="ava-hero-body">{t("ava.hero.body")}</p>
             <div className="ava-actions">
-              <a className="ava-cta" href={accessMailto}>
-                {t("ava.cta.access")}
-              </a>
               <a className="ava-text-link" href="#como-funciona">
                 {t("ava.cta.how")}
               </a>
@@ -179,17 +166,6 @@ const Ava = () => {
               <h2>{t("ava.origin.headline")}</h2>
               <p className="ava-section-body">{t("ava.origin.body")}</p>
             </div>
-          </div>
-        </section>
-
-        <section className="ava-section ava-access">
-          <div className="ava-shell">
-            <p className="ava-kicker">{t("ava.access.kicker")}</p>
-            <h2>{t("ava.access.headline")}</h2>
-            <p className="ava-section-body">{t("ava.access.body")}</p>
-            <a className="ava-access-mail" href={accessMailto}>
-              {AVA_ACCESS_EMAIL}
-            </a>
           </div>
         </section>
       </main>
