@@ -270,6 +270,11 @@
   stroke-width: 1.5;
 }
 
+.ava-pitch-line.is-dotted {
+  stroke-dasharray: 3.5 5;
+  opacity: 0.5;
+}
+
 .ava-pitch-mark {
   fill: var(--ava-fg);
 }
