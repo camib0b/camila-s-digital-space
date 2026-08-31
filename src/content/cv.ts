@@ -44,7 +44,6 @@ export const cvProjects: CvProject[] = [
     titleKey: "cv.fleetOptimizer.title",
     typeKey: "cv.fleetOptimizer.type",
     descriptionKey: "cv.fleetOptimizer.description",
-    impactKey: "cv.fleetOptimizer.impact",
     technologies: ["Python", "Linear Programming", "Gurobi", "Pandas"],
   },
 ];

@@ -172,7 +172,6 @@ const en = {
     "cv.fleetOptimizer.title": "Aircraft Fleet Engine Allocation Optimizer",
     "cv.fleetOptimizer.type": "Course Project — Optimization Methods",
     "cv.fleetOptimizer.description": "Developed an optimization tool to allocate engines across an aircraft fleet minimizing maintenance costs while meeting flight schedule constraints.",
-    "cv.fleetOptimizer.impact": "Achieved 12% cost reduction vs. baseline heuristic in simulated scenarios",
     "cv.acfin.title": "BI Developer",
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Present",

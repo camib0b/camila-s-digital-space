@@ -175,7 +175,6 @@ const es: Record<TranslationKey, string> = {
     "cv.fleetOptimizer.title": "Optimizador de Asignación de Motores de Flota de Aeronaves",
     "cv.fleetOptimizer.type": "Proyecto de Curso — Métodos de Optimización",
     "cv.fleetOptimizer.description": "Desarrollé una herramienta de optimización para asignar motores a través de una flota de aeronaves minimizando costos de mantenimiento mientras cumple restricciones de horarios de vuelo.",
-    "cv.fleetOptimizer.impact": "Logró 12% de reducción de costos vs. heurística base en escenarios simulados",
     "cv.acfin.title": "Desarrolladora BI",
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Actualidad",
