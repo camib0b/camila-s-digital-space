@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mañana · Camila Escudero</title>
-    <meta name="description" content="Agenda de la mañana — lunes 31 de agosto 2026." />
+    <meta name="description" content="Agenda de la mañana — martes 1 de septiembre 2026." />
     <link rel="canonical" href="https://camilaescudero.cl/tomorrow" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,16 +61,16 @@
       }
       .hero { padding: 2rem 0 1.25rem; }
       .kicker { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
-      h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+      h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.35rem; }
       .lede { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
-      .tz { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
+      .tz { font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; }
       .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
       .stats div { background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.65rem 0.5rem; text-align: center; }
       .stats dt { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
       .stats dd { font-size: 0.95rem; font-weight: 600; margin-top: 0.15rem; }
       .note {
-        background: var(--card); border: 1px solid var(--border); border-radius: 0.85rem;
-        padding: 0.9rem 1rem; font-size: 0.85rem; color: var(--muted); margin: 1.25rem 0 1.5rem;
+        background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem;
+        padding: 0.85rem 1rem; font-size: 0.85rem; color: var(--muted); margin: 1.25rem 0 1.5rem;
       }
       .block { display: grid; grid-template-columns: 3.5rem 1fr; gap: 0.75rem; margin-bottom: 0.25rem; }
       .time { text-align: right; padding-top: 0.85rem; }
@@ -78,23 +78,22 @@
       .time .end { font-size: 0.7rem; color: var(--muted); }
       .rail { position: relative; padding-left: 0.85rem; }
       .rail::before {
-        content: ""; position: absolute; left: 0.3rem; top: 0; bottom: 0;
-        width: 2px; background: var(--rail);
+        content: ""; position: absolute; left: 0; top: 0; bottom: -0.25rem; width: 2px; background: var(--rail);
       }
       .dot {
-        position: absolute; left: 0; top: 1.05rem; width: 0.65rem; height: 0.65rem;
+        position: absolute; left: -4px; top: 1.1rem; width: 10px; height: 10px;
         border-radius: 50%; background: var(--accent); border: 2px solid var(--bg);
       }
-      .dot.hollow { background: var(--bg); border: 2px solid var(--accent); }
+      .dot.hollow { background: var(--bg); border-color: var(--accent); }
       .card {
         background: var(--card); border: 1px solid var(--border); border-radius: 0.85rem;
-        padding: 0.85rem 1rem; margin-bottom: 0.75rem;
+        padding: 0.85rem 1rem; margin-bottom: 0.5rem;
       }
       .card.transit { background: var(--transit); }
       .meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; }
       .chip {
         font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
-        background: var(--chip); color: var(--chip-fg); padding: 0.15rem 0.45rem; border-radius: 999px;
+        background: var(--chip); color: var(--chip-fg); padding: 0.15rem 0.5rem; border-radius: 999px;
       }
       .dur { font-size: 0.7rem; color: var(--muted); }
       .card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
@@ -123,111 +122,90 @@
     <header class="top"><div class="wrap bar"><a class="back" href="/">← <span data-i18n="back">Volver</span></a><div class="controls"><button type="button" id="langBtn">EN</button><button type="button" id="themeBtn">◐</button></div></div></header>
     <main class="wrap">
       <section class="hero">
-        <p class="kicker" data-i18n="kicker">lunes 31 de agosto</p>
+        <p class="kicker" data-i18n="kicker">martes 1 de septiembre</p>
         <h1 data-i18n="title">Mañana</h1>
-        <p class="lede" data-i18n="subtitle">Gimnasio 07:00–09:00, vuelve a Casa, Universidad a las 11:00 (bdd, después innovación). Tutor de mates a las 16:00.</p>
+        <p class="lede" data-i18n="subtitle">Sin gimnasio. Universidad a las 08:20 (arqui, después web). A2 arqui a las 14:50.</p>
         <p class="tz" data-i18n="timezone">Santiago · UTC−4</p>
-        <dl class="stats"><div><dt data-i18n="blocksLabel">Bloques</dt><dd>8</dd></div><div><dt data-i18n="committed">En calendario</dt><dd>3</dd></div><div><dt data-i18n="transit">Traslado</dt><dd>25+55m</dd></div><div><dt data-i18n="first">Primer bloque</dt><dd>07:00</dd></div></dl>
+        <dl class="stats"><div><dt data-i18n="blocksLabel">Bloques</dt><dd>3</dd></div><div><dt data-i18n="committed">En calendario</dt><dd>2</dd></div><div><dt data-i18n="transit">Traslado</dt><dd>55m</dd></div><div><dt data-i18n="first">Primer bloque</dt><dd>08:20</dd></div></dl>
       </section>
-      <p class="note" data-i18n="note">Tres eventos en Google Calendar: gimnasio 07:00–09:00, clases 11:00–13:30 en Universidad, tutor de mates 16:00–17:30. Hoy no se lava el pelo: ducha corta (~15 min) con jabón/shampoo del gimnasio y toalla propia, sin secar pelo en Casa. Última serie ~08:30, proteína + carbos en el gimnasio, ducha, auto 25 min. Mañana fría y húmeda (~8–10 °C), máxima ~18–19 °C; chubascos residuales temprano — impermeable puesto en los dos traslados de la mañana.</p>
-      <article class="block"><div class="time"><div class="start">05:50</div><div class="end">06:35</div></div><div class="rail"><span class="dot hollow"></span><div class="card"><div class="meta"><span class="chip" data-i18n="tagPlan">Plan</span><span class="dur">45 min</span></div><h2 data-i18n="wakeTitle">Despertar · salir</h2><p class="detail" data-i18n="wakeDetail">400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Bolso de gimnasio y mochila de Universidad listos. Buffer de 45 min porque el primer despertar se atrasa. Sales a las 06:35.</p><p class="loc" data-i18n="homeLoc">Casa</p></div></div></article>
-      <article class="block"><div class="time"><div class="start">06:35</div><div class="end">07:00</div></div><div class="rail"><span class="dot hollow"></span><div class="card transit"><div class="meta"><span class="chip" data-i18n="tagTransit">Traslados</span><span class="dur">25 min</span></div><h2 data-i18n="driveGymTitle">Auto al gimnasio</h2><p class="detail" data-i18n="driveGymDetail">25 min en auto. Calle fría y posiblemente mojada. Impermeable puesto, no en el asiento de atrás.</p><p class="loc" data-i18n="toGymLoc">Hacia el gimnasio</p></div></div></article>
-      <article class="block"><div class="time"><div class="start">07:00</div><div class="end">08:30</div></div><div class="rail"><span class="dot"></span><div class="card"><div class="meta"><span class="chip" data-i18n="tagCal">Calendario</span><span class="dur">1h 30m</span></div><h2 data-i18n="gymTitle">Gimnasio</h2><p class="detail" data-i18n="gymDetail">Calendario dice 07:00–09:00; se corta para ducha corta y buffer en Casa. Última serie ~08:30. Proteína + carbos en el gimnasio en los 5–15 min siguientes, no en Casa.</p><p class="loc" data-i18n="gymLoc">Gimnasio</p></div></div></article>
-      <article class="block"><div class="time"><div class="start">08:30</div><div class="end">08:50</div></div><div class="rail"><span class="dot hollow"></span><div class="card"><div class="meta"><span class="chip" data-i18n="tagPlan">Plan</span><span class="dur">20 min</span></div><h2 data-i18n="showerTitle">Ducha · cambio</h2><p class="detail" data-i18n="showerDetail">Ducha corta (~15 min) con jabón y shampoo del gimnasio, toalla propia, ropa limpia. Sin lavar pelo. Café en la cafetería del gimnasio al salir si quieres. Saliendo del gimnasio ~08:50.</p><p class="loc" data-i18n="gymLoc">Gimnasio</p></div></div></article>
-      <article class="block"><div class="time"><div class="start">08:50</div><div class="end">09:15</div></div><div class="rail"><span class="dot hollow"></span><div class="card transit"><div class="meta"><span class="chip" data-i18n="tagTransit">Traslados</span><span class="dur">25 min</span></div><h2 data-i18n="driveHomeTitle">Auto a Casa</h2><p class="detail" data-i18n="driveHomeDetail">25 min. Llegas ~09:15 con ~45 min antes de salir a Universidad.</p><p class="loc" data-i18n="toHomeLoc">Hacia Casa</p></div></div></article>
-      <article class="block"><div class="time"><div class="start">09:15</div><div class="end">10:00</div></div><div class="rail"><span class="dot hollow"></span><div class="card"><div class="meta"><span class="chip" data-i18n="tagPlan">Plan</span><span class="dur">45 min</span></div><h2 data-i18n="homeResetTitle">Casa · reset</h2><p class="detail" data-i18n="homeResetDetail">Revisar mochila, algo fácil de comer si no desayunaste, botella. Sin secar pelo. No empieces otra tarea. Sales a las 10:00.</p><p class="loc" data-i18n="homeLoc">Casa</p></div></div></article>
-      <article class="block"><div class="time"><div class="start">10:00</div><div class="end">10:55</div></div><div class="rail"><span class="dot hollow"></span><div class="card transit"><div class="meta"><span class="chip" data-i18n="tagTransit">Traslados</span><span class="dur">55 min</span></div><h2 data-i18n="transitTitle">Transporte a Universidad</h2><p class="detail" data-i18n="transitDetail">55 min puerta a sala. Salir a las 10:00, no a las 10:10. Si sigue húmedo, impermeable puesto.</p><p class="loc" data-i18n="toUniLoc">Hacia Universidad</p></div></div></article>
-      <article class="block"><div class="time"><div class="start">11:00</div><div class="end">13:30</div></div><div class="rail"><span class="dot"></span><div class="card"><div class="meta"><span class="chip" data-i18n="tagCal">Calendario</span><span class="dur">2h 30m</span></div><h2 data-i18n="classTitle">Clases</h2><p class="detail" data-i18n="classDetail">11:00 bdd · 12:20 innovación. Bloque continuo hasta 13:30. Agua a mano; no dejes el almuerzo para las 16:00.</p><p class="loc" data-i18n="uniLoc">Universidad</p></div></div></article>
-      <section class="later"><h3 data-i18n="later">Más tarde</h3><p data-i18n="laterBody">Después de innovación (~13:30), almuerzo real y un rato en Universidad o Casa antes del tutor de mates a las 16:00. Ese bloque no es entrenamiento: no aplica el protocolo post-gimnasio.</p><ul>
-        <li><div><div class="when">13:30–15:15</div><div class="name" data-i18n="lunchTitle">Almuerzo · respiro</div><p class="place" data-i18n="lunchLoc">Universidad o Casa</p></div><span class="chip" data-i18n="tagPlan">Plan</span></li>
-        <li><div><div class="when">16:00–17:30</div><div class="name" data-i18n="tutorTitle">Tutor de mates</div><p class="place" data-i18n="tutorLoc">Tutor de mates</p></div><span class="chip" data-i18n="tagCal">Calendario</span></li>
-      </ul></section>
-      <section class="night"><h3 data-i18n="night">La noche anterior</h3><ul>
-        <li><span>·</span><span data-i18n="n1">Bolso de gimnasio: toalla, ropa limpia para después de la ducha (la que usas en Universidad), proteína + carbos para comer en el gimnasio apenas termines. Jabón y shampoo están allá.</span></li>
-        <li><span>·</span><span data-i18n="n2">Mochila de Universidad armada anoche: cuaderno/laptop, cargador, botella, colación, notas para bdd (11:00) e innovación (12:20). Queda en Casa lista para las 09:20.</span></li>
-        <li><span>·</span><span data-i18n="n3">Capas para ~8–10 °C y calle húmeda a las 06:35: base térmica o manga larga, polar o hoodie, chaqueta impermeable. En el gimnasio te cambias a ropa limpia; para el bus de las 10:00 reusas la capa de abrigo liviana y te la sacas en Universidad (~18 °C).</span></li>
-        <li><span>·</span><span data-i18n="n4">Alarma 05:50, backup 06:00. Sales de Casa al gimnasio a las 06:35. Botella llena, teléfono cargado, llaves, tarjeta de transporte en la mochila de Universidad — no la dejes en el bolso de gimnasio.</span></li>
-        <li><span>·</span><span data-i18n="n5">Pre-workout: solo agua, o un bocado mínimo. El desayuno real espera a Casa ~09:20 o un café al salir del gimnasio después de la ducha.</span></li>
-        <li><span>·</span><span data-i18n="n6">Confirmar materiales del tutor de mates (16:00) para no decidir eso a las 15:00.</span></li>
-        <li><span>·</span><span data-i18n="n7">Luces apagadas ~21:50–22:15. Con alarma a las 05:50 necesitas ~8 h en cama. El primer despertar cuesta — no recortes esto.</span></li>
-      </ul></section>
+      <p class="note" data-i18n="note">Dos eventos en Google Calendar: clases 08:20–11:00 en Universidad (8:20 arqui · 9:40 web), A2 arqui 14:50–17:00. Sin gimnasio esta mañana. Sal de Casa a las 07:20 (55–60 min puerta a sala). Mañana fresca ~10–13 °C, máxima ~17–21 °C, parcialmente nublado — manga larga o base ligera más chaqueta liviana.</p>
+      <article class="block"><div class="time"><div class="start">06:40</div><div class="end">07:20</div></div><div class="rail"><span class="dot hollow"></span><div class="card"><div class="meta"><span class="chip" data-i18n="tagPlan">Plan</span><span class="dur">40 min</span></div><h2 data-i18n="wakeTitle">Despertar · salir</h2><p class="detail" data-i18n="wakeDetail">400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mochila lista. Buffer de 40 min porque el primer despertar se atrasa. Sales a las 07:20.</p><p class="loc" data-i18n="homeLoc">Casa</p></div></div></article>
+      <article class="block"><div class="time"><div class="start">07:20</div><div class="end">08:20</div></div><div class="rail"><span class="dot hollow"></span><div class="card transit"><div class="meta"><span class="chip" data-i18n="tagTransit">Traslados</span><span class="dur">60 min</span></div><h2 data-i18n="transitTitle">Traslado a Universidad</h2><p class="detail" data-i18n="transitDetail">55 min puerta a sala. Sale a las 07:20, no a las 07:30. Transporte público.</p><p class="loc" data-i18n="toUniLoc">Hacia Universidad</p></div></div></article>
+      <article class="block"><div class="time"><div class="start">08:20</div><div class="end">11:00</div></div><div class="rail"><span class="dot"></span><div class="card"><div class="meta"><span class="chip" data-i18n="tagCal">Calendario</span><span class="dur">2h 40m</span></div><h2 data-i18n="classTitle">Clases</h2><p class="detail" data-i18n="classDetail">08:20 arqui · 09:40 web. Bloque continuo hasta 11:00. Agua a mano.</p><p class="loc" data-i18n="uniLoc">Universidad</p></div></div></article>
+      <section class="later">
+        <h3 data-i18n="later">Más tarde</h3>
+        <p data-i18n="laterBody">Después de web (~11:00), almuerzo real y tiempo libre en Universidad o Casa antes de A2 arqui a las 14:50. Ese bloque es trabajo de curso, no entrenamiento.</p>
+        <ul>
+          <li><div><div class="when">11:00–14:50</div><div class="name" data-i18n="lunchTitle">Almuerzo · respiro</div><div class="place" data-i18n="lunchLoc">Universidad o Casa</div></div></li>
+          <li><div><div class="when">14:50–17:00</div><div class="name" data-i18n="a2Title">A2 arqui</div><div class="place" data-i18n="a2Loc">Universidad</div></div></li>
+        </ul>
+      </section>
+      <section class="night">
+        <h3 data-i18n="night">La noche anterior</h3>
+        <ul>
+          <li><span>1</span><span data-i18n="n1">Mochila de Universidad armada anoche: cuaderno/laptop, cargador, botella, colación, notas para arqui (08:20) y web (09:40). Queda en Casa lista para las 07:20.</span></li>
+          <li><span>2</span><span data-i18n="n2">Capas para ~10–13 °C a la salida y máxima ~17–21 °C: manga larga o base ligera, chaqueta o polar liviano. Una sola sugerencia de capas; tú decides el resto.</span></li>
+          <li><span>3</span><span data-i18n="n3">Alarma 06:40, backup 06:50. Sales de Casa a las 07:20. Botella llena, teléfono cargado, llaves, tarjeta de transporte en la mochila.</span></li>
+          <li><span>4</span><span data-i18n="n4">400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml antes de salir. Desayuno liviano en Casa si quieres; no hace falta más.</span></li>
+          <li><span>5</span><span data-i18n="n5">Revisar materiales de A2 arqui (14:50) para no decidir eso a las 14:00.</span></li>
+          <li><span>6</span><span data-i18n="n6">Luces apagadas ~22:15–22:45. Con alarma a las 06:40 necesitas ~7.5–8.5 h en cama. El primer despertar cuesta — no recortes esto.</span></li>
+        </ul>
+      </section>
     </main>
-    <footer><div class="wrap"><p data-i18n="source">Desde Google Calendar · 30 ago 2026, 22:20</p><a href="/">camila escudero</a></div></footer>
+    <footer><div class="wrap"><span data-i18n="source">Desde Google Calendar · 31 ago 2026, 08:45</span><a href="/">camilaescudero.cl</a></div></footer>
     <script>
       const i18n = {
         es: {
-          back:"Volver", kicker:"lunes 31 de agosto", title:"Mañana",
-          subtitle:"Gimnasio 07:00–09:00, vuelve a Casa, Universidad a las 11:00 (bdd, después innovación). Tutor de mates a las 16:00.",
+          back:"Volver", kicker:"martes 1 de septiembre", title:"Mañana",
+          subtitle:"Sin gimnasio. Universidad a las 08:20 (arqui, después web). A2 arqui a las 14:50.",
           timezone:"Santiago · UTC−4", blocksLabel:"Bloques", committed:"En calendario", transit:"Traslado", first:"Primer bloque",
-          note:"Tres eventos en Google Calendar: gimnasio 07:00–09:00, clases 11:00–13:30 en Universidad, tutor de mates 16:00–17:30. Hoy no se lava el pelo: ducha corta (~15 min) con jabón/shampoo del gimnasio y toalla propia, sin secar pelo en Casa. Última serie ~08:30, proteína + carbos en el gimnasio, ducha, auto 25 min. Mañana fría y húmeda (~8–10 °C), máxima ~18–19 °C; chubascos residuales temprano — impermeable puesto en los dos traslados de la mañana.",
+          note:"Dos eventos en Google Calendar: clases 08:20–11:00 en Universidad (8:20 arqui · 9:40 web), A2 arqui 14:50–17:00. Sin gimnasio esta mañana. Sal de Casa a las 07:20 (55–60 min puerta a sala). Mañana fresca ~10–13 °C, máxima ~17–21 °C, parcialmente nublado — manga larga o base ligera más chaqueta liviana.",
           tagPlan:"Plan", tagCal:"Calendario", tagTransit:"Traslados",
           wakeTitle:"Despertar · salir",
-          wakeDetail:"400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Bolso de gimnasio y mochila de Universidad listos. Buffer de 45 min porque el primer despertar se atrasa. Sales a las 06:35.",
-          driveGymTitle:"Auto al gimnasio",
-          driveGymDetail:"25 min en auto. Calle fría y posiblemente mojada. Impermeable puesto, no en el asiento de atrás.",
-          gymTitle:"Gimnasio",
-          gymDetail:"Calendario dice 07:00–09:00; se corta para ducha corta y buffer en Casa. Última serie ~08:30. Proteína + carbos en el gimnasio en los 5–15 min siguientes, no en Casa.",
-          showerTitle:"Ducha · cambio",
-          showerDetail:"Ducha corta (~15 min) con jabón y shampoo del gimnasio, toalla propia, ropa limpia. Sin lavar pelo. Café en la cafetería del gimnasio al salir si quieres. Saliendo del gimnasio ~08:50.",
-          driveHomeTitle:"Auto a Casa",
-          driveHomeDetail:"25 min. Llegas ~09:15 con ~45 min antes de salir a Universidad.",
-          homeResetTitle:"Casa · reset",
-          homeResetDetail:"Revisar mochila, algo fácil de comer si no desayunaste, botella. Sin secar pelo. No empieces otra tarea. Sales a las 10:00.",
-          transitTitle:"Transporte a Universidad",
-          transitDetail:"55 min puerta a sala. Salir a las 10:00, no a las 10:10. Si sigue húmedo, impermeable puesto.",
+          wakeDetail:"400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mochila lista. Buffer de 40 min porque el primer despertar se atrasa. Sales a las 07:20.",
+          transitTitle:"Traslado a Universidad",
+          transitDetail:"55 min puerta a sala. Sale a las 07:20, no a las 07:30. Transporte público.",
           classTitle:"Clases",
-          classDetail:"11:00 bdd · 12:20 innovación. Bloque continuo hasta 13:30. Agua a mano; no dejes el almuerzo para las 16:00.",
-          homeLoc:"Casa", toGymLoc:"Hacia el gimnasio", gymLoc:"Gimnasio", toHomeLoc:"Hacia Casa", toUniLoc:"Hacia Universidad", uniLoc:"Universidad",
+          classDetail:"08:20 arqui · 09:40 web. Bloque continuo hasta 11:00. Agua a mano.",
+          homeLoc:"Casa", toUniLoc:"Hacia Universidad", uniLoc:"Universidad",
           later:"Más tarde",
-          laterBody:"Después de innovación (~13:30), almuerzo real y un rato en Universidad o Casa antes del tutor de mates a las 16:00. Ese bloque no es entrenamiento: no aplica el protocolo post-gimnasio.",
+          laterBody:"Después de web (~11:00), almuerzo real y tiempo libre en Universidad o Casa antes de A2 arqui a las 14:50. Ese bloque es trabajo de curso, no entrenamiento.",
           lunchTitle:"Almuerzo · respiro", lunchLoc:"Universidad o Casa",
-          tutorTitle:"Tutor de mates", tutorLoc:"Tutor de mates",
+          a2Title:"A2 arqui", a2Loc:"Universidad",
           night:"La noche anterior",
-          n1:"Bolso de gimnasio: toalla, ropa limpia para después de la ducha (la que usas en Universidad), proteína + carbos para comer en el gimnasio apenas termines. Jabón y shampoo están allá.",
-          n2:"Mochila de Universidad armada anoche: cuaderno/laptop, cargador, botella, colación, notas para bdd (11:00) e innovación (12:20). Queda en Casa lista para las 09:20.",
-          n3:"Capas para ~8–10 °C y calle húmeda a las 06:35: base térmica o manga larga, polar o hoodie, chaqueta impermeable. En el gimnasio te cambias a ropa limpia; para el bus de las 10:00 reusas la capa de abrigo liviana y te la sacas en Universidad (~18 °C).",
-          n4:"Alarma 05:50, backup 06:00. Sales de Casa al gimnasio a las 06:35. Botella llena, teléfono cargado, llaves, tarjeta de transporte en la mochila de Universidad — no la dejes en el bolso de gimnasio.",
-          n5:"Pre-workout: solo agua, o un bocado mínimo. El desayuno real espera a Casa ~09:20 o un café al salir del gimnasio después de la ducha.",
-          n6:"Confirmar materiales del tutor de mates (16:00) para no decidir eso a las 15:00.",
-          n7:"Luces apagadas ~21:50–22:15. Con alarma a las 05:50 necesitas ~8 h en cama. El primer despertar cuesta — no recortes esto.",
-          source:"Desde Google Calendar · 30 ago 2026, 22:20"
+          n1:"Mochila de Universidad armada anoche: cuaderno/laptop, cargador, botella, colación, notas para arqui (08:20) y web (09:40). Queda en Casa lista para las 07:20.",
+          n2:"Capas para ~10–13 °C a la salida y máxima ~17–21 °C: manga larga o base ligera, chaqueta o polar liviano. Una sola sugerencia de capas; tú decides el resto.",
+          n3:"Alarma 06:40, backup 06:50. Sales de Casa a las 07:20. Botella llena, teléfono cargado, llaves, tarjeta de transporte en la mochila.",
+          n4:"400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml antes de salir. Desayuno liviano en Casa si quieres; no hace falta más.",
+          n5:"Revisar materiales de A2 arqui (14:50) para no decidir eso a las 14:00.",
+          n6:"Luces apagadas ~22:15–22:45. Con alarma a las 06:40 necesitas ~7.5–8.5 h en cama. El primer despertar cuesta — no recortes esto.",
+          source:"Desde Google Calendar · 31 ago 2026, 08:45"
         },
         en: {
-          back:"Back", kicker:"monday 31 august", title:"Morning",
-          subtitle:"Gym 07:00–09:00, back Home, University at 11:00 (bdd, then innovación). Math tutor at 16:00.",
+          back:"Back", kicker:"tuesday 1 september", title:"Morning",
+          subtitle:"No gym. University at 08:20 (arqui, then web). A2 arqui at 14:50.",
           timezone:"Santiago · UTC−4", blocksLabel:"Blocks", committed:"On the calendar", transit:"Transit", first:"First block",
-          note:"Three Google Calendar events: gym 07:00–09:00, class 11:00–13:30 at University, Math tutor 16:00–17:30. No hair wash today: short shower (~15 min) with gym soap/shampoo and own towel, no hair-dry buffer at Home. Last set ~08:30, protein + carbs at the gym, shower, 25 min drive. Cold damp morning (~8–10 °C), high ~18–19 °C; leftover showers early — waterproof on for both morning trips.",
+          note:"Two Google Calendar events: class 08:20–11:00 at University (8:20 arqui · 9:40 web), A2 arqui 14:50–17:00. No gym this morning. Leave Home at 07:20 (55–60 min door to classroom). Cool morning ~10–13 °C, high ~17–21 °C, partly cloudy — long sleeve or light base plus a light jacket.",
           tagPlan:"Plan", tagCal:"Calendar", tagTransit:"Transit",
           wakeTitle:"Wake · leave",
-          wakeDetail:"400–500 ml water on waking. Sip to ~600–800 ml. Gym bag and University bag ready. 45 min buffer because the first alarm slips. Leave at 06:35.",
-          driveGymTitle:"Drive to gym",
-          driveGymDetail:"25 min by car. Cold street, possibly wet. Waterproof is on, not on the back seat.",
-          gymTitle:"Gym",
-          gymDetail:"Calendar says 07:00–09:00; cut short for a short shower and Home buffer. Last set ~08:30. Protein + carbs at the gym in the next 5–15 min, not at Home.",
-          showerTitle:"Shower · change",
-          showerDetail:"Short shower (~15 min) with gym soap and shampoo, own towel, clean clothes. No hair wash. Coffee at the gym shop on the way out if you want. Leave the gym ~08:50.",
-          driveHomeTitle:"Drive to Home",
-          driveHomeDetail:"25 min. Home ~09:15, ~45 min before leaving for University.",
-          homeResetTitle:"Home · reset",
-          homeResetDetail:"Check the bag, easy food if you skipped breakfast, refill the bottle. No hair dry. Do not start another task. Leave at 10:00.",
+          wakeDetail:"400–500 ml water on waking. Sip to ~600–800 ml. Bag ready. 40 min buffer because the first alarm slips. Leave at 07:20.",
           transitTitle:"Transit to University",
-          transitDetail:"55 min door to classroom. Leave at 10:00, not 10:10. If the street is still wet, waterproof on.",
+          transitDetail:"55 min door to classroom. Leave at 07:20, not 07:30. Public transport.",
           classTitle:"Classes",
-          classDetail:"11:00 bdd · 12:20 innovación. Continuous block until 13:30. Water on hand; do not push lunch to 16:00.",
-          homeLoc:"Home", toGymLoc:"To the gym", gymLoc:"Gym", toHomeLoc:"To Home", toUniLoc:"To University", uniLoc:"University",
+          classDetail:"08:20 arqui · 09:40 web. Continuous block until 11:00. Water on hand.",
+          homeLoc:"Home", toUniLoc:"To University", uniLoc:"University",
           later:"Later today",
-          laterBody:"After innovación (~13:30), a real lunch and a stretch at University or Home before Math tutor at 16:00. That block is not training: skip the post-gym protocol.",
+          laterBody:"After web (~11:00), a real lunch and free time at University or Home before A2 arqui at 14:50. That block is course work, not training.",
           lunchTitle:"Lunch · reset", lunchLoc:"University or Home",
-          tutorTitle:"Math tutor", tutorLoc:"Math tutor",
+          a2Title:"A2 arqui", a2Loc:"University",
           night:"The night before",
-          n1:"Gym bag: towel, clean clothes for after the shower (what you wear at University), protein + carbs to eat at the gym right after the last set. Soap and shampoo are already there.",
-          n2:"University bag packed tonight: notebook/laptop, charger, bottle, snack, notes for bdd (11:00) and innovación (12:20). Leave it at Home ready for 09:20.",
-          n3:"Layers for ~8–10 °C and a wet street at 06:35: thermal or long-sleeve base, fleece or hoodie, waterproof jacket. Change into clean clothes at the gym; reuse the light warm layer for the 10:00 bus and shed it at University (~18 °C).",
-          n4:"Alarm 05:50, backup 06:00. Leave Home for the gym at 06:35. Bottle filled, phone charged, keys, transit card in the University bag — do not leave it in the gym bag.",
-          n5:"Pre-workout: water only, or a tiny bite. Real food waits at Home ~09:20, or coffee on the way out of the gym after the shower.",
-          n6:"Confirm materials for Math tutor (16:00) so you are not deciding that at 15:00.",
-          n7:"Lights out ~21:50–22:15. A 05:50 alarm needs ~8 h in bed. First alarm is hard — do not cut this.",
-          source:"From Google Calendar · 30 Aug 2026, 22:20"
+          n1:"University bag packed tonight: notebook/laptop, charger, bottle, snack, notes for arqui (08:20) and web (09:40). Leave it at Home ready for 07:20.",
+          n2:"Layers for ~10–13 °C at leave time and high ~17–21 °C: long sleeve or light base, light jacket or fleece. One layer suggestion only; you decide the rest.",
+          n3:"Alarm 06:40, backup 06:50. Leave Home at 07:20. Bottle filled, phone charged, keys, transit card in the bag.",
+          n4:"400–500 ml water on waking, then sip to ~600–800 ml before leaving. Light breakfast at Home if you want; nothing more is required.",
+          n5:"Check materials for A2 arqui (14:50) so you are not deciding that at 14:00.",
+          n6:"Lights out ~22:15–22:45. A 06:40 alarm needs ~7.5–8.5 h in bed. First alarm is hard — do not cut this.",
+          source:"From Google Calendar · 31 Aug 2026, 08:45"
         }
       };
       let lang = "es";
