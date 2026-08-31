@@ -1,16 +1,17 @@
 import type { TranslationKey } from "@/i18n/types";
 
-export type CvJobId = "acfin" | "softwareIntern" | "webIntern" | "frontendIntern";
-export type CvProjectId = "sportsVideo" | "fleetOptimizer";
-export type CvLeadershipId = "coach" | "player";
+export type CvJobId = "acfin" | "finapsys" | "a3" | "visionary";
+export type CvProjectId = "ava" | "fleetOptimizer";
+export type CvLeadershipId = "player" | "coachUc" | "coachNational" | "videoAnalyst";
 
 export interface CvProject {
   id: CvProjectId;
   titleKey: TranslationKey;
   typeKey: TranslationKey;
   descriptionKey: TranslationKey;
-  impactKey: TranslationKey;
+  impactKey?: TranslationKey;
   technologies: string[];
+  href?: string;
 }
 
 export interface CvJob {
@@ -31,19 +32,18 @@ export interface CvLeadership {
 
 export const cvProjects: CvProject[] = [
   {
-    id: "sportsVideo",
-    titleKey: "cv.sportsVideo.title",
-    typeKey: "cv.sportsVideo.type",
-    descriptionKey: "cv.sportsVideo.description",
-    impactKey: "cv.sportsVideo.impact",
-    technologies: ["React", "TypeScript", "FFmpeg", "Node.js", "PostgreSQL"],
+    id: "ava",
+    titleKey: "cv.ava.title",
+    typeKey: "cv.ava.type",
+    descriptionKey: "cv.ava.description",
+    technologies: ["C++"],
+    href: "/ava",
   },
   {
     id: "fleetOptimizer",
     titleKey: "cv.fleetOptimizer.title",
     typeKey: "cv.fleetOptimizer.type",
     descriptionKey: "cv.fleetOptimizer.description",
-    impactKey: "cv.fleetOptimizer.impact",
     technologies: ["Python", "Linear Programming", "Gurobi", "Pandas"],
   },
 ];
@@ -55,59 +55,63 @@ export const cvJobs: CvJob[] = [
     companyKey: "cv.acfin.company",
     periodKey: "cv.acfin.period",
     bulletKeys: ["cv.acfin.bullet1", "cv.acfin.bullet2", "cv.acfin.bullet3"],
-    technologies: ["Looker", "LookML", "SQL", "Python"],
+    technologies: ["Looker", "LookML", "BigQuery", "SQL", "Python"],
   },
   {
-    id: "softwareIntern",
-    titleKey: "cv.softwareIntern.title",
-    companyKey: "cv.softwareIntern.company",
-    periodKey: "cv.softwareIntern.period",
-    bulletKeys: [
-      "cv.softwareIntern.bullet1",
-      "cv.softwareIntern.bullet2",
-      "cv.softwareIntern.bullet3",
-    ],
-    technologies: ["React", "TypeScript", "Node.js", "PostgreSQL"],
+    id: "finapsys",
+    titleKey: "cv.finapsys.title",
+    companyKey: "cv.finapsys.company",
+    periodKey: "cv.finapsys.period",
+    bulletKeys: ["cv.finapsys.bullet1", "cv.finapsys.bullet2", "cv.finapsys.bullet3"],
+    technologies: ["Vue 3", "TypeScript", "Pinia", "Firebase"],
   },
   {
-    id: "webIntern",
-    titleKey: "cv.webIntern.title",
-    companyKey: "cv.webIntern.company",
-    periodKey: "cv.webIntern.period",
-    bulletKeys: ["cv.webIntern.bullet1", "cv.webIntern.bullet2", "cv.webIntern.bullet3"],
-    technologies: ["Vue.js", "Tailwind CSS", "PostgreSQL"],
+    id: "a3",
+    titleKey: "cv.a3.title",
+    companyKey: "cv.a3.company",
+    periodKey: "cv.a3.period",
+    bulletKeys: ["cv.a3.bullet1", "cv.a3.bullet2", "cv.a3.bullet3"],
+    technologies: [],
   },
   {
-    id: "frontendIntern",
-    titleKey: "cv.frontendIntern.title",
-    companyKey: "cv.frontendIntern.company",
-    periodKey: "cv.frontendIntern.period",
-    bulletKeys: [
-      "cv.frontendIntern.bullet1",
-      "cv.frontendIntern.bullet2",
-      "cv.frontendIntern.bullet3",
-    ],
-    technologies: ["React", "Styled Components", "Jest", "Figma"],
+    id: "visionary",
+    titleKey: "cv.visionary.title",
+    companyKey: "cv.visionary.company",
+    periodKey: "cv.visionary.period",
+    bulletKeys: ["cv.visionary.bullet1", "cv.visionary.bullet2", "cv.visionary.bullet3"],
+    technologies: ["Shopify", "BSale"],
   },
 ];
 
 export const cvLeadership: CvLeadership[] = [
-  {
-    id: "coach",
-    roleKey: "cv.coach.role",
-    organizationKey: "cv.coach.organization",
-    descriptionKey: "cv.coach.description",
-  },
   {
     id: "player",
     roleKey: "cv.player.role",
     organizationKey: "cv.player.organization",
     descriptionKey: "cv.player.description",
   },
+  {
+    id: "coachUc",
+    roleKey: "cv.coachUc.role",
+    organizationKey: "cv.coachUc.organization",
+    descriptionKey: "cv.coachUc.description",
+  },
+  {
+    id: "coachNational",
+    roleKey: "cv.coachNational.role",
+    organizationKey: "cv.coachNational.organization",
+    descriptionKey: "cv.coachNational.description",
+  },
+  {
+    id: "videoAnalyst",
+    roleKey: "cv.videoAnalyst.role",
+    organizationKey: "cv.videoAnalyst.organization",
+    descriptionKey: "cv.videoAnalyst.description",
+  },
 ];
 
 export const cvSkills = {
-  languages: ["TypeScript", "JavaScript", "Python", "SQL", "HTML/CSS"],
-  frameworks: ["React", "Node.js", "Vue.js", "Tailwind CSS"],
-  tools: ["Git", "PostgreSQL", "Looker", "LookML", "Figma", "REST APIs", "Vite"],
+  languages: ["TypeScript", "Python", "SQL", "C++"],
+  frameworks: ["Vue.js", "React", "Tailwind CSS"],
+  tools: ["Looker", "LookML", "BigQuery", "Git", "Firebase"],
 };

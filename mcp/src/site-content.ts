@@ -11,7 +11,7 @@ export const profile = {
   location: "Santiago, Chile",
   tagline: "Engineering in Santiago. Hockey on the side. Ideas end up here.",
   summary:
-    "Engineering student with experience across data analytics (BI, SQL, Looker) and production web applications. I ship clear analytics and user-focused code, and bring the same discipline from coaching athletes to collaborating on technical teams.",
+    "BI Developer at ACFIN. Studying Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology. Graduating 2026. Also a field hockey player, coach, and video analyst.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
