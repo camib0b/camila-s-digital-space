@@ -17,6 +17,7 @@ const AvaStage = ({ caption }: { caption: string }) => {
       <div className="ava-stage-field">
         <svg viewBox="0 0 914 550" role="img" aria-label={caption}>
           <title>{caption}</title>
+          <rect className="ava-pitch-fill" x="28" y="28" width="858" height="494" />
           <rect className="ava-pitch-line is-strong" x="28" y="28" width="858" height="494" />
           <line className="ava-pitch-line is-strong" x1="457" y1="28" x2="457" y2="522" />
           <circle className="ava-pitch-line" cx="457" cy="275" r="91" />
