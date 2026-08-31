@@ -9,7 +9,7 @@ export interface CvProject {
   titleKey: TranslationKey;
   typeKey: TranslationKey;
   descriptionKey: TranslationKey;
-  impactKey: TranslationKey;
+  impactKey?: TranslationKey;
   technologies: string[];
   href?: string;
 }
@@ -36,7 +36,6 @@ export const cvProjects: CvProject[] = [
     titleKey: "cv.ava.title",
     typeKey: "cv.ava.type",
     descriptionKey: "cv.ava.description",
-    impactKey: "cv.ava.impact",
     technologies: ["C++"],
     href: "/ava",
   },

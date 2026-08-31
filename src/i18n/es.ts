@@ -172,7 +172,6 @@ const es: Record<TranslationKey, string> = {
     "cv.ava.title": "AVA",
     "cv.ava.type": "Proyecto Personal",
     "cv.ava.description": "Producto de análisis de video para hockey sobre césped. Abres el partido, marcas los momentos clave y los clips salen el mismo día — pensado para cuerpos técnicos sin un analista dedicado.",
-    "cv.ava.impact": "Redujo el tiempo de revisión de video en 60% para mi equipo de hockey",
     "cv.fleetOptimizer.title": "Optimizador de Asignación de Motores de Flota de Aeronaves",
     "cv.fleetOptimizer.type": "Proyecto de Curso — Métodos de Optimización",
     "cv.fleetOptimizer.description": "Desarrollé una herramienta de optimización para asignar motores a través de una flota de aeronaves minimizando costos de mantenimiento mientras cumple restricciones de horarios de vuelo.",

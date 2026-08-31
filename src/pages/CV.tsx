@@ -81,10 +81,18 @@ const CV = () => {
                     {t(project.typeKey)}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-1">
+                <p
+                  className={
+                    project.impactKey
+                      ? "text-sm text-muted-foreground leading-relaxed mb-1"
+                      : "text-sm text-muted-foreground leading-relaxed mb-2"
+                  }
+                >
                   {t(project.descriptionKey)}
                 </p>
-                <p className="text-sm text-foreground/70 mb-2">↳ {t(project.impactKey)}</p>
+                {project.impactKey ? (
+                  <p className="text-sm text-foreground/70 mb-2">↳ {t(project.impactKey)}</p>
+                ) : null}
                 {project.technologies.length > 0 ? (
                   <div className="flex flex-wrap gap-1.5">
                     {project.technologies.map((technology) => (

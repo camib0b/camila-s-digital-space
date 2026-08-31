@@ -169,7 +169,6 @@ const en = {
     "cv.ava.title": "AVA",
     "cv.ava.type": "Personal Project",
     "cv.ava.description": "Field-hockey video analysis product. Load a match, tag key moments, and send clips the same day — built for coaches without a dedicated technical analyst.",
-    "cv.ava.impact": "Reduced video review time by 60% for my hockey team",
     "cv.fleetOptimizer.title": "Aircraft Fleet Engine Allocation Optimizer",
     "cv.fleetOptimizer.type": "Course Project — Optimization Methods",
     "cv.fleetOptimizer.description": "Developed an optimization tool to allocate engines across an aircraft fleet minimizing maintenance costs while meeting flight schedule constraints.",
