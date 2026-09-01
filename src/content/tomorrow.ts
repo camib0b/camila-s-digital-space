@@ -1,6 +1,6 @@
-export const TOMORROW_DATE = "2026-09-01";
+export const TOMORROW_DATE = "2026-09-02";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-08-31T08:45:00-04:00";
+export const SOURCED_AT = "2026-09-01T08:58:00-04:00";
 
 export type Lang = "en" | "es";
 
@@ -22,11 +22,11 @@ export interface ScheduleBlock {
 
 export const pageCopy = {
   back: { es: "Volver", en: "Back" } satisfies Copy,
-  kicker: { es: "martes 1 de septiembre", en: "tuesday 1 september" } satisfies Copy,
+  kicker: { es: "miércoles 2 de septiembre", en: "wednesday 2 september" } satisfies Copy,
   title: { es: "Mañana", en: "Morning" } satisfies Copy,
   subtitle: {
-    es: "Sin gimnasio. Universidad a las 08:20 (arqui, después web). A2 arqui a las 14:50.",
-    en: "No gym. University at 08:20 (arqui, then web). A2 arqui at 14:50.",
+    es: "Gira Sub-16 a Rosario. Vuelo SKY H2537 despega 07:55 (SCL → AEP). Sin gimnasio ni universidad.",
+    en: "Sub-16 tour to Rosario. SKY H2537 departs 07:55 (SCL → AEP). No gym, no university.",
   } satisfies Copy,
   timezone: { es: "Santiago · UTC−4", en: "Santiago · UTC−4" } satisfies Copy,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies Copy,
@@ -34,46 +34,46 @@ export const pageCopy = {
   transit: { es: "Traslado", en: "Transit" } satisfies Copy,
   first: { es: "Primer bloque", en: "First block" } satisfies Copy,
   note: {
-    es: "Dos eventos en Google Calendar: clases 08:20–11:00 en Universidad (8:20 arqui · 9:40 web), A2 arqui 14:50–17:00. Sin gimnasio esta mañana. Sal de Casa a las 07:20 (55–60 min puerta a sala). Mañana fresca ~10–13 °C, máxima ~17–21 °C, parcialmente nublado — manga larga o base ligera más chaqueta liviana.",
-    en: "Two Google Calendar events: class 08:20–11:00 at University (8:20 arqui · 9:40 web), A2 arqui 14:50–17:00. No gym this morning. Leave Home at 07:20 (55–60 min door to classroom). Cool morning ~10–13 °C, high ~17–21 °C, partly cloudy — long sleeve or light base plus a light jacket.",
+    es: "Un evento en Google Calendar: Sub-16 Gira a Rosario 🇦🇷 (04:45–07 sep). Ida: SKY H2537 despega 07:55 hrs SCL → AEP. Vuelta: SKY H2536 aterriza 23:00. Sin gimnasio ni clases. Es coaching de gira, no entrenamiento personal — no aplica protocolo post-gimnasio. Mañana fresca ~10–12 °C, máxima ~18–20 °C, mayormente nublado — base + chaqueta liviana o polar para la salida temprano.",
+    en: "One Google Calendar event: Sub-16 Tour to Rosario 🇦🇷 (04:45–07 Sep). Outbound: SKY H2537 departs 07:55 SCL → AEP. Return: SKY H2536 lands 23:00. No gym, no classes. Coaching tour, not personal training — no post-gym nutrition protocol. Cool morning ~10–12 °C, high ~18–20 °C, mostly cloudy — base + light jacket or fleece for the early leave.",
   } satisfies Copy,
   later: { es: "Más tarde", en: "Later today" } satisfies Copy,
   laterBody: {
-    es: "Después de web (~11:00), almuerzo real y tiempo libre en Universidad o Casa antes de A2 arqui a las 14:50. Ese bloque es trabajo de curso, no entrenamiento.",
-    en: "After web (~11:00), a real lunch and free time at University or Home before A2 arqui at 14:50. That block is course work, not training.",
+    es: "Llegada a Buenos Aires (AEP) alrededor de 11:00 hora local. El bloque de calendario continúa hasta el 7 de septiembre. Coordinar traslado a Rosario según el plan del equipo. Hidratación y comida real en el camino; no es un día de entrenamiento personal.",
+    en: "Arrival in Buenos Aires (AEP) around 11:00 local. Calendar block continues through 7 September. Coordinate transfer to Rosario with the team plan. Hydration and real food on the way; this is not a personal training day.",
   } satisfies Copy,
   night: { es: "La noche anterior", en: "The night before" } satisfies Copy,
   source: {
-    es: "Desde Google Calendar · 31 ago 2026, 08:45",
-    en: "From Google Calendar · 31 Aug 2026, 08:45",
+    es: "Desde Google Calendar · 1 sep 2026, 08:58",
+    en: "From Google Calendar · 1 Sep 2026, 08:58",
   } satisfies Copy,
   map: { es: "Mapa", en: "Map" } satisfies Copy,
 };
 
 export const nightBefore: Copy[] = [
   {
-    es: "Mochila de Universidad armada anoche: cuaderno/laptop, cargador, botella, colación, notas para arqui (08:20) y web (09:40). Queda en Casa lista para las 07:20.",
-    en: "University bag packed tonight: notebook/laptop, charger, bottle, snack, notes for arqui (08:20) and web (09:40). Leave it at Home ready for 07:20.",
+    es: "Maleta / bolso de gira armado: ropa para varios días, documentos de viaje, cargadores, botella, cualquier material de coaching del equipo. Dejarlo en Casa listo para la salida de las 04:45.",
+    en: "Tour bag packed: clothes for several days, travel documents, chargers, bottle, any team coaching materials. Leave it at Home ready for the 04:45 leave.",
   },
   {
-    es: "Capas para ~10–13 °C a la salida y máxima ~17–21 °C: manga larga o base ligera, chaqueta o polar liviano. Una sola sugerencia de capas; tú decides el resto.",
-    en: "Layers for ~10–13 °C at leave time and high ~17–21 °C: long sleeve or light base, light jacket or fleece. One layer suggestion only; you decide the rest.",
+    es: "Capas para ~10–12 °C a la salida temprano y máxima ~18–20 °C: base o manga larga, chaqueta o polar liviano. Una sola sugerencia de capas; tú decides el resto.",
+    en: "Layers for ~10–12 °C at early leave and high ~18–20 °C: base or long sleeve, light jacket or fleece. One layer suggestion only; you decide the rest.",
   },
   {
-    es: "Alarma 06:40, backup 06:50. Sales de Casa a las 07:20. Botella llena, teléfono cargado, llaves, tarjeta de transporte en la mochila.",
-    en: "Alarm 06:40, backup 06:50. Leave Home at 07:20. Bottle filled, phone charged, keys, transit card in the bag.",
+    es: "Alarma 04:00, backup 04:10. Sales de Casa a las 04:45. Botella llena, teléfono cargado, documentos y llaves a mano.",
+    en: "Alarm 04:00, backup 04:10. Leave Home at 04:45. Bottle filled, phone charged, documents and keys ready.",
   },
   {
-    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml antes de salir. Desayuno liviano en Casa si quieres; no hace falta más.",
-    en: "400–500 ml water on waking, then sip to ~600–800 ml before leaving. Light breakfast at Home if you want; nothing more is required.",
+    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml antes de salir. Colación liviana si quieres; el desayuno real puede esperar al aeropuerto o al vuelo.",
+    en: "400–500 ml water on waking, then sip to ~600–800 ml before leaving. Light snack if you want; real breakfast can wait at the airport or on the flight.",
   },
   {
-    es: "Revisar materiales de A2 arqui (14:50) para no decidir eso a las 14:00.",
-    en: "Check materials for A2 arqui (14:50) so you are not deciding that at 14:00.",
+    es: "Confirmar check-in online, asiento y requisitos de documentos (pasaporte/DNI según corresponda) para no improvisar a las 04:30.",
+    en: "Confirm online check-in, seat and document requirements (passport/ID as needed) so you are not improvising at 04:30.",
   },
   {
-    es: "Luces apagadas ~22:15–22:45. Con alarma a las 06:40 necesitas ~7.5–8.5 h en cama. El primer despertar cuesta — no recortes esto.",
-    en: "Lights out ~22:15–22:45. A 06:40 alarm needs ~7.5–8.5 h in bed. First alarm is hard — do not cut this.",
+    es: "Luces apagadas ~20:00–20:30. Con alarma a las 04:00 necesitas ~7.5–8.5 h en cama. El primer despertar cuesta — no recortes esto.",
+    en: "Lights out ~20:00–20:30. A 04:00 alarm needs ~7.5–8.5 h in bed. First alarm is hard — do not cut this.",
   },
 ];
 
@@ -81,69 +81,69 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "wake",
     kind: "plan",
-    start: "06:40",
-    end: "07:20",
+    start: "04:00",
+    end: "04:45",
     title: { es: "Despertar · salir", en: "Wake · leave" },
     detail: {
-      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mochila lista. Buffer de 40 min porque el primer despertar se atrasa. Sales a las 07:20.",
-      en: "400–500 ml water on waking. Sip to ~600–800 ml. Bag ready. 40 min buffer because the first alarm slips. Leave at 07:20.",
+      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Maleta lista. Buffer de 45 min porque el primer despertar se atrasa. Sales a las 04:45.",
+      en: "400–500 ml water on waking. Sip to ~600–800 ml. Bag ready. 45 min buffer because the first alarm slips. Leave at 04:45.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "transit-uni",
+    id: "transit-airport",
     kind: "transit",
-    start: "07:20",
-    end: "08:20",
-    title: { es: "Traslado a Universidad", en: "Transit to University" },
+    start: "04:45",
+    end: "06:00",
+    title: { es: "Traslado al aeropuerto", en: "Transit to airport" },
     detail: {
-      es: "55 min puerta a sala. Sale a las 07:20, no a las 07:30. Transporte público.",
-      en: "55 min door to classroom. Leave at 07:20, not 07:30. Public transport.",
+      es: "Salida 04:45 según el bloque de calendario. Llegar con margen para check-in y seguridad antes del despegue 07:55.",
+      en: "Leave 04:45 per the calendar block. Arrive with buffer for check-in and security before 07:55 departure.",
     },
-    location: { es: "Hacia Universidad", en: "To University" },
+    location: { es: "Hacia el aeropuerto", en: "To the airport" },
     tag: { es: "Traslados", en: "Transit" },
   },
   {
-    id: "clases",
+    id: "airport-flight",
     kind: "event",
-    start: "08:20",
-    end: "11:00",
-    title: { es: "Clases", en: "Classes" },
+    start: "06:00",
+    end: "07:55",
+    title: { es: "Aeropuerto · vuelo", en: "Airport · flight" },
     detail: {
-      es: "08:20 arqui · 09:40 web. Bloque continuo hasta 11:00. Agua a mano.",
-      en: "08:20 arqui · 09:40 web. Continuous block until 11:00. Water on hand.",
+      es: "Check-in, seguridad, puerta. SKY H2537 despega 07:55 SCL → AEP. Agua a mano. Es día de gira de coaching Sub-16, no entrenamiento.",
+      en: "Check-in, security, gate. SKY H2537 departs 07:55 SCL → AEP. Water on hand. Sub-16 coaching tour day, not personal training.",
     },
-    location: { es: "Universidad", en: "University" },
+    location: { es: "Aeropuerto", en: "Airport" },
     tag: { es: "Calendario", en: "Calendar" },
   },
 ];
 
 export const laterBlocks: ScheduleBlock[] = [
   {
-    id: "lunch",
-    kind: "plan",
-    start: "11:00",
-    end: "14:50",
-    title: { es: "Almuerzo · respiro", en: "Lunch · reset" },
+    id: "flight-arrival",
+    kind: "event",
+    start: "07:55",
+    end: "11:00",
+    title: { es: "Vuelo · llegada AEP", en: "Flight · AEP arrival" },
     detail: {
-      es: "Comida real después de web. Luego Universidad o Casa, según te alcance el tiempo antes de A2 arqui.",
-      en: "Real meal after web. Then University or Home, depending on how much time you have before A2 arqui.",
+      es: "Vuelo ~2 h. Llegada estimada ~11:00 hora local en Buenos Aires. Continuar según plan del equipo hacia Rosario.",
+      en: "Flight ~2 h. Estimated arrival ~11:00 local in Buenos Aires. Continue per team plan toward Rosario.",
     },
-    location: { es: "Universidad o Casa", en: "University or Home" },
-    tag: { es: "Plan", en: "Plan" },
+    location: { es: "En vuelo / AEP", en: "In flight / AEP" },
+    tag: { es: "Calendario", en: "Calendar" },
   },
   {
-    id: "a2-arqui",
+    id: "gira-continue",
     kind: "event",
-    start: "14:50",
-    end: "17:00",
-    title: { es: "A2 arqui", en: "A2 arqui" },
+    start: "11:00",
+    end: undefined,
+    title: { es: "Gira Sub-16 (continúa)", en: "Sub-16 tour (continues)" },
     detail: {
-      es: "Bloque de calendario 14:50–17:00. Trabajo de curso, no entrenamiento.",
-      en: "Calendar block 14:50–17:00. Course work, not training.",
+      es: "Bloque de calendario hasta el 7 de septiembre. Coaching de gira, no carga de entrenamiento personal. Hidratación y comida real según el ritmo del equipo.",
+      en: "Calendar block through 7 September. Coaching tour, not personal training load. Hydration and real food per team rhythm.",
     },
-    location: { es: "Universidad", en: "University" },
+    location: { es: "Rosario / gira", en: "Rosario / tour" },
     tag: { es: "Calendario", en: "Calendar" },
   },
 ];
@@ -173,7 +173,7 @@ export function mapsUrl(query: string): string {
 
 export const STATS = {
   blocks: String(morningBlocks.length),
-  committed: "2",
-  transit: "55m",
-  first: "08:20",
+  committed: "1",
+  transit: "~75m",
+  first: "04:45",
 };
