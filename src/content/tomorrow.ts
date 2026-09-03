@@ -1,6 +1,6 @@
-export const TOMORROW_DATE = "2026-09-02";
+export const TOMORROW_DATE = "2026-09-04";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-09-01T08:58:00-04:00";
+export const SOURCED_AT = "2026-09-03T08:47:00-04:00";
 
 export type Lang = "en" | "es";
 
@@ -22,58 +22,58 @@ export interface ScheduleBlock {
 
 export const pageCopy = {
   back: { es: "Volver", en: "Back" } satisfies Copy,
-  kicker: { es: "miércoles 2 de septiembre", en: "wednesday 2 september" } satisfies Copy,
+  kicker: { es: "viernes 4 de septiembre", en: "friday 4 september" } satisfies Copy,
   title: { es: "Mañana", en: "Morning" } satisfies Copy,
   subtitle: {
-    es: "Gira Sub-16 a Rosario. Vuelo SKY H2537 despega 07:55 (SCL → AEP). Sin gimnasio ni universidad.",
-    en: "Sub-16 tour to Rosario. SKY H2537 departs 07:55 (SCL → AEP). No gym, no university.",
+    es: "Gira Sub-16 en Rosario. Partido 07:30 vs Asociación Sanjuanina B · 13:00 vs Federación Cordobesa. Sin gimnasio ni universidad.",
+    en: "Sub-16 tour in Rosario. Match 07:30 vs Asociación Sanjuanina B · 13:00 vs Federación Cordobesa. No gym, no university.",
   } satisfies Copy,
-  timezone: { es: "Santiago · UTC−4", en: "Santiago · UTC−4" } satisfies Copy,
+  timezone: { es: "Santiago · UTC−4 · Rosario local UTC−3", en: "Santiago · UTC−4 · Rosario local UTC−3" } satisfies Copy,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies Copy,
   committed: { es: "En calendario", en: "On the calendar" } satisfies Copy,
   transit: { es: "Traslado", en: "Transit" } satisfies Copy,
   first: { es: "Primer bloque", en: "First block" } satisfies Copy,
   note: {
-    es: "Un evento en Google Calendar: Sub-16 Gira a Rosario 🇦🇷 (04:45–07 sep). Ida: SKY H2537 despega 07:55 hrs SCL → AEP. Vuelta: SKY H2536 aterriza 23:00. Sin gimnasio ni clases. Es coaching de gira, no entrenamiento personal — no aplica protocolo post-gimnasio. Mañana fresca ~10–12 °C, máxima ~18–20 °C, mayormente nublado — base + chaqueta liviana o polar para la salida temprano.",
-    en: "One Google Calendar event: Sub-16 Tour to Rosario 🇦🇷 (04:45–07 Sep). Outbound: SKY H2537 departs 07:55 SCL → AEP. Return: SKY H2536 lands 23:00. No gym, no classes. Coaching tour, not personal training — no post-gym nutrition protocol. Cool morning ~10–12 °C, high ~18–20 °C, mostly cloudy — base + light jacket or fleece for the early leave.",
+    es: "Dos partidos en Google Calendar (Universitario 2, Rosario): 07:30–09:00 vs Asociación Sanjuanina B y 13:00–14:30 vs Federación Cordobesa. Son partidos de selección (eventos «vs»), no sesiones de coaching Sub-12/14/16. Protocolo de recuperación post-partido sí aplica. Mañana fresca ~8–10 °C, máxima ~18–21 °C, mayormente despejado — base + capa liviana para la salida temprano; se quita después.",
+    en: "Two matches on Google Calendar (Universitario 2, Rosario): 07:30–09:00 vs Asociación Sanjuanina B and 13:00–14:30 vs Federación Cordobesa. Selection matches («vs» events), not Sub-12/14/16 coaching blocks. Post-match recovery nutrition applies. Cool morning ~8–10 °C, high ~18–21 °C, mostly clear — base + light layer for the early leave; remove later.",
   } satisfies Copy,
   later: { es: "Más tarde", en: "Later today" } satisfies Copy,
   laterBody: {
-    es: "Llegada a Buenos Aires (AEP) alrededor de 11:00 hora local. El bloque de calendario continúa hasta el 7 de septiembre. Coordinar traslado a Rosario según el plan del equipo. Hidratación y comida real en el camino; no es un día de entrenamiento personal.",
-    en: "Arrival in Buenos Aires (AEP) around 11:00 local. Calendar block continues through 7 September. Coordinate transfer to Rosario with the team plan. Hydration and real food on the way; this is not a personal training day.",
+    es: "Ventana entre partidos para comida real, hidratación y descanso relativo. Segundo partido 13:00–14:30. El bloque de gira continúa hasta el 7 de septiembre. No es día de gimnasio ni de clases.",
+    en: "Window between matches for real food, hydration and relative rest. Second match 13:00–14:30. Tour block continues through 7 September. Not a gym or class day.",
   } satisfies Copy,
   night: { es: "La noche anterior", en: "The night before" } satisfies Copy,
   source: {
-    es: "Desde Google Calendar · 1 sep 2026, 08:58",
-    en: "From Google Calendar · 1 Sep 2026, 08:58",
+    es: "Desde Google Calendar · 3 sep 2026, 08:47",
+    en: "From Google Calendar · 3 Sep 2026, 08:47",
   } satisfies Copy,
   map: { es: "Mapa", en: "Map" } satisfies Copy,
 };
 
 export const nightBefore: Copy[] = [
   {
-    es: "Maleta / bolso de gira armado: ropa para varios días, documentos de viaje, cargadores, botella, cualquier material de coaching del equipo. Dejarlo en Casa listo para la salida de las 04:45.",
-    en: "Tour bag packed: clothes for several days, travel documents, chargers, bottle, any team coaching materials. Leave it at Home ready for the 04:45 leave.",
+    es: "Kit de partido listo: indumentaria de juego, calzado, toalla, botella, cualquier material del equipo. Dejarlo visible para no buscar a las 06:00.",
+    en: "Match kit ready: playing kit, shoes, towel, bottle, any team materials. Leave it visible so you are not searching at 06:00.",
   },
   {
-    es: "Capas para ~10–12 °C a la salida temprano y máxima ~18–20 °C: base o manga larga, chaqueta o polar liviano. Una sola sugerencia de capas; tú decides el resto.",
-    en: "Layers for ~10–12 °C at early leave and high ~18–20 °C: base or long sleeve, light jacket or fleece. One layer suggestion only; you decide the rest.",
+    es: "Capas para ~8–10 °C a la salida y máxima ~18–21 °C: base o manga larga + capa liviana (polar o cortaviento fino). Una sola sugerencia; tú decides el resto.",
+    en: "Layers for ~8–10 °C at leave and high ~18–21 °C: base or long sleeve + light layer (fleece or thin windbreaker). One suggestion only; you decide the rest.",
   },
   {
-    es: "Alarma 04:00, backup 04:10. Sales de Casa a las 04:45. Botella llena, teléfono cargado, documentos y llaves a mano.",
-    en: "Alarm 04:00, backup 04:10. Leave Home at 04:45. Bottle filled, phone charged, documents and keys ready.",
+    es: "Alarma 05:45, backup 05:55. Buffer real porque el primer despertar se atrasa. Botella llena, teléfono cargado, llaves y documentos del equipo a mano.",
+    en: "Alarm 05:45, backup 05:55. Real buffer because the first alarm slips. Bottle filled, phone charged, keys and team documents ready.",
   },
   {
-    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml antes de salir. Colación liviana si quieres; el desayuno real puede esperar al aeropuerto o al vuelo.",
-    en: "400–500 ml water on waking, then sip to ~600–800 ml before leaving. Light snack if you want; real breakfast can wait at the airport or on the flight.",
+    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml antes de salir. Colación mínima si la necesitas; el desayuno real puede ser después del primer partido o en la ventana del mediodía.",
+    en: "400–500 ml water on waking, then sip to ~600–800 ml before leaving. Minimal snack if needed; real breakfast can wait until after the first match or in the midday window.",
   },
   {
-    es: "Confirmar check-in online, asiento y requisitos de documentos (pasaporte/DNI según corresponda) para no improvisar a las 04:30.",
-    en: "Confirm online check-in, seat and document requirements (passport/ID as needed) so you are not improvising at 04:30.",
+    es: "Confirmar hora de salida del alojamiento y traslado al Universitario 2 con el plan del equipo. No improvisar tiempos de puerta a cancha.",
+    en: "Confirm leave time from accommodation and transfer to Universitario 2 with the team plan. Do not improvise door-to-pitch times.",
   },
   {
-    es: "Luces apagadas ~20:00–20:30. Con alarma a las 04:00 necesitas ~7.5–8.5 h en cama. El primer despertar cuesta — no recortes esto.",
-    en: "Lights out ~20:00–20:30. A 04:00 alarm needs ~7.5–8.5 h in bed. First alarm is hard — do not cut this.",
+    es: "Luces apagadas ~21:30–22:00. Con alarma a las 05:45 necesitas ~7.5–8.5 h en cama. El primer despertar cuesta — no recortes esto.",
+    en: "Lights out ~21:30–22:00. A 05:45 alarm needs ~7.5–8.5 h in bed. First alarm is hard — do not cut this.",
   },
 ];
 
@@ -81,67 +81,80 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "wake",
     kind: "plan",
-    start: "04:00",
-    end: "04:45",
+    start: "05:45",
+    end: "06:30",
     title: { es: "Despertar · salir", en: "Wake · leave" },
     detail: {
-      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Maleta lista. Buffer de 45 min porque el primer despertar se atrasa. Sales a las 04:45.",
-      en: "400–500 ml water on waking. Sip to ~600–800 ml. Bag ready. 45 min buffer because the first alarm slips. Leave at 04:45.",
+      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Kit listo. Buffer de ~45 min porque el primer despertar se atrasa. Salida del alojamiento según plan del equipo para llegar con margen al Universitario 2.",
+      en: "400–500 ml water on waking. Sip to ~600–800 ml. Kit ready. ~45 min buffer because the first alarm slips. Leave accommodation per team plan to arrive at Universitario 2 with margin.",
     },
-    location: { es: "Casa", en: "Home" },
+    location: { es: "Alojamiento", en: "Accommodation" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "transit-airport",
+    id: "transit-venue",
     kind: "transit",
-    start: "04:45",
-    end: "06:00",
-    title: { es: "Traslado al aeropuerto", en: "Transit to airport" },
+    start: "06:30",
+    end: "07:15",
+    title: { es: "Traslado a cancha", en: "Transit to pitch" },
     detail: {
-      es: "Salida 04:45 según el bloque de calendario. Llegar con margen para check-in y seguridad antes del despegue 07:55.",
-      en: "Leave 04:45 per the calendar block. Arrive with buffer for check-in and security before 07:55 departure.",
+      es: "Salida con margen para llegar al Universitario 2, Rosario, con tiempo de activación antes del 07:30. Coordinar con el equipo.",
+      en: "Leave with margin to reach Universitario 2, Rosario, with activation time before 07:30. Coordinate with the team.",
     },
-    location: { es: "Hacia el aeropuerto", en: "To the airport" },
+    location: { es: "Hacia Universitario 2", en: "To Universitario 2" },
     tag: { es: "Traslados", en: "Transit" },
   },
   {
-    id: "airport-flight",
+    id: "match-1",
     kind: "event",
-    start: "06:00",
-    end: "07:55",
-    title: { es: "Aeropuerto · vuelo", en: "Airport · flight" },
+    start: "07:30",
+    end: "09:00",
+    title: { es: "Partido · vs Asociación Sanjuanina B", en: "Match · vs Asociación Sanjuanina B" },
     detail: {
-      es: "Check-in, seguridad, puerta. SKY H2537 despega 07:55 SCL → AEP. Agua a mano. Es día de gira de coaching Sub-16, no entrenamiento.",
-      en: "Check-in, security, gate. SKY H2537 departs 07:55 SCL → AEP. Water on hand. Sub-16 coaching tour day, not personal training.",
+      es: "Campeonato Argentino de Seleccionados Promocionales Sub 16 (pdo 8). Universitario 2, Rosario. Partido de selección — sí aplica recuperación con proteína + carbohidratos después (ideal 5–15 min post último esfuerzo si el plan del equipo lo permite).",
+      en: "Argentine Championship of Promotional Selections U16 (match 8). Universitario 2, Rosario. Selection match — recovery with protein + carbs applies after (ideally 5–15 min post last effort if team plan allows).",
     },
-    location: { es: "Aeropuerto", en: "Airport" },
+    location: { es: "Universitario 2, Rosario", en: "Universitario 2, Rosario" },
     tag: { es: "Calendario", en: "Calendar" },
   },
 ];
 
 export const laterBlocks: ScheduleBlock[] = [
   {
-    id: "flight-arrival",
-    kind: "event",
-    start: "07:55",
-    end: "11:00",
-    title: { es: "Vuelo · llegada AEP", en: "Flight · AEP arrival" },
+    id: "between",
+    kind: "plan",
+    start: "09:00",
+    end: "12:30",
+    title: { es: "Ventana entre partidos", en: "Between-matches window" },
     detail: {
-      es: "Vuelo ~2 h. Llegada estimada ~11:00 hora local en Buenos Aires. Continuar según plan del equipo hacia Rosario.",
-      en: "Flight ~2 h. Estimated arrival ~11:00 local in Buenos Aires. Continue per team plan toward Rosario.",
+      es: "Comida real, hidratación continua y descanso relativo. Preparar kit y mente para el segundo partido. No es sesión de gimnasio.",
+      en: "Real food, ongoing hydration and relative rest. Prep kit and mind for the second match. Not a gym session.",
     },
-    location: { es: "En vuelo / AEP", en: "In flight / AEP" },
+    location: { es: "Rosario / gira", en: "Rosario / tour" },
+    tag: { es: "Plan", en: "Plan" },
+  },
+  {
+    id: "match-2",
+    kind: "event",
+    start: "13:00",
+    end: "14:30",
+    title: { es: "Partido · vs Federación Cordobesa", en: "Match · vs Federación Cordobesa" },
+    detail: {
+      es: "Campeonato Argentino de Seleccionados Promocionales Sub 16 (pdo 12). Universitario 2, Rosario. Mismo criterio de recuperación post-partido si el plan del equipo lo permite.",
+      en: "Argentine Championship of Promotional Selections U16 (match 12). Universitario 2, Rosario. Same post-match recovery approach if team plan allows.",
+    },
+    location: { es: "Universitario 2, Rosario", en: "Universitario 2, Rosario" },
     tag: { es: "Calendario", en: "Calendar" },
   },
   {
     id: "gira-continue",
     kind: "event",
-    start: "11:00",
+    start: "14:30",
     end: undefined,
     title: { es: "Gira Sub-16 (continúa)", en: "Sub-16 tour (continues)" },
     detail: {
-      es: "Bloque de calendario hasta el 7 de septiembre. Coaching de gira, no carga de entrenamiento personal. Hidratación y comida real según el ritmo del equipo.",
-      en: "Calendar block through 7 September. Coaching tour, not personal training load. Hydration and real food per team rhythm.",
+      es: "Bloque de calendario hasta el 7 de septiembre. Recuperación, comida e hidratación según ritmo del equipo. No es carga de gimnasio personal.",
+      en: "Calendar block through 7 September. Recovery, food and hydration per team rhythm. Not personal gym load.",
     },
     location: { es: "Rosario / gira", en: "Rosario / tour" },
     tag: { es: "Calendario", en: "Calendar" },
@@ -173,7 +186,7 @@ export function mapsUrl(query: string): string {
 
 export const STATS = {
   blocks: String(morningBlocks.length),
-  committed: "1",
-  transit: "~75m",
-  first: "04:45",
+  committed: "2",
+  transit: "~45m",
+  first: "06:30",
 };
