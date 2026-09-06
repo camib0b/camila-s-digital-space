@@ -1,6 +1,6 @@
-export const TOMORROW_DATE = "2026-09-06";
+export const TOMORROW_DATE = "2026-09-07";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-09-05T08:41:00-04:00";
+export const SOURCED_AT = "2026-09-06T08:40:00-03:00";
 
 export type Lang = "en" | "es";
 
@@ -22,58 +22,58 @@ export interface ScheduleBlock {
 
 export const pageCopy = {
   back: { es: "Volver", en: "Back" } satisfies Copy,
-  kicker: { es: "domingo 6 de septiembre", en: "sunday 6 september" } satisfies Copy,
+  kicker: { es: "lunes 7 de septiembre", en: "monday 7 september" } satisfies Copy,
   title: { es: "Mañana", en: "Morning" } satisfies Copy,
   subtitle: {
-    es: "Gira Sub-16 en Rosario — día de regreso. Vuelo SKY H2536 aterriza ~23:00. Sin gimnasio ni universidad.",
-    en: "Sub-16 tour in Rosario — return day. SKY H2536 lands ~23:00. No gym, no university.",
+    es: "Recuperación post-gira Sub-16. Llegada la noche anterior ~23:00. Tutor de mates 16:00. Sin gimnasio ni universidad.",
+    en: "Recovery after Sub-16 tour. Arrival the night before ~23:00. Math tutor 16:00. No gym, no university.",
   } satisfies Copy,
-  timezone: { es: "Santiago · UTC−4 · Rosario local UTC−3", en: "Santiago · UTC−4 · Rosario local UTC−3" } satisfies Copy,
+  timezone: { es: "Santiago · UTC−3", en: "Santiago · UTC−3" } satisfies Copy,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies Copy,
   committed: { es: "En calendario", en: "On the calendar" } satisfies Copy,
   transit: { es: "Traslado", en: "Transit" } satisfies Copy,
   first: { es: "Primer bloque", en: "First block" } satisfies Copy,
   note: {
-    es: "Último día de la gira Sub-16 en Rosario. Bloque de calendario hasta el 7 de septiembre; tramo de vuelta SKY H2536 aterriza ~23:00. No hay partidos listados en el calendario para este día. Mañana fría ~2–4 °C, máxima ~11–13 °C, mayormente despejado — base + capa media (polar o polar liviano) para salir del alojamiento.",
-    en: "Last day of the Sub-16 tour in Rosario. Calendar block through 7 September; return leg SKY H2536 lands ~23:00. No matches listed on the calendar for this day. Cold morning ~2–4 °C, high ~11–13 °C, mostly clear — base + mid layer (fleece or light polar) for leaving accommodation.",
+    es: "Día de recuperación después de la gira Sub-16 y el vuelo de regreso (aterrizaje ~23:00 la noche anterior). Sin carga de gimnasio ni clases. Sesión con tutor de mates 16:00–17:30. Mañana fresca ~6–8 °C, máxima ~18–20 °C, mayormente despejado — base o manga larga + capa liviana si sales temprano.",
+    en: "Recovery day after the Sub-16 tour and return flight (landing ~23:00 the night before). No gym load or classes. Math tutor session 16:00–17:30. Cool morning ~6–8 °C, high ~18–20 °C, mostly clear — base or long sleeve + light layer if you go out early.",
   } satisfies Copy,
   later: { es: "Más tarde", en: "Later today" } satisfies Copy,
   laterBody: {
-    es: "Recuperación, comida real e hidratación según ritmo del equipo. Empacar y coordinar traslados al aeropuerto con el plan del equipo. Vuelo de regreso aterriza ~23:00. No es día de gimnasio ni de clases.",
-    en: "Recovery, real food and hydration per team rhythm. Pack and coordinate airport transfers with the team plan. Return flight lands ~23:00. Not a gym or class day.",
+    es: "Priorizar sueño, comida real e hidratación. Preparar material para el tutor de mates. Sesión 16:00–17:30. Después, cena ligera y cierre temprano si el cuerpo lo pide.",
+    en: "Prioritise sleep, real food and hydration. Prep materials for the math tutor. Session 16:00–17:30. Afterwards, light dinner and an early wind-down if the body asks.",
   } satisfies Copy,
   night: { es: "La noche anterior", en: "The night before" } satisfies Copy,
   source: {
-    es: "Desde Google Calendar · 5 sep 2026, 08:41",
-    en: "From Google Calendar · 5 Sep 2026, 08:41",
+    es: "Desde Google Calendar · 6 sep 2026, 08:40",
+    en: "From Google Calendar · 6 Sep 2026, 08:40",
   } satisfies Copy,
   map: { es: "Mapa", en: "Map" } satisfies Copy,
 };
 
 export const nightBefore: Copy[] = [
   {
-    es: "Empacar lo esencial para el regreso: indumentaria limpia, documentos, cargadores, botella. Dejar el kit de viaje visible y el resto ordenado para no buscar a la mañana.",
-    en: "Pack essentials for the return: clean clothes, documents, chargers, bottle. Leave the travel kit visible and the rest tidy so you are not searching in the morning.",
+    es: "Llegada ~23:00. Traslado a casa, hidratación final y colación si hace falta. Dejar el equipaje de viaje en un solo lugar; sacar solo lo esencial para la mañana.",
+    en: "Arrival ~23:00. Transfer home, final hydration and a snack if needed. Leave travel bags in one place; take out only essentials for the morning.",
   },
   {
-    es: "Capas para ~2–4 °C a la salida y máxima ~11–13 °C: base o manga larga + capa media (polar o polar liviano). Una sola sugerencia; tú decides el resto.",
-    en: "Layers for ~2–4 °C at leave and high ~11–13 °C: base or long sleeve + mid layer (fleece or light polar). One suggestion only; you decide the rest.",
+    es: "Capas para mañana fresca ~6–8 °C y máxima ~18–20 °C: base o manga larga + capa liviana (polar fino o campera liviana). Una sola sugerencia; tú decides el resto.",
+    en: "Layers for a cool morning ~6–8 °C and high ~18–20 °C: base or long sleeve + light layer (thin fleece or light jacket). One suggestion only; you decide the rest.",
   },
   {
-    es: "Alarma 08:00, backup 08:10. Mañana más calmada: no hay partido temprano. Botella llena, teléfono cargado, documentos del equipo y del vuelo a mano.",
-    en: "Alarm 08:00, backup 08:10. Calmer morning: no early match. Bottle filled, phone charged, team and flight documents ready.",
+    es: "Alarma 09:00, backup 09:15. Mañana de recuperación: sin gimnasio ni universidad. Botella lista, teléfono cargado, material del tutor a mano si se puede preparar antes de dormir.",
+    en: "Alarm 09:00, backup 09:15. Recovery morning: no gym, no university. Bottle ready, phone charged, tutor materials to hand if you can prep before sleep.",
   },
   {
-    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml. Desayuno real cuando el plan del equipo lo permita; priorizar proteína y carbohidratos para recuperación.",
-    en: "400–500 ml water on waking, then sip to ~600–800 ml. Real breakfast when the team plan allows; prioritise protein and carbs for recovery.",
+    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml. Desayuno real con proteína y carbohidratos cuando el cuerpo lo pida; no forzar hora temprana.",
+    en: "400–500 ml water on waking, then sip to ~600–800 ml. Real breakfast with protein and carbs when the body asks; do not force an early window.",
   },
   {
-    es: "Confirmar con el equipo hora de salida del alojamiento, traslado al aeropuerto y detalles del vuelo SKY H2536. No improvisar tiempos de puerta a terminal.",
-    en: "Confirm with the team leave time from accommodation, airport transfer and SKY H2536 details. Do not improvise door-to-terminal times.",
+    es: "Revisar horario y material para tutor de mates 16:00. Confirmar ruta y tiempo de salida con ~15–20 min de holgura. No dejar la preparación para el último momento.",
+    en: "Check schedule and materials for the 16:00 math tutor. Confirm route and leave time with ~15–20 min buffer. Do not leave prep for the last minute.",
   },
   {
-    es: "Luces apagadas ~22:30–23:00. Con alarma a las 08:00 necesitas ~7.5–8.5 h en cama. El primer despertar cuesta — no recortes esto.",
-    en: "Lights out ~22:30–23:00. An 08:00 alarm needs ~7.5–8.5 h in bed. First alarm is hard — do not cut this.",
+    es: "Luces apagadas lo antes posible después de llegar (~00:00–00:30). Con alarma a las 09:00 buscas ~7.5–8.5 h en cama. El primer despertar cuesta — protege este sueño de recuperación.",
+    en: "Lights out as soon as possible after arriving (~00:00–00:30). A 09:00 alarm needs ~7.5–8.5 h in bed. First alarm is hard — protect this recovery sleep.",
   },
 ];
 
@@ -81,67 +81,67 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "wake",
     kind: "plan",
-    start: "08:00",
-    end: "09:00",
+    start: "09:00",
+    end: "10:00",
     title: { es: "Despertar · hidratar", en: "Wake · hydrate" },
     detail: {
-      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mañana calmada: no hay partido temprano. Revisar checklist de equipaje y documentos del vuelo.",
-      en: "400–500 ml water on waking. Sip to ~600–800 ml. Calm morning: no early match. Check luggage and flight-document checklist.",
+      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mañana de recuperación post-viaje: sin presión de salida temprana. Revisar checklist ligero (botella, material del tutor).",
+      en: "400–500 ml water on waking. Sip to ~600–800 ml. Recovery morning after travel: no early leave pressure. Light checklist (bottle, tutor materials).",
     },
-    location: { es: "Alojamiento", en: "Accommodation" },
+    location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
     id: "recovery",
     kind: "plan",
-    start: "09:00",
-    end: "12:00",
+    start: "10:00",
+    end: "13:00",
     title: { es: "Recuperación · comida", en: "Recovery · food" },
     detail: {
-      es: "Comida real con proteína + carbohidratos. Hidratación continua. Descanso relativo y movilidad ligera si el cuerpo lo pide. Coordinar con el ritmo del equipo.",
-      en: "Real food with protein + carbs. Ongoing hydration. Relative rest and light mobility if the body asks. Coordinate with the team rhythm.",
+      es: "Comida real con proteína + carbohidratos. Hidratación continua. Descanso relativo, movilidad ligera o caminata corta si el cuerpo lo pide. Preparar material para el tutor si no quedó listo la noche anterior.",
+      en: "Real food with protein + carbs. Ongoing hydration. Relative rest, light mobility or a short walk if the body asks. Prep tutor materials if not done the night before.",
     },
-    location: { es: "Rosario / gira", en: "Rosario / tour" },
+    location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "gira-block",
-    kind: "event",
-    start: "12:00",
-    end: undefined,
-    title: { es: "Gira Sub-16 (regreso)", en: "Sub-16 tour (return)" },
+    id: "prep",
+    kind: "plan",
+    start: "13:00",
+    end: "15:00",
+    title: { es: "Prep · salida", en: "Prep · leave" },
     detail: {
-      es: "Bloque de calendario hasta el 7 de septiembre. Empacar, traslados al aeropuerto y vuelo SKY H2536 según plan del equipo. Aterrizaje ~23:00. No es carga de gimnasio personal.",
-      en: "Calendar block through 7 September. Pack, airport transfers and SKY H2536 per team plan. Landing ~23:00. Not personal gym load.",
+      es: "Almuerzo si corresponde. Revisar apuntes o ejercicios para la sesión. Salir de casa con 15–20 min de holgura antes de la hora de llegada al tutor. Hidratación y colación ligera si hace falta.",
+      en: "Lunch if needed. Review notes or exercises for the session. Leave home with 15–20 min buffer before arrival at the tutor. Hydration and a light snack if needed.",
     },
-    location: { es: "Rosario / gira", en: "Rosario / tour" },
-    tag: { es: "Calendario", en: "Calendar" },
+    location: { es: "Casa", en: "Home" },
+    tag: { es: "Plan", en: "Plan" },
   },
 ];
 
 export const laterBlocks: ScheduleBlock[] = [
   {
-    id: "travel",
-    kind: "transit",
-    start: "15:00",
-    end: "23:00",
-    title: { es: "Traslado · vuelo de regreso", en: "Transfer · return flight" },
+    id: "tutor",
+    kind: "event",
+    start: "16:00",
+    end: "17:30",
+    title: { es: "Tutor de mates", en: "Math tutor" },
     detail: {
-      es: "Coordinar con el equipo salida del alojamiento, traslado al aeropuerto y conexión si corresponde. SKY H2536 aterriza ~23:00. Mantener hidratación y una colación con proteína en el viaje.",
-      en: "Coordinate with the team leave from accommodation, airport transfer and connection if needed. SKY H2536 lands ~23:00. Keep hydrating and a protein snack on the journey.",
+      es: "Sesión en calendario 16:00–17:30. Llevar material preparado. No es carga de entrenamiento físico.",
+      en: "Calendar session 16:00–17:30. Bring prepared materials. Not physical training load.",
     },
-    location: { es: "Hacia aeropuerto / vuelo", en: "To airport / flight" },
-    tag: { es: "Traslados", en: "Transit" },
+    location: { es: "Tutor de mates", en: "Math tutor" },
+    tag: { es: "Calendario", en: "Calendar" },
   },
   {
-    id: "arrive",
+    id: "evening",
     kind: "plan",
-    start: "23:00",
+    start: "17:30",
     end: undefined,
-    title: { es: "Llegada · casa", en: "Arrival · home" },
+    title: { es: "Regreso · cierre", en: "Return · wind-down" },
     detail: {
-      es: "Aterrizaje ~23:00. Traslado a casa, hidratación final y descanso. Mañana sin carga de gimnasio ni clases obligatorias según el bloque de gira.",
-      en: "Landing ~23:00. Transfer home, final hydration and rest. Tomorrow no gym load or mandatory classes per the tour block.",
+      es: "Regreso a casa, cena real con proteína si aún no comiste bien, hidratación final. Cierre temprano si el cuerpo pide más sueño de recuperación.",
+      en: "Return home, real dinner with protein if you have not eaten well yet, final hydration. Early wind-down if the body asks for more recovery sleep.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -174,6 +174,6 @@ export function mapsUrl(query: string): string {
 export const STATS = {
   blocks: String(morningBlocks.length),
   committed: "1",
-  transit: "~8h",
-  first: "08:00",
+  transit: "—",
+  first: "09:00",
 };
