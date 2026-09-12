@@ -1,6 +1,6 @@
-export const TOMORROW_DATE = "2026-09-08";
+export const TOMORROW_DATE = "2026-09-13";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-09-07T23:46:00-03:00";
+export const SOURCED_AT = "2026-09-12T08:54:00-03:00";
 
 export type Lang = "en" | "es";
 
@@ -22,11 +22,11 @@ export interface ScheduleBlock {
 
 export const pageCopy = {
   back: { es: "Volver", en: "Back" } satisfies Copy,
-  kicker: { es: "martes 8 de septiembre", en: "tuesday 8 september" } satisfies Copy,
+  kicker: { es: "domingo 13 de septiembre", en: "sunday 13 september" } satisfies Copy,
   title: { es: "Mañana", en: "Morning" } satisfies Copy,
   subtitle: {
-    es: "Sin gimnasio. Universidad 08:20 (arqui, después web). Tutor de mates 17:30. Entrenamiento de hockey 19:30.",
-    en: "No gym. University 08:20 (arqui, then web). Math tutor 17:30. Hockey training 19:30.",
+    es: "Día libre. Sin eventos en calendario. Sin gimnasio ni universidad. Recuperación y prep ligera para la semana.",
+    en: "Free day. No calendar events. No gym, no university. Recovery and light prep for the week.",
   } satisfies Copy,
   timezone: { es: "Santiago · UTC−3", en: "Santiago · UTC−3" } satisfies Copy,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies Copy,
@@ -34,46 +34,42 @@ export const pageCopy = {
   transit: { es: "Traslado", en: "Transit" } satisfies Copy,
   first: { es: "Primer bloque", en: "First block" } satisfies Copy,
   note: {
-    es: "Tres eventos en calendario: clases 08:20–11:00 en Universidad (8:20 arqui · 9:40 web), tutor de mates 17:30–18:40, hockey 19:30–21:00 (entrenamiento propio, no coaching). Sin gimnasio. Sal de Casa a las 07:20 (55–60 min puerta a sala). Mañana fresca ~7–9 °C, máxima ~15–17 °C — manga larga o base + capa liviana.",
-    en: "Three calendar events: class 08:20–11:00 at University (8:20 arqui · 9:40 web), math tutor 17:30–18:40, hockey 19:30–21:00 (your training, not coaching). No gym. Leave Home at 07:20 (55–60 min door to classroom). Cool morning ~7–9 °C, high ~15–17 °C — long sleeve or base + light layer.",
+    es: "Cero eventos en Google Calendar para el domingo. Día de recuperación y margen antes del receso que empieza el lunes. Sin gimnasio, sin universidad, sin tutor. Mañana fresca ~8–10 °C, máxima ~21–23 °C, soleado — manga larga o base + capa liviana si sales temprano; se puede sacar capas al mediodía.",
+    en: "Zero Google Calendar events for Sunday. Recovery day and buffer before the break that starts Monday. No gym, no university, no tutor. Cool morning ~8–10 °C, high ~21–23 °C, sunny — long sleeve or base + light layer if you go out early; layers can come off by midday.",
   } satisfies Copy,
   later: { es: "Más tarde", en: "Later today" } satisfies Copy,
   laterBody: {
-    es: "Después de web (~11:00), almuerzo real. Tutor de mates 17:30–18:40; salir de ahí con holgura hacia hockey 19:30–21:00. Después del último ejercicio: proteína + carbohidratos en 5–15 min. Cena real si falta y cierre.",
-    en: "After web (~11:00), a real lunch. Math tutor 17:30–18:40; leave with buffer toward hockey 19:30–21:00. After the last drill: protein + carbs within 5–15 min. Real dinner if still needed, then wind-down.",
+    es: "Priorizar sueño, comida real e hidratación. Movimiento liviano solo si el cuerpo lo pide (caminata corta o movilidad). Tarde libre: lectura, tareas pendientes o descanso. Cena real y cierre temprano si hace falta.",
+    en: "Prioritise sleep, real food and hydration. Light movement only if the body asks (short walk or mobility). Free afternoon: reading, leftover tasks or rest. Real dinner and early wind-down if needed.",
   } satisfies Copy,
   night: { es: "La noche anterior", en: "The night before" } satisfies Copy,
   source: {
-    es: "Desde Google Calendar · 7 sep 2026, 23:46",
-    en: "From Google Calendar · 7 Sep 2026, 23:46",
+    es: "Desde Google Calendar · 12 sep 2026, 08:54",
+    en: "From Google Calendar · 12 Sep 2026, 08:54",
   } satisfies Copy,
   map: { es: "Mapa", en: "Map" } satisfies Copy,
 };
 
 export const nightBefore: Copy[] = [
   {
-    es: "Capas para mañana fresca ~7–9 °C y máxima ~15–17 °C: manga larga o base + capa liviana. Una sola sugerencia; tú decides el resto. El entrenamiento de hockey es de noche y más fresco.",
-    en: "Layers for a cool morning ~7–9 °C and high ~15–17 °C: long sleeve or base + light layer. One suggestion only; you decide the rest. Hockey training is in the evening and cooler.",
+    es: "Capas para mañana fresca ~8–10 °C y máxima ~21–23 °C, soleado: manga larga o base + capa liviana. Una sola sugerencia; tú decides el resto. Al mediodía se puede quitar la capa.",
+    en: "Layers for a cool morning ~8–10 °C and high ~21–23 °C, sunny: long sleeve or base + light layer. One suggestion only; you decide the rest. Layer can come off by midday.",
   },
   {
-    es: "Alarma 06:40, backup 06:50. Sin gimnasio. Botella lista, teléfono cargado, mochila de universidad armada (apuntes arqui/web, cargador). Bolso de hockey aparte para la tarde.",
-    en: "Alarm 06:40, backup 06:50. No gym. Bottle ready, phone charged, university bag packed (arqui/web notes, charger). Separate hockey bag for the afternoon.",
+    es: "Alarma 09:00, backup 09:15. Día libre: sin gimnasio ni universidad. Botella lista, teléfono cargado. Nada de mochila de uni ni bolso de gym que preparar.",
+    en: "Alarm 09:00, backup 09:15. Free day: no gym, no university. Bottle ready, phone charged. No uni bag or gym bag to pack.",
   },
   {
-    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml antes de salir. Pre-salida: solo agua o un snack mínimo.",
-    en: "400–500 ml water on waking, then sip to ~600–800 ml before leaving. Pre-leave: water only or a tiny snack.",
+    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml. Desayuno real con proteína y carbohidratos cuando el cuerpo lo pida; no forzar hora temprana.",
+    en: "400–500 ml water on waking, then sip to ~600–800 ml. Real breakfast with protein and carbs when the body asks; do not force an early window.",
   },
   {
-    es: "Salida de Casa 07:20. Transporte público: 55–60 min puerta a sala. No recortar el margen. Confirmar Bip y ruta.",
-    en: "Leave Home 07:20. Public transport: 55–60 min door to classroom. Do not cut the buffer. Confirm Bip and route.",
+    es: "Día sin traslados obligatorios. Si sales, solo por gusto. Confirmar que el teléfono y la botella estén listos; el resto puede esperar.",
+    en: "No mandatory transit. If you go out, only by choice. Confirm phone and bottle are ready; everything else can wait.",
   },
   {
-    es: "Material del tutor de mates listo. Snack de proteína + carbohidratos para después de hockey (5–15 min post último ejercicio).",
-    en: "Math tutor materials ready. Protein + carb snack for after hockey (5–15 min after the last drill).",
-  },
-  {
-    es: "Luces apagadas lo antes posible. Con alarma a las 06:40 buscas ~7.5–8.5 h; si ya es tarde, duerme ya. El primer despertar cuesta.",
-    en: "Lights out as soon as possible. A 06:40 alarm wants ~7.5–8.5 h; if it is already late, sleep now. First alarm is hard.",
+    es: "Luces apagadas lo antes posible. Con alarma a las 09:00 buscas ~7.5–8.5 h en cama. El primer despertar cuesta — protege este sueño de recuperación antes de la semana.",
+    en: "Lights out as soon as possible. A 09:00 alarm wants ~7.5–8.5 h in bed. First alarm is hard — protect this recovery sleep before the week.",
   },
 ];
 
@@ -81,93 +77,54 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "wake",
     kind: "plan",
-    start: "06:40",
-    end: "07:20",
+    start: "09:00",
+    end: "10:00",
     title: { es: "Despertar · hidratar", en: "Wake · hydrate" },
     detail: {
-      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Checklist: botella, mochila, teléfono, tarjeta de transporte.",
-      en: "400–500 ml water on waking. Sip to ~600–800 ml. Checklist: bottle, bag, phone, transit card.",
+      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mañana libre: sin presión de salida. Checklist mínimo: botella, teléfono.",
+      en: "400–500 ml water on waking. Sip to ~600–800 ml. Free morning: no leave pressure. Minimal checklist: bottle, phone.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "transit-uni",
-    kind: "transit",
-    start: "07:20",
-    end: "08:20",
-    title: { es: "Traslado a Universidad", en: "Transit to University" },
+    id: "breakfast",
+    kind: "plan",
+    start: "10:00",
+    end: "12:00",
+    title: { es: "Desayuno · recuperación", en: "Breakfast · recovery" },
     detail: {
-      es: "Transporte público. 55–60 min puerta a sala. Salir a las 07:20, no más tarde. Agua a mano.",
-      en: "Public transport. 55–60 min door to classroom. Leave at 07:20, not later. Water on hand.",
+      es: "Comida real con proteína + carbohidratos cuando el cuerpo lo pida. Seguir hidratando. Sin agenda fija hasta el mediodía.",
+      en: "Real meal with protein + carbs when the body asks. Keep hydrating. No fixed agenda until midday.",
     },
-    location: { es: "Hacia Universidad", en: "To University" },
-    tag: { es: "Traslados", en: "Transit" },
-  },
-  {
-    id: "clases",
-    kind: "event",
-    start: "08:20",
-    end: "11:00",
-    title: { es: "Clases", en: "Classes" },
-    detail: {
-      es: "08:20 arqui · 09:40 web. Bloque continuo hasta 11:00. Agua a mano.",
-      en: "08:20 arqui · 09:40 web. Continuous block until 11:00. Water on hand.",
-    },
-    location: { es: "Universidad", en: "University" },
-    tag: { es: "Calendario", en: "Calendar" },
+    location: { es: "Casa", en: "Home" },
+    tag: { es: "Plan", en: "Plan" },
   },
 ];
 
 export const laterBlocks: ScheduleBlock[] = [
   {
-    id: "lunch",
+    id: "afternoon",
     kind: "plan",
-    start: "11:00",
-    end: "17:30",
-    title: { es: "Almuerzo · tarde", en: "Lunch · afternoon" },
+    start: "12:00",
+    end: "18:00",
+    title: { es: "Tarde libre", en: "Free afternoon" },
     detail: {
-      es: "Comida real con proteína + carbohidratos después de web. Hidratación. Tareas o descanso según energía. Salir hacia el tutor de mates con holgura.",
-      en: "Real meal with protein + carbs after web. Hydration. Work or rest according to energy. Leave toward the math tutor with buffer.",
+      es: "Movimiento liviano solo si apetece (caminata corta o movilidad). Lectura, tareas pendientes o descanso. Almuerzo/merienda real. Hidratación continua.",
+      en: "Light movement only if it feels good (short walk or mobility). Reading, leftover tasks or rest. Real lunch/snack. Ongoing hydration.",
     },
-    location: { es: "Universidad o Casa", en: "University or Home" },
+    location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
-  },
-  {
-    id: "tutor",
-    kind: "event",
-    start: "17:30",
-    end: "18:40",
-    title: { es: "Tutor de mates", en: "Math tutor" },
-    detail: {
-      es: "Sesión 17:30–18:40. Llevar material. Salir al terminar con holgura hacia hockey 19:30.",
-      en: "Session 17:30–18:40. Bring materials. Leave when it ends with buffer toward hockey 19:30.",
-    },
-    location: { es: "Tutor de mates", en: "Math tutor" },
-    tag: { es: "Calendario", en: "Calendar" },
-  },
-  {
-    id: "hockey",
-    kind: "event",
-    start: "19:30",
-    end: "21:00",
-    title: { es: "Hockey", en: "Hockey" },
-    detail: {
-      es: "Entrenamiento propio 19:30–21:00, no sesión de coaching. Agua durante. Proteína + carbohidratos 5–15 min después del último ejercicio.",
-      en: "Your training 19:30–21:00, not a coaching session. Water during. Protein + carbs 5–15 min after the last drill.",
-    },
-    location: { es: "Hockey", en: "Hockey" },
-    tag: { es: "Calendario", en: "Calendar" },
   },
   {
     id: "evening",
     kind: "plan",
-    start: "21:00",
+    start: "18:00",
     end: undefined,
-    title: { es: "Regreso · cierre", en: "Return · wind-down" },
+    title: { es: "Cena · cierre", en: "Dinner · wind-down" },
     detail: {
-      es: "Regreso a Casa. Si no alcanzó el snack post-entreno, completar proteína + carbohidratos. Cena real si falta. Hidratación final y cierre.",
-      en: "Return Home. If the post-training snack did not happen, finish protein + carbs. Real dinner if still needed. Final hydration and wind-down.",
+      es: "Cena real con proteína. Hidratación final. Cierre temprano si el cuerpo lo pide — mañana empieza el receso y la semana puede pedir energía.",
+      en: "Real dinner with protein. Final hydration. Early wind-down if the body asks — the break starts tomorrow and the week may need energy.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -199,7 +156,7 @@ export function mapsUrl(query: string): string {
 
 export const STATS = {
   blocks: String(morningBlocks.length),
-  committed: "3",
-  transit: "55m",
-  first: "08:20",
+  committed: "0",
+  transit: "—",
+  first: "09:00",
 };
