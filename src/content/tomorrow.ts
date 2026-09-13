@@ -1,6 +1,6 @@
-export const TOMORROW_DATE = "2026-09-13";
+export const TOMORROW_DATE = "2026-09-14";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-09-12T08:54:00-03:00";
+export const SOURCED_AT = "2026-09-13T08:57:00-03:00";
 
 export type Lang = "en" | "es";
 
@@ -22,11 +22,11 @@ export interface ScheduleBlock {
 
 export const pageCopy = {
   back: { es: "Volver", en: "Back" } satisfies Copy,
-  kicker: { es: "domingo 13 de septiembre", en: "sunday 13 september" } satisfies Copy,
+  kicker: { es: "lunes 14 de septiembre", en: "monday 14 september" } satisfies Copy,
   title: { es: "Mañana", en: "Morning" } satisfies Copy,
   subtitle: {
-    es: "Día libre. Sin eventos en calendario. Sin gimnasio ni universidad. Recuperación y prep ligera para la semana.",
-    en: "Free day. No calendar events. No gym, no university. Recovery and light prep for the week.",
+    es: "Primer día de receso. Sin gimnasio ni universidad. Mañana libre; una cita por la tarde.",
+    en: "First day of the break. No gym, no university. Free morning; one afternoon appointment.",
   } satisfies Copy,
   timezone: { es: "Santiago · UTC−3", en: "Santiago · UTC−3" } satisfies Copy,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies Copy,
@@ -34,42 +34,42 @@ export const pageCopy = {
   transit: { es: "Traslado", en: "Transit" } satisfies Copy,
   first: { es: "Primer bloque", en: "First block" } satisfies Copy,
   note: {
-    es: "Cero eventos en Google Calendar para el domingo. Día de recuperación y margen antes del receso que empieza el lunes. Sin gimnasio, sin universidad, sin tutor. Mañana fresca ~8–10 °C, máxima ~21–23 °C, soleado — manga larga o base + capa liviana si sales temprano; se puede sacar capas al mediodía.",
-    en: "Zero Google Calendar events for Sunday. Recovery day and buffer before the break that starts Monday. No gym, no university, no tutor. Cool morning ~8–10 °C, high ~21–23 °C, sunny — long sleeve or base + light layer if you go out early; layers can come off by midday.",
+    es: "Receso del 14 al 22. Sin clases ni gimnasio. Una cita en calendario: Mila Dittborn 16:00–17:30. Mañana fresca ~10 °C, máxima ~23 °C, mayormente soleado — manga larga o base + capa liviana si sales temprano; se puede sacar capas al mediodía.",
+    en: "Break 14–22. No classes, no gym. One calendar appointment: Mila Dittborn 16:00–17:30. Cool morning ~10 °C, high ~23 °C, mostly sunny — long sleeve or base + light layer if you go out early; layers can come off by midday.",
   } satisfies Copy,
   later: { es: "Más tarde", en: "Later today" } satisfies Copy,
   laterBody: {
-    es: "Priorizar sueño, comida real e hidratación. Movimiento liviano solo si el cuerpo lo pide (caminata corta o movilidad). Tarde libre: lectura, tareas pendientes o descanso. Cena real y cierre temprano si hace falta.",
-    en: "Prioritise sleep, real food and hydration. Light movement only if the body asks (short walk or mobility). Free afternoon: reading, leftover tasks or rest. Real dinner and early wind-down if needed.",
+    es: "Mañana libre para recuperación y lo que apetezca. Por la tarde, cita fija 16:00–17:30. Después, cena real y cierre sin presión.",
+    en: "Free morning for recovery and whatever feels good. Fixed afternoon appointment 16:00–17:30. After that, real dinner and an easy wind-down.",
   } satisfies Copy,
   night: { es: "La noche anterior", en: "The night before" } satisfies Copy,
   source: {
-    es: "Desde Google Calendar · 12 sep 2026, 08:54",
-    en: "From Google Calendar · 12 Sep 2026, 08:54",
+    es: "Desde Google Calendar · 13 sep 2026, 08:57",
+    en: "From Google Calendar · 13 Sep 2026, 08:57",
   } satisfies Copy,
   map: { es: "Mapa", en: "Map" } satisfies Copy,
 };
 
 export const nightBefore: Copy[] = [
   {
-    es: "Capas para mañana fresca ~8–10 °C y máxima ~21–23 °C, soleado: manga larga o base + capa liviana. Una sola sugerencia; tú decides el resto. Al mediodía se puede quitar la capa.",
-    en: "Layers for a cool morning ~8–10 °C and high ~21–23 °C, sunny: long sleeve or base + light layer. One suggestion only; you decide the rest. Layer can come off by midday.",
+    es: "Capas para mañana fresca ~10 °C y máxima ~23 °C, mayormente soleado: manga larga o base + capa liviana. Una sola sugerencia; tú decides el resto. Al mediodía se puede quitar la capa.",
+    en: "Layers for a cool morning ~10 °C and high ~23 °C, mostly sunny: long sleeve or base + light layer. One suggestion only; you decide the rest. Layer can come off by midday.",
   },
   {
-    es: "Alarma 09:00, backup 09:15. Día libre: sin gimnasio ni universidad. Botella lista, teléfono cargado. Nada de mochila de uni ni bolso de gym que preparar.",
-    en: "Alarm 09:00, backup 09:15. Free day: no gym, no university. Bottle ready, phone charged. No uni bag or gym bag to pack.",
+    es: "Alarma 09:00, backup 09:15. Primer día de receso: sin gimnasio ni universidad. Botella lista, teléfono cargado. Nada de mochila de uni ni bolso de gym.",
+    en: "Alarm 09:00, backup 09:15. First day of the break: no gym, no university. Bottle ready, phone charged. No uni bag or gym bag.",
   },
   {
-    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml. Desayuno real con proteína y carbohidratos cuando el cuerpo lo pida; no forzar hora temprana.",
-    en: "400–500 ml water on waking, then sip to ~600–800 ml. Real breakfast with protein and carbs when the body asks; do not force an early window.",
+    es: "400–500 ml de agua al despertar, luego sorber hasta ~600–800 ml. Desayuno real con proteína y carbohidratos cuando el cuerpo lo pida.",
+    en: "400–500 ml water on waking, then sip to ~600–800 ml. Real breakfast with protein and carbs when the body asks.",
   },
   {
-    es: "Día sin traslados obligatorios. Si sales, solo por gusto. Confirmar que el teléfono y la botella estén listos; el resto puede esperar.",
-    en: "No mandatory transit. If you go out, only by choice. Confirm phone and bottle are ready; everything else can wait.",
+    es: "Cita Mila Dittborn 16:00–17:30 en el calendario. Confirmar hora de salida con margen; no publicar dirección en el plan.",
+    en: "Mila Dittborn appointment 16:00–17:30 on the calendar. Confirm leave time with buffer; do not publish the address on the plan.",
   },
   {
-    es: "Luces apagadas lo antes posible. Con alarma a las 09:00 buscas ~7.5–8.5 h en cama. El primer despertar cuesta — protege este sueño de recuperación antes de la semana.",
-    en: "Lights out as soon as possible. A 09:00 alarm wants ~7.5–8.5 h in bed. First alarm is hard — protect this recovery sleep before the week.",
+    es: "Luces apagadas a tiempo. Con alarma a las 09:00 buscas ~7.5–8.5 h en cama. El primer despertar cuesta — protege el sueño de recuperación al inicio del receso.",
+    en: "Lights out on time. A 09:00 alarm wants ~7.5–8.5 h in bed. First alarm is hard — protect recovery sleep at the start of the break.",
   },
 ];
 
@@ -81,8 +81,8 @@ export const morningBlocks: ScheduleBlock[] = [
     end: "10:00",
     title: { es: "Despertar · hidratar", en: "Wake · hydrate" },
     detail: {
-      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mañana libre: sin presión de salida. Checklist mínimo: botella, teléfono.",
-      en: "400–500 ml water on waking. Sip to ~600–800 ml. Free morning: no leave pressure. Minimal checklist: bottle, phone.",
+      es: "400–500 ml de agua al despertar. Hidratar hasta ~600–800 ml. Mañana libre de receso: sin presión de salida. Checklist mínimo: botella, teléfono.",
+      en: "400–500 ml water on waking. Sip to ~600–800 ml. Free break morning: no leave pressure. Minimal checklist: bottle, phone.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -92,10 +92,10 @@ export const morningBlocks: ScheduleBlock[] = [
     kind: "plan",
     start: "10:00",
     end: "12:00",
-    title: { es: "Desayuno · recuperación", en: "Breakfast · recovery" },
+    title: { es: "Desayuno · mañana libre", en: "Breakfast · free morning" },
     detail: {
-      es: "Comida real con proteína + carbohidratos cuando el cuerpo lo pida. Seguir hidratando. Sin agenda fija hasta el mediodía.",
-      en: "Real meal with protein + carbs when the body asks. Keep hydrating. No fixed agenda until midday.",
+      es: "Comida real con proteína + carbohidratos cuando el cuerpo lo pida. Seguir hidratando. Sin agenda fija hasta la tarde.",
+      en: "Real meal with protein + carbs when the body asks. Keep hydrating. No fixed agenda until the afternoon.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -104,17 +104,29 @@ export const morningBlocks: ScheduleBlock[] = [
 
 export const laterBlocks: ScheduleBlock[] = [
   {
-    id: "afternoon",
+    id: "afternoon-free",
     kind: "plan",
     start: "12:00",
-    end: "18:00",
-    title: { es: "Tarde libre", en: "Free afternoon" },
+    end: "15:30",
+    title: { es: "Tarde libre · prep cita", en: "Free afternoon · prep appointment" },
     detail: {
-      es: "Movimiento liviano solo si apetece (caminata corta o movilidad). Lectura, tareas pendientes o descanso. Almuerzo/merienda real. Hidratación continua.",
-      en: "Light movement only if it feels good (short walk or mobility). Reading, leftover tasks or rest. Real lunch/snack. Ongoing hydration.",
+      es: "Movimiento liviano solo si apetece. Almuerzo real. Dejar margen para salir hacia la cita de las 16:00.",
+      en: "Light movement only if it feels good. Real lunch. Leave buffer to head out for the 16:00 appointment.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
+  },
+  {
+    id: "mila",
+    kind: "event",
+    start: "16:00",
+    end: "17:30",
+    title: { es: "Mila Dittborn", en: "Mila Dittborn" },
+    detail: {
+      es: "Cita en calendario. 16:00–17:30. Salir con margen; no publicar dirección.",
+      en: "Calendar appointment. 16:00–17:30. Leave with buffer; do not publish the address.",
+    },
+    tag: { es: "Calendario", en: "Calendar" },
   },
   {
     id: "evening",
@@ -123,8 +135,8 @@ export const laterBlocks: ScheduleBlock[] = [
     end: undefined,
     title: { es: "Cena · cierre", en: "Dinner · wind-down" },
     detail: {
-      es: "Cena real con proteína. Hidratación final. Cierre temprano si el cuerpo lo pide — mañana empieza el receso y la semana puede pedir energía.",
-      en: "Real dinner with protein. Final hydration. Early wind-down if the body asks — the break starts tomorrow and the week may need energy.",
+      es: "Cena real con proteína. Hidratación final. Cierre sin presión — primer día de receso.",
+      en: "Real dinner with protein. Final hydration. Easy wind-down — first day of the break.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -156,7 +168,7 @@ export function mapsUrl(query: string): string {
 
 export const STATS = {
   blocks: String(morningBlocks.length),
-  committed: "0",
+  committed: "1",
   transit: "—",
   first: "09:00",
 };
