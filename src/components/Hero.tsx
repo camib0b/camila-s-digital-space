@@ -17,7 +17,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-background">
+    <section className="relative min-h-screen flex items-center justify-center">
       <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
         <ThemeToggle />
         <LanguageToggle />

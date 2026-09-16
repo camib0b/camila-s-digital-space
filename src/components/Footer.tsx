@@ -14,7 +14,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-10 border-t border-border bg-background">
+    <footer className="py-10 border-t border-border">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
