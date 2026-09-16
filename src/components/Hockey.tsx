@@ -1,5 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { coachingMilestones, playerMilestones } from "@/content/hockey";
+import { hockeyRoles } from "@/content/hockey";
 
 const Hockey = () => {
   const { t } = useLanguage();
@@ -15,48 +15,25 @@ const Hockey = () => {
             {t("hockey.description")}
           </p>
 
-          <div className="mb-10">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-4">
-              {t("hockey.playerTrajectory")}
-            </p>
-            <div className="space-y-4">
-              {playerMilestones.map((milestone) => (
-                <div key={milestone.year} className="flex gap-4">
-                  <span className="text-xs text-muted-foreground font-mono w-10 shrink-0 pt-0.5">
-                    {milestone.year}
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
-                      {milestone.titleKey ? t(milestone.titleKey) : milestone.title}
-                    </p>
+          <div className="space-y-6">
+            {hockeyRoles.map((role) => (
+              <div
+                key={role.id}
+                className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1"
+              >
+                <div>
+                  <p className="font-medium text-foreground">{t(role.roleKey)}</p>
+                  {role.organizationKey ? (
                     <p className="text-sm text-muted-foreground">
-                      {t(milestone.descriptionKey)}
+                      {t(role.organizationKey)}
                     </p>
-                  </div>
+                  ) : null}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-4">
-              {t("hockey.coachingTrajectory")}
-            </p>
-            <div className="space-y-4">
-              {coachingMilestones.map((milestone) => (
-                <div key={`${milestone.year}-${milestone.title}`} className="flex gap-4">
-                  <span className="text-xs text-muted-foreground font-mono w-16 shrink-0 pt-0.5">
-                    {milestone.year}
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{milestone.title}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {t(milestone.descriptionKey)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                <p className="text-xs text-muted-foreground font-mono shrink-0">
+                  {t(role.periodKey)}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

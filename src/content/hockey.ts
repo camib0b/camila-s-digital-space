@@ -1,49 +1,34 @@
-import type { TranslationKey } from "@/i18n/types";
+export type HockeyRoleId = "player" | "coachUc" | "coachNational" | "videoAnalyst";
 
-export interface HockeyMilestone {
-  year: string;
-  titleKey?: TranslationKey;
-  title?: string;
-  descriptionKey: TranslationKey;
+export interface HockeyRole {
+  id: HockeyRoleId;
+  roleKey: `hockey.${HockeyRoleId}.role`;
+  organizationKey?: `hockey.${HockeyRoleId}.organization`;
+  periodKey: `hockey.${HockeyRoleId}.period`;
 }
 
-export const playerMilestones: HockeyMilestone[] = [
+export const hockeyRoles: HockeyRole[] = [
   {
-    year: "2009",
-    titleKey: "hockey.started.title",
-    descriptionKey: "hockey.started.description",
+    id: "player",
+    roleKey: "hockey.player.role",
+    periodKey: "hockey.player.period",
   },
   {
-    year: "2018",
-    titleKey: "hockey.earlyRetirement.title",
-    descriptionKey: "hockey.earlyRetirement.description",
+    id: "coachUc",
+    roleKey: "hockey.coachUc.role",
+    organizationKey: "hockey.coachUc.organization",
+    periodKey: "hockey.coachUc.period",
   },
   {
-    year: "2022",
-    titleKey: "hockey.returned.title",
-    descriptionKey: "hockey.returned.description",
+    id: "coachNational",
+    roleKey: "hockey.coachNational.role",
+    organizationKey: "hockey.coachNational.organization",
+    periodKey: "hockey.coachNational.period",
   },
   {
-    year: "2025",
-    titleKey: "hockey.aclRupture.title",
-    descriptionKey: "hockey.aclRupture.description",
-  },
-];
-
-export const coachingMilestones: HockeyMilestone[] = [
-  {
-    year: "2023–25",
-    title: "Club Deportivo Universidad Católica",
-    descriptionKey: "hockey.coachingUc.description",
-  },
-  {
-    year: "2024–",
-    title: "Selección Nacional",
-    descriptionKey: "hockey.coachingNational.description",
-  },
-  {
-    year: "Dec 2025",
-    title: "Video Analyst",
-    descriptionKey: "hockey.coachingJwC.description",
+    id: "videoAnalyst",
+    roleKey: "hockey.videoAnalyst.role",
+    organizationKey: "hockey.videoAnalyst.organization",
+    periodKey: "hockey.videoAnalyst.period",
   },
 ];
