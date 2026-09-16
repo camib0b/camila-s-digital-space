@@ -3,15 +3,15 @@ import { AVA_EVENTS, AVA_TIMELINE_MARKS, MATCH_MINUTES } from "@/content/ava";
 import type { Language } from "@/i18n/types";
 
 const METRE = 10;
-const PAD_X = 28;
-const PAD_Y = 20;
+const VIEW_PADDING_X = 28;
+const VIEW_PADDING_Y = 20;
 const FIELD_LENGTH = 91.4 * METRE;
 const FIELD_WIDTH = 55 * METRE;
-const VIEW_WIDTH = FIELD_LENGTH + PAD_X * 2;
-const VIEW_HEIGHT = FIELD_WIDTH + PAD_Y * 2;
+const VIEW_WIDTH = FIELD_LENGTH + VIEW_PADDING_X * 2;
+const VIEW_HEIGHT = FIELD_WIDTH + VIEW_PADDING_Y * 2;
 
-const FIELD_LEFT = PAD_X;
-const FIELD_TOP = PAD_Y;
+const FIELD_LEFT = VIEW_PADDING_X;
+const FIELD_TOP = VIEW_PADDING_Y;
 const FIELD_RIGHT = FIELD_LEFT + FIELD_LENGTH;
 const FIELD_BOTTOM = FIELD_TOP + FIELD_WIDTH;
 const FIELD_CENTER_X = (FIELD_LEFT + FIELD_RIGHT) / 2;
@@ -19,15 +19,15 @@ const FIELD_CENTER_Y = (FIELD_TOP + FIELD_BOTTOM) / 2;
 
 const GOAL_WIDTH = 3.66 * METRE;
 const GOAL_DEPTH = 1.2 * METRE;
-const GOAL_HALF = GOAL_WIDTH / 2;
+const GOAL_HALF_WIDTH = GOAL_WIDTH / 2;
 const SHOOTING_CIRCLE_RADIUS = 14.63 * METRE;
 const FIVE_METRE_RADIUS = SHOOTING_CIRCLE_RADIUS + 5 * METRE;
-const PENALTY_SPOT = 6.4 * METRE;
+const PENALTY_SPOT_DISTANCE = 6.4 * METRE;
 const TWENTY_THREE_METRE = 22.9 * METRE;
 
 function shootingCirclePath(goalX: number, intoField: 1 | -1, radius: number): string {
-  const postTop = FIELD_CENTER_Y - GOAL_HALF;
-  const postBottom = FIELD_CENTER_Y + GOAL_HALF;
+  const postTop = FIELD_CENTER_Y - GOAL_HALF_WIDTH;
+  const postBottom = FIELD_CENTER_Y + GOAL_HALF_WIDTH;
   const backlineTop = postTop - radius;
   const backlineBottom = postBottom + radius;
   const capX = goalX + intoField * radius;
@@ -41,7 +41,7 @@ function shootingCirclePath(goalX: number, intoField: 1 | -1, radius: number): s
   ].join(" ");
 }
 
-function eventLabel(token: (typeof AVA_EVENTS)[number]["token"], language: Language) {
+function localizedEventLabel(token: (typeof AVA_EVENTS)[number]["token"], language: Language) {
   const event = AVA_EVENTS.find((item) => item.token === token);
   if (!event) {
     return token;
@@ -50,7 +50,7 @@ function eventLabel(token: (typeof AVA_EVENTS)[number]["token"], language: Langu
 }
 
 const HockeyPitch = ({ caption }: { caption: string }) => {
-  const leftGoalY = FIELD_CENTER_Y - GOAL_HALF;
+  const leftGoalY = FIELD_CENTER_Y - GOAL_HALF_WIDTH;
   const rightTwentyThree = FIELD_RIGHT - TWENTY_THREE_METRE;
 
   return (
@@ -128,13 +128,13 @@ const HockeyPitch = ({ caption }: { caption: string }) => {
       />
       <circle
         className="ava-pitch-mark"
-        cx={FIELD_LEFT + PENALTY_SPOT}
+        cx={FIELD_LEFT + PENALTY_SPOT_DISTANCE}
         cy={FIELD_CENTER_Y}
         r="2.2"
       />
       <circle
         className="ava-pitch-mark"
-        cx={FIELD_RIGHT - PENALTY_SPOT}
+        cx={FIELD_RIGHT - PENALTY_SPOT_DISTANCE}
         cy={FIELD_CENTER_Y}
         r="2.2"
       />
@@ -170,7 +170,7 @@ export const AvaTimeline = ({ language }: { language: Language }) => {
             style={{ left: `${(mark.at / MATCH_MINUTES) * 100}%` }}
           >
             <span />
-            <span>{eventLabel(mark.token, language)}</span>
+            <span>{localizedEventLabel(mark.token, language)}</span>
           </div>
         ))}
       </div>

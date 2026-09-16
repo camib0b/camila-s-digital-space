@@ -19,7 +19,7 @@ const ProjectList = ({ projects }: ProjectListProps) => {
     <ul className="space-y-6">
       {projects.map((project) => (
         <li key={project.id} className="text-sm text-muted-foreground leading-relaxed">
-          <span>{t(project.textKey)}</span>
+          <span>{t(project.descriptionKey)}</span>
           {project.link.kind === "internal" ? (
             <Link to={project.link.path} className={projectLinkClassName}>
               {t("personalProjects.view")}

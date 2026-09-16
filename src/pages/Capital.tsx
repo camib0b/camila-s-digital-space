@@ -9,16 +9,16 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
 
 /** Public route: `/capital` — live investment portfolio dashboard. */
-const Portfolio = () => {
+const Capital = () => {
   const { t } = useLanguage();
   const {
     portfolio,
     history,
-    loading,
+    portfolioLoading,
     historyLoading,
-    error,
+    portfolioError,
     historyError,
-    holdingsWithAllocation,
+    holdingsWithMetrics,
     allocationChartData,
     availableAiModels,
     showModelSelector,
@@ -31,7 +31,7 @@ const Portfolio = () => {
     refreshLiveData,
   } = usePortfolioData();
 
-  if (loading) {
+  if (portfolioLoading) {
     return (
       <main className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex items-center gap-3 text-muted-foreground">
@@ -42,11 +42,11 @@ const Portfolio = () => {
     );
   }
 
-  if (error || !portfolio) {
+  if (portfolioError || !portfolio) {
     return (
       <main className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-red-500">
-          {t("portfolio.error.prefix")}: {error}
+          {t("portfolio.error.prefix")}: {portfolioError}
         </div>
       </main>
     );
@@ -125,7 +125,7 @@ const Portfolio = () => {
           <p className="text-xs text-muted-foreground mb-4">
             {t("portfolio.holdings.description")}
           </p>
-          <HoldingsTable holdings={holdingsWithAllocation} />
+          <HoldingsTable holdings={holdingsWithMetrics} />
         </section>
 
         <section className="mb-12 space-y-6">
@@ -188,7 +188,7 @@ const Portfolio = () => {
           onGenerate={generateAiInsight}
           loading={aiInsightLoading}
           error={aiInsightError}
-          insight={portfolio.aiInsight}
+          aiInsight={portfolio.aiInsight}
           provider={insightProvider}
         />
 
@@ -207,4 +207,4 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+export default Capital;

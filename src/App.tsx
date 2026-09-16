@@ -3,10 +3,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import Index from "./pages/Index";
+import Home from "./pages/Home";
 import CV from "./pages/CV";
 import Ava from "./pages/Ava";
-import Portfolio from "./pages/Portfolio";
+import Capital from "./pages/Capital";
 import NotFound from "./pages/NotFound";
 import Tomorrow from "./pages/Tomorrow";
 
@@ -19,11 +19,11 @@ const App = () => (
         <LanguageProvider>
           <TooltipProvider>
             <Routes>
-              <Route path="/" element={<Index />} />
+              <Route path="/" element={<Home />} />
               <Route path="/cv" element={<CV />} />
               <Route path="/ava" element={<Ava />} />
               <Route path="/ava/" element={<Ava />} />
-              <Route path="/capital" element={<Portfolio />} />
+              <Route path="/capital" element={<Capital />} />
               <Route path="/tomorrow" element={<Tomorrow />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

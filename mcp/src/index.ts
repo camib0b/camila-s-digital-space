@@ -1,10 +1,10 @@
 import { OAuthProvider } from "@cloudflare/workers-oauth-provider";
 import { createMcpHandler } from "agents/mcp/server";
 import { authHandler } from "./auth-handler";
-import { createServer } from "./mcp-server";
+import { createSiteMcpServer } from "./mcp-server";
 import { MCP_URL } from "./site-content";
 
-const mcpHandler = createMcpHandler(createServer, {
+const mcpHandler = createMcpHandler(createSiteMcpServer, {
   route: "/mcp",
   allowedHostnames: ["mcp.camilaescudero.cl", "localhost", "127.0.0.1"],
 });

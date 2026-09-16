@@ -46,8 +46,8 @@ function parseGithubContributionsPayload(value: unknown): GithubContributionsPay
   return clipCalendarToStartDate({
     totalContributions: record.totalContributions,
     generatedAt: record.generatedAt,
-    months: record.months.map(parseMonth).filter(isPresent),
-    weeks: record.weeks.map(parseWeek).filter(isPresent),
+    months: record.months.map(parseMonth).filter(isNonNull),
+    weeks: record.weeks.map(parseWeek).filter(isNonNull),
   });
 }
 
@@ -110,7 +110,7 @@ function parseWeek(value: unknown): GithubContributionWeek | null {
   }
   return {
     firstDay: week.firstDay,
-    contributionDays: week.contributionDays.map(parseDay).filter(isPresent),
+    contributionDays: week.contributionDays.map(parseDay).filter(isNonNull),
   };
 }
 
@@ -142,6 +142,6 @@ function asRecord(value: unknown): Record<string, unknown> | null {
   return null;
 }
 
-function isPresent<T>(value: T | null): value is T {
+function isNonNull<T>(value: T | null): value is T {
   return value !== null;
 }

@@ -116,7 +116,7 @@ async function renderConsentPage(env: AuthHandlerEnv, request: Request): Promise
   );
 }
 
-async function completeConsent(env: AuthHandlerEnv, request: Request): Promise<Response> {
+async function handleConsentDecision(env: AuthHandlerEnv, request: Request): Promise<Response> {
   const formData = await request.formData();
   const encodedState = formData.get("state");
   const decision = formData.get("decision");
@@ -173,7 +173,7 @@ export const authHandler = {
     }
 
     if (url.pathname === "/authorize" && request.method === "POST") {
-      return completeConsent(env, request);
+      return handleConsentDecision(env, request);
     }
 
     return htmlResponse(

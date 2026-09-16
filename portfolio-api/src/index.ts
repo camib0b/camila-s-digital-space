@@ -1,22 +1,22 @@
-import { AI_MODELS, buildAiPrompt, runAiInsight, type StockSnapshot } from "./aiInsight";
-import { CORS_HEADERS, GITHUB_CONTRIBUTIONS_PATH, PORTFOLIO_PATHS } from "./cors";
+import { AI_MODELS, buildAiPrompt, generateAiInsight, type Holding } from "./aiInsight";
+import { CORS_ALLOWED_PATHS, CORS_HEADERS, GITHUB_CONTRIBUTIONS_PATH } from "./cors";
 import { handleGithubContributionsRequest } from "./githubContributions";
-import { computeHoldings, getTransactions } from "./holdings";
+import { computeHoldings, fetchTransactions } from "./holdings";
 import { buildPortfolioHistory } from "./history";
 import { fetchQuote } from "./quotes";
 
 async function getPortfolioSnapshot(env: Env) {
-  const transactions = await getTransactions(env);
-  const holdings = computeHoldings(transactions);
+  const transactions = await fetchTransactions(env);
+  const holdingsByTicker = computeHoldings(transactions);
 
-  const stocks: StockSnapshot[] = [];
-  for (const [ticker, holding] of holdings.entries()) {
+  const holdings: Holding[] = [];
+  for (const [ticker, position] of holdingsByTicker.entries()) {
     const quote = await fetchQuote(ticker, env.FINNHUB_API_KEY);
-    const currentValue = holding.shares * quote.currentPrice;
-    stocks.push({
+    const currentValue = position.shares * quote.currentPrice;
+    holdings.push({
       ticker,
-      shares: holding.shares,
-      totalCost: holding.totalCost,
+      shares: position.shares,
+      totalCost: position.totalCost,
       currentPrice: quote.currentPrice,
       changePercent: quote.changePercent,
       currentValue,
@@ -24,13 +24,13 @@ async function getPortfolioSnapshot(env: Env) {
     await new Promise((resolve) => setTimeout(resolve, 120));
   }
 
-  stocks.sort((left, right) => right.currentValue - left.currentValue);
+  holdings.sort((left, right) => right.currentValue - left.currentValue);
 
   let totalValue = 0;
   let totalInvested = 0;
-  for (const stock of stocks) {
-    totalValue += stock.currentValue;
-    totalInvested += stock.totalCost;
+  for (const holding of holdings) {
+    totalValue += holding.currentValue;
+    totalInvested += holding.totalCost;
   }
 
   const totalGain = totalValue - totalInvested;
@@ -41,8 +41,8 @@ async function getPortfolioSnapshot(env: Env) {
     totalInvested,
     totalGain,
     totalReturnPct,
-    stocks,
-    count: stocks.length,
+    holdings,
+    holdingsCount: holdings.length,
     transactions,
   };
 }
@@ -52,7 +52,7 @@ export default {
     const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
-      if (PORTFOLIO_PATHS.includes(url.pathname)) {
+      if (CORS_ALLOWED_PATHS.includes(url.pathname)) {
         return new Response(null, { headers: CORS_HEADERS });
       }
       return new Response("Not found", { status: 404 });
@@ -72,10 +72,10 @@ export default {
             totalInvested: snapshot.totalInvested.toFixed(2),
             totalGain: snapshot.totalGain.toFixed(2),
             totalReturnPct: snapshot.totalReturnPct.toFixed(2),
-            stocks: snapshot.stocks,
+            stocks: snapshot.holdings,
             aiInsight: null,
             lastUpdated: new Date().toISOString(),
-            count: snapshot.count,
+            count: snapshot.holdingsCount,
             aiModels: [{ id: "grok", label: "Grok (xAI)" }],
           },
           { headers: CORS_HEADERS }
@@ -83,7 +83,7 @@ export default {
       }
 
       if (url.pathname === "/api/portfolio/history" && request.method === "GET") {
-        const transactions = await getTransactions(env);
+        const transactions = await fetchTransactions(env);
         const history = await buildPortfolioHistory(env, transactions);
 
         return Response.json(
@@ -117,8 +117,8 @@ export default {
 
         const language = body.language === "es" ? "es" : "en";
         const snapshot = await getPortfolioSnapshot(env);
-        const aiPrompt = buildAiPrompt(snapshot.stocks, snapshot.totalValue, language);
-        const result = await runAiInsight(env, modelKey, aiPrompt);
+        const aiPrompt = buildAiPrompt(snapshot.holdings, snapshot.totalValue, language);
+        const result = await generateAiInsight(env, modelKey, aiPrompt);
 
         if (result.ok === false) {
           return Response.json(

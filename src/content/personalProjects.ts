@@ -10,7 +10,7 @@ export type PersonalProjectCategory = "project" | "learning-lab";
 export interface PersonalProject {
   id: string;
   category: PersonalProjectCategory;
-  textKey: TranslationKey;
+  descriptionKey: TranslationKey;
   link: PersonalProjectLink;
 }
 
@@ -18,31 +18,31 @@ export const personalProjects: PersonalProject[] = [
   {
     id: "video-analysis",
     category: "project",
-    textKey: "personalProjects.videoAnalysis",
+    descriptionKey: "personalProjects.videoAnalysis",
     link: { kind: "internal", path: "/ava" },
   },
   {
     id: "clip-library",
     category: "project",
-    textKey: "personalProjects.clipLibrary",
+    descriptionKey: "personalProjects.clipLibrary",
     link: { kind: "external", url: "https://carpeta.cl/" },
   },
   {
     id: "raycast",
     category: "project",
-    textKey: "personalProjects.raycast",
+    descriptionKey: "personalProjects.raycast",
     link: { kind: "external", url: "https://www.raycast.com/camib0b/zodme" },
   },
   {
     id: "tomorrow",
     category: "learning-lab",
-    textKey: "personalProjects.tomorrow",
+    descriptionKey: "personalProjects.tomorrow",
     link: { kind: "internal", path: "/tomorrow" },
   },
   {
     id: "capital",
     category: "learning-lab",
-    textKey: "personalProjects.capital",
+    descriptionKey: "personalProjects.capital",
     link: { kind: "internal", path: "/capital" },
   },
 ];

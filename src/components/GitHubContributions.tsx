@@ -38,7 +38,7 @@ interface CalendarTooltip {
 
 const GitHubContributions = () => {
   const { language, t } = useLanguage();
-  const { data, loading, error } = useGithubContributions();
+  const { contributions, isLoading, isError } = useGithubContributions();
   const [tooltip, setTooltip] = useState<CalendarTooltip | null>(null);
 
   const hideTooltip = () => {
@@ -57,9 +57,9 @@ const GitHubContributions = () => {
     });
   };
 
-  const weekCount = data?.weeks.length ?? skeletonWeekCount();
-  const monthCells = data
-    ? monthLabelCells(data.months, data.weeks, language)
+  const weekCount = contributions?.weeks.length ?? skeletonWeekCount();
+  const monthCells = contributions
+    ? monthLabelCells(contributions.months, contributions.weeks, language)
     : [{ label: "", span: skeletonWeekCount() }];
 
   return (
@@ -68,7 +68,7 @@ const GitHubContributions = () => {
         {t("github.label")}
       </h3>
 
-      {error && !loading ? (
+      {isError && !isLoading ? (
         <p className="text-sm text-muted-foreground">{t("github.error")}</p>
       ) : (
         <>
@@ -97,7 +97,7 @@ const GitHubContributions = () => {
               className="min-w-0 flex-1 overflow-x-auto pb-1"
               role="region"
               aria-label={t("github.label")}
-              aria-busy={loading}
+              aria-busy={isLoading}
               onScroll={hideTooltip}
             >
               <div
@@ -125,7 +125,7 @@ const GitHubContributions = () => {
                   ))}
                 </div>
 
-                {loading || !data ? (
+                {isLoading || !contributions ? (
                   <div
                     className="grid grid-flow-col"
                     style={{
@@ -150,7 +150,7 @@ const GitHubContributions = () => {
                       gap: CELL_GAP_PX,
                     }}
                   >
-                    {data.weeks.map((week) =>
+                    {contributions.weeks.map((week) =>
                       week.contributionDays.map((day) => {
                         const tooltipText = formatDayTooltip(day.date, day.contributionCount, t);
                         return (
@@ -180,10 +180,10 @@ const GitHubContributions = () => {
             </div>
           </div>
 
-          {data && !loading ? (
+          {contributions && !isLoading ? (
             <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-xs text-muted-foreground">
-                {interpolateTemplate(t("github.summary"), data.totalContributions)}
+                {interpolateTemplate(t("github.summary"), contributions.totalContributions)}
               </p>
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <span>{t("github.less")}</span>

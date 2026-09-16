@@ -1,10 +1,10 @@
+import type { Language } from "@/i18n/types";
+
 export const TOMORROW_DATE = "2026-09-14";
 export const TIMEZONE = "America/Santiago";
 export const SOURCED_AT = "2026-09-13T08:57:00-03:00";
 
-export type Lang = "en" | "es";
-
-export type Copy = Record<Lang, string>;
+export type LocalizedText = Record<Language, string>;
 
 export type BlockKind = "plan" | "event" | "transit";
 
@@ -13,44 +13,44 @@ export interface ScheduleBlock {
   kind: BlockKind;
   start: string;
   end?: string;
-  title: Copy;
-  detail?: Copy;
-  location?: Copy;
+  title: LocalizedText;
+  detail?: LocalizedText;
+  location?: LocalizedText;
   mapQuery?: string;
-  tag: Copy;
+  tag: LocalizedText;
 }
 
-export const pageCopy = {
-  back: { es: "Volver", en: "Back" } satisfies Copy,
-  kicker: { es: "lunes 14 de septiembre", en: "monday 14 september" } satisfies Copy,
-  title: { es: "Mañana", en: "Morning" } satisfies Copy,
+export const tomorrowPageText = {
+  back: { es: "Volver", en: "Back" } satisfies LocalizedText,
+  kicker: { es: "lunes 14 de septiembre", en: "monday 14 september" } satisfies LocalizedText,
+  title: { es: "Mañana", en: "Morning" } satisfies LocalizedText,
   subtitle: {
     es: "Primer día de receso. Sin gimnasio ni universidad. Mañana libre; una cita por la tarde.",
     en: "First day of the break. No gym, no university. Free morning; one afternoon appointment.",
-  } satisfies Copy,
-  timezone: { es: "Santiago · UTC−3", en: "Santiago · UTC−3" } satisfies Copy,
-  blocksLabel: { es: "Bloques", en: "Blocks" } satisfies Copy,
-  committed: { es: "En calendario", en: "On the calendar" } satisfies Copy,
-  transit: { es: "Traslado", en: "Transit" } satisfies Copy,
-  first: { es: "Primer bloque", en: "First block" } satisfies Copy,
+  } satisfies LocalizedText,
+  timezone: { es: "Santiago · UTC−3", en: "Santiago · UTC−3" } satisfies LocalizedText,
+  blocksLabel: { es: "Bloques", en: "Blocks" } satisfies LocalizedText,
+  committed: { es: "En calendario", en: "On the calendar" } satisfies LocalizedText,
+  transit: { es: "Traslado", en: "Transit" } satisfies LocalizedText,
+  first: { es: "Primer bloque", en: "First block" } satisfies LocalizedText,
   note: {
     es: "Receso del 14 al 22. Sin clases ni gimnasio. Una cita en calendario: Mila Dittborn 16:00–17:30. Mañana fresca ~10 °C, máxima ~23 °C, mayormente soleado — manga larga o base + capa liviana si sales temprano; se puede sacar capas al mediodía.",
     en: "Break 14–22. No classes, no gym. One calendar appointment: Mila Dittborn 16:00–17:30. Cool morning ~10 °C, high ~23 °C, mostly sunny — long sleeve or base + light layer if you go out early; layers can come off by midday.",
-  } satisfies Copy,
-  later: { es: "Más tarde", en: "Later today" } satisfies Copy,
+  } satisfies LocalizedText,
+  later: { es: "Más tarde", en: "Later today" } satisfies LocalizedText,
   laterBody: {
     es: "Mañana libre para recuperación y lo que apetezca. Por la tarde, cita fija 16:00–17:30. Después, cena real y cierre sin presión.",
     en: "Free morning for recovery and whatever feels good. Fixed afternoon appointment 16:00–17:30. After that, real dinner and an easy wind-down.",
-  } satisfies Copy,
-  night: { es: "La noche anterior", en: "The night before" } satisfies Copy,
+  } satisfies LocalizedText,
+  night: { es: "La noche anterior", en: "The night before" } satisfies LocalizedText,
   source: {
     es: "Desde Google Calendar · 13 sep 2026, 08:57",
     en: "From Google Calendar · 13 Sep 2026, 08:57",
-  } satisfies Copy,
-  map: { es: "Mapa", en: "Map" } satisfies Copy,
+  } satisfies LocalizedText,
+  map: { es: "Mapa", en: "Map" } satisfies LocalizedText,
 };
 
-export const nightBefore: Copy[] = [
+export const nightBefore: LocalizedText[] = [
   {
     es: "Capas para mañana fresca ~10 °C y máxima ~23 °C, mayormente soleado: manga larga o base + capa liviana. Una sola sugerencia; tú decides el resto. Al mediodía se puede quitar la capa.",
     en: "Layers for a cool morning ~10 °C and high ~23 °C, mostly sunny: long sleeve or base + light layer. One suggestion only; you decide the rest. Layer can come off by midday.",
@@ -143,30 +143,34 @@ export const laterBlocks: ScheduleBlock[] = [
   },
 ];
 
-export function durationLabel(start: string, end: string | undefined, lang: Lang): string {
+export function durationLabel(
+  start: string,
+  end: string | undefined,
+  language: Language
+): string {
   if (!end) return "";
   if (!/^\d{2}:\d{2}$/.test(start) || !/^\d{2}:\d{2}$/.test(end)) return "";
-  const [sh, sm] = start.split(":").map(Number);
-  const [eh, em] = end.split(":").map(Number);
-  const minutes = eh * 60 + em - (sh * 60 + sm);
+  const [startHours, startMinutes] = start.split(":").map(Number);
+  const [endHours, endMinutes] = end.split(":").map(Number);
+  const minutes = endHours * 60 + endMinutes - (startHours * 60 + startMinutes);
   if (minutes < 0) return "";
   const hours = Math.floor(minutes / 60);
-  const rest = minutes % 60;
-  if (lang === "es") {
-    if (hours && rest) return `${hours}h ${rest}m`;
+  const remainingMinutes = minutes % 60;
+  if (language === "es") {
+    if (hours && remainingMinutes) return `${hours}h ${remainingMinutes}m`;
     if (hours) return `${hours}h`;
-    return `${rest} min`;
+    return `${remainingMinutes} min`;
   }
-  if (hours && rest) return `${hours}h ${rest}m`;
+  if (hours && remainingMinutes) return `${hours}h ${remainingMinutes}m`;
   if (hours) return `${hours}h`;
-  return `${rest} min`;
+  return `${remainingMinutes} min`;
 }
 
-export function mapsUrl(query: string): string {
+export function googleMapsSearchUrl(query: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
-export const STATS = {
+export const TOMORROW_SUMMARY_STATS = {
   blocks: String(morningBlocks.length),
   committed: "1",
   transit: "—",
