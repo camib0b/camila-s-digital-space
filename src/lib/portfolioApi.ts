@@ -17,7 +17,7 @@ export const PORTFOLIO_REFRESH_INTERVAL_MS = 60_000;
 
 export const DEFAULT_AI_MODEL_ID = "grok";
 
-async function parseJsonOrEmpty(response: Response): Promise<Record<string, unknown>> {
+async function parseJsonObjectOrEmpty(response: Response): Promise<Record<string, unknown>> {
   try {
     return (await response.json()) as Record<string, unknown>;
   } catch {
@@ -50,7 +50,7 @@ export async function fetchAiInsight(params: {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model: params.model, language: params.language }),
   });
-  const payload = (await parseJsonOrEmpty(response)) as AiInsightResponse;
+  const payload = (await parseJsonObjectOrEmpty(response)) as AiInsightResponse;
   if (!response.ok) {
     throw new Error(
       typeof payload.error === "string" ? payload.error : "portfolio.error.aiInsight"

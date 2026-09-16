@@ -6,7 +6,7 @@ import "@/components/ava/ava.css";
 import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_STATS } from "@/content/ava";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const STEPS = [
+const HOW_IT_WORKS_STEPS = [
   {
     index: "01",
     kickerKey: "ava.step1.kicker",
@@ -27,7 +27,7 @@ const STEPS = [
   },
 ] as const;
 
-const MODES = [
+const WORKFLOW_MODES = [
   { kicker: "01", titleKey: "ava.modes.tagging.title", bodyKey: "ava.modes.tagging.body" },
   { kicker: "02", titleKey: "ava.modes.analyzing.title", bodyKey: "ava.modes.analyzing.body" },
   { kicker: "03", titleKey: "ava.modes.presentation.title", bodyKey: "ava.modes.presentation.body" },
@@ -110,7 +110,7 @@ const Ava = () => {
               <h2>{t("ava.modes.headline")}</h2>
             </div>
             <div className="ava-modes">
-              {MODES.map((mode) => (
+              {WORKFLOW_MODES.map((mode) => (
                 <article className="ava-mode" key={mode.titleKey}>
                   <p className="ava-kicker">{mode.kicker}</p>
                   <h3>{t(mode.titleKey)}</h3>
@@ -129,7 +129,7 @@ const Ava = () => {
               <p className="ava-section-body">{t("ava.how.body")}</p>
             </div>
             <div className="ava-steps">
-              {STEPS.map((step) => (
+              {HOW_IT_WORKS_STEPS.map((step) => (
                 <article className="ava-step" key={step.index}>
                   <span className="ava-step-index">{step.index}</span>
                   <p className="ava-kicker">{t(step.kickerKey)}</p>

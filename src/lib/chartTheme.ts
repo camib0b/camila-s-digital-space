@@ -6,7 +6,7 @@ export const CHART_COLORS = {
   tick: "hsl(220 8% 46%)",
 } as const;
 
-export const performanceChartConfig = {
+export const portfolioValueChartConfig = {
   value: { label: "Portfolio value", color: CHART_COLORS.primary },
 };
 

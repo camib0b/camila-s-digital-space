@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import Hockey from "@/components/Hockey";
 import HowIWork from "@/components/HowIWork";
 
-const Index = () => {
+const Home = () => {
   return (
     <main className="min-h-screen">
       <Hero />
@@ -24,4 +24,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home;

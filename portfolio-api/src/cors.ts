@@ -6,7 +6,8 @@ export const CORS_HEADERS = {
 
 export const GITHUB_CONTRIBUTIONS_PATH = "/api/github/contributions";
 
-export const PORTFOLIO_PATHS = [
+/** Worker routes that receive CORS headers (portfolio + GitHub contributions). */
+export const CORS_ALLOWED_PATHS = [
   "/api/portfolio",
   "/api/portfolio/ai-insight",
   "/api/portfolio/history",
