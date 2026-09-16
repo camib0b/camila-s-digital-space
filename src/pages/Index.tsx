@@ -6,19 +6,23 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Hockey from "@/components/Hockey";
 import HowIWork from "@/components/HowIWork";
+import PatternedBackground from "@/components/PatternedBackground";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
-      <Hero />
-      <div id="after-hero">
-        <PersonalProjects />
-        <Experience />
-        <Hockey />
-        <HowIWork />
-        <Books />
-        <Contact />
-        <Footer />
+    <main className="min-h-screen bg-background relative">
+      <PatternedBackground />
+      <div className="relative z-10">
+        <Hero />
+        <div id="after-hero">
+          <PersonalProjects />
+          <Experience />
+          <Hockey />
+          <HowIWork />
+          <Books />
+          <Contact />
+          <Footer />
+        </div>
       </div>
     </main>
   );

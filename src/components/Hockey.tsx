@@ -5,7 +5,7 @@ const Hockey = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="hockey" className="py-20 md:py-28 bg-background">
+    <section id="hockey" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-2">
