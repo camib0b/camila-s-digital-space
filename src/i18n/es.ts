@@ -66,10 +66,9 @@ const es: Record<TranslationKey, string> = {
     // Personal projects
     "personalProjects.label": "Proyectos personales",
     "personalProjects.raycast": "Extensión de Raycast",
-    "personalProjects.videoAnalysis": "App de análisis de video en C++",
+    "personalProjects.videoAnalysis": "AVA — análisis de video para hockey sobre césped en macOS. Marcas el partido mientras lo ves; los clips salen esa noche.",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
-    "personalProjects.clipLibrary":
-      "Biblioteca navegable de clips de partidos de hockey para coaching y análisis de juego. Clips los genero con AVA.",
+    "personalProjects.clipLibrary": "Carpeta de clips — bibliotecas por equipo, filtradas por concepto, alimentadas desde AVA.",
     "personalProjects.view": "Ver proyecto",
     "personalProjects.learningLab.label": "Laboratorio de aprendizaje",
     "personalProjects.learningLab.description":
