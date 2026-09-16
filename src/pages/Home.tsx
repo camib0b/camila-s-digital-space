@@ -8,7 +8,7 @@ import Hockey from "@/components/Hockey";
 import HowIWork from "@/components/HowIWork";
 import PatternedBackground from "@/components/PatternedBackground";
 
-const Index = () => {
+const Home = () => {
   return (
     <main className="min-h-screen bg-background relative">
       <PatternedBackground />
@@ -28,4 +28,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home;

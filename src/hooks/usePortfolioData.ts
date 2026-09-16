@@ -109,14 +109,14 @@ export function usePortfolioData() {
     };
   }, [portfolioQuery.data, localAiInsight]);
 
-  const holdingsWithAllocation = useMemo(
+  const holdingsWithMetrics = useMemo(
     () => (portfolio ? buildHoldingsWithMetrics(portfolio) : []),
     [portfolio]
   );
 
   const allocationChartData = useMemo(
-    () => buildAllocationChartData(holdingsWithAllocation),
-    [holdingsWithAllocation]
+    () => buildAllocationChartData(holdingsWithMetrics),
+    [holdingsWithMetrics]
   );
 
   const availableAiModels =
@@ -132,15 +132,15 @@ export function usePortfolioData() {
   return {
     portfolio,
     history: historyQuery.data ?? null,
-    loading: portfolioQuery.isLoading,
+    portfolioLoading: portfolioQuery.isLoading,
     historyLoading: historyQuery.isLoading,
-    error: portfolioQuery.error
+    portfolioError: portfolioQuery.error
       ? resolveErrorMessage(portfolioQuery.error, t, "portfolio.error.load")
       : null,
     historyError: historyQuery.error
       ? resolveErrorMessage(historyQuery.error, t, "portfolio.error.history")
       : null,
-    holdingsWithAllocation,
+    holdingsWithMetrics,
     allocationChartData,
     availableAiModels,
     showModelSelector: availableAiModels.length > 1,

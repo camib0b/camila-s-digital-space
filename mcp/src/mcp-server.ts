@@ -9,11 +9,11 @@ function textResult(text: string) {
   };
 }
 
-function jsonResult(value: unknown) {
+function jsonTextResult(value: unknown) {
   return textResult(JSON.stringify(value, null, 2));
 }
 
-export function createServer() {
+export function createSiteMcpServer() {
   const server = new McpServer({
     name: "camilaescudero-mcp",
     version: "1.0.0",
@@ -44,7 +44,7 @@ export function createServer() {
         return textResult("No authentication context available");
       }
 
-      return jsonResult({
+      return jsonTextResult({
         userId: auth.props?.userId,
         username: auth.props?.username,
         clientId: context.http?.authInfo?.clientId,
@@ -58,7 +58,7 @@ export function createServer() {
     {
       description: "Returns Camila Escudero's public profile from camilaescudero.cl",
     },
-    async () => jsonResult(profile),
+    async () => jsonTextResult(profile),
   );
 
   server.registerTool(
@@ -66,7 +66,7 @@ export function createServer() {
     {
       description: "Returns public work experience and internships from the website",
     },
-    async () => jsonResult(experience),
+    async () => jsonTextResult(experience),
   );
 
   server.registerTool(
@@ -74,7 +74,7 @@ export function createServer() {
     {
       description: "Returns public personal projects from the website",
     },
-    async () => jsonResult(projects),
+    async () => jsonTextResult(projects),
   );
 
   server.registerTool(
@@ -82,7 +82,7 @@ export function createServer() {
     {
       description: "Returns the public reading list from the website",
     },
-    async () => jsonResult(readingList),
+    async () => jsonTextResult(readingList),
   );
 
   server.registerTool(
@@ -90,7 +90,7 @@ export function createServer() {
     {
       description: "Returns public contact email and social links",
     },
-    async () => jsonResult(contact),
+    async () => jsonTextResult(contact),
   );
 
   return server;

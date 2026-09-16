@@ -47,23 +47,23 @@ function buildTradePriceHistory(transactions: Transaction[]): PortfolioHistoryPo
 function computeMonthlyReturns(
   portfolioHistory: PortfolioHistoryPoint[]
 ): MonthlyReturnPoint[] {
-  const months = new Map<string, { start: number; end: number }>();
+  const valueRangeByMonth = new Map<string, { openingValue: number; closingValue: number }>();
 
   for (const point of portfolioHistory) {
     const month = point.date.slice(0, 7);
-    if (!months.has(month)) {
-      months.set(month, { start: point.value, end: point.value });
+    if (!valueRangeByMonth.has(month)) {
+      valueRangeByMonth.set(month, { openingValue: point.value, closingValue: point.value });
     } else {
-      months.get(month)!.end = point.value;
+      valueRangeByMonth.get(month)!.closingValue = point.value;
     }
   }
 
-  return [...months.entries()]
+  return [...valueRangeByMonth.entries()]
     .map(([month, values]) => ({
       month,
       returnPct:
-        values.start > 0
-          ? Math.round((((values.end - values.start) / values.start) * 100) * 100) / 100
+        values.openingValue > 0
+          ? Math.round((((values.closingValue - values.openingValue) / values.openingValue) * 100) * 100) / 100
           : 0,
     }))
     .sort((left, right) => left.month.localeCompare(right.month));
@@ -85,15 +85,15 @@ export async function buildPortfolioHistory(
   const toUnix = Math.floor(Date.now() / 1000);
   const tickers = [...new Set(transactions.map((transaction) => transaction.ticker))];
 
-  const priceMaps: Record<string, Map<string, number>> = {};
+  const dailyClosesByTicker: Record<string, Map<string, number>> = {};
   for (const ticker of tickers) {
-    priceMaps[ticker] = await fetchDailyCloses(ticker, fromUnix, toUnix, env.FINNHUB_API_KEY);
+    dailyClosesByTicker[ticker] = await fetchDailyCloses(ticker, fromUnix, toUnix, env.FINNHUB_API_KEY);
     await new Promise((resolve) => setTimeout(resolve, 120));
   }
 
   const tradingDates = new Set<string>();
-  for (const priceMap of Object.values(priceMaps)) {
-    for (const date of priceMap.keys()) {
+  for (const dailyCloses of Object.values(dailyClosesByTicker)) {
+    for (const date of dailyCloses.keys()) {
       tradingDates.add(date);
     }
   }
@@ -110,17 +110,17 @@ export async function buildPortfolioHistory(
     }
 
     let portfolioValue = 0;
-    let pricedHoldings = 0;
+    let pricedHoldingsCount = 0;
 
     for (const [ticker, holding] of holdings) {
-      const closePrice = priceMaps[ticker]?.get(date);
+      const closePrice = dailyClosesByTicker[ticker]?.get(date);
       if (closePrice !== undefined) {
         portfolioValue += holding.shares * closePrice;
-        pricedHoldings += 1;
+        pricedHoldingsCount += 1;
       }
     }
 
-    if (pricedHoldings > 0 && portfolioValue > 0) {
+    if (pricedHoldingsCount > 0 && portfolioValue > 0) {
       portfolioHistory.push({
         date,
         value: Math.round(portfolioValue * 100) / 100,

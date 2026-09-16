@@ -5,7 +5,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import { CHART_COLORS, performanceChartConfig } from "@/lib/chartTheme";
+import { CHART_COLORS, portfolioValueChartConfig } from "@/lib/chartTheme";
 import { formatChartDate, formatCurrency } from "@/lib/portfolioMetrics";
 import type { PortfolioHistoryPoint } from "@/types/portfolio";
 
@@ -42,7 +42,7 @@ const PortfolioValueChart = ({
   }
 
   return (
-    <ChartContainer config={performanceChartConfig} className="h-[220px] w-full">
+    <ChartContainer config={portfolioValueChartConfig} className="h-[220px] w-full">
       <AreaChart data={history}>
         <defs>
           <linearGradient id="portfolioValueGradient" x1="0" y1="0" x2="0" y2="1">

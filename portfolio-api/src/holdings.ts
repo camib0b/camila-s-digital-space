@@ -7,12 +7,12 @@ export interface Transaction {
   transaction_type: string;
 }
 
-export interface HoldingEntry {
+export interface HoldingPosition {
   shares: number;
   totalCost: number;
 }
 
-export async function getTransactions(env: Env): Promise<Transaction[]> {
+export async function fetchTransactions(env: Env): Promise<Transaction[]> {
   const { results } = await env.DB.prepare(`
     SELECT transaction_id, ticker, trade_date, price, quantity, transaction_type
     FROM transactions
@@ -24,8 +24,8 @@ export async function getTransactions(env: Env): Promise<Transaction[]> {
 export function computeHoldings(
   transactions: Transaction[],
   asOfDate: string | null = null
-): Map<string, HoldingEntry> {
-  const holdings = new Map<string, HoldingEntry>();
+): Map<string, HoldingPosition> {
+  const holdings = new Map<string, HoldingPosition>();
 
   for (const transaction of transactions) {
     if (asOfDate && transaction.trade_date > asOfDate) {
@@ -34,19 +34,19 @@ export function computeHoldings(
 
     const quantity = parseFloat(String(transaction.quantity));
     const price = parseFloat(String(transaction.price));
-    const entry = holdings.get(transaction.ticker) || { shares: 0, totalCost: 0 };
+    const position = holdings.get(transaction.ticker) || { shares: 0, totalCost: 0 };
 
     if (transaction.transaction_type === "BUY") {
-      entry.shares += quantity;
-      entry.totalCost += price * quantity;
-    } else if (entry.shares > 0) {
-      const averageCost = entry.totalCost / entry.shares;
-      entry.shares -= quantity;
-      entry.totalCost -= averageCost * quantity;
+      position.shares += quantity;
+      position.totalCost += price * quantity;
+    } else if (position.shares > 0) {
+      const averageCost = position.totalCost / position.shares;
+      position.shares -= quantity;
+      position.totalCost -= averageCost * quantity;
     }
 
-    if (entry.shares > 1e-8) {
-      holdings.set(transaction.ticker, entry);
+    if (position.shares > 1e-8) {
+      holdings.set(transaction.ticker, position);
     } else {
       holdings.delete(transaction.ticker);
     }

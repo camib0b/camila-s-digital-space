@@ -12,8 +12,8 @@ export function useGithubContributions() {
   });
 
   return {
-    data: query.data ?? null,
-    loading: query.isLoading,
-    error: query.isError,
+    contributions: query.data ?? null,
+    isLoading: query.isLoading,
+    isError: query.isError,
   };
 }

@@ -26,15 +26,15 @@ export function buildHoldingsWithMetrics(
   portfolio: PortfolioResponse
 ): HoldingWithMetrics[] {
   const totalValueNumber = parseFloat(portfolio.totalValue);
-  return portfolio.stocks.map((stock) => ({
-    ...stock,
+  return portfolio.stocks.map((holding) => ({
+    ...holding,
     allocation:
       totalValueNumber > 0
-        ? ((stock.currentValue / totalValueNumber) * 100).toFixed(1)
+        ? ((holding.currentValue / totalValueNumber) * 100).toFixed(1)
         : "0.0",
     gainPercent:
-      stock.totalCost > 0
-        ? (((stock.currentValue - stock.totalCost) / stock.totalCost) * 100).toFixed(2)
+      holding.totalCost > 0
+        ? (((holding.currentValue - holding.totalCost) / holding.totalCost) * 100).toFixed(2)
         : "0.00",
   }));
 }

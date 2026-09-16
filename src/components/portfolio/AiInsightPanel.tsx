@@ -16,7 +16,7 @@ interface AiInsightPanelProps {
   onGenerate: () => void;
   loading: boolean;
   error: string | null;
-  insight: string | null;
+  aiInsight: string | null;
   provider: string | null;
 }
 
@@ -34,7 +34,7 @@ const AiInsightPanel = ({
   onGenerate,
   loading,
   error,
-  insight,
+  aiInsight,
   provider,
 }: AiInsightPanelProps) => {
   return (
@@ -80,9 +80,9 @@ const AiInsightPanel = ({
         </div>
       </div>
       {error && <p className="text-sm text-red-600 dark:text-red-400 mb-3">{error}</p>}
-      {insight ? (
+      {aiInsight ? (
         <div className="space-y-3">
-          <AiInsightContent content={insight} />
+          <AiInsightContent content={aiInsight} />
           {provider && (
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
               {viaLabel} {provider}

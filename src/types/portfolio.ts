@@ -1,4 +1,5 @@
-export interface Stock {
+/** A priced portfolio holding. JSON field remains `stocks` (public API). */
+export interface Holding {
   ticker: string;
   shares: number;
   totalCost: number;
@@ -17,9 +18,11 @@ export interface PortfolioResponse {
   totalInvested: string;
   totalGain: string;
   totalReturnPct: string;
-  stocks: Stock[];
+  /** Public JSON key; values are priced holdings. */
+  stocks: Holding[];
   aiInsight: string | null;
   lastUpdated: string;
+  /** Public JSON key; number of holdings. */
   count: number;
   aiModels?: AiModelOption[];
 }
@@ -47,7 +50,7 @@ export interface AiInsightResponse {
   error?: string;
 }
 
-export interface HoldingWithMetrics extends Stock {
+export interface HoldingWithMetrics extends Holding {
   allocation: string;
   gainPercent: string;
 }
