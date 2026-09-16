@@ -64,9 +64,9 @@ const en = {
     // Personal projects
     "personalProjects.label": "Personal projects",
     "personalProjects.raycast": "Raycast extension",
-    "personalProjects.videoAnalysis": "Video analysis app written in C++",
+    "personalProjects.videoAnalysis": "AVA — field-hockey video analysis for macOS. Tag the match as you watch; clips go out the same night.",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
-    "personalProjects.clipLibrary": "Browsable library of field-hockey match clips for coaching and game analysis. Clips are generated using AVA.",
+    "personalProjects.clipLibrary": "Carpeta de clips — team libraries of match clips, filtered by concept, fed from AVA.",
     "personalProjects.view": "View project",
     "personalProjects.learningLab.label": "Learning Lab",
     "personalProjects.learningLab.description":
