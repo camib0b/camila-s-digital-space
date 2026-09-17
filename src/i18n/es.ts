@@ -94,7 +94,7 @@ const es: Record<TranslationKey, string> = {
     // How I work
     "howIWork.label": "Cómo trabajo",
     "howIWork.comesCheap.heading": "Sale barato",
-    "howIWork.comesCheap.body": "Una versión que funciona antes de que esté completa. Libros sucios hasta que las métricas cuadran.",
+    "howIWork.comesCheap.body": "Una versión que funciona antes de que esté completa. Libros sucios hasta que las métricas cuadren.",
     "howIWork.hasToBeBuilt.heading": "Hay que construirlo",
     "howIWork.hasToBeBuilt.body": "Terminar. Los plazos ajenos. Disentir después de reformular la restricción.",
 
