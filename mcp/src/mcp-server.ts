@@ -64,7 +64,7 @@ export function createSiteMcpServer() {
   server.registerTool(
     "get_experience",
     {
-      description: "Returns public work experience and internships from the website",
+      description: "Returns public work experience from the website",
     },
     async () => jsonTextResult(experience),
   );

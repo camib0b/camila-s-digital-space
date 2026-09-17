@@ -9,9 +9,10 @@ export const MCP_URL = "https://mcp.camilaescudero.cl/mcp";
 export const profile = {
   name: "Camila Escudero",
   location: "Santiago, Chile",
-  tagline: "Engineering in Santiago. Hockey on the side. Ideas end up here.",
+  tagline:
+    "Investor reporting products at ACFIN. A native field-hockey video analysis product, built because the market lacked a technical analyst.",
   summary:
-    "BI Developer at ACFIN. Studying Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology. Graduating 2026. Also a field hockey player, coach, and video analyst.",
+    "Investor reporting and analytics on live structured-finance portfolios at ACFIN. AVA is a field-hockey video analysis product for macOS, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
@@ -30,33 +31,33 @@ export const contact = {
 export const experience = [
   {
     id: "acfin",
-    title: "BI Developer",
+    title: "Investor reporting",
     company: "ACFIN",
     period: "Feb 2026 – Present",
     description:
-      "Ship investor-facing Looker dashboards for structured credit portfolios; SQL-heavy reporting and investor analytics.",
+      "Investor reporting and analytics on live structured-finance portfolios.",
   },
   {
     id: "finapsys",
-    title: "Software Engineering Intern",
+    title: "Frontend",
     company: "Finapsys (health tech B2B SaaS)",
     period: "Summer 2024",
-    description: "Shipped reactive views with reusable components in TypeScript + Vue.js.",
+    description: "Shipped production UI for a health-tech product.",
   },
   {
     id: "a3",
-    title: "Hotel Asset Management Intern",
+    title: "Hotel asset reporting",
     company: "A3 Property Investments",
     period: "Summer 2023",
-    description: "KPI reporting for board of directors.",
+    description: "Board KPI reporting for a portfolio of eleven hotels.",
   },
   {
     id: "visionary",
-    title: "Retail & E-commerce Intern",
+    title: "E-commerce & operations",
     company: "Visionary",
-    period: "Sabbatical 2021",
+    period: "2021 – 2022",
     description:
-      "Owned e-commerce/PDV/distributor operations across Shopify + BSale; built sales & inventory forecasts and tracked core KPIs (conversion rate, avg. ticket, margin) to coordinate pricing, promos, and replenishment.",
+      "Day-to-day e-commerce and POS: orders, inventory, wholesale, and in-store coverage.",
   },
 ] as const;
 
@@ -66,7 +67,7 @@ export const projects = [
     name: "AVA",
     category: "personal-project",
     description:
-      "Video analysis app written in C++. AVA is a field-hockey video analysis tool: load a match recording, tag key moments with one keystroke, and share highlight clips.",
+      "Field-hockey video analysis for macOS. Tag the match as you watch; clips go out the same night.",
     url: `${SITE_URL}/ava`,
   },
   {
@@ -87,17 +88,17 @@ export const projects = [
   {
     id: "tomorrow",
     name: "Agentic routine planner",
-    category: "learning-lab",
+    category: "small-tool",
     description:
-      "Agentic routine planner that uses MCP to fetch Google Calendar events and reusable skills to plan the day. Built as a first agentic development exercise, it runs automatically every day at 9:30 AM.",
+      "Daily planner. Reads a Google Calendar and writes the day. Runs at 9:30 AM.",
     url: `${SITE_URL}/tomorrow`,
   },
   {
     id: "capital",
     name: "Capital",
-    category: "learning-lab",
+    category: "small-tool",
     description:
-      "Live portfolio exercise built to learn how to connect market pricing data with an LLM for on-demand text generation.",
+      "Live investment dashboard. Market prices in; on-demand text out.",
     url: `${SITE_URL}/capital`,
   },
 ] as const;

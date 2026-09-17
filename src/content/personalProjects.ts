@@ -5,7 +5,7 @@ export type PersonalProjectLink =
   | { kind: "external"; url: string }
   | { kind: "none" };
 
-export type PersonalProjectCategory = "project" | "learning-lab";
+export type PersonalProjectCategory = "project" | "small-tool";
 
 export interface PersonalProject {
   id: string;
@@ -35,13 +35,13 @@ export const personalProjects: PersonalProject[] = [
   },
   {
     id: "tomorrow",
-    category: "learning-lab",
+    category: "small-tool",
     descriptionKey: "personalProjects.tomorrow",
     link: { kind: "internal", path: "/tomorrow" },
   },
   {
     id: "capital",
-    category: "learning-lab",
+    category: "small-tool",
     descriptionKey: "personalProjects.capital",
     link: { kind: "internal", path: "/capital" },
   },
