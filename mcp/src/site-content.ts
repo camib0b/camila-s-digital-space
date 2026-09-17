@@ -10,9 +10,9 @@ export const profile = {
   name: "Camila Escudero",
   location: "Santiago, Chile",
   tagline:
-    "Analytics products for structured-credit investors at ACFIN. A native field-hockey video analysis product, built because the market lacked a technical analyst.",
+    "Analytics products at ACFIN: live structured-credit books into metrics that have to match. AVA, a native field-hockey video product — clips the same night, because the market lacked a technical analyst.",
   summary:
-    "Analytics products on live structured-credit portfolios at ACFIN: metrics, reconciliations, and investor-facing views that have to match the books. AVA is a field-hockey video analysis product for macOS, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "Live structured-credit books at ACFIN — dirty dates, partitions, FX — modeled into metrics and reconciliations that have to match. AVA is a field-hockey video analysis product for macOS: clips the same night, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
@@ -35,7 +35,7 @@ export const experience = [
     company: "ACFIN",
     period: "Feb 2026 – Present",
     description:
-      "Build analytics products on live structured-credit portfolios—metrics, reconciliations, and investor-facing views that have to match the books.",
+      "Live structured-credit books — dirty dates, partitions, FX. A metrics layer and reconciliations that have to match the books. Then something people use.",
   },
   {
     id: "finapsys",
@@ -67,7 +67,7 @@ export const projects = [
     name: "AVA",
     category: "personal-project",
     description:
-      "Field-hockey video analysis for macOS. Tag the match as you watch; clips go out the same night.",
+      "Field-hockey video analysis for macOS, built because the market lacked a technical analyst. Tag the match as you watch; clips go out the same night.",
     url: `${SITE_URL}/ava`,
   },
   {
@@ -87,7 +87,7 @@ export const projects = [
   },
   {
     id: "tomorrow",
-    name: "Agentic routine planner",
+    name: "Daily planner",
     category: "small-tool",
     description:
       "Daily planner. Reads a Google Calendar and writes the day. Runs at 9:30 AM.",
@@ -98,7 +98,7 @@ export const projects = [
     name: "Capital",
     category: "small-tool",
     description:
-      "Live investment dashboard. Market prices in; on-demand text out.",
+      "Small live dashboard. Market prices in; on-demand text out.",
     url: `${SITE_URL}/capital`,
   },
 ] as const;

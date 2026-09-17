@@ -1,7 +1,7 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.subtagline": "Analytics products for structured-credit investors at ACFIN. A native field-hockey video analysis product, built because the market lacked a technical analyst.",
+    "hero.subtagline": "Analytics products at ACFIN: live structured-credit books into metrics that have to match. AVA, a native field-hockey video product — clips the same night, because the market lacked a technical analyst.",
     "hero.cta.work": "Work",
     "hero.cta.cv": "View CV",
 
@@ -47,7 +47,7 @@ const en = {
     "experience.acfin.title": "Analytics products",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Present",
-    "experience.acfin.description": "Build analytics products on live structured-credit portfolios—metrics, reconciliations, and investor-facing views that have to match the books.",
+    "experience.acfin.description": "Live structured-credit books — dirty dates, partitions, FX. A metrics layer and reconciliations that have to match the books. Then something people use.",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Summer 2024",
@@ -64,7 +64,7 @@ const en = {
     // Personal projects
     "personalProjects.label": "Personal projects",
     "personalProjects.raycast": "Raycast extension",
-    "personalProjects.videoAnalysis": "AVA — field-hockey video analysis for macOS. Tag the match as you watch; clips go out the same night.",
+    "personalProjects.videoAnalysis": "AVA — field-hockey video analysis for macOS, built because the market lacked a technical analyst. Tag the match as you watch; clips go out the same night.",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
     "personalProjects.clipLibrary": "Carpeta de clips — team libraries of match clips, filtered by concept, fed from AVA.",
     "personalProjects.view": "View project",
@@ -74,7 +74,7 @@ const en = {
     "personalProjects.tomorrow":
       "Daily planner. Reads my calendar and writes the day. Runs at 9:30 AM.",
     "personalProjects.capital":
-      "Live investment dashboard. Market prices in; on-demand text out.",
+      "Small live dashboard. Market prices in; on-demand text out.",
 
     // GitHub
     "github.label": "Contributions",
@@ -92,9 +92,9 @@ const en = {
     // How I work
     "howIWork.label": "How I work",
     "howIWork.comesCheap.heading": "Comes cheap",
-    "howIWork.comesCheap.body": "Systems, first principles, staying even, warmth that is not compliance.",
+    "howIWork.comesCheap.body": "A working slice before a complete one. Messy books until the metrics reconcile.",
     "howIWork.hasToBeBuilt.heading": "Has to be built",
-    "howIWork.hasToBeBuilt.body": "The last twenty percent, other people's timelines, disagreeing after restating the constraint.",
+    "howIWork.hasToBeBuilt.body": "Finishing. Other people's timelines. Disagreeing after restating the constraint.",
 
     // Books
     "books.label": "Reading List",
@@ -113,7 +113,6 @@ const en = {
 
     // Hockey
     "hockey.label": "Hockey",
-    "hockey.description": "Playing, coaching, and video analysis.",
     "hockey.player.role": "Field hockey player",
     "hockey.player.period": "Since 2009",
     "hockey.coachUc.role": "Coach",
@@ -147,12 +146,12 @@ const en = {
     // CV Page
     "cv.back": "Back",
     "cv.role": "Analytics products · video analysis",
-    "cv.summary": "Analytics products on live structured-credit portfolios at ACFIN: metrics, reconciliations, and investor-facing views that have to match the books. AVA is a field-hockey video analysis product for macOS, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "cv.summary": "Live structured-credit books at ACFIN — dirty dates, partitions, FX — modeled into metrics and reconciliations that have to match. AVA is a field-hockey video analysis product for macOS: clips the same night, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
     "cv.selectedProjects": "Selected Projects",
     "cv.workExperience": "Work Experience",
     "cv.education": "Education",
     "cv.skills": "Skills",
-    "cv.leadershipAthletics": "Leadership & Athletics",
+    "cv.leadershipAthletics": "Hockey",
     "cv.languages": "Languages",
     "cv.frameworks": "Frameworks",
     "cv.tools": "Tools",
@@ -166,9 +165,9 @@ const en = {
     "cv.acfin.title": "Analytics products",
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Present",
-    "cv.acfin.bullet1": "Analytics products on live structured-credit portfolios: warehouse and semantic-layer modeling, portfolio metrics, and balance and cash-flow reconciliations that have to match the books.",
-    "cv.acfin.bullet2": "Data-quality hardening for dirty dates and partitions, including FX so the same book can be read in more than one currency.",
-    "cv.acfin.bullet3": "Scaled factoring analytics across clients via automation, and how people consume the numbers—embed, download, session.",
+    "cv.acfin.bullet1": "Live structured-credit books: dirty dates, partitions, and FX so the same book can be read in more than one currency.",
+    "cv.acfin.bullet2": "Warehouse and semantic-layer modeling — portfolio metrics, and balance and cash-flow reconciliations that have to match the books.",
+    "cv.acfin.bullet3": "Scaled factoring analytics across clients via automation, including how people consume the numbers—embed, download, session.",
     "cv.finapsys.title": "Frontend",
     "cv.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "cv.finapsys.period": "Summer 2024",

@@ -8,12 +8,9 @@ const Hockey = () => {
     <section id="hockey" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-2">
+          <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-8">
             {t("hockey.label")}
           </h2>
-          <p className="text-base text-muted-foreground leading-relaxed mb-10">
-            {t("hockey.description")}
-          </p>
 
           <div className="space-y-6">
             {hockeyRoles.map((role) => (

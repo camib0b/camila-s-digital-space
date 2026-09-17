@@ -3,7 +3,7 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.subtagline": "Productos de analítica para inversionistas de crédito estructurado en ACFIN. Un producto nativo de análisis de video para hockey, porque el mercado no tenía un analista técnico.",
+    "hero.subtagline": "Productos de analítica en ACFIN: libros vivos de crédito estructurado, convertidos en métricas que tienen que cuadrar. AVA, un producto nativo de análisis de video para hockey — clips esa misma noche, porque el mercado no tenía un analista técnico.",
     "hero.cta.work": "Trabajo",
     "hero.cta.cv": "CV",
 
@@ -49,7 +49,7 @@ const es: Record<TranslationKey, string> = {
     "experience.acfin.title": "Productos de analítica",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Actualidad",
-    "experience.acfin.description": "Construyo productos de analítica sobre portafolios vivos de crédito estructurado: métricas, conciliaciones y vistas para inversionistas que tienen que cuadrar con los libros.",
+    "experience.acfin.description": "Libros vivos de crédito estructurado — fechas sucias, particiones, FX. Una capa de métricas y conciliaciones que tienen que cuadrar con los libros. Después, algo que la gente usa.",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Verano 2024",
@@ -66,7 +66,7 @@ const es: Record<TranslationKey, string> = {
     // Personal projects
     "personalProjects.label": "Proyectos personales",
     "personalProjects.raycast": "Extensión de Raycast",
-    "personalProjects.videoAnalysis": "AVA — análisis de video para hockey sobre césped en macOS. Marcas el partido mientras lo ves; los clips salen esa noche.",
+    "personalProjects.videoAnalysis": "AVA — análisis de video para hockey sobre césped en macOS, porque el mercado no tenía un analista técnico. Marcas el partido mientras lo ves; los clips salen esa noche.",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
     "personalProjects.clipLibrary": "Carpeta de clips — bibliotecas por equipo, filtradas por concepto, alimentadas desde AVA.",
     "personalProjects.view": "Ver proyecto",
@@ -76,7 +76,7 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.tomorrow":
       "Planificador diario. Lee mi calendario y arma el día. Corre a las 9:30.",
     "personalProjects.capital":
-      "Dashboard de inversión en vivo. Precios de mercado de entrada; texto bajo demanda de salida.",
+      "Dashboard chico, en vivo. Precios de mercado de entrada; texto bajo demanda de salida.",
 
     // GitHub
     "github.label": "Contribuciones",
@@ -94,9 +94,9 @@ const es: Record<TranslationKey, string> = {
     // How I work
     "howIWork.label": "Cómo trabajo",
     "howIWork.comesCheap.heading": "Sale barato",
-    "howIWork.comesCheap.body": "Sistemas, primeros principios, ecuanimidad, calidez que no es complacencia.",
+    "howIWork.comesCheap.body": "Una versión que funciona antes de que esté completa. Libros sucios hasta que las métricas cuadran.",
     "howIWork.hasToBeBuilt.heading": "Hay que construirlo",
-    "howIWork.hasToBeBuilt.body": "El último veinte por ciento, los plazos ajenos, disentir después de reformular la restricción.",
+    "howIWork.hasToBeBuilt.body": "Terminar. Los plazos ajenos. Disentir después de reformular la restricción.",
 
     // Books
     "books.label": "Lista de Lectura",
@@ -115,7 +115,6 @@ const es: Record<TranslationKey, string> = {
 
     // Hockey
     "hockey.label": "Hockey",
-    "hockey.description": "Juego, entrenamiento y análisis de video.",
     "hockey.player.role": "Jugadora de hockey",
     "hockey.player.period": "Desde 2009",
     "hockey.coachUc.role": "Entrenadora",
@@ -149,12 +148,12 @@ const es: Record<TranslationKey, string> = {
     // CV Page
     "cv.back": "Volver",
     "cv.role": "Productos de analítica · análisis de video",
-    "cv.summary": "Productos de analítica sobre portafolios vivos de crédito estructurado en ACFIN: métricas, conciliaciones y vistas para inversionistas que tienen que cuadrar con los libros. AVA es un producto de análisis de video para hockey sobre césped en macOS, construido porque el mercado no tenía un analista técnico. Ingeniería Civil Industrial en la Pontificia Universidad Católica de Chile, con diploma en Tecnologías de la Información; graduación en 2026.",
+    "cv.summary": "Libros vivos de crédito estructurado en ACFIN — fechas sucias, particiones, FX — modelados en métricas y conciliaciones que tienen que cuadrar. AVA es un producto de análisis de video para hockey sobre césped en macOS: clips esa misma noche, construido porque el mercado no tenía un analista técnico. Ingeniería Civil Industrial en la Pontificia Universidad Católica de Chile, con diploma en Tecnologías de la Información; graduación en 2026.",
     "cv.selectedProjects": "Proyectos Seleccionados",
     "cv.workExperience": "Experiencia Laboral",
     "cv.education": "Educación",
     "cv.skills": "Habilidades",
-    "cv.leadershipAthletics": "Liderazgo y Deporte",
+    "cv.leadershipAthletics": "Hockey",
     "cv.languages": "Lenguajes",
     "cv.frameworks": "Frameworks",
     "cv.tools": "Herramientas",
@@ -168,9 +167,9 @@ const es: Record<TranslationKey, string> = {
     "cv.acfin.title": "Productos de analítica",
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Actualidad",
-    "cv.acfin.bullet1": "Productos de analítica sobre portafolios vivos de crédito estructurado: modelación de warehouse y capa semántica, métricas de portafolio, y conciliaciones de saldo y flujo de caja que tienen que cuadrar con los libros.",
-    "cv.acfin.bullet2": "Endurecimiento de calidad de datos para fechas sucias y particiones, incluida la conversión de moneda para leer el mismo libro en más de una divisa.",
-    "cv.acfin.bullet3": "Escalé la analítica de factoring entre clientes con automatización, y el consumo de los números: embed, descarga, sesión.",
+    "cv.acfin.bullet1": "Libros vivos de crédito estructurado: fechas sucias, particiones y FX para leer el mismo libro en más de una divisa.",
+    "cv.acfin.bullet2": "Modelación de warehouse y capa semántica — métricas de portafolio, y conciliaciones de saldo y flujo de caja que tienen que cuadrar con los libros.",
+    "cv.acfin.bullet3": "Escalé la analítica de factoring entre clientes con automatización, incluido cómo se consumen los números: embed, descarga, sesión.",
     "cv.finapsys.title": "Frontend",
     "cv.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "cv.finapsys.period": "Verano 2024",
