@@ -9,11 +9,11 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
   return (
     <div className="bg-card rounded-lg ring-1 ring-border overflow-hidden">
       <div className="grid grid-cols-5 text-[10px] tracking-[0.1em] uppercase text-muted-foreground px-4 py-2.5 border-b border-border bg-muted/30">
-        <span>Ticker</span>
-        <span className="text-right">Shares</span>
-        <span className="text-right">Value</span>
-        <span className="text-right">Return %</span>
-        <span className="text-right">Trend</span>
+              <span>Ticker</span>
+              <span className="text-right">Shares</span>
+              <span className="text-right">Alloc %</span>
+              <span className="text-right">Return %</span>
+              <span className="text-right">Trend</span>
       </div>
       {holdings.map((holding, index) => {
         const gainPercent = parseFloat(holding.gainPercent);
@@ -30,7 +30,7 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
               {holding.shares.toFixed(4)}
             </span>
             <span className="text-right text-xs font-medium">
-              ${holding.currentValue.toFixed(2)}
+              {holding.allocation}%
             </span>
             <span
               className={`text-right text-xs font-medium ${

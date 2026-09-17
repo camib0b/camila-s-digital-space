@@ -4,6 +4,7 @@ import { fetchDailyCloses, fetchQuote } from "./quotes";
 export interface PortfolioHistoryPoint {
   date: string;
   value: number;
+  returnPct: number;
 }
 
 export interface MonthlyReturnPoint {
@@ -19,15 +20,17 @@ function buildTradePriceHistory(transactions: Transaction[]): PortfolioHistoryPo
     return left.trade_date.localeCompare(right.trade_date);
   });
   const lastTradePriceByTicker = new Map<string, number>();
-  const historyByDate = new Map<string, number>();
+  const historyByDate = new Map<string, { value: number; returnPct: number }>();
 
   for (const transaction of sortedTransactions) {
     lastTradePriceByTicker.set(transaction.ticker, parseFloat(String(transaction.price)));
 
     const holdings = computeHoldings(sortedTransactions, transaction.trade_date);
     let portfolioValue = 0;
+    let totalCost = 0;
 
     for (const [ticker, holding] of holdings) {
+      totalCost += holding.totalCost;
       const price = lastTradePriceByTicker.get(ticker);
       if (price !== undefined) {
         portfolioValue += holding.shares * price;
@@ -35,13 +38,23 @@ function buildTradePriceHistory(transactions: Transaction[]): PortfolioHistoryPo
     }
 
     if (portfolioValue > 0) {
-      historyByDate.set(transaction.trade_date, Math.round(portfolioValue * 100) / 100);
+      historyByDate.set(transaction.trade_date, {
+        value: Math.round(portfolioValue * 100) / 100,
+        returnPct: percentReturn(portfolioValue, totalCost),
+      });
     }
   }
 
   return [...historyByDate.entries()]
-    .map(([date, value]) => ({ date, value }))
+    .map(([date, point]) => ({ date, ...point }))
     .sort((left, right) => left.date.localeCompare(right.date));
+}
+
+function percentReturn(portfolioValue: number, totalCost: number): number {
+  if (totalCost <= 0) {
+    return 0;
+  }
+  return Math.round(((portfolioValue - totalCost) / totalCost) * 10000) / 100;
 }
 
 function computeMonthlyReturns(
@@ -111,8 +124,10 @@ export async function buildPortfolioHistory(
 
     let portfolioValue = 0;
     let pricedHoldingsCount = 0;
+    let totalCost = 0;
 
     for (const [ticker, holding] of holdings) {
+      totalCost += holding.totalCost;
       const closePrice = dailyClosesByTicker[ticker]?.get(date);
       if (closePrice !== undefined) {
         portfolioValue += holding.shares * closePrice;
@@ -124,6 +139,7 @@ export async function buildPortfolioHistory(
       portfolioHistory.push({
         date,
         value: Math.round(portfolioValue * 100) / 100,
+        returnPct: percentReturn(portfolioValue, totalCost),
       });
     }
   }
@@ -137,13 +153,19 @@ export async function buildPortfolioHistory(
   if (!lastPoint || lastPoint.date !== today) {
     let liveValue = 0;
     const holdings = computeHoldings(transactions);
+    let liveCost = 0;
     for (const [ticker, holding] of holdings) {
+      liveCost += holding.totalCost;
       const quote = await fetchQuote(ticker, env.FINNHUB_API_KEY);
       liveValue += holding.shares * quote.currentPrice;
       await new Promise((resolve) => setTimeout(resolve, 120));
     }
     if (liveValue > 0) {
-      portfolioHistory.push({ date: today, value: Math.round(liveValue * 100) / 100 });
+      portfolioHistory.push({
+        date: today,
+        value: Math.round(liveValue * 100) / 100,
+        returnPct: percentReturn(liveValue, liveCost),
+      });
     }
   }
 

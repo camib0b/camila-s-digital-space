@@ -76,12 +76,8 @@ const Capital = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-lg overflow-hidden mb-12 ring-1 ring-border">
+        <div className="grid grid-cols-2 gap-px bg-border rounded-lg overflow-hidden mb-12 ring-1 ring-border">
           {[
-            {
-              label: t("portfolio.stats.value"),
-              value: `$${parseFloat(portfolio.totalValue).toLocaleString()}`,
-            },
             {
               label: t("portfolio.stats.return"),
               value: totalReturnLabel,
@@ -89,10 +85,6 @@ const Capital = () => {
                 totalReturnPercent >= 0
                   ? "text-green-600 dark:text-green-400"
                   : "text-red-600 dark:text-red-400",
-            },
-            {
-              label: t("portfolio.stats.invested"),
-              value: `$${parseFloat(portfolio.totalInvested).toLocaleString()}`,
             },
             {
               label: t("portfolio.stats.holdings"),

@@ -1,7 +1,9 @@
 import type {
   AllocationChartPoint,
   HoldingWithMetrics,
+  PortfolioHistoryPoint,
   PortfolioResponse,
+  RelativePerformancePoint,
 } from "@/types/portfolio";
 
 export function formatChartDate(date: string): string {
@@ -15,11 +17,25 @@ export function formatMonthLabel(month: string): string {
   return date.toLocaleDateString(undefined, { month: "short", year: "2-digit" });
 }
 
-export function formatCurrency(value: number): string {
-  return `$${value.toLocaleString(undefined, {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  })}`;
+export function formatSignedPercent(value: number, fractionDigits = 1): string {
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value.toFixed(fractionDigits)}%`;
+}
+
+export function buildRelativePerformanceHistory(
+  history: PortfolioHistoryPoint[]
+): RelativePerformancePoint[] {
+  const hasCostBasisReturn = history.every(
+    (point) => typeof point.returnPct === "number" && Number.isFinite(point.returnPct)
+  );
+  if (!hasCostBasisReturn || history.length === 0) {
+    return [];
+  }
+
+  return history.map((point) => ({
+    date: point.date,
+    changePercent: point.returnPct as number,
+  }));
 }
 
 export function buildHoldingsWithMetrics(

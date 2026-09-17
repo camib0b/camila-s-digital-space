@@ -6,7 +6,11 @@ import {
 } from "@/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { CHART_COLORS, portfolioValueChartConfig } from "@/lib/chartTheme";
-import { formatChartDate, formatCurrency } from "@/lib/portfolioMetrics";
+import {
+  buildRelativePerformanceHistory,
+  formatChartDate,
+  formatSignedPercent,
+} from "@/lib/portfolioMetrics";
 import type { PortfolioHistoryPoint } from "@/types/portfolio";
 
 interface PortfolioValueChartProps {
@@ -41,9 +45,14 @@ const PortfolioValueChart = ({
     return <p className="text-sm text-muted-foreground">{emptyLabel}</p>;
   }
 
+  const relativeHistory = buildRelativePerformanceHistory(history);
+  if (relativeHistory.length === 0) {
+    return <p className="text-sm text-muted-foreground">{emptyLabel}</p>;
+  }
+
   return (
     <ChartContainer config={portfolioValueChartConfig} className="h-[220px] w-full">
-      <AreaChart data={history}>
+      <AreaChart data={relativeHistory}>
         <defs>
           <linearGradient id="portfolioValueGradient" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={CHART_COLORS.primary} stopOpacity={0.25} />
@@ -63,20 +72,20 @@ const PortfolioValueChart = ({
           axisLine={false}
           tickLine={false}
           tick={{ fill: CHART_COLORS.tick, fontSize: 11 }}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={(value) => formatSignedPercent(Number(value))}
           width={56}
         />
         <ChartTooltip
           content={
             <ChartTooltipContent
-              formatter={(value) => formatCurrency(Number(value))}
+              formatter={(value) => formatSignedPercent(Number(value), 2)}
               labelFormatter={(label) => String(label)}
             />
           }
         />
         <Area
           type="monotone"
-          dataKey="value"
+          dataKey="changePercent"
           stroke={CHART_COLORS.primary}
           strokeWidth={1.5}
           fill="url(#portfolioValueGradient)"

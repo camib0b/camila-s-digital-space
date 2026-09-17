@@ -30,6 +30,12 @@ export interface PortfolioResponse {
 export interface PortfolioHistoryPoint {
   date: string;
   value: number;
+  returnPct?: number;
+}
+
+export interface RelativePerformancePoint {
+  date: string;
+  changePercent: number;
 }
 
 export interface MonthlyReturnPoint {

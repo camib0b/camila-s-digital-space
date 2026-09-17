@@ -7,7 +7,7 @@ export const CHART_COLORS = {
 } as const;
 
 export const portfolioValueChartConfig = {
-  value: { label: "Portfolio value", color: CHART_COLORS.primary },
+  changePercent: { label: "Relative change", color: CHART_COLORS.primary },
 };
 
 export const monthlyReturnsChartConfig = {
