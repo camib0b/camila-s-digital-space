@@ -31,9 +31,14 @@ const Hero = () => {
 
           <h1 className="mb-4 animate-fade-up-delay-1">camila escudero</h1>
 
-          <p className="text-base text-muted-foreground mb-10 animate-fade-up-delay-2 leading-relaxed max-w-lg">
-            {t("hero.subtagline")}
-          </p>
+          <div className="mb-10 animate-fade-up-delay-2 space-y-2 max-w-lg">
+            <p className="text-base text-muted-foreground leading-relaxed">
+              {t("hero.acfin")}
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              {t("hero.ava")}
+            </p>
+          </div>
 
           <div className="flex items-center gap-5 animate-fade-up-delay-3 mb-6">
             <Link

@@ -3,7 +3,8 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.subtagline": "Productos de analítica en ACFIN: libros vivos de crédito estructurado, convertidos en métricas que tienen que cuadrar. AVA, un producto nativo de análisis de video para hockey — clips esa misma noche, porque el mercado no tenía un analista técnico.",
+    "hero.acfin": "Productos de analítica en ACFIN: libros vivos de crédito estructurado, convertidos en métricas que tienen que cuadrar.",
+    "hero.ava": "AVA, un producto nativo de análisis de video para hockey. Clips esa misma noche.",
     "hero.cta.work": "Trabajo",
     "hero.cta.cv": "CV",
 
@@ -49,7 +50,7 @@ const es: Record<TranslationKey, string> = {
     "experience.acfin.title": "Productos de analítica",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Actualidad",
-    "experience.acfin.description": "Libros vivos de crédito estructurado — fechas sucias, particiones, FX. Una capa de métricas y conciliaciones que tienen que cuadrar con los libros. Después, algo que la gente usa.",
+    "experience.acfin.description": "Libros vivos de crédito estructurado — fechas sucias, particiones, FX. Una capa de métricas y conciliaciones que tienen que cuadrar con los libros. Embed, descarga, sesión — cómo se consumen los números.",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Verano 2024",
@@ -148,7 +149,7 @@ const es: Record<TranslationKey, string> = {
     // CV Page
     "cv.back": "Volver",
     "cv.role": "Productos de analítica · análisis de video",
-    "cv.summary": "Libros vivos de crédito estructurado en ACFIN — fechas sucias, particiones, FX — modelados en métricas y conciliaciones que tienen que cuadrar. AVA es un producto de análisis de video para hockey sobre césped en macOS: clips esa misma noche, construido porque el mercado no tenía un analista técnico. Ingeniería Civil Industrial en la Pontificia Universidad Católica de Chile, con diploma en Tecnologías de la Información; graduación en 2026.",
+    "cv.summary": "Libros vivos de crédito estructurado en ACFIN — fechas sucias, particiones, FX — modelados en métricas y conciliaciones que tienen que cuadrar. AVA es un producto de análisis de video para hockey sobre césped en macOS: clips esa misma noche. Ingeniería Civil Industrial en la Pontificia Universidad Católica de Chile, con diploma en Tecnologías de la Información; graduación en 2026.",
     "cv.selectedProjects": "Proyectos Seleccionados",
     "cv.workExperience": "Experiencia Laboral",
     "cv.education": "Educación",
@@ -160,7 +161,7 @@ const es: Record<TranslationKey, string> = {
     "cv.footerNote": "Productos de analítica en ACFIN",
     "cv.ava.title": "AVA",
     "cv.ava.type": "Producto",
-    "cv.ava.description": "Producto de análisis de video para hockey sobre césped. Abres el partido, marcas los momentos clave y los clips salen el mismo día — pensado para cuerpos técnicos sin un analista dedicado.",
+    "cv.ava.description": "Producto de análisis de video para hockey sobre césped. Abres el partido, marcas los momentos clave y los clips salen el mismo día.",
     "cv.fleetOptimizer.title": "Optimizador de Asignación de Motores de Flota de Aeronaves",
     "cv.fleetOptimizer.type": "Proyecto de Curso — Métodos de Optimización",
     "cv.fleetOptimizer.description": "Desarrollé una herramienta de optimización para asignar motores a través de una flota de aeronaves minimizando costos de mantenimiento mientras cumple restricciones de horarios de vuelo.",

@@ -1,7 +1,8 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.subtagline": "Analytics products at ACFIN: live structured-credit books into metrics that have to match. AVA, a native field-hockey video product — clips the same night, because the market lacked a technical analyst.",
+    "hero.acfin": "Analytics products at ACFIN: live structured-credit books into metrics that have to match.",
+    "hero.ava": "AVA, a native field-hockey video product. Clips the same night.",
     "hero.cta.work": "Work",
     "hero.cta.cv": "View CV",
 
@@ -47,7 +48,7 @@ const en = {
     "experience.acfin.title": "Analytics products",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Present",
-    "experience.acfin.description": "Live structured-credit books — dirty dates, partitions, FX. A metrics layer and reconciliations that have to match the books. Then something people use.",
+    "experience.acfin.description": "Live structured-credit books — dirty dates, partitions, FX. A metrics layer and reconciliations that have to match the books. Embed, download, session — how people consume the numbers.",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Summer 2024",
@@ -146,7 +147,7 @@ const en = {
     // CV Page
     "cv.back": "Back",
     "cv.role": "Analytics products · video analysis",
-    "cv.summary": "Live structured-credit books at ACFIN — dirty dates, partitions, FX — modeled into metrics and reconciliations that have to match. AVA is a field-hockey video analysis product for macOS: clips the same night, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "cv.summary": "Live structured-credit books at ACFIN — dirty dates, partitions, FX — modeled into metrics and reconciliations that have to match. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
     "cv.selectedProjects": "Selected Projects",
     "cv.workExperience": "Work Experience",
     "cv.education": "Education",
@@ -158,7 +159,7 @@ const en = {
     "cv.footerNote": "Analytics products at ACFIN",
     "cv.ava.title": "AVA",
     "cv.ava.type": "Product",
-    "cv.ava.description": "Field-hockey video analysis product. Load a match, tag key moments, and send clips the same day — built for coaches without a dedicated technical analyst.",
+    "cv.ava.description": "Field-hockey video analysis product. Load a match, tag key moments, and send clips the same day.",
     "cv.fleetOptimizer.title": "Aircraft Fleet Engine Allocation Optimizer",
     "cv.fleetOptimizer.type": "Course Project — Optimization Methods",
     "cv.fleetOptimizer.description": "Developed an optimization tool to allocate engines across an aircraft fleet minimizing maintenance costs while meeting flight schedule constraints.",
