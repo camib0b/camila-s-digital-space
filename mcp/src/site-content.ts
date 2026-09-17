@@ -10,9 +10,9 @@ export const profile = {
   name: "Camila Escudero",
   location: "Santiago, Chile",
   tagline:
-    "Investor reporting products at ACFIN. A native field-hockey video analysis product, built because the market lacked a technical analyst.",
+    "Analytics products for structured-credit investors at ACFIN. A native field-hockey video analysis product, built because the market lacked a technical analyst.",
   summary:
-    "Investor reporting and analytics on live structured-finance portfolios at ACFIN. AVA is a field-hockey video analysis product for macOS, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "Analytics products on live structured-credit portfolios at ACFIN: metrics, reconciliations, and investor-facing views that have to match the books. AVA is a field-hockey video analysis product for macOS, built because the market lacked a technical analyst. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
@@ -31,11 +31,11 @@ export const contact = {
 export const experience = [
   {
     id: "acfin",
-    title: "Investor reporting",
+    title: "Analytics products",
     company: "ACFIN",
     period: "Feb 2026 – Present",
     description:
-      "Investor reporting and analytics on live structured-finance portfolios.",
+      "Build analytics products on live structured-credit portfolios—metrics, reconciliations, and investor-facing views that have to match the books.",
   },
   {
     id: "finapsys",
