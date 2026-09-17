@@ -46,9 +46,6 @@ const PersonalProjects = () => {
   const projectEntries = personalProjects.filter(
     (project) => project.category === "project"
   );
-  const learningLabEntries = personalProjects.filter(
-    (project) => project.category === "learning-lab"
-  );
 
   return (
     <section id="personal-projects" className="py-20 md:py-28">
@@ -58,18 +55,30 @@ const PersonalProjects = () => {
             {t("personalProjects.label")}
           </h2>
           <ProjectList projects={projectEntries} />
-
-          <div className="mt-12">
-            <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              {t("personalProjects.learningLab.label")}
-            </h3>
-            <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
-              {t("personalProjects.learningLab.description")}
-            </p>
-            <ProjectList projects={learningLabEntries} />
-          </div>
-
           <GitHubContributions />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const SmallTools = () => {
+  const { t } = useLanguage();
+  const smallToolEntries = personalProjects.filter(
+    (project) => project.category === "small-tool"
+  );
+
+  return (
+    <section id="small-tools" className="py-20 md:py-28">
+      <div className="container px-6 md:px-8">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="mb-2 text-sm font-medium uppercase tracking-wider text-foreground">
+            {t("personalProjects.smallTools.label")}
+          </h2>
+          <p className="mb-8 text-sm leading-relaxed text-muted-foreground">
+            {t("personalProjects.smallTools.description")}
+          </p>
+          <ProjectList projects={smallToolEntries} />
         </div>
       </div>
     </section>

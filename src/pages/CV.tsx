@@ -61,6 +61,47 @@ const CV = () => {
 
         <section className="mb-10">
           <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
+            {t("cv.workExperience")}
+          </h2>
+          <div className="space-y-6">
+            {cvJobs.map((job) => (
+              <div key={job.id}>
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+                  <div>
+                    <p className="font-medium text-foreground text-sm">{t(job.titleKey)}</p>
+                    <p className="text-sm text-muted-foreground">{t(job.companyKey)}</p>
+                  </div>
+                  <span className="text-xs text-muted-foreground font-mono shrink-0">
+                    {t(job.periodKey)}
+                  </span>
+                </div>
+                <ul className="text-sm text-muted-foreground leading-relaxed space-y-0.5 mt-2 mb-2">
+                  {job.bulletKeys.map((bulletKey) => (
+                    <li key={bulletKey} className="flex items-start gap-2">
+                      <span className="text-foreground/40 mt-1">·</span>
+                      {t(bulletKey)}
+                    </li>
+                  ))}
+                </ul>
+                {job.technologies.length > 0 ? (
+                  <div className="flex flex-wrap gap-1.5">
+                    {job.technologies.map((technology) => (
+                      <span
+                        key={technology}
+                        className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
+                      >
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
             {t("cv.selectedProjects")}
           </h2>
           <div className="space-y-6">
@@ -96,47 +137,6 @@ const CV = () => {
                 {project.technologies.length > 0 ? (
                   <div className="flex flex-wrap gap-1.5">
                     {project.technologies.map((technology) => (
-                      <span
-                        key={technology}
-                        className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-                      >
-                        {technology}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
-            {t("cv.workExperience")}
-          </h2>
-          <div className="space-y-6">
-            {cvJobs.map((job) => (
-              <div key={job.id}>
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
-                  <div>
-                    <p className="font-medium text-foreground text-sm">{t(job.titleKey)}</p>
-                    <p className="text-sm text-muted-foreground">{t(job.companyKey)}</p>
-                  </div>
-                  <span className="text-xs text-muted-foreground font-mono shrink-0">
-                    {t(job.periodKey)}
-                  </span>
-                </div>
-                <ul className="text-sm text-muted-foreground leading-relaxed space-y-0.5 mt-2 mb-2">
-                  {job.bulletKeys.map((bulletKey) => (
-                    <li key={bulletKey} className="flex items-start gap-2">
-                      <span className="text-foreground/40 mt-1">·</span>
-                      {t(bulletKey)}
-                    </li>
-                  ))}
-                </ul>
-                {job.technologies.length > 0 ? (
-                  <div className="flex flex-wrap gap-1.5">
-                    {job.technologies.map((technology) => (
                       <span
                         key={technology}
                         className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"

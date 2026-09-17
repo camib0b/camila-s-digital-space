@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
-import PersonalProjects from "@/components/PersonalProjects";
+import PersonalProjects, { SmallTools } from "@/components/PersonalProjects";
 import Books from "@/components/Books";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -17,6 +17,7 @@ const Home = () => {
         <div id="after-hero">
           <PersonalProjects />
           <Experience />
+          <SmallTools />
           <Hockey />
           <HowIWork />
           <Books />

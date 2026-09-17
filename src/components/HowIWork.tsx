@@ -1,5 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { bigFiveTraits, howIWorkColumns } from "@/content/howIWork";
+import { howIWorkColumns } from "@/content/howIWork";
 
 const HowIWork = () => {
   const { t } = useLanguage();
@@ -12,7 +12,7 @@ const HowIWork = () => {
             {t("howIWork.label")}
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-16 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-16">
             {howIWorkColumns.map((column) => (
               <div key={column.id}>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3">
@@ -24,29 +24,6 @@ const HowIWork = () => {
               </div>
             ))}
           </div>
-
-          <div className="space-y-6 mb-10">
-            {bigFiveTraits.map((trait) => (
-              <div key={trait.id}>
-                <div className="flex items-baseline justify-between gap-4 mb-2">
-                  <span className="text-sm text-foreground">{t(trait.labelKey)}</span>
-                  <span className="text-xs text-muted-foreground font-mono shrink-0">
-                    {trait.percentile}
-                  </span>
-                </div>
-                <div className="h-[2px] w-full bg-border">
-                  <div
-                    className="h-full bg-foreground"
-                    style={{ width: `${trait.percentile}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-xs text-muted-foreground/70 leading-relaxed">
-            {t("howIWork.footnote")}
-          </p>
         </div>
       </div>
     </section>
