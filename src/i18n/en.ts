@@ -1,7 +1,7 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.acfin": "Analytics products at ACFIN: live structured-credit books into metrics that have to match.",
+    "hero.acfin": "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients.",
     "hero.ava": "AVA, a native field-hockey video product. Clips the same night.",
     "hero.cta.work": "Work",
     "hero.cta.cv": "View CV",
@@ -48,7 +48,7 @@ const en = {
     "experience.acfin.title": "Analytics products",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Present",
-    "experience.acfin.description": "Live structured-credit books — dirty dates, partitions, FX. A metrics layer and reconciliations that have to match the books. Embed, download, session — how people consume the numbers.",
+    "experience.acfin.description": "Product and platform for client-facing structured-credit metrics and reports. Dirty dates, partitions, FX. Embed, download, session — how people consume the numbers.",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Summer 2024",
@@ -93,7 +93,7 @@ const en = {
     // How I work
     "howIWork.label": "How I work",
     "howIWork.comesCheap.heading": "Comes cheap",
-    "howIWork.comesCheap.body": "A working slice before a complete one. Messy books until the metrics reconcile.",
+    "howIWork.comesCheap.body": "A working slice before a complete one. Metrics and reports in a product clients use.",
     "howIWork.hasToBeBuilt.heading": "Has to be built",
     "howIWork.hasToBeBuilt.body": "Finishing. Other people's timelines. Disagreeing after restating the constraint.",
 
@@ -147,7 +147,7 @@ const en = {
     // CV Page
     "cv.back": "Back",
     "cv.role": "Analytics products · video analysis",
-    "cv.summary": "Live structured-credit books at ACFIN — dirty dates, partitions, FX — modeled into metrics and reconciliations that have to match. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "cv.summary": "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
     "cv.selectedProjects": "Selected Projects",
     "cv.workExperience": "Work Experience",
     "cv.education": "Education",
@@ -167,7 +167,7 @@ const en = {
     "cv.acfin.company": "ACFIN",
     "cv.acfin.period": "Feb 2026 – Present",
     "cv.acfin.bullet1": "Live structured-credit books: dirty dates, partitions, and FX so the same book can be read in more than one currency.",
-    "cv.acfin.bullet2": "Warehouse and semantic-layer modeling — portfolio metrics, and balance and cash-flow reconciliations that have to match the books.",
+    "cv.acfin.bullet2": "Warehouse and semantic-layer modeling for the portfolio metrics the product presents.",
     "cv.acfin.bullet3": "Scaled factoring analytics across clients via automation, including how people consume the numbers—embed, download, session.",
     "cv.finapsys.title": "Frontend",
     "cv.finapsys.company": "Finapsys (health tech B2B SaaS)",

@@ -10,9 +10,9 @@ export const profile = {
   name: "Camila Escudero",
   location: "Santiago, Chile",
   tagline:
-    "Analytics products at ACFIN: live structured-credit books into metrics that have to match. AVA, a native field-hockey video product. Clips the same night.",
+    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA, a native field-hockey video product. Clips the same night.",
   summary:
-    "Live structured-credit books at ACFIN — dirty dates, partitions, FX — modeled into metrics and reconciliations that have to match. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
@@ -35,7 +35,7 @@ export const experience = [
     company: "ACFIN",
     period: "Feb 2026 – Present",
     description:
-      "Live structured-credit books — dirty dates, partitions, FX. A metrics layer and reconciliations that have to match the books. Embed, download, session — how people consume the numbers.",
+      "Product and platform for client-facing structured-credit metrics and reports. Dirty dates, partitions, FX. Embed, download, session — how people consume the numbers.",
   },
   {
     id: "finapsys",
