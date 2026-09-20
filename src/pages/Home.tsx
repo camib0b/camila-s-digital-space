@@ -1,11 +1,9 @@
 import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import PersonalProjects, { SmallTools } from "@/components/PersonalProjects";
-import Books from "@/components/Books";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Hockey from "@/components/Hockey";
-import HowIWork from "@/components/HowIWork";
 import PatternedBackground from "@/components/PatternedBackground";
 
 const Home = () => {
@@ -19,8 +17,6 @@ const Home = () => {
           <Experience />
           <SmallTools />
           <Hockey />
-          <HowIWork />
-          <Books />
           <Contact />
           <Footer />
         </div>
