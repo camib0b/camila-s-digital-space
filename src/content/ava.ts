@@ -46,3 +46,12 @@ export const AVA_FOLLOW_UPS = [
   { id: "action", es: "Tipo de acción", en: "Action type", bodyKey: "ava.follow.action" },
   { id: "notes", es: "Notas", en: "Notes", bodyKey: "ava.follow.notes" },
 ] as const;
+
+export const AVA_CONCAT_FILES = [
+  { id: "q1", name: "Q1.MP4", duration: "17:31", seconds: 1051, quarter: "Q1" },
+  { id: "q2", name: "Q2.MP4", duration: "17:28", seconds: 1048, quarter: "Q2" },
+  { id: "q3", name: "Q3.MP4", duration: "17:33", seconds: 1053, quarter: "Q3" },
+  { id: "card", name: "00004.MTS", duration: "12:04", seconds: 724, quarter: "Q4" },
+] as const;
+
+export const AVA_CONCAT_TOTAL_LABEL = "64:36";

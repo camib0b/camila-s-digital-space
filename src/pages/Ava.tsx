@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import LanguageToggle from "@/components/LanguageToggle";
+import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
 import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_STATS } from "@/content/ava";
@@ -31,6 +32,12 @@ const WORKFLOW_MODES = [
   { kicker: "01", titleKey: "ava.modes.tagging.title", bodyKey: "ava.modes.tagging.body" },
   { kicker: "02", titleKey: "ava.modes.analyzing.title", bodyKey: "ava.modes.analyzing.body" },
   { kicker: "03", titleKey: "ava.modes.presentation.title", bodyKey: "ava.modes.presentation.body" },
+] as const;
+
+const CONCAT_STEPS = [
+  { index: "01", titleKey: "ava.concat.step1.title", bodyKey: "ava.concat.step1.body" },
+  { index: "02", titleKey: "ava.concat.step2.title", bodyKey: "ava.concat.step2.body" },
+  { index: "03", titleKey: "ava.concat.step3.title", bodyKey: "ava.concat.step3.body" },
 ] as const;
 
 const Ava = () => {
@@ -78,6 +85,34 @@ const Ava = () => {
         </section>
 
         <AvaTimeline language={language} />
+
+        <section className="ava-section" id="un-partido">
+          <div className="ava-shell">
+            <div className="ava-section-head ava-concat-head">
+              <p className="ava-kicker">{t("ava.concat.kicker")}</p>
+              <h2>{t("ava.concat.headline")}</h2>
+              <p className="ava-section-body">{t("ava.concat.lede")}</p>
+            </div>
+            <div className="ava-concat">
+              <div className="ava-concat-copy">
+                <p className="ava-section-body">{t("ava.concat.body")}</p>
+                <p className="ava-section-body">{t("ava.concat.note")}</p>
+                <p className="ava-concat-diff">{t("ava.concat.differentiator")}</p>
+              </div>
+              <AvaConcatGraphic />
+            </div>
+            <div className="ava-concat-steps">
+              {CONCAT_STEPS.map((step) => (
+                <article className="ava-concat-step" key={step.index}>
+                  <p className="ava-kicker">{step.index}</p>
+                  <h3>{t(step.titleKey)}</h3>
+                  <p>{t(step.bodyKey)}</p>
+                </article>
+              ))}
+            </div>
+            <p className="ava-concat-honesty">{t("ava.concat.honesty")}</p>
+          </div>
+        </section>
 
         <section className="ava-section">
           <div className="ava-shell">
