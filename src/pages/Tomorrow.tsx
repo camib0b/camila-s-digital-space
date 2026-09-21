@@ -1,4 +1,4 @@
-import { Clock, MapPin, Moon } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Moon } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Language } from "@/i18n/types";
@@ -10,6 +10,7 @@ import {
   morningBlocks,
   nightBefore,
   tomorrowPageText,
+  upcomingItems,
   type ScheduleBlock,
 } from "@/content/tomorrow";
 
@@ -185,7 +186,7 @@ const Tomorrow = () => {
               >
                 <div>
                   <div className="font-mono text-xs tabular-nums text-muted-foreground">
-                    {block.start}–{block.end}
+                    {block.end ? `${block.start}–${block.end}` : `${block.start} →`}
                   </div>
                   <div className="mt-1 text-sm font-medium text-foreground">
                     {block.title[language]}
@@ -199,6 +200,40 @@ const Tomorrow = () => {
                 <span className="shrink-0 rounded-full border border-border px-2 py-0.5 text-[0.625rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">
                   {block.tag[language]}
                 </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="mb-16 mt-6 rounded-[10px] border border-border bg-card p-5">
+          <div className="mb-2 flex items-center gap-2">
+            <CalendarDays className="size-3.5 text-muted-foreground" strokeWidth={1.75} />
+            <h3 className="text-[0.625rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              {tomorrowPageText.upcoming[language]}
+            </h3>
+          </div>
+          <p className="max-w-lg text-sm leading-relaxed text-muted-foreground">
+            {tomorrowPageText.upcomingBody[language]}
+          </p>
+          <ul className="mt-5">
+            {upcomingItems.map((item) => (
+              <li
+                key={item.id}
+                className="mt-4 flex items-start justify-between gap-4 border-t border-border pt-4 first:mt-0 first:border-t-0 first:pt-0"
+              >
+                <div>
+                  <div className="font-mono text-xs tabular-nums text-muted-foreground">
+                    {item.when[language]}
+                  </div>
+                  <div className="mt-1 text-sm font-medium text-foreground">
+                    {item.title[language]}
+                  </div>
+                  {item.detail ? (
+                    <p className="mt-1.5 max-w-md text-xs text-muted-foreground">
+                      {item.detail[language]}
+                    </p>
+                  ) : null}
+                </div>
               </li>
             ))}
           </ul>
