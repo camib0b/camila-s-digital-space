@@ -1,9 +1,10 @@
 export type HockeyRoleId = "player" | "coach" | "videoAnalyst";
+export type HockeyRoleWithOrganizationId = Exclude<HockeyRoleId, "player">;
 
 export interface HockeyRole {
   id: HockeyRoleId;
   roleKey: `hockey.${HockeyRoleId}.role`;
-  organizationKey?: `hockey.${HockeyRoleId}.organization`;
+  organizationKey?: `hockey.${HockeyRoleWithOrganizationId}.organization`;
   periodKey: `hockey.${HockeyRoleId}.period`;
 }
 
