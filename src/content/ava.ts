@@ -19,18 +19,18 @@ export const AVA_EVENTS = [
 ] as const;
 
 export const AVA_TIMELINE_MARKS: { at: number; token: (typeof AVA_EVENTS)[number]["token"] }[] = [
-  { at: 6, token: "Circle Entry" },
-  { at: 13, token: "Shot" },
-  { at: 21, token: "PC" },
-  { at: 29, token: "Goal" },
-  { at: 37, token: "Turnover" },
-  { at: 45, token: "Pass" },
-  { at: 53, token: "Card" },
-  { at: 61, token: "Circle Entry" },
-  { at: 68, token: "Goal" },
+  { at: 5, token: "Circle Entry" },
+  { at: 11, token: "Shot" },
+  { at: 18, token: "PC" },
+  { at: 25, token: "Goal" },
+  { at: 32, token: "Turnover" },
+  { at: 39, token: "Pass" },
+  { at: 45, token: "Card" },
+  { at: 52, token: "Circle Entry" },
+  { at: 58, token: "Goal" },
 ];
 
-export const MATCH_MINUTES = 70;
+export const MATCH_MINUTES = 60;
 
 export const AVA_STATS = [
   { id: "possession", es: "Posesión", en: "Possession" },

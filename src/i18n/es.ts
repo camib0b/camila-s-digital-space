@@ -220,7 +220,7 @@ const es: Record<TranslationKey, string> = {
     "ava.hero.meta": "macOS",
     "ava.stage.caption": "Un partido. Varias cámaras. Una línea de tiempo.",
     "ava.events.kicker": "Marcar",
-    "ava.events.headline": "El teclado ya habla hockey.",
+    "ava.events.headline": "El teclado habla hockey.",
     "ava.events.body": "Cada evento del deporte es una tecla. Una segunda tecla suma resultado, zona y tipo de acción. Flick. Push. Una nota si hace falta.",
     "ava.follow.result": "Qué pasó después de la marca.",
     "ava.follow.zone": "Dónde en la cancha.",
