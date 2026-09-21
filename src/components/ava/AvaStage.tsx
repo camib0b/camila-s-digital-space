@@ -49,6 +49,10 @@ function localizedEventLabel(token: (typeof AVA_EVENTS)[number]["token"], langua
   return language === "es" ? event.es : event.en;
 }
 
+function formatMatchClock(totalMinutes: number): string {
+  return `${String(totalMinutes).padStart(2, "0")}:00`;
+}
+
 const HockeyPitch = ({ caption }: { caption: string }) => {
   const leftGoalY = FIELD_CENTER_Y - GOAL_HALF_WIDTH;
   const rightTwentyThree = FIELD_RIGHT - TWENTY_THREE_METRE;
@@ -151,7 +155,7 @@ const AvaStage = ({ caption }: { caption: string }) => {
       </div>
       <div className="ava-stage-caption">
         <span>{caption}</span>
-        <span>70:00</span>
+        <span>{formatMatchClock(MATCH_MINUTES)}</span>
       </div>
     </div>
   );
@@ -175,9 +179,9 @@ export const AvaTimeline = ({ language }: { language: Language }) => {
         ))}
       </div>
       <div className="ava-timeline-ends">
-        <span>00:00</span>
-        <span>35:00</span>
-        <span>70:00</span>
+        <span>{formatMatchClock(0)}</span>
+        <span>{formatMatchClock(MATCH_MINUTES / 2)}</span>
+        <span>{formatMatchClock(MATCH_MINUTES)}</span>
       </div>
     </div>
   );
