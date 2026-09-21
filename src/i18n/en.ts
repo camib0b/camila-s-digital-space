@@ -64,7 +64,7 @@ const en = {
 
     // Personal projects
     "personalProjects.label": "Personal projects",
-    "personalProjects.raycast": "Raycast extension",
+    "personalProjects.raycast": "Zodme — Raycast extension: birth date in, zodiac sign + short archetype out.",
     "personalProjects.videoAnalysis": "AVA — field-hockey video analysis for macOS, built because the market lacked a technical analyst. Tag the match as you watch; clips go out the same night.",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
     "personalProjects.clipLibrary": "Carpeta de clips — team libraries of match clips, filtered by concept, fed from AVA.",
@@ -249,7 +249,7 @@ const en = {
     "ava.access.kicker": "Access",
     "ava.access.headline": "The product already runs.",
     "ava.access.body": "The binary comes by mail. Write to me.",
-    "ava.footer.line": "Field hockey. Chile and Argentina.",
+    "ava.footer.line": "Clips and boards ready before the next session.",
 
     // Portfolio
     "portfolio.eyebrow": "grand exchange",

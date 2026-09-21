@@ -28,12 +28,6 @@ export const personalProjects: PersonalProject[] = [
     link: { kind: "external", url: "https://carpeta.cl/" },
   },
   {
-    id: "raycast",
-    category: "project",
-    descriptionKey: "personalProjects.raycast",
-    link: { kind: "external", url: "https://www.raycast.com/camib0b/zodme" },
-  },
-  {
     id: "tomorrow",
     category: "small-tool",
     descriptionKey: "personalProjects.tomorrow",
@@ -44,5 +38,11 @@ export const personalProjects: PersonalProject[] = [
     category: "small-tool",
     descriptionKey: "personalProjects.capital",
     link: { kind: "internal", path: "/capital" },
+  },
+  {
+    id: "raycast",
+    category: "small-tool",
+    descriptionKey: "personalProjects.raycast",
+    link: { kind: "external", url: "https://www.raycast.com/camib0b/zodme" },
   },
 ];
