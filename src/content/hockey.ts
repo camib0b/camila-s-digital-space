@@ -1,4 +1,4 @@
-export type HockeyRoleId = "player" | "coachUc" | "coachNational" | "videoAnalyst";
+export type HockeyRoleId = "player" | "coach" | "videoAnalyst";
 
 export interface HockeyRole {
   id: HockeyRoleId;
@@ -14,16 +14,10 @@ export const hockeyRoles: HockeyRole[] = [
     periodKey: "hockey.player.period",
   },
   {
-    id: "coachUc",
-    roleKey: "hockey.coachUc.role",
-    organizationKey: "hockey.coachUc.organization",
-    periodKey: "hockey.coachUc.period",
-  },
-  {
-    id: "coachNational",
-    roleKey: "hockey.coachNational.role",
-    organizationKey: "hockey.coachNational.organization",
-    periodKey: "hockey.coachNational.period",
+    id: "coach",
+    roleKey: "hockey.coach.role",
+    organizationKey: "hockey.coach.organization",
+    periodKey: "hockey.coach.period",
   },
   {
     id: "videoAnalyst",

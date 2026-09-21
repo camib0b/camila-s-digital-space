@@ -2,7 +2,7 @@ import type { TranslationKey } from "@/i18n/types";
 
 export type CvJobId = "acfin" | "finapsys" | "a3" | "visionary";
 export type CvProjectId = "ava" | "fleetOptimizer";
-export type CvLeadershipId = "player" | "coachUc" | "coachNational" | "videoAnalyst";
+export type CvLeadershipId = "player" | "coach" | "videoAnalyst";
 
 export interface CvProject {
   id: CvProjectId;
@@ -91,16 +91,10 @@ export const cvLeadership: CvLeadership[] = [
     descriptionKey: "cv.player.description",
   },
   {
-    id: "coachUc",
-    roleKey: "cv.coachUc.role",
-    organizationKey: "cv.coachUc.organization",
-    descriptionKey: "cv.coachUc.description",
-  },
-  {
-    id: "coachNational",
-    roleKey: "cv.coachNational.role",
-    organizationKey: "cv.coachNational.organization",
-    descriptionKey: "cv.coachNational.description",
+    id: "coach",
+    roleKey: "cv.coach.role",
+    organizationKey: "cv.coach.organization",
+    descriptionKey: "cv.coach.description",
   },
   {
     id: "videoAnalyst",
