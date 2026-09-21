@@ -80,30 +80,6 @@ const Ava = () => {
         <AvaTimeline language={language} />
 
         <section className="ava-section">
-          <div className="ava-shell ava-section-head">
-            <p className="ava-kicker">{t("ava.events.kicker")}</p>
-            <h2>{t("ava.events.headline")}</h2>
-            <p className="ava-section-body">{t("ava.events.body")}</p>
-          </div>
-          <dl className="ava-events">
-            {AVA_EVENTS.map((event) => (
-              <div className="ava-event" key={event.token}>
-                <dt>{event.token}</dt>
-                <dd>{language === "es" ? event.es : event.en}</dd>
-              </div>
-            ))}
-          </dl>
-          <ul className="ava-follow">
-            {AVA_FOLLOW_UPS.map((item) => (
-              <li key={item.id}>
-                <b>{language === "es" ? item.es : item.en}</b>
-                {t(item.bodyKey)}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="ava-section">
           <div className="ava-shell">
             <div className="ava-section-head">
               <p className="ava-kicker">{t("ava.modes.kicker")}</p>
@@ -157,6 +133,30 @@ const Ava = () => {
               </div>
             </div>
           </div>
+        </section>
+
+        <section className="ava-section">
+          <div className="ava-shell ava-section-head">
+            <p className="ava-kicker">{t("ava.events.kicker")}</p>
+            <h2>{t("ava.events.headline")}</h2>
+            <p className="ava-section-body">{t("ava.events.body")}</p>
+          </div>
+          <dl className="ava-events">
+            {AVA_EVENTS.map((event) => (
+              <div className="ava-event" key={event.token}>
+                <dt>{event.token}</dt>
+                <dd>{language === "es" ? event.es : event.en}</dd>
+              </div>
+            ))}
+          </dl>
+          <ul className="ava-follow">
+            {AVA_FOLLOW_UPS.map((item) => (
+              <li key={item.id}>
+                <b>{language === "es" ? item.es : item.en}</b>
+                {t(item.bodyKey)}
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className="ava-section">

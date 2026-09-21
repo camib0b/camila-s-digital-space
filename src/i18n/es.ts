@@ -66,7 +66,7 @@ const es: Record<TranslationKey, string> = {
 
     // Personal projects
     "personalProjects.label": "Proyectos personales",
-    "personalProjects.raycast": "Extensión de Raycast",
+    "personalProjects.raycast": "Zodme — extensión de Raycast: fecha de nacimiento entra; signo zodiacal + arquetipo corto sale.",
     "personalProjects.videoAnalysis": "AVA — análisis de video para hockey sobre césped en macOS, porque el mercado no tenía un analista técnico. Marcas el partido mientras lo ves; los clips salen esa noche.",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
     "personalProjects.clipLibrary": "Carpeta de clips — bibliotecas por equipo, filtradas por concepto, alimentadas desde AVA.",
@@ -251,7 +251,7 @@ const es: Record<TranslationKey, string> = {
     "ava.access.kicker": "Acceso",
     "ava.access.headline": "El producto ya corre.",
     "ava.access.body": "El binario se entrega por mail. Escríbeme.",
-    "ava.footer.line": "Hockey sobre césped. Chile y Argentina.",
+    "ava.footer.line": "Clips y pizarras listos antes de la próxima sesión.",
 
     // Portfolio
     "portfolio.eyebrow": "grand exchange",
