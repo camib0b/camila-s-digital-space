@@ -1,8 +1,8 @@
 import type { Language } from "@/i18n/types";
 
-export const TOMORROW_DATE = "2026-09-23";
+export const TOMORROW_DATE = "2026-09-24";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-09-22T20:30:00-03:00";
+export const SOURCED_AT = "2026-09-23T20:35:00-03:00";
 
 export type LocalizedText = Record<Language, string>;
 
@@ -29,11 +29,11 @@ export interface UpcomingItem {
 
 export const tomorrowPageText = {
   back: { es: "Volver", en: "Back" } satisfies LocalizedText,
-  kicker: { es: "miércoles 23 de septiembre", en: "wednesday 23 september" } satisfies LocalizedText,
+  kicker: { es: "jueves 24 de septiembre", en: "thursday 24 september" } satisfies LocalizedText,
   title: { es: "Mañana", en: "Morning" } satisfies LocalizedText,
   subtitle: {
-    es: "Sin gimnasio. Clases 11:00 (Debate Innovación 12:20). Salir de Casa a las 10:00. Tarde: Sub-16 coaching.",
-    en: "No gym. Class 11:00 (Innovación debate 12:20). Leave Home at 10:00. Afternoon: Sub-16 coaching.",
+    es: "Sin gimnasio. Clases 08:20. Salir de Casa a las 07:20. Tarde: Seguimiento ACFIN.",
+    en: "No gym. Class 08:20. Leave Home at 07:20. Afternoon: ACFIN follow-up.",
   } satisfies LocalizedText,
   timezone: { es: "Santiago · UTC−3", en: "Santiago · UTC−3" } satisfies LocalizedText,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies LocalizedText,
@@ -41,13 +41,13 @@ export const tomorrowPageText = {
   transit: { es: "Traslado", en: "Transit" } satisfies LocalizedText,
   first: { es: "Primer bloque", en: "First block" } satisfies LocalizedText,
   note: {
-    es: "Ancla: clases 11:00 (bdd), 12:20 (innovación · Debate), 14:50 (eti) — salir de Casa a las 10:00. Sin gimnasio (noche larga de coaching; proteger sueño). Mañana ~14 °C / máx ~23 °C, nublado, lluvia improbable — capas livianas.",
-    en: "Anchor: class 11:00 (bdd), 12:20 (innovación · debate), 14:50 (eti) — leave Home at 10:00. No gym (long coaching evening; protect sleep). Morning ~14 °C / high ~23 °C, overcast, rain unlikely — light layers.",
+    es: "Ancla: clases 08:20 (arqui) y 09:40 (web) — salir de Casa a las 07:20. Sin gimnasio esta mañana (clase temprana; proteger sueño). Mañana ~18 °C / máx ~27 °C, nublado, lluvia posible — capas livianas; impermeable liviano opcional al salir.",
+    en: "Anchor: class 08:20 (arqui) and 09:40 (web) — leave Home at 07:20. No gym this morning (early class; protect sleep). Morning ~18 °C / high ~27 °C, overcast, rain possible — light layers; optional light rain shell when you leave.",
   } satisfies LocalizedText,
   later: { es: "Más tarde", en: "Later today" } satisfies LocalizedText,
   laterBody: {
-    es: "Después de innovación, almuerzo real antes de eti 14:50. Sub-16 coaching 17:30–20:00. Cierre deliberado.",
-    en: "After innovación, a real lunch before eti at 14:50. Sub-16 coaching 17:30–20:00. Deliberate wind-down.",
+    es: "Después de clases, almuerzo real. Seguimiento ACFIN (1:1 / pendientes de dashboards). Cierre sin presión — el día empezó temprano; mañana viernes hay coaching.",
+    en: "After classes, a real lunch. ACFIN follow-up (1:1 / dashboard follow-ups). Easy wind-down — the day started early; Friday has coaching.",
   } satisfies LocalizedText,
   upcoming: { es: "Próximo", en: "Upcoming" } satisfies LocalizedText,
   upcomingBody: {
@@ -56,28 +56,28 @@ export const tomorrowPageText = {
   } satisfies LocalizedText,
   night: { es: "La noche anterior", en: "The night before" } satisfies LocalizedText,
   source: {
-    es: "Desde Google Calendar · 22 sep 2026, 20:30",
-    en: "From Google Calendar · 22 Sep 2026, 20:30",
+    es: "Desde Google Calendar · 23 sep 2026, 20:35",
+    en: "From Google Calendar · 23 Sep 2026, 20:35",
   } satisfies LocalizedText,
   map: { es: "Mapa", en: "Map" } satisfies LocalizedText,
 };
 
 export const nightBefore: LocalizedText[] = [
   {
-    es: "Antes de dormir: argumentos listos para Debate Innovación (12:20). Luego luces apagadas ~23:00–23:30.",
-    en: "Before sleep: talking points ready for the Innovación debate (12:20). Then lights out ~23:00–23:30.",
+    es: "Antes de dormir: pendientes de dashboards listos para Seguimiento ACFIN. Luces apagadas ~22:00–22:30. Alarma 06:35 pide ~8 h en cama.",
+    en: "Before sleep: dashboard follow-ups ready for ACFIN. Lights out ~22:00–22:30. A 06:35 alarm wants ~8 h in bed.",
   },
   {
-    es: "Alarma 09:15, backup 09:25. Salir de Casa a Universidad a las 10:00. Mochila lista. Botella, teléfono, llaves.",
-    en: "Alarm 09:15, backup 09:25. Leave Home for University at 10:00. University bag ready. Bottle, phone, keys.",
+    es: "Alarma 06:35, backup 06:45. Salir de Casa a Universidad a las 07:20. Mochila lista. Botella, teléfono, llaves.",
+    en: "Alarm 06:35, backup 06:45. Leave Home for University at 07:20. University bag ready. Bottle, phone, keys.",
   },
   {
-    es: "Capas para ~14 °C / máx ~23 °C, nublado: capas livianas.",
-    en: "Layers for ~14 °C / high ~23 °C, overcast: light layers.",
+    es: "Capas para ~18 °C / máx ~27 °C, nublado: capas livianas; impermeable liviano opcional si sale con lluvia posible.",
+    en: "Layers for ~18 °C / high ~27 °C, overcast: light layers; optional light rain shell if rain looks likely when you leave.",
   },
   {
-    es: "Ancla: salir a las 10:00 (clases 11:00). Sin gimnasio. Tarde: Sub-16 coaching 17:30.",
-    en: "Anchor: leave at 10:00 (class 11:00). No gym. Afternoon: Sub-16 coaching 17:30.",
+    es: "Ancla: salir a las 07:20 (clases 08:20). Sin gimnasio mañana. Tarde: Seguimiento ACFIN.",
+    en: "Anchor: leave at 07:20 (class 08:20). No gym tomorrow. Afternoon: ACFIN follow-up.",
   },
 ];
 
@@ -85,12 +85,12 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "wake",
     kind: "plan",
-    start: "09:15",
-    end: "10:00",
+    start: "06:35",
+    end: "07:20",
     title: { es: "Despertar · salir", en: "Wake · leave" },
     detail: {
-      es: "400–500 ml de agua al despertar; hidratar hasta ~600–800 ml. Desayuno breve. Sales a las 10:00 — no a las 10:10.",
-      en: "400–500 ml water on waking; sip to ~600–800 ml. Brief breakfast. Leave at 10:00 — not 10:10.",
+      es: "400–500 ml de agua al despertar; hidratar hasta ~600–800 ml. Desayuno breve si hace falta. Sales a las 07:20 — no a las 07:30.",
+      en: "400–500 ml water on waking; sip to ~600–800 ml. Brief breakfast if needed. Leave at 07:20 — not 07:30.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -98,12 +98,12 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "transit-uni",
     kind: "transit",
-    start: "10:00",
-    end: "10:55",
+    start: "07:20",
+    end: "08:15",
     title: { es: "Transporte a Universidad", en: "Transit to University" },
     detail: {
-      es: "55–60 min puerta a sala.",
-      en: "55–60 min door to classroom.",
+      es: "55–60 min puerta a sala. Posible lluvia temprana.",
+      en: "55–60 min door to classroom. Possible early rain.",
     },
     location: { es: "Hacia Universidad", en: "To University" },
     tag: { es: "Traslados", en: "Transit" },
@@ -111,12 +111,12 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "clases",
     kind: "event",
-    start: "11:00",
-    end: "13:30",
+    start: "08:20",
+    end: "11:00",
     title: { es: "Clases", en: "Classes" },
     detail: {
-      es: "11:00 bdd · 12:20 innovación (Debate). Agua a mano.",
-      en: "11:00 bdd · 12:20 innovación (debate). Water on hand.",
+      es: "08:20 arqui · 09:40 web. Agua a mano.",
+      en: "08:20 arqui · 09:40 web. Water on hand.",
     },
     location: { es: "Universidad", en: "University" },
     tag: { es: "Calendario", en: "Calendar" },
@@ -127,50 +127,37 @@ export const laterBlocks: ScheduleBlock[] = [
   {
     id: "lunch",
     kind: "plan",
-    start: "13:30",
-    end: "14:50",
+    start: "11:00",
+    end: "12:30",
     title: { es: "Almuerzo · respiro", en: "Lunch · reset" },
     detail: {
-      es: "Comida real. Margen antes de eti a las 14:50.",
-      en: "Real meal. Buffer before eti at 14:50.",
+      es: "Comida real. Luego margen para ACFIN.",
+      en: "Real meal. Then buffer for ACFIN.",
     },
     location: { es: "Casa o Universidad", en: "Home or University" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "eti",
+    id: "acfin",
     kind: "event",
-    start: "14:50",
-    end: "17:20",
-    title: { es: "ETI", en: "ETI" },
+    start: "12:30",
+    end: "17:00",
+    title: { es: "Seguimiento ACFIN", en: "ACFIN follow-up" },
     detail: {
-      es: "14:50–17:20. Clase en calendario.",
-      en: "14:50–17:20. Class on the calendar.",
-    },
-    location: { es: "Universidad", en: "University" },
-    tag: { es: "Calendario", en: "Calendar" },
-  },
-  {
-    id: "amistoso",
-    kind: "event",
-    start: "17:30",
-    end: "20:00",
-    title: { es: "Sub-16 coaching", en: "Sub-16 coaching" },
-    detail: {
-      es: "17:30–20:00. Luego cena y sueño.",
-      en: "17:30–20:00. Then dinner and sleep.",
+      es: "1:1 / pendientes de dashboards.",
+      en: "1:1 / dashboard follow-ups.",
     },
     tag: { es: "Calendario", en: "Calendar" },
   },
   {
     id: "evening",
     kind: "plan",
-    start: "20:00",
+    start: "17:00",
     end: undefined,
     title: { es: "Cena · cierre", en: "Dinner · wind-down" },
     detail: {
-      es: "Cena real. Luces hacia abajo — el día terminó tarde por coaching.",
-      en: "Real dinner. Lights down — the day ended late for coaching.",
+      es: "Cena real. Luces hacia abajo — mañana viernes hay Sub-14 / Sub-16 coaching.",
+      en: "Real dinner. Lights down — Friday has Sub-14 / Sub-16 coaching.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -189,12 +176,6 @@ export const upcomingItems: UpcomingItem[] = [
     when: { es: "sáb 26", en: "Sat 26" },
     title: { es: "UC B vs Old Reds", en: "UC B vs Old Reds" },
     detail: { es: "Juegas — equipo y recuperación previos.", en: "You play — kit and recovery beforehand." },
-  },
-  {
-    id: "acfin",
-    when: { es: "jue 24", en: "Thu 24" },
-    title: { es: "Seguimiento ACFIN", en: "ACFIN follow-up" },
-    detail: { es: "1:1 — tener pendientes de dashboards listos.", en: "1:1 — have dashboard follow-ups ready." },
   },
   {
     id: "i1-inn",
@@ -245,7 +226,7 @@ export function googleMapsSearchUrl(query: string): string {
 
 export const TOMORROW_SUMMARY_STATS = {
   blocks: String(morningBlocks.length),
-  committed: "3",
+  committed: "2",
   transit: "55m",
-  first: "09:15",
+  first: "06:35",
 };
