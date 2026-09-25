@@ -35,9 +35,11 @@ const TickerLabel = ({ ticker, className }: TickerLabelProps) => {
   const fundName = fundNameForTicker(ticker);
   const tooltipId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const pinnedByTouch = useRef(false);
-  const [visible, setVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [position, setPosition] = useState<TooltipPosition | null>(null);
+  const visible = hovered || pinned || focused;
 
   useEffect(() => {
     if (!visible || !triggerRef.current) {
@@ -70,16 +72,18 @@ const TickerLabel = ({ ticker, className }: TickerLabelProps) => {
       if (!(target instanceof Node) || triggerRef.current?.contains(target)) {
         return;
       }
-      pinnedByTouch.current = false;
-      setVisible(false);
+      setHovered(false);
+      setPinned(false);
+      setFocused(false);
     };
 
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") {
         return;
       }
-      pinnedByTouch.current = false;
-      setVisible(false);
+      setHovered(false);
+      setPinned(false);
+      setFocused(false);
     };
 
     document.addEventListener("pointerdown", closeOnOutsidePointer);
@@ -94,44 +98,28 @@ const TickerLabel = ({ ticker, className }: TickerLabelProps) => {
     return <span className={cn("font-medium text-xs", className)}>{ticker}</span>;
   }
 
-  const showFromHover = () => {
-    if (pointerSupportsHover()) {
-      setVisible(true);
-    }
-  };
-
-  const hideFromHover = () => {
-    if (pointerSupportsHover() && !pinnedByTouch.current) {
-      setVisible(false);
-    }
-  };
-
   return (
     <>
       <button
         ref={triggerRef}
         type="button"
         className={cn(
-          "border-0 bg-transparent p-0 text-left font-medium text-xs text-inherit shadow-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm",
+          "border-0 bg-transparent p-0 text-left font-medium text-xs text-inherit no-underline shadow-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm",
           className
         )}
         aria-label={`${ticker}, ${fundName}`}
         aria-describedby={visible ? tooltipId : undefined}
-        onMouseEnter={showFromHover}
-        onMouseLeave={hideFromHover}
-        onFocus={() => setVisible(true)}
-        onBlur={() => {
-          if (!pinnedByTouch.current) {
-            setVisible(false);
-          }
-        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         onClick={() => {
           if (pointerSupportsHover()) {
-            setVisible(true);
+            setHovered(true);
             return;
           }
-          pinnedByTouch.current = !pinnedByTouch.current;
-          setVisible(pinnedByTouch.current);
+          setHovered(false);
+          setPinned((current) => !current);
         }}
       >
         {ticker}

@@ -3,7 +3,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import TickerLabel from "@/components/portfolio/TickerLabel";
 import { CHART_COLORS, allocationChartConfig } from "@/lib/chartTheme";
 import { fundNameForTicker } from "@/lib/tickerNames";
 import type { AllocationChartPoint } from "@/types/portfolio";
@@ -12,12 +11,6 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 interface AllocationChartProps {
   data: AllocationChartPoint[];
   emptyLabel: string;
-}
-
-interface AllocationTickerTickProps {
-  x?: number;
-  y?: number;
-  payload?: { value?: string | number };
 }
 
 function AllocationTooltipLabel({ ticker }: { ticker: string }) {
@@ -31,20 +24,6 @@ function AllocationTooltipLabel({ ticker }: { ticker: string }) {
       <span>{ticker}</span>
       <span className="text-[10px] font-normal leading-snug text-muted-foreground">{fundName}</span>
     </span>
-  );
-}
-
-function AllocationTickerTick({ x = 0, y = 0, payload }: AllocationTickerTickProps) {
-  const ticker = String(payload?.value ?? "");
-  const width = 52;
-  const height = 22;
-
-  return (
-    <foreignObject x={x - width} y={y - height / 2} width={width} height={height}>
-      <div className="flex h-full items-center justify-end overflow-visible">
-        <TickerLabel ticker={ticker} className="text-[11px] text-muted-foreground" />
-      </div>
-    </foreignObject>
   );
 }
 
@@ -69,8 +48,8 @@ const AllocationChart = ({ data, emptyLabel }: AllocationChartProps) => {
           dataKey="ticker"
           axisLine={false}
           tickLine={false}
-          tick={<AllocationTickerTick />}
-          width={56}
+          tick={{ fill: CHART_COLORS.tick, fontSize: 11 }}
+          width={48}
         />
         <ChartTooltip
           content={
