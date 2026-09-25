@@ -81,7 +81,7 @@ export function computeHoldings(
     if (transaction.transaction_type === "BUY") {
       position.shares += quantity;
       position.totalCost += price * quantity;
-    } else if (position.shares > 0) {
+    } else if (transaction.transaction_type === "SELL" && position.shares > 0) {
       const averageCost = position.totalCost / position.shares;
       position.shares -= quantity;
       position.totalCost -= averageCost * quantity;

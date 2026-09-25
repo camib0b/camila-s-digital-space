@@ -8,9 +8,14 @@
     {
       "binding": "DB",
       "database_name": "portfolio-holdings",
-      "database_id": "d483ec9f-1675-43db-ade5-f5d0cc05ab02"
+      "database_id": "d483ec9f-1675-43db-ade5-f5d0cc05ab02",
+      "migrations_dir": "migrations"
     }
   ],
+
+  "triggers": {
+    "crons": ["30 22 * * MON-FRI"]
+  },
 
   "ai": {
     "binding": "AI"

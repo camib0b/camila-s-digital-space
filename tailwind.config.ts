@@ -88,6 +88,12 @@ export default {
           DEFAULT: "hsl(var(--card) / <alpha-value>)",
           foreground: "hsl(var(--card-foreground) / <alpha-value>)",
         },
+        series: {
+          portfolio: "hsl(var(--series-portfolio) / <alpha-value>)",
+          benchmark: "hsl(var(--series-benchmark) / <alpha-value>)",
+        },
+        "number-positive": "hsl(var(--number-positive) / <alpha-value>)",
+        "number-negative": "hsl(var(--number-negative) / <alpha-value>)",
       },
 
       borderRadius: {

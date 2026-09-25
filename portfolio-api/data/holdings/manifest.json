@@ -1,0 +1,38 @@
+[
+  {
+    "fundTicker": "VOO",
+    "file": "voo-2026-06-30.json",
+    "asOf": "2026-06-30",
+    "seriesName": "VANGUARD 500 INDEX FUND",
+    "holdingCount": 504,
+    "coverage": 0.997492429633479,
+    "unresolvedWeight": 0.0034453415349300002
+  },
+  {
+    "fundTicker": "VXUS",
+    "file": "vxus-2026-04-30.json",
+    "asOf": "2026-04-30",
+    "seriesName": "VANGUARD FTSE ALL-WORLD EX-US INDEX FUND",
+    "holdingCount": 3852,
+    "coverage": 0.9882994302079435,
+    "unresolvedWeight": 0.01528677741102
+  },
+  {
+    "fundTicker": "ROBO",
+    "file": "robo-2026-04-30.json",
+    "asOf": "2026-04-30",
+    "seriesName": "ROBO Global Robotics and Automation Index ETF",
+    "holdingCount": 78,
+    "coverage": 0.9979834221146199,
+    "unresolvedWeight": 0.042594387405859996
+  },
+  {
+    "fundTicker": "BND",
+    "file": "bnd-2026-06-30.json",
+    "asOf": "2026-06-30",
+    "seriesName": "VANGUARD TOTAL BOND MARKET INDEX FUND",
+    "holdingCount": 0,
+    "coverage": null,
+    "unresolvedWeight": null
+  }
+]

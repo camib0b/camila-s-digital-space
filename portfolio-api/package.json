@@ -8,11 +8,12 @@
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "cf-typegen": "wrangler types",
-    "test": "node --experimental-strip-types --test tests/portfolioPricing.test.ts"
+    "test": "vitest run && node --experimental-strip-types --test tests/portfolioPricing.test.ts"
   },
   "devDependencies": {
     "@types/node": "^22.13.0",
     "@types/service-worker-mock": "^2.0.4",
+    "vitest": "^5.0.2",
     "wrangler": "^4.81.1"
   }
 }

@@ -46,6 +46,11 @@
     --contrib-q2: 172 38% 62%;
     --contrib-q3: 172 45% 42%;
     --contrib-q4: 172 50% 26%;
+
+    --series-portfolio: 200 16% 32%;
+    --series-benchmark: 220 6% 46%;
+    --number-positive: 152 32% 28%;
+    --number-negative: 0 48% 38%;
   }
 
   .dark {
@@ -87,6 +92,11 @@
     --contrib-q2: 172 40% 24%;
     --contrib-q3: 172 45% 36%;
     --contrib-q4: 172 50% 48%;
+
+    --series-portfolio: 200 18% 74%;
+    --series-benchmark: 220 8% 64%;
+    --number-positive: 152 28% 68%;
+    --number-negative: 0 42% 72%;
   }
 
   * {
@@ -111,6 +121,21 @@
   h3 { @apply text-lg font-medium tracking-tight leading-[1.3] text-foreground; }
 
   p { @apply text-foreground/80; }
+}
+
+@keyframes analytics-rise {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.analytics-rise {
+  animation: analytics-rise 250ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analytics-rise {
+    animation: none;
+  }
 }
 
 @layer components {

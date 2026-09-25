@@ -1,6 +1,7 @@
 import { RefreshCw } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import PatternedBackground from "@/components/PatternedBackground";
+import PortfolioAnalytics from "@/components/portfolio/analytics/PortfolioAnalytics";
 import AllocationChart from "@/components/portfolio/AllocationChart";
 import AiInsightPanel from "@/components/portfolio/AiInsightPanel";
 import HoldingsTable from "@/components/portfolio/HoldingsTable";
@@ -62,7 +63,7 @@ const Capital = () => {
 
       <PageHeader backLabel="home" />
 
-      <div className="container px-6 md:px-8 max-w-3xl mx-auto py-16 relative z-10">
+      <div className="container px-6 md:px-8 max-w-5xl mx-auto py-16 relative z-10">
         <div className="mb-12">
           <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">
             {t("portfolio.eyebrow")}
@@ -101,6 +102,8 @@ const Capital = () => {
             </div>
           ))}
         </div>
+
+        <PortfolioAnalytics />
 
         <section className="mb-12">
           <h2 className="text-sm font-medium mb-1">{t("portfolio.holdings.title")}</h2>
