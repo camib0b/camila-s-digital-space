@@ -3,13 +3,49 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import TickerLabel from "@/components/portfolio/TickerLabel";
 import { CHART_COLORS, allocationChartConfig } from "@/lib/chartTheme";
+import { fundNameForTicker } from "@/lib/tickerNames";
 import type { AllocationChartPoint } from "@/types/portfolio";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 interface AllocationChartProps {
   data: AllocationChartPoint[];
   emptyLabel: string;
+}
+
+interface AllocationTickerTickProps {
+  x?: number;
+  y?: number;
+  payload?: { value?: string | number };
+}
+
+function AllocationTooltipLabel({ ticker }: { ticker: string }) {
+  const fundName = fundNameForTicker(ticker);
+  if (!fundName) {
+    return ticker;
+  }
+
+  return (
+    <span className="flex max-w-[14rem] flex-col gap-0.5">
+      <span>{ticker}</span>
+      <span className="text-[10px] font-normal leading-snug text-muted-foreground">{fundName}</span>
+    </span>
+  );
+}
+
+function AllocationTickerTick({ x = 0, y = 0, payload }: AllocationTickerTickProps) {
+  const ticker = String(payload?.value ?? "");
+  const width = 52;
+  const height = 22;
+
+  return (
+    <foreignObject x={x - width} y={y - height / 2} width={width} height={height}>
+      <div className="flex h-full items-center justify-end overflow-visible">
+        <TickerLabel ticker={ticker} className="text-[11px] text-muted-foreground" />
+      </div>
+    </foreignObject>
+  );
 }
 
 const AllocationChart = ({ data, emptyLabel }: AllocationChartProps) => {
@@ -33,14 +69,14 @@ const AllocationChart = ({ data, emptyLabel }: AllocationChartProps) => {
           dataKey="ticker"
           axisLine={false}
           tickLine={false}
-          tick={{ fill: CHART_COLORS.tick, fontSize: 11 }}
-          width={48}
+          tick={<AllocationTickerTick />}
+          width={56}
         />
         <ChartTooltip
           content={
             <ChartTooltipContent
               formatter={(value) => `${value}%`}
-              labelFormatter={(label) => String(label)}
+              labelFormatter={(label) => <AllocationTooltipLabel ticker={String(label)} />}
             />
           }
         />

@@ -285,6 +285,7 @@ const es: Record<TranslationKey, string> = {
     "portfolio.stats.holdings": "Posiciones",
     "portfolio.holdings.title": "posiciones",
     "portfolio.holdings.description": "Tus acciones en tiempo real",
+    "portfolio.holdings.lastTradePrice": "último precio de operación",
     "portfolio.charts.value.title": "cambio relativo",
     "portfolio.charts.value.description": "Retorno porcentual frente al costo en cada fecha",
     "portfolio.charts.historyLoading": "Cargando historial...",

@@ -283,6 +283,7 @@ const en = {
     "portfolio.stats.holdings": "Holdings",
     "portfolio.holdings.title": "holdings",
     "portfolio.holdings.description": "Your stocks in real time",
+    "portfolio.holdings.lastTradePrice": "last trade price",
     "portfolio.charts.value.title": "relative change",
     "portfolio.charts.value.description": "Percentage return versus cost at each date",
     "portfolio.charts.historyLoading": "Loading history...",

@@ -1,25 +1,28 @@
 import { AI_MODELS, buildAiPrompt, generateAiInsight, type Holding } from "./aiInsight";
 import { CORS_ALLOWED_PATHS, CORS_HEADERS, GITHUB_CONTRIBUTIONS_PATH } from "./cors";
 import { handleGithubContributionsRequest } from "./githubContributions";
-import { computeHoldings, fetchTransactions } from "./holdings";
+import { computeHoldings, fetchTransactions, latestTradePriceByTicker } from "./holdings";
 import { buildPortfolioHistory } from "./history";
-import { fetchQuote } from "./quotes";
+import { fetchQuote, resolveHoldingQuote } from "./quotes";
 
 async function getPortfolioSnapshot(env: Env) {
   const transactions = await fetchTransactions(env);
   const holdingsByTicker = computeHoldings(transactions);
+  const lastTradePriceByTicker = latestTradePriceByTicker(transactions);
 
   const holdings: Holding[] = [];
   for (const [ticker, position] of holdingsByTicker.entries()) {
     const quote = await fetchQuote(ticker, env.FINNHUB_API_KEY);
-    const currentValue = position.shares * quote.currentPrice;
+    const resolvedQuote = resolveHoldingQuote(quote, lastTradePriceByTicker.get(ticker));
+    const currentValue = position.shares * resolvedQuote.currentPrice;
     holdings.push({
       ticker,
       shares: position.shares,
       totalCost: position.totalCost,
-      currentPrice: quote.currentPrice,
-      changePercent: quote.changePercent,
+      currentPrice: resolvedQuote.currentPrice,
+      changePercent: resolvedQuote.changePercent,
       currentValue,
+      stale: resolvedQuote.stale,
     });
     await new Promise((resolve) => setTimeout(resolve, 120));
   }
