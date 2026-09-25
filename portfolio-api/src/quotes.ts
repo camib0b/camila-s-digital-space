@@ -3,6 +3,39 @@ export interface Quote {
   changePercent: number;
 }
 
+export interface ResolvedHoldingQuote {
+  currentPrice: number;
+  changePercent: number;
+  stale: boolean;
+}
+
+export function resolveHoldingQuote(
+  quote: Quote,
+  lastTradePrice: number | undefined
+): ResolvedHoldingQuote {
+  if (quote.currentPrice > 0) {
+    return {
+      currentPrice: quote.currentPrice,
+      changePercent: quote.changePercent,
+      stale: false,
+    };
+  }
+
+  if (lastTradePrice !== undefined && Number.isFinite(lastTradePrice) && lastTradePrice > 0) {
+    return {
+      currentPrice: lastTradePrice,
+      changePercent: 0,
+      stale: true,
+    };
+  }
+
+  return {
+    currentPrice: 0,
+    changePercent: 0,
+    stale: false,
+  };
+}
+
 const quoteCache = new Map<string, { data: Quote; expiresAt: number }>();
 
 export async function fetchQuote(ticker: string, apiKey: string): Promise<Quote> {

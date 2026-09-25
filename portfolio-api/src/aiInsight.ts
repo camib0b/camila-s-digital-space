@@ -11,6 +11,8 @@ export interface Holding {
   currentPrice: number;
   changePercent: number;
   currentValue: number;
+  /** True when `currentPrice` is the latest trade fill, not a live quote. */
+  stale: boolean;
 }
 
 const LANGUAGE_INSTRUCTIONS = {
