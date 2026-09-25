@@ -12,6 +12,48 @@ export interface HoldingPosition {
   totalCost: number;
 }
 
+const TRADE_TRANSACTION_TYPES = new Set(["BUY", "SELL"]);
+
+/** Latest fill for each ticker: newest `trade_date`, then highest `transaction_id`. */
+export function latestTradePriceByTicker(transactions: Transaction[]): Map<string, number> {
+  const latestTradeByTicker = new Map<
+    string,
+    { tradeDate: string; transactionId: number; price: number }
+  >();
+
+  for (const transaction of transactions) {
+    if (!TRADE_TRANSACTION_TYPES.has(transaction.transaction_type)) {
+      continue;
+    }
+
+    const price = parseFloat(String(transaction.price));
+    if (!Number.isFinite(price) || price <= 0) {
+      continue;
+    }
+
+    const currentLatest = latestTradeByTicker.get(transaction.ticker);
+    const isLaterTrade =
+      currentLatest === undefined ||
+      transaction.trade_date > currentLatest.tradeDate ||
+      (transaction.trade_date === currentLatest.tradeDate &&
+        transaction.transaction_id > currentLatest.transactionId);
+
+    if (isLaterTrade) {
+      latestTradeByTicker.set(transaction.ticker, {
+        tradeDate: transaction.trade_date,
+        transactionId: transaction.transaction_id,
+        price,
+      });
+    }
+  }
+
+  const lastTradePriceByTicker = new Map<string, number>();
+  for (const [ticker, latestTrade] of latestTradeByTicker) {
+    lastTradePriceByTicker.set(ticker, latestTrade.price);
+  }
+  return lastTradePriceByTicker;
+}
+
 export async function fetchTransactions(env: Env): Promise<Transaction[]> {
   const { results } = await env.DB.prepare(`
     SELECT transaction_id, ticker, trade_date, price, quantity, transaction_type

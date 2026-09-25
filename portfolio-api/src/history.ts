@@ -1,5 +1,5 @@
-import { computeHoldings, type Transaction } from "./holdings";
-import { fetchDailyCloses, fetchQuote } from "./quotes";
+import { computeHoldings, latestTradePriceByTicker, type Transaction } from "./holdings";
+import { fetchDailyCloses, fetchQuote, resolveHoldingQuote } from "./quotes";
 
 export interface PortfolioHistoryPoint {
   date: string;
@@ -153,11 +153,13 @@ export async function buildPortfolioHistory(
   if (!lastPoint || lastPoint.date !== today) {
     let liveValue = 0;
     const holdings = computeHoldings(transactions);
+    const lastTradePriceByTicker = latestTradePriceByTicker(transactions);
     let liveCost = 0;
     for (const [ticker, holding] of holdings) {
       liveCost += holding.totalCost;
       const quote = await fetchQuote(ticker, env.FINNHUB_API_KEY);
-      liveValue += holding.shares * quote.currentPrice;
+      const resolvedQuote = resolveHoldingQuote(quote, lastTradePriceByTicker.get(ticker));
+      liveValue += holding.shares * resolvedQuote.currentPrice;
       await new Promise((resolve) => setTimeout(resolve, 120));
     }
     if (liveValue > 0) {

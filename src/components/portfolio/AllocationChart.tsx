@@ -3,13 +3,28 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { CHART_COLORS, allocationChartConfig } from "@/lib/chartTheme";
+import { fundNameForTicker } from "@/lib/tickerNames";
 import type { AllocationChartPoint } from "@/types/portfolio";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 interface AllocationChartProps {
   data: AllocationChartPoint[];
   emptyLabel: string;
+}
+
+function AllocationTooltipLabel({ ticker }: { ticker: string }) {
+  const fundName = fundNameForTicker(ticker);
+  if (!fundName) {
+    return ticker;
+  }
+
+  return (
+    <span className="flex max-w-[14rem] flex-col gap-0.5">
+      <span>{ticker}</span>
+      <span className="text-[10px] font-normal leading-snug text-muted-foreground">{fundName}</span>
+    </span>
+  );
 }
 
 const AllocationChart = ({ data, emptyLabel }: AllocationChartProps) => {
@@ -40,7 +55,7 @@ const AllocationChart = ({ data, emptyLabel }: AllocationChartProps) => {
           content={
             <ChartTooltipContent
               formatter={(value) => `${value}%`}
-              labelFormatter={(label) => String(label)}
+              labelFormatter={(label) => <AllocationTooltipLabel ticker={String(label)} />}
             />
           }
         />

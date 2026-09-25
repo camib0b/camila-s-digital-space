@@ -6,6 +6,8 @@ export interface Holding {
   currentPrice: number;
   changePercent: number;
   currentValue: number;
+  /** Present when the API priced this holding from the latest trade instead of a live quote. */
+  stale?: boolean;
 }
 
 export interface AiModelOption {
