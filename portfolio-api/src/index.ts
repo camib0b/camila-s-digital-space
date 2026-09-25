@@ -3,6 +3,8 @@ import { CORS_ALLOWED_PATHS, CORS_HEADERS, GITHUB_CONTRIBUTIONS_PATH } from "./c
 import { handleGithubContributionsRequest } from "./githubContributions";
 import { computeHoldings, fetchTransactions } from "./holdings";
 import { buildPortfolioHistory } from "./history";
+import { buildAnalyticsReport } from "./analytics/load";
+import { syncMarketData } from "./marketData";
 import { fetchQuote } from "./quotes";
 
 async function getPortfolioSnapshot(env: Env) {
@@ -80,6 +82,24 @@ export default {
           },
           { headers: CORS_HEADERS }
         );
+      }
+
+      if (url.pathname === "/api/analytics" && request.method === "GET") {
+        try {
+          const report = await buildAnalyticsReport(env);
+          return Response.json(report, { headers: CORS_HEADERS });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "Unknown error";
+          const tablesMissing = /no such table/i.test(message);
+          return Response.json(
+            {
+              error: tablesMissing
+                ? "Market-data tables are not initialized. Apply the D1 migration, then let the daily sync run."
+                : message,
+            },
+            { status: tablesMissing ? 503 : 500, headers: CORS_HEADERS },
+          );
+        }
       }
 
       if (url.pathname === "/api/portfolio/history" && request.method === "GET") {
@@ -161,5 +181,9 @@ export default {
       const message = error instanceof Error ? error.message : "Unknown error";
       return Response.json({ error: message }, { status: 500, headers: CORS_HEADERS });
     }
+  },
+
+  async scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(syncMarketData(env));
   },
 };

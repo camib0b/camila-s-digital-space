@@ -11,5 +11,6 @@ export const CORS_ALLOWED_PATHS = [
   "/api/portfolio",
   "/api/portfolio/ai-insight",
   "/api/portfolio/history",
+  "/api/analytics",
   GITHUB_CONTRIBUTIONS_PATH,
 ];
