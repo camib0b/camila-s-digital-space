@@ -1,7 +1,11 @@
+import { EmailMessage } from "cloudflare:email";
+
 const INTEREST_PATH = "/api/ava-interest";
 const FIELD_CHARACTER_LIMIT = 200;
 const USER_AGENT_CHARACTER_LIMIT = 300;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ALERT_FROM = "ava@camilaescudero.cl";
+const ALERT_TO = "camilaescudero@uc.cl";
 
 interface InterestStatement {
   bind(...values: Array<string | null>): {
@@ -18,14 +22,13 @@ interface AssetsBinding {
 }
 
 interface SignupAlertEmail {
-  send(message: { to: string; from: string; subject: string; text: string }): Promise<unknown>;
+  send(message: EmailMessage): Promise<unknown>;
 }
 
 interface SiteEnvironment {
   AVA_INTEREST: InterestDatabase;
   ASSETS: AssetsBinding;
-  AVA_ALERT: SignupAlertEmail;
-  AVA_ALERT_TO: string;
+  AVA_ALERT?: SignupAlertEmail;
 }
 
 interface WorkerContext {
@@ -114,23 +117,28 @@ async function saveInterestSignup(
 
   try {
     const row = await environment.AVA_INTEREST.prepare(
-      "INSERT INTO signups (name, email, org, lang, user_agent) VALUES (?, ?, ?, ?, ?) RETURNING id",
+      "INSERT INTO signups (name, email, org, lang, user_agent) VALUES (?, ?, ?, ?, ?) RETURNING id, created_at",
     )
       .bind(name, email, organization === "" ? null : organization, storedLanguage, userAgent)
-      .first<{ id: number }>();
+      .first<{ id: number; created_at: string | null }>();
 
     if (!row || typeof row.id !== "number") {
       return jsonResponse({ ok: false, error: "unavailable" }, 500);
     }
 
+    const timestamp =
+      typeof row.created_at === "string" && row.created_at.trim() !== ""
+        ? row.created_at
+        : new Date().toISOString();
+
     context.waitUntil(
       sendSignupAlert(environment, {
-        id: row.id,
         name,
         email,
         organization,
         language: storedLanguage,
-      }).catch(() => undefined),
+        timestamp,
+      }),
     );
 
     return jsonResponse({ ok: true, id: row.id }, 200);
@@ -139,27 +147,48 @@ async function saveInterestSignup(
   }
 }
 
-const ALERT_FROM = "ava@camilaescudero.cl";
-
 async function sendSignupAlert(
   environment: SiteEnvironment,
-  signup: { id: number; name: string; email: string; organization: string; language: string | null },
+  signup: {
+    name: string;
+    email: string;
+    organization: string;
+    language: string | null;
+    timestamp: string;
+  },
 ): Promise<void> {
-  const recipient = environment.AVA_ALERT_TO.trim();
-  if (recipient === "") {
-    return;
-  }
+  try {
+    if (environment.AVA_ALERT === undefined || typeof environment.AVA_ALERT.send !== "function") {
+      console.error("AVA interest alert skipped: AVA_ALERT binding is missing");
+      return;
+    }
 
-  await environment.AVA_ALERT.send({
-    to: recipient,
-    from: ALERT_FROM,
-    subject: "AVA interest signup",
-    text: [
-      `id: ${signup.id}`,
-      `name: ${signup.name}`,
-      `email: ${signup.email}`,
-      `org: ${signup.organization}`,
-      `lang: ${signup.language ?? ""}`,
-    ].join("\n"),
-  });
+    const message = new EmailMessage(ALERT_FROM, ALERT_TO, buildAlertMime(signup));
+    await environment.AVA_ALERT.send(message);
+  } catch (error) {
+    console.error("AVA interest alert failed", error);
+  }
+}
+
+function buildAlertMime(signup: {
+  name: string;
+  email: string;
+  organization: string;
+  language: string | null;
+  timestamp: string;
+}): string {
+  return [
+    `From: AVA <${ALERT_FROM}>`,
+    `To: ${ALERT_TO}`,
+    "Subject: AVA interest signup",
+    "MIME-Version: 1.0",
+    "Content-Type: text/plain; charset=utf-8",
+    "Content-Transfer-Encoding: 8bit",
+    "",
+    `Name: ${signup.name}`,
+    `Email: ${signup.email}`,
+    `Club / institution / country: ${signup.organization}`,
+    `Language: ${signup.language ?? ""}`,
+    `Timestamp: ${signup.timestamp}`,
+  ].join("\r\n");
 }
