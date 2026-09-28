@@ -6,12 +6,8 @@ import {
   PORTFOLIO_REFRESH_INTERVAL_MS,
   fetchAiInsight,
   fetchPortfolio,
-  fetchPortfolioHistory,
 } from "@/lib/portfolioApi";
-import {
-  buildAllocationChartData,
-  buildHoldingsWithMetrics,
-} from "@/lib/portfolioMetrics";
+import { buildHoldingsWithMetrics } from "@/lib/portfolioMetrics";
 import type { TranslationKey } from "@/i18n/types";
 import type { AiModelOption, PortfolioResponse } from "@/types/portfolio";
 
@@ -21,7 +17,6 @@ const DEFAULT_AI_MODELS: AiModelOption[] = [
 
 const PORTFOLIO_ERROR_KEYS = new Set<TranslationKey>([
   "portfolio.error.load",
-  "portfolio.error.history",
   "portfolio.error.aiInsight",
 ]);
 
@@ -50,11 +45,6 @@ export function usePortfolioData() {
     queryKey: ["portfolio"],
     queryFn: fetchPortfolio,
     refetchInterval: PORTFOLIO_REFRESH_INTERVAL_MS,
-  });
-
-  const historyQuery = useQuery({
-    queryKey: ["portfolio-history"],
-    queryFn: fetchPortfolioHistory,
   });
 
   useEffect(() => {
@@ -114,11 +104,6 @@ export function usePortfolioData() {
     [portfolio]
   );
 
-  const allocationChartData = useMemo(
-    () => buildAllocationChartData(holdingsWithMetrics),
-    [holdingsWithMetrics]
-  );
-
   const availableAiModels =
     portfolio?.aiModels && portfolio.aiModels.length > 0
       ? portfolio.aiModels
@@ -126,22 +111,15 @@ export function usePortfolioData() {
 
   const refreshLiveData = () => {
     void portfolioQuery.refetch();
-    void historyQuery.refetch();
   };
 
   return {
     portfolio,
-    history: historyQuery.data ?? null,
     portfolioLoading: portfolioQuery.isLoading,
-    historyLoading: historyQuery.isLoading,
     portfolioError: portfolioQuery.error
       ? resolveErrorMessage(portfolioQuery.error, t, "portfolio.error.load")
       : null,
-    historyError: historyQuery.error
-      ? resolveErrorMessage(historyQuery.error, t, "portfolio.error.history")
-      : null,
     holdingsWithMetrics,
-    allocationChartData,
     availableAiModels,
     showModelSelector: availableAiModels.length > 1,
     selectedAiModel,
