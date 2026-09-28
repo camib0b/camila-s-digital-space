@@ -29,28 +29,6 @@ export interface PortfolioResponse {
   aiModels?: AiModelOption[];
 }
 
-export interface PortfolioHistoryPoint {
-  date: string;
-  value: number;
-  returnPct?: number;
-}
-
-export interface RelativePerformancePoint {
-  date: string;
-  changePercent: number;
-}
-
-export interface MonthlyReturnPoint {
-  month: string;
-  returnPct: number;
-}
-
-export interface PortfolioHistoryResponse {
-  portfolioHistory: PortfolioHistoryPoint[];
-  monthlyReturns: MonthlyReturnPoint[];
-  lastUpdated: string;
-}
-
 export interface AiInsightResponse {
   aiInsight: string;
   lastUpdated?: string;
@@ -61,9 +39,4 @@ export interface AiInsightResponse {
 export interface HoldingWithMetrics extends Holding {
   allocation: string;
   gainPercent: string;
-}
-
-export interface AllocationChartPoint {
-  ticker: string;
-  allocation: number;
 }

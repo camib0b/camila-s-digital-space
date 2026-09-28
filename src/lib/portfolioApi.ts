@@ -1,17 +1,11 @@
 import type { AnalyticsReport } from "@/types/portfolioAnalytics";
-import type {
-  AiInsightResponse,
-  PortfolioHistoryResponse,
-  PortfolioResponse,
-} from "@/types/portfolio";
+import type { AiInsightResponse, PortfolioResponse } from "@/types/portfolio";
 
 const DEFAULT_PORTFOLIO_API_BASE =
   "https://portfolio-api.camilaescuderob.workers.dev/api/portfolio";
 
 export const PORTFOLIO_API_BASE =
   import.meta.env.VITE_PORTFOLIO_API_URL ?? DEFAULT_PORTFOLIO_API_BASE;
-
-export const PORTFOLIO_HISTORY_URL = `${PORTFOLIO_API_BASE}/history`;
 
 export function portfolioAnalyticsUrl(): string {
   const origin = PORTFOLIO_API_BASE.replace(/\/api\/portfolio\/?$/, "");
@@ -46,14 +40,6 @@ export async function fetchPortfolioAnalytics(): Promise<AnalyticsReport> {
     throw new Error(typeof payload.error === "string" ? payload.error : "portfolio.analytics.error");
   }
   return payload;
-}
-
-export async function fetchPortfolioHistory(): Promise<PortfolioHistoryResponse> {
-  const response = await fetch(PORTFOLIO_HISTORY_URL);
-  if (!response.ok) {
-    throw new Error("portfolio.error.history");
-  }
-  return (await response.json()) as PortfolioHistoryResponse;
 }
 
 export async function fetchAiInsight(params: {

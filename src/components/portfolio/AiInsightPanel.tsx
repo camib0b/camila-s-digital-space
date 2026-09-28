@@ -1,4 +1,3 @@
-import { RefreshCw, Sparkles } from "lucide-react";
 import AiInsightContent from "@/components/AiInsightContent";
 import type { AiModelOption } from "@/types/portfolio";
 
@@ -38,18 +37,18 @@ const AiInsightPanel = ({
   provider,
 }: AiInsightPanelProps) => {
   return (
-    <div className="mb-12 bg-card rounded-lg ring-1 ring-border p-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-3">
-        <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground">{label}</p>
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+    <section className="analytics-rise mb-16 border border-border bg-card px-4 py-5 md:px-5" aria-busy={loading}>
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <h2 className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">{label}</h2>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           {showModelSelector && (
-            <label className="flex flex-col gap-1 text-[10px] uppercase tracking-wider text-muted-foreground sm:min-w-[200px]">
+            <label className="flex flex-col gap-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:min-w-[12rem]">
               {modelLabel}
               <select
                 value={selectedAiModel}
                 onChange={(event) => onSelectedAiModelChange(event.target.value)}
                 disabled={loading}
-                className="text-xs font-normal normal-case tracking-normal h-9 rounded-md border border-border bg-background px-2 text-foreground"
+                className="h-8 border border-border bg-background px-2 font-mono text-xs normal-case tracking-normal text-foreground"
               >
                 {availableAiModels.map((option) => (
                   <option key={option.id} value={option.id}>
@@ -63,28 +62,18 @@ const AiInsightPanel = ({
             type="button"
             onClick={onGenerate}
             disabled={loading}
-            className="inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md text-xs font-medium bg-foreground text-background hover:opacity-90 disabled:opacity-50 disabled:pointer-events-none transition-opacity"
+            className="inline-flex h-8 items-center justify-center border border-foreground bg-foreground px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-background disabled:pointer-events-none disabled:opacity-50"
           >
-            {loading ? (
-              <>
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                {generatingLabel}
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-3.5 h-3.5" />
-                {generateLabel}
-              </>
-            )}
+            {loading ? generatingLabel : generateLabel}
           </button>
         </div>
       </div>
-      {error && <p className="text-sm text-red-600 dark:text-red-400 mb-3">{error}</p>}
+      {error && <p className="mb-3 text-sm text-number-negative">{error}</p>}
       {aiInsight ? (
         <div className="space-y-3">
           <AiInsightContent content={aiInsight} />
           {provider && (
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
               {viaLabel} {provider}
             </p>
           )}
@@ -92,7 +81,7 @@ const AiInsightPanel = ({
       ) : (
         <p className="text-sm leading-relaxed text-muted-foreground">{placeholder}</p>
       )}
-    </div>
+    </section>
   );
 };
 

@@ -2,12 +2,9 @@ import { RefreshCw } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import PatternedBackground from "@/components/PatternedBackground";
 import PortfolioAnalytics from "@/components/portfolio/analytics/PortfolioAnalytics";
-import AllocationChart from "@/components/portfolio/AllocationChart";
 import AiInsightPanel from "@/components/portfolio/AiInsightPanel";
 import HoldingsTable from "@/components/portfolio/HoldingsTable";
-import MonthlyReturnsChart from "@/components/portfolio/MonthlyReturnsChart";
 import PortfolioLoadingScreen from "@/components/portfolio/PortfolioLoadingScreen";
-import PortfolioValueChart from "@/components/portfolio/PortfolioValueChart";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
 
@@ -16,13 +13,9 @@ const Capital = () => {
   const { t } = useLanguage();
   const {
     portfolio,
-    history,
     portfolioLoading,
-    historyLoading,
     portfolioError,
-    historyError,
     holdingsWithMetrics,
-    allocationChartData,
     availableAiModels,
     showModelSelector,
     selectedAiModel,
@@ -99,59 +92,7 @@ const Capital = () => {
 
         <PortfolioAnalytics />
 
-        <section className="mb-12">
-          <h2 className="text-sm font-medium mb-1">{t("portfolio.holdings.title")}</h2>
-          <p className="text-xs text-muted-foreground mb-4">
-            {t("portfolio.holdings.description")}
-          </p>
-          <HoldingsTable holdings={holdingsWithMetrics} />
-        </section>
-
-        <section className="mb-12 space-y-6">
-          <div className="bg-card rounded-lg ring-1 ring-border p-6">
-            <h2 className="text-sm font-medium mb-1">{t("portfolio.charts.value.title")}</h2>
-            <p className="text-xs text-muted-foreground mb-4">
-              {t("portfolio.charts.value.description")}
-            </p>
-            <PortfolioValueChart
-              history={history?.portfolioHistory}
-              loading={historyLoading}
-              error={historyError}
-              loadingLabel={t("portfolio.charts.historyLoading")}
-              emptyLabel={t("portfolio.charts.historyEmpty")}
-            />
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-card rounded-lg ring-1 ring-border p-6">
-              <h2 className="text-sm font-medium mb-1">
-                {t("portfolio.charts.monthly.title")}
-              </h2>
-              <p className="text-xs text-muted-foreground mb-4">
-                {t("portfolio.charts.monthly.description")}
-              </p>
-              <MonthlyReturnsChart
-                monthlyReturns={history?.monthlyReturns}
-                loading={historyLoading}
-                loadingLabel={t("portfolio.loadingShort")}
-                emptyLabel={t("portfolio.charts.monthly.empty")}
-              />
-            </div>
-
-            <div className="bg-card rounded-lg ring-1 ring-border p-6">
-              <h2 className="text-sm font-medium mb-1">
-                {t("portfolio.charts.allocation.title")}
-              </h2>
-              <p className="text-xs text-muted-foreground mb-4">
-                {t("portfolio.charts.allocation.description")}
-              </p>
-              <AllocationChart
-                data={allocationChartData}
-                emptyLabel={t("portfolio.charts.allocation.empty")}
-              />
-            </div>
-          </div>
-        </section>
+        <HoldingsTable holdings={holdingsWithMetrics} />
 
         <AiInsightPanel
           label={t("portfolio.aiInsight.label")}
@@ -175,7 +116,7 @@ const Capital = () => {
           <button
             type="button"
             onClick={refreshLiveData}
-            className="text-xs flex items-center gap-1 mx-auto text-muted-foreground hover:text-foreground"
+            className="mx-auto flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground"
           >
             <RefreshCw className="w-3 h-3" />
             {t("portfolio.refresh")}
