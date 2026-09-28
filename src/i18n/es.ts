@@ -77,7 +77,7 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.tomorrow":
       "Planificador diario. Lee mi calendario y arma el día. Corre a las 9:30.",
     "personalProjects.capital":
-      "Dashboard chico, en vivo. Precios de mercado de entrada; texto bajo demanda de salida.",
+      "Posiciones y precios en vivo, con retorno, riesgo y exposición look-through.",
 
     // GitHub
     "github.label": "Contribuciones",
@@ -274,7 +274,8 @@ const es: Record<TranslationKey, string> = {
     "portfolio.eyebrow": "grand exchange",
     "portfolio.title": "portafolio de inversión",
     "portfolio.lastUpdated": "Datos en tiempo real • Última actualización",
-    "portfolio.loading": "Cargando portafolio en vivo...",
+    "portfolio.loading": "Obteniendo cotizaciones",
+    "portfolio.loading.status": "Sync · posiciones",
     "portfolio.loadingShort": "Cargando...",
     "portfolio.refresh": "Actualizar datos en vivo",
     "portfolio.error.prefix": "Error",
@@ -303,7 +304,7 @@ const es: Record<TranslationKey, string> = {
     "portfolio.aiInsight.placeholder": "Genera un insight sobre tu portafolio (la IA no se llama al cargar la página).",
     "portfolio.aiInsight.via": "vía",
 
-    "portfolio.analytics.loading": "Cargando analítica…",
+    "portfolio.analytics.loading": "Sync · analítica",
     "portfolio.analytics.error": "La analítica no está disponible.",
     "portfolio.analytics.twr": "Retorno ponderado por tiempo",
     "portfolio.analytics.benchmark": "TWR de VOO",

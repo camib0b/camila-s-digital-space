@@ -132,9 +132,36 @@
   animation: analytics-rise 250ms ease;
 }
 
+@keyframes portfolio-sync-sweep {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(320%); }
+}
+
+@keyframes portfolio-skeleton-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.85; }
+}
+
+.portfolio-sync-bar {
+  animation: portfolio-sync-sweep 1.6s ease-in-out infinite;
+}
+
+.portfolio-skeleton-block {
+  animation: portfolio-skeleton-pulse 1.8s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .analytics-rise {
     animation: none;
+  }
+
+  .portfolio-sync-bar,
+  .portfolio-skeleton-block {
+    animation: none;
+  }
+
+  .portfolio-skeleton-block {
+    opacity: 0.55;
   }
 }
 
