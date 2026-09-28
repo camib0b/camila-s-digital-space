@@ -115,14 +115,13 @@ const es: Record<TranslationKey, string> = {
     "books.category.biography": "Biografía",
 
     // Hockey
-    "hockey.label": "Hockey",
-    "hockey.player.role": "Jugadora de hockey",
-    "hockey.player.period": "Desde 2009",
+    "hockey.label": "Hockey sobre césped",
+    "hockey.player.role": "Jugadora",
+    "hockey.player.period": "Desde 2008",
     "hockey.coach.role": "Entrenadora",
     "hockey.coach.organization": "Equipos juveniles — UC y Selección Nacional",
     "hockey.coach.period": "2023–actualidad",
     "hockey.videoAnalyst.role": "Analista de video",
-    "hockey.videoAnalyst.organization": "Hockey sobre césped",
     "hockey.videoAnalyst.period": "2025–actualidad",
 
     // Contact

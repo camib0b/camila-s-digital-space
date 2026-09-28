@@ -113,14 +113,13 @@ const en = {
     "books.category.biography": "Biography",
 
     // Hockey
-    "hockey.label": "Hockey",
-    "hockey.player.role": "Field hockey player",
-    "hockey.player.period": "Since 2009",
+    "hockey.label": "Field hockey",
+    "hockey.player.role": "Player",
+    "hockey.player.period": "Since 2008",
     "hockey.coach.role": "Coach",
     "hockey.coach.organization": "Youth teams — UC and Selección Nacional",
     "hockey.coach.period": "2023–present",
     "hockey.videoAnalyst.role": "Video analyst",
-    "hockey.videoAnalyst.organization": "Field hockey",
     "hockey.videoAnalyst.period": "2025–present",
 
     // Contact
