@@ -64,7 +64,7 @@ const en = {
 
     // Personal projects
     "personalProjects.label": "Personal projects",
-    "personalProjects.raycast": "Zodme — Raycast extension: birth date in, zodiac sign + short archetype out.",
+    "personalProjects.raycast": "Zodme — Raycast extension, published and open source. Date in, zodiac sign + short archetype out.",
     "personalProjects.videoAnalysis": "AVA — Game footage tagging to delivery in one app: C++/Qt, XML export compatible with established analysis tools, and compiled clips that feed carpeta.cl.",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
     "personalProjects.clipLibrary": "Carpeta de clips — End to end: game footage library of clips tagged in my own C++ analysis app, published on Cloudflare. Open to players, coaches and analysts alike.",
@@ -73,9 +73,9 @@ const en = {
     "personalProjects.smallTools.description":
       "Utilities I shipped for my own use. Small on purpose.",
     "personalProjects.tomorrow":
-      "Daily planner. Reads my calendar and writes the day. Runs at 9:30 AM.",
+      "Tomorrow, planned the night before: an agent turns my Google Calendar into a timed day plan and commits it to this site.",
     "personalProjects.capital":
-      "Live holdings and prices, with return, risk, and look-through exposure.",
+      "Market prices in; time-weighted returns, a VOO benchmark and look-through exposure out. AI commentary only on request.",
 
     // GitHub
     "github.label": "Contributions",
@@ -348,6 +348,7 @@ const en = {
     "portfolio.analytics.unattributed": "Unattributed",
     "portfolio.analytics.overlap": "Equity fund overlap",
     "portfolio.analytics.methodPerformance": "External flow is new cash. Same-day sale proceeds fund same-day buys. Fees reduce value and are not flows. Annualize only when the window is at least 365 days. The VOO line is a total-return index. The counterfactual invests the same external flows, on the same dates, in VOO.",
+    "portfolio.analytics.priceSource": "Live quotes come from Finnhub. A scheduled daily-close job tries Finnhub first and uses Yahoo as the fallback.",
     "portfolio.analytics.methodRisk": "Weekly simple total returns, Friday to Friday, on a common date intersection, sample covariance with divisor n−1, annualized by 52. Sharpe uses the arithmetic mean and the sample standard deviation, scaled once by the square root of the periods per year. Holdings Sharpe applies current weights to trailing weekly returns. Realized Sharpe uses the portfolio's own daily time-weighted returns and needs 252 paired days.",
     "portfolio.analytics.methodExposure": "Fund holdings are issuer N-PORT snapshots matched by ISIN. A direct stock has weight 1 in itself. BND is a bond bucket and is not mapped to companies. Overlap is the sum of the minimum holding weight and is shown for equity funds only. Weights are current market value divided by total portfolio value, cash included.",
   } as const;

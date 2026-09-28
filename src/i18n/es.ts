@@ -66,7 +66,7 @@ const es: Record<TranslationKey, string> = {
 
     // Personal projects
     "personalProjects.label": "Proyectos personales",
-    "personalProjects.raycast": "Zodme — extensión de Raycast: fecha de nacimiento entra; signo zodiacal + arquetipo corto sale.",
+    "personalProjects.raycast": "Zodme — extensión de Raycast, publicada y de código abierto. Fecha entra; signo zodiacal + arquetipo corto sale.",
     "personalProjects.videoAnalysis": "AVA — Del etiquetado de partidos a la entrega en una sola app: C++/Qt, exportación XML compatible con herramientas de análisis establecidas y compilados de clips que alimentan carpeta.cl.",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
     "personalProjects.clipLibrary": "Carpeta de clips — De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
@@ -75,9 +75,9 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.smallTools.description":
       "Utilidades que publiqué para uso propio. Chicas a propósito.",
     "personalProjects.tomorrow":
-      "Planificador diario. Lee mi calendario y arma el día. Corre a las 9:30.",
+      "Mañana, planificado la noche anterior: un agente convierte mi Google Calendar en un plan con horas y lo publica en este sitio.",
     "personalProjects.capital":
-      "Posiciones y precios en vivo, con retorno, riesgo y exposición look-through.",
+      "Precios de mercado de entrada; retornos ponderados por tiempo, benchmark VOO y exposición look-through de salida. Comentario de IA solo si lo pides.",
 
     // GitHub
     "github.label": "Contribuciones",
@@ -350,6 +350,7 @@ const es: Record<TranslationKey, string> = {
     "portfolio.analytics.unattributed": "Sin atribuir",
     "portfolio.analytics.overlap": "Traslape de fondos de renta variable",
     "portfolio.analytics.methodPerformance": "El flujo externo es dinero nuevo. El producto de una venta del mismo día financia las compras de ese día. Las comisiones reducen valor y no son flujos. Solo se anualiza si la ventana tiene al menos 365 días. VOO es un índice de retorno total. El contrafactual invierte los mismos flujos externos, en las mismas fechas, en VOO.",
+    "portfolio.analytics.priceSource": "Las cotizaciones en vivo vienen de Finnhub. Un trabajo programado de cierre diario prueba Finnhub primero y usa Yahoo como respaldo.",
     "portfolio.analytics.methodRisk": "Retornos simples semanales, de viernes a viernes, en la intersección de fechas, covarianza muestral con divisor n−1, anualizada por 52. El Sharpe usa la media aritmética y la desviación estándar muestral, escalada una sola vez por la raíz de los períodos al año. El Sharpe por posiciones aplica los pesos actuales a los retornos semanales. El Sharpe realizado usa el TWR diario del portafolio y exige 252 días emparejados.",
     "portfolio.analytics.methodExposure": "Las posiciones de los fondos son snapshots N-PORT del emisor, cruzadas por ISIN. Una acción directa pesa 1 en sí misma. BND es un bloque de bonos y no se abre por empresa. El traslape es la suma del peso mínimo y se muestra solo para fondos de renta variable. Los pesos son el valor de mercado actual dividido por el valor total del portafolio, caja incluida.",
   };

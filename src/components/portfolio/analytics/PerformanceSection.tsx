@@ -246,12 +246,16 @@ export function PerformanceSection({ report }: { report: AnalyticsReport }) {
           String.raw`(1+\mathrm{TWR})^{365/\mathrm{days}}-1`,
           String.raw`C_t=C_{t-1}\cdot\frac{TR_t}{TR_{t-1}}+F_t`,
         ]}
-        notes={[t("portfolio.analytics.methodPerformance"), t("portfolio.analytics.dividend")]}
+        notes={[
+          t("portfolio.analytics.methodPerformance"),
+          t("portfolio.analytics.priceSource"),
+          t("portfolio.analytics.dividend"),
+        ]}
       />
       <SourceFooter
         tag={sourceTag([
           "D1 ledger",
-          performance.source,
+          t("portfolio.analytics.priceSource"),
           `as of ${performance.asOf}`,
           `${performance.lookbackStart} → ${performance.lookbackEnd}`,
           `n=${performance.sampleSize} daily`,

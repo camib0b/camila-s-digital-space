@@ -85,7 +85,7 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
           <SourceFooter
             tag={sourceTag([
               "D1 ledger",
-              risk.source,
+              t("portfolio.analytics.priceSource"),
               `as of ${risk.asOf}`,
               `${risk.lookbackStart} → ${risk.lookbackEnd}`,
               `${risk.sampleSize}w weekly`,
