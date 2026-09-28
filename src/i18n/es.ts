@@ -67,7 +67,7 @@ const es: Record<TranslationKey, string> = {
     // Personal projects
     "personalProjects.label": "Proyectos personales",
     "personalProjects.raycast": "Zodme — extensión de Raycast: fecha de nacimiento entra; signo zodiacal + arquetipo corto sale.",
-    "personalProjects.videoAnalysis": "AVA — análisis de video para hockey sobre césped en macOS, porque el mercado no tenía un analista técnico. Marcas el partido mientras lo ves; los clips salen esa noche.",
+    "personalProjects.videoAnalysis": "AVA — Del etiquetado de partidos a la entrega en una sola app: C++/Qt, exportación XML compatible con herramientas de análisis establecidas y compilados de clips que alimentan carpeta.cl.",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
     "personalProjects.clipLibrary": "Carpeta de clips — De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
     "personalProjects.view": "Ver proyecto",

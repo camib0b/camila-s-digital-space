@@ -65,7 +65,7 @@ const en = {
     // Personal projects
     "personalProjects.label": "Personal projects",
     "personalProjects.raycast": "Zodme — Raycast extension: birth date in, zodiac sign + short archetype out.",
-    "personalProjects.videoAnalysis": "AVA — field-hockey video analysis for macOS, built because the market lacked a technical analyst. Tag the match as you watch; clips go out the same night.",
+    "personalProjects.videoAnalysis": "AVA — Game footage tagging to delivery in one app: C++/Qt, XML export compatible with established analysis tools, and compiled clips that feed carpeta.cl.",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
     "personalProjects.clipLibrary": "Carpeta de clips — End to end: game footage library of clips tagged in my own C++ analysis app, published on Cloudflare. Open to players, coaches and analysts alike.",
     "personalProjects.view": "View project",
