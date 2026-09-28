@@ -1,0 +1,15 @@
+# Copy to .dev.vars for local `wrangler dev`. Do not commit real values.
+# Production secrets:
+#   npx wrangler secret put MP_ACCESS_TOKEN
+#   npx wrangler secret put MP_WEBHOOK_SECRET
+#   npx wrangler secret put AVA_LICENSE_API_URL
+#   npx wrangler secret put AVA_LICENSE_ADMIN_SECRET
+#   npx wrangler secret put MAIL_FROM
+
+MP_ACCESS_TOKEN=
+MP_WEBHOOK_SECRET=
+AVA_LICENSE_API_URL=https://ava-license.example.workers.dev
+AVA_LICENSE_ADMIN_SECRET=
+MAIL_FROM=ava@camilaescudero.cl
+# Integer CLP charged by Checkout Pro and shown on /ava.
+AVA_PRICE_CLP=

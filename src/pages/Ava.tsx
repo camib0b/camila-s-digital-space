@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import LanguageToggle from "@/components/LanguageToggle";
+import AvaCheckout from "@/components/ava/AvaCheckout";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
@@ -75,6 +76,9 @@ const Ava = () => {
             <p className="ava-lede">{t("ava.lede")}</p>
             <p className="ava-hero-body">{t("ava.hero.body")}</p>
             <div className="ava-actions">
+              <a className="ava-cta" href="#acceso">
+                {t("ava.cta.buy")}
+              </a>
               <a className="ava-text-link" href="#como-funciona">
                 {t("ava.cta.how")}
               </a>
@@ -96,6 +100,7 @@ const Ava = () => {
             <div className="ava-concat">
               <div className="ava-concat-copy">
                 <p className="ava-section-body">{t("ava.concat.body")}</p>
+                <p className="ava-section-body">{t("ava.concat.note")}</p>
                 <p className="ava-concat-diff">{t("ava.concat.differentiator")}</p>
               </div>
               <AvaConcatGraphic />
@@ -202,6 +207,8 @@ const Ava = () => {
             </div>
           </div>
         </section>
+
+        <AvaCheckout />
       </main>
 
       <footer className="ava-footer">
