@@ -75,7 +75,7 @@ const en = {
     "personalProjects.tomorrow":
       "Daily planner. Reads my calendar and writes the day. Runs at 9:30 AM.",
     "personalProjects.capital":
-      "Small live dashboard. Market prices in; on-demand text out.",
+      "Live holdings and prices, with return, risk, and look-through exposure.",
 
     // GitHub
     "github.label": "Contributions",
@@ -272,7 +272,8 @@ const en = {
     "portfolio.eyebrow": "grand exchange",
     "portfolio.title": "investment portfolio",
     "portfolio.lastUpdated": "Live data • Last updated",
-    "portfolio.loading": "Loading live portfolio...",
+    "portfolio.loading": "Fetching live quotes",
+    "portfolio.loading.status": "Sync · holdings",
     "portfolio.loadingShort": "Loading...",
     "portfolio.refresh": "Refresh live data",
     "portfolio.error.prefix": "Error",
@@ -301,7 +302,7 @@ const en = {
     "portfolio.aiInsight.placeholder": "Generate an insight about your portfolio (AI is not called on page load).",
     "portfolio.aiInsight.via": "via",
 
-    "portfolio.analytics.loading": "Loading analytics…",
+    "portfolio.analytics.loading": "Sync · analytics",
     "portfolio.analytics.error": "Analytics are unavailable.",
     "portfolio.analytics.twr": "Time-weighted return",
     "portfolio.analytics.benchmark": "VOO TWR",

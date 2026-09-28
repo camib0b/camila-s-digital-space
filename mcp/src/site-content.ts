@@ -98,7 +98,7 @@ export const projects = [
     name: "Capital",
     category: "small-tool",
     description:
-      "Small live dashboard. Market prices in; on-demand text out.",
+      "Live holdings and prices, with return, risk, and look-through exposure.",
     url: `${SITE_URL}/capital`,
   },
 ] as const;
