@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import LanguageToggle from "@/components/LanguageToggle";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
+import AvaInterestForm from "@/components/ava/AvaInterestForm";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
-import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_STATS } from "@/content/ava";
+import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_INTEREST_EMAIL, AVA_STATS } from "@/content/ava";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const HOW_IT_WORKS_STEPS = [
@@ -39,6 +40,28 @@ const CONCAT_STEPS = [
   { index: "02", titleKey: "ava.concat.step2.title", bodyKey: "ava.concat.step2.body" },
   { index: "03", titleKey: "ava.concat.step3.title", bodyKey: "ava.concat.step3.body" },
 ] as const;
+
+function renderLinkedPhrase(text: string, label: string, href: string, openInNewTab = false): ReactNode {
+  const labelIndex = text.indexOf(label);
+  if (labelIndex < 0) {
+    return text;
+  }
+
+  return (
+    <>
+      {text.slice(0, labelIndex)}
+      <a
+        className="ava-inline-link"
+        href={href}
+        target={openInNewTab ? "_blank" : undefined}
+        rel={openInNewTab ? "noopener noreferrer" : undefined}
+      >
+        {label}
+      </a>
+      {text.slice(labelIndex + label.length)}
+    </>
+  );
+}
 
 const Ava = () => {
   const { language, t } = useLanguage();
@@ -77,6 +100,9 @@ const Ava = () => {
             <div className="ava-actions">
               <a className="ava-text-link" href="#como-funciona">
                 {t("ava.cta.how")}
+              </a>
+              <a className="ava-cta" href="#ava-interest">
+                {t("ava.cta.access")}
               </a>
             </div>
             <p className="ava-meta">{t("ava.hero.meta")}</p>
@@ -151,6 +177,9 @@ const Ava = () => {
             <div className="ava-clip">
               <p className="ava-kicker">{t("ava.clip.kicker")}</p>
               <p className="ava-section-body">{t("ava.clip.body")}</p>
+              <p className="ava-section-body">
+                {renderLinkedPhrase(t("ava.clip.example"), "carpeta.cl", "https://carpeta.cl/", true)}
+              </p>
               <div className="ava-clip-window" aria-hidden="true">
                 <div className="ava-clip-span" />
                 <div className="ava-clip-mark" />
@@ -200,6 +229,16 @@ const Ava = () => {
               <h2>{t("ava.origin.headline")}</h2>
               <p className="ava-section-body">{t("ava.origin.body")}</p>
             </div>
+          </div>
+        </section>
+
+        <section className="ava-section" id="ava-interest">
+          <div className="ava-shell ava-access">
+            <p className="ava-kicker">{t("ava.access.kicker")}</p>
+            <p className="ava-section-body">
+              {renderLinkedPhrase(t("ava.access.body"), AVA_INTEREST_EMAIL, `mailto:${AVA_INTEREST_EMAIL}`)}
+            </p>
+            <AvaInterestForm />
           </div>
         </section>
       </main>

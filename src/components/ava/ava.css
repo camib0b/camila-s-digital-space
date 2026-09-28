@@ -201,9 +201,11 @@
 
 .ava-cta:focus-visible,
 .ava-text-link:focus-visible,
+.ava-inline-link:focus-visible,
 .ava-access-mail:focus-visible,
 .ava-site-link:focus-visible,
-.ava-wordmark:focus-visible {
+.ava-wordmark:focus-visible,
+.ava-interest button:focus-visible {
   outline: 1px solid var(--ava-fg);
   outline-offset: 4px;
 }
@@ -1048,6 +1050,104 @@
   line-height: 1.4;
   letter-spacing: -0.02em;
   max-width: 28ch;
+}
+
+#ava-interest {
+  scroll-margin-top: 4rem;
+}
+
+.ava-inline-link {
+  color: var(--ava-fg);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ava-rule-strong);
+}
+
+.ava-inline-link:hover {
+  border-bottom-color: var(--ava-fg);
+}
+
+.ava-access .ava-section-body {
+  max-width: 40rem;
+}
+
+.ava-interest {
+  position: relative;
+  display: grid;
+  gap: 1.35rem;
+  max-width: 28rem;
+  margin-top: 2.25rem;
+}
+
+.ava-interest label {
+  display: grid;
+  gap: 0.45rem;
+  font-family: var(--ava-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ava-muted);
+}
+
+.ava-interest input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--ava-rule-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ava-fg);
+  font-family: var(--ava-font);
+  font-size: 1rem;
+  letter-spacing: -0.011em;
+  text-transform: none;
+  padding: 0.45rem 0 0.55rem;
+}
+
+.ava-interest input:focus {
+  outline: none;
+  border-bottom-color: var(--ava-fg);
+}
+
+.ava-interest .ava-cta {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 0.35rem;
+  text-transform: none;
+  letter-spacing: -0.011em;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  text-align: left;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.ava-interest .ava-cta:disabled {
+  opacity: 0.45;
+  cursor: progress;
+}
+
+.ava-interest-status {
+  margin: 2rem 0 0;
+  max-width: 36rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ava-fg);
+}
+
+.ava-interest-status.is-error {
+  margin: 0;
+  color: var(--ava-muted);
+}
+
+.ava-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .ava-access h2 {
