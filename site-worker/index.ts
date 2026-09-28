@@ -17,9 +17,19 @@ interface AssetsBinding {
   fetch(request: Request): Promise<Response>;
 }
 
+interface SignupAlertEmail {
+  send(message: { to: string; from: string; subject: string; text: string }): Promise<unknown>;
+}
+
 interface SiteEnvironment {
   AVA_INTEREST: InterestDatabase;
   ASSETS: AssetsBinding;
+  AVA_ALERT: SignupAlertEmail;
+  AVA_ALERT_TO: string;
+}
+
+interface WorkerContext {
+  waitUntil(promise: Promise<unknown>): void;
 }
 
 function jsonResponse(body: Record<string, unknown>, status: number): Response {
@@ -44,7 +54,7 @@ function isWithinLimit(value: string): boolean {
 }
 
 export default {
-  async fetch(request: Request, environment: SiteEnvironment): Promise<Response> {
+  async fetch(request: Request, environment: SiteEnvironment, context: WorkerContext): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname.length > 1 ? url.pathname.replace(/\/+$/, "") : url.pathname;
 
@@ -52,11 +62,15 @@ export default {
       return environment.ASSETS.fetch(request);
     }
 
-    return saveInterestSignup(request, environment);
+    return saveInterestSignup(request, environment, context);
   },
 };
 
-async function saveInterestSignup(request: Request, environment: SiteEnvironment): Promise<Response> {
+async function saveInterestSignup(
+  request: Request,
+  environment: SiteEnvironment,
+  context: WorkerContext,
+): Promise<Response> {
   const contentLength = Number(request.headers.get("content-length") ?? "0");
   if (Number.isFinite(contentLength) && contentLength > 8000) {
     return jsonResponse({ ok: false, error: "invalid_body" }, 400);
@@ -109,8 +123,43 @@ async function saveInterestSignup(request: Request, environment: SiteEnvironment
       return jsonResponse({ ok: false, error: "unavailable" }, 500);
     }
 
+    context.waitUntil(
+      sendSignupAlert(environment, {
+        id: row.id,
+        name,
+        email,
+        organization,
+        language: storedLanguage,
+      }).catch(() => undefined),
+    );
+
     return jsonResponse({ ok: true, id: row.id }, 200);
   } catch {
     return jsonResponse({ ok: false, error: "unavailable" }, 500);
   }
+}
+
+const ALERT_FROM = "ava@camilaescudero.cl";
+
+async function sendSignupAlert(
+  environment: SiteEnvironment,
+  signup: { id: number; name: string; email: string; organization: string; language: string | null },
+): Promise<void> {
+  const recipient = environment.AVA_ALERT_TO.trim();
+  if (recipient === "") {
+    return;
+  }
+
+  await environment.AVA_ALERT.send({
+    to: recipient,
+    from: ALERT_FROM,
+    subject: "AVA interest signup",
+    text: [
+      `id: ${signup.id}`,
+      `name: ${signup.name}`,
+      `email: ${signup.email}`,
+      `org: ${signup.organization}`,
+      `lang: ${signup.language ?? ""}`,
+    ].join("\n"),
+  });
 }
