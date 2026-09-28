@@ -122,6 +122,7 @@ const Ava = () => {
             <div className="ava-concat">
               <div className="ava-concat-copy">
                 <p className="ava-section-body">{t("ava.concat.body")}</p>
+                <p className="ava-section-body">{t("ava.concat.note")}</p>
                 <p className="ava-concat-diff">{t("ava.concat.differentiator")}</p>
               </div>
               <AvaConcatGraphic />
@@ -235,10 +236,12 @@ const Ava = () => {
         <section className="ava-section" id="ava-interest">
           <div className="ava-shell ava-access">
             <p className="ava-kicker">{t("ava.access.kicker")}</p>
-            <p className="ava-section-body">
-              {renderLinkedPhrase(t("ava.access.body"), AVA_INTEREST_EMAIL, `mailto:${AVA_INTEREST_EMAIL}`)}
-            </p>
-            <AvaInterestForm />
+            <div>
+              <p className="ava-section-body">
+                {renderLinkedPhrase(t("ava.access.body"), AVA_INTEREST_EMAIL, `mailto:${AVA_INTEREST_EMAIL}`)}
+              </p>
+              <AvaInterestForm />
+            </div>
           </div>
         </section>
       </main>

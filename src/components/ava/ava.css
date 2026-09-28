@@ -199,6 +199,16 @@
   text-transform: uppercase;
 }
 
+button.ava-cta {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button.ava-cta:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
 .ava-cta:focus-visible,
 .ava-text-link:focus-visible,
 .ava-inline-link:focus-visible,
@@ -1150,8 +1160,22 @@
   border: 0;
 }
 
+.ava-access {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 860px) {
+  .ava-access {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 4rem;
+    align-items: start;
+  }
+}
+
 .ava-access h2 {
-  max-width: 12ch;
+  max-width: 16ch;
 }
 
 .ava-access-mail {

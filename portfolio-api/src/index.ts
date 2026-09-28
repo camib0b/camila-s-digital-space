@@ -186,7 +186,7 @@ export default {
     }
   },
 
-  async scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
-    ctx.waitUntil(syncMarketData(env));
+  async scheduled(_controller: ScheduledController, env: Env): Promise<void> {
+    await syncMarketData(env);
   },
 };

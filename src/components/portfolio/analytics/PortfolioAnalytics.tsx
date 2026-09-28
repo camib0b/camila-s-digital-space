@@ -26,7 +26,16 @@ export default function PortfolioAnalytics() {
   });
 
   if (analytics.isLoading) {
-    return <p className="mb-12 text-sm text-muted-foreground">{t("portfolio.analytics.loading")}</p>;
+    return (
+      <div className="mb-12 border border-border bg-card px-4 py-5" aria-busy="true">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          {t("portfolio.analytics.loading")}
+        </p>
+        <div className="portfolio-sync-track mt-4 h-px w-full max-w-sm overflow-hidden bg-border">
+          <div className="portfolio-sync-bar h-full w-1/3 bg-foreground/70" />
+        </div>
+      </div>
+    );
   }
 
   if (analytics.isError || analytics.data === undefined) {

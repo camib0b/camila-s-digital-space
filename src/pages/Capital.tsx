@@ -6,6 +6,7 @@ import AllocationChart from "@/components/portfolio/AllocationChart";
 import AiInsightPanel from "@/components/portfolio/AiInsightPanel";
 import HoldingsTable from "@/components/portfolio/HoldingsTable";
 import MonthlyReturnsChart from "@/components/portfolio/MonthlyReturnsChart";
+import PortfolioLoadingScreen from "@/components/portfolio/PortfolioLoadingScreen";
 import PortfolioValueChart from "@/components/portfolio/PortfolioValueChart";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
@@ -34,14 +35,7 @@ const Capital = () => {
   } = usePortfolioData();
 
   if (portfolioLoading) {
-    return (
-      <main className="min-h-screen bg-background flex items-center justify-center">
-        <div className="flex items-center gap-3 text-muted-foreground">
-          <RefreshCw className="w-5 h-5 animate-spin" />
-          <span>{t("portfolio.loading")}</span>
-        </div>
-      </main>
-    );
+    return <PortfolioLoadingScreen />;
   }
 
   if (portfolioError || !portfolio) {

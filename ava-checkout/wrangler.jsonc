@@ -1,0 +1,36 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ava-checkout",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-19",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  // Same-origin in production. More specific than the assets Worker on camilaescudero.cl.
+  "routes": [
+    {
+      "pattern": "camilaescudero.cl/api/ava/*",
+      "zone_name": "camilaescudero.cl"
+    }
+  ],
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "PAYMENTS",
+      // Create with: npx wrangler kv namespace create PAYMENTS
+      // then paste the id here.
+      "id": "00000000000000000000000000000000"
+    }
+  ],
+  "vars": {
+    "PUBLIC_SITE_URL": "https://camilaescudero.cl",
+    // Integer CLP. Override in the dashboard or .dev.vars before taking payments.
+    "AVA_PRICE_CLP": ""
+  }
+}
