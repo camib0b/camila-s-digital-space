@@ -1,5 +1,6 @@
 export const AVA_ACCESS_EMAIL = "camilaescuderob@gmail.com";
 export const AVA_ACCESS_SUBJECT = "AVA";
+export const AVA_INTEREST_EMAIL = "camilaescudero@uc.cl";
 
 export const AVA_EVENTS = [
   { token: "Goal", es: "Gol", en: "Goal" },

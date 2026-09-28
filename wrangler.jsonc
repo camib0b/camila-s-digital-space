@@ -1,9 +1,14 @@
 {
 	"name": "camilaescudero",
+	"main": "site-worker/index.ts",
 	"compatibility_date": "2026-01-11",
 	"assets": {
 		"directory": "./dist",
-		"not_found_handling": "single-page-application"
+		"not_found_handling": "single-page-application",
+		"binding": "ASSETS",
+		// API routes run the worker first. Every other path stays on the asset
+		// pipeline, so SPA fallback and /tomorrow/ static HTML keep working.
+		"run_worker_first": ["/api/*"]
 	},
 	"d1_databases": [
 		{
@@ -11,8 +16,21 @@
 			"database_name": "portfolio-holdings",
 			"database_id": "d483ec9f-1675-43db-ade5-f5d0cc05ab02",
 			"remote": true
+		},
+		{
+			"binding": "AVA_INTEREST",
+			"database_name": "ava-interest",
+			"database_id": "f6286d54-7d63-44da-847f-92b3feff7cdf"
 		}
 	],
+	"send_email": [
+		{
+			"name": "AVA_ALERT"
+		}
+	],
+	"vars": {
+		"AVA_ALERT_TO": "camilaescudero@uc.cl"
+	},
 	"observability": {
 	  "enabled": false,
 	  "head_sampling_rate": 1,
