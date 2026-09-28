@@ -25,10 +25,12 @@
 	],
 	"send_email": [
 		{
-			"name": "AVA_ALERT",
-			"destination_address": "camilaescudero@uc.cl"
+			"name": "AVA_ALERT"
 		}
 	],
+	"vars": {
+		"AVA_ALERT_TO": "camilaescudero@uc.cl"
+	},
 	"observability": {
 	  "enabled": false,
 	  "head_sampling_rate": 1,

@@ -5,7 +5,6 @@ const FIELD_CHARACTER_LIMIT = 200;
 const USER_AGENT_CHARACTER_LIMIT = 300;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ALERT_FROM = "ava@camilaescudero.cl";
-const ALERT_TO = "camilaescudero@uc.cl";
 
 interface InterestStatement {
   bind(...values: Array<string | null>): {
@@ -29,6 +28,7 @@ interface SiteEnvironment {
   AVA_INTEREST: InterestDatabase;
   ASSETS: AssetsBinding;
   AVA_ALERT?: SignupAlertEmail;
+  AVA_ALERT_TO?: string;
 }
 
 interface WorkerContext {
@@ -163,23 +163,32 @@ async function sendSignupAlert(
       return;
     }
 
-    const message = new EmailMessage(ALERT_FROM, ALERT_TO, buildAlertMime(signup));
+    const recipient = typeof environment.AVA_ALERT_TO === "string" ? environment.AVA_ALERT_TO.trim() : "";
+    if (recipient === "") {
+      console.error("AVA interest alert skipped: AVA_ALERT_TO is empty");
+      return;
+    }
+
+    const message = new EmailMessage(ALERT_FROM, recipient, buildAlertMime(signup, recipient));
     await environment.AVA_ALERT.send(message);
   } catch (error) {
     console.error("AVA interest alert failed", error);
   }
 }
 
-function buildAlertMime(signup: {
-  name: string;
-  email: string;
-  organization: string;
-  language: string | null;
-  timestamp: string;
-}): string {
+function buildAlertMime(
+  signup: {
+    name: string;
+    email: string;
+    organization: string;
+    language: string | null;
+    timestamp: string;
+  },
+  recipient: string,
+): string {
   return [
     `From: AVA <${ALERT_FROM}>`,
-    `To: ${ALERT_TO}`,
+    `To: ${recipient}`,
     "Subject: AVA interest signup",
     "MIME-Version: 1.0",
     "Content-Type: text/plain; charset=utf-8",
