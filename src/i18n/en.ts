@@ -64,18 +64,26 @@ const en = {
 
     // Personal projects
     "personalProjects.label": "Personal projects",
-    "personalProjects.raycast": "Zodme — Raycast extension, published and open source. Date in, zodiac sign + short archetype out.",
-    "personalProjects.videoAnalysis": "AVA — Game footage tagging to delivery in one app: C++/Qt, XML export compatible with established analysis tools, and compiled clips that feed carpeta.cl.",
+    "personalProjects.raycast.title": "Zodme",
+    "personalProjects.raycast": "Raycast extension, published and open source. Date in, zodiac sign + short archetype out.",
+    "personalProjects.videoAnalysis.title": "AVA",
+    "personalProjects.videoAnalysis": "Game footage tagging to delivery in one app: C++/Qt, XML export compatible with established analysis tools, and compiled clips that feed carpeta.cl.",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
-    "personalProjects.clipLibrary": "Carpeta de clips — End to end: game footage library of clips tagged in my own C++ analysis app, published on Cloudflare. Open to players, coaches and analysts alike.",
-    "personalProjects.view": "View project",
+    "personalProjects.clipLibrary.title": "Carpeta",
+    "personalProjects.clipLibrary": "End to end: game footage library of clips tagged in my own C++ analysis app, published on Cloudflare. Open to players, coaches and analysts alike.",
+    "personalProjects.open": "Open",
     "personalProjects.smallTools.label": "Small tools",
     "personalProjects.smallTools.description":
       "Utilities I shipped for my own use. Small on purpose.",
+    "personalProjects.tomorrow.title": "Tomorrow",
     "personalProjects.tomorrow":
-      "Tomorrow, planned the night before: an agent turns my Google Calendar into a timed day plan and commits it to this site.",
+      "Planned the night before: an agent turns my Google Calendar into a timed day plan and commits it to this site.",
+    "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Market prices in; time-weighted returns, a VOO benchmark and look-through exposure out. AI commentary only on request.",
+    "personalProjects.xmlViz.title": "XML Viz",
+    "personalProjects.xmlViz":
+      "Analysis XML in; tag counts, label groups, and a match timeline out. The file stays in the browser.",
 
     // GitHub
     "github.label": "Contributions",

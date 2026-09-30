@@ -66,18 +66,26 @@ const es: Record<TranslationKey, string> = {
 
     // Personal projects
     "personalProjects.label": "Proyectos personales",
-    "personalProjects.raycast": "Zodme — extensión de Raycast, publicada y de código abierto. Fecha entra; signo zodiacal + arquetipo corto sale.",
-    "personalProjects.videoAnalysis": "AVA — Del etiquetado de partidos a la entrega en una sola app: C++/Qt, exportación XML compatible con herramientas de análisis establecidas y compilados de clips que alimentan carpeta.cl.",
+    "personalProjects.raycast.title": "Zodme",
+    "personalProjects.raycast": "Extensión de Raycast, publicada y de código abierto. Fecha entra; signo zodiacal + arquetipo corto sale.",
+    "personalProjects.videoAnalysis.title": "AVA",
+    "personalProjects.videoAnalysis": "Del etiquetado de partidos a la entrega en una sola app: C++/Qt, exportación XML compatible con herramientas de análisis establecidas y compilados de clips que alimentan carpeta.cl.",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
-    "personalProjects.clipLibrary": "Carpeta de clips — De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
-    "personalProjects.view": "Ver proyecto",
+    "personalProjects.clipLibrary.title": "Carpeta",
+    "personalProjects.clipLibrary": "De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
+    "personalProjects.open": "Abrir",
     "personalProjects.smallTools.label": "Herramientas pequeñas",
     "personalProjects.smallTools.description":
       "Utilidades que publiqué para uso propio. Chicas a propósito.",
+    "personalProjects.tomorrow.title": "Mañana",
     "personalProjects.tomorrow":
-      "Mañana, planificado la noche anterior: un agente convierte mi Google Calendar en un plan con horas y lo publica en este sitio.",
+      "Planificado la noche anterior: un agente convierte mi Google Calendar en un plan con horas y lo publica en este sitio.",
+    "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Precios de mercado de entrada; retornos ponderados por tiempo, benchmark VOO y exposición look-through de salida. Comentario de IA solo si lo pides.",
+    "personalProjects.xmlViz.title": "XML Viz",
+    "personalProjects.xmlViz":
+      "XML de análisis de entrada; conteo de tags, grupos de etiquetas y una línea de tiempo del partido de salida. El archivo se queda en el navegador.",
 
     // GitHub
     "github.label": "Contribuciones",

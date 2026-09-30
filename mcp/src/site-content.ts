@@ -101,6 +101,14 @@ export const projects = [
       "Live holdings and prices, with return, risk, and look-through exposure.",
     url: `${SITE_URL}/capital`,
   },
+  {
+    id: "xml-viz",
+    name: "XML Viz",
+    category: "small-tool",
+    description:
+      "Analysis XML in; tag counts, label groups, and a match timeline out. The file stays in the browser.",
+    url: `${SITE_URL}/xml`,
+  },
 ] as const;
 
 export const readingList = {

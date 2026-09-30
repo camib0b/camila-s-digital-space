@@ -10,31 +10,62 @@ interface ProjectListProps {
   projects: PersonalProject[];
 }
 
+const openLinkClassName =
+  "shrink-0 text-sm text-foreground transition-colors duration-200 link-underline hover:text-muted-foreground";
+
+const ProjectOpenLink = ({ project }: { project: PersonalProject }) => {
+  const { t } = useLanguage();
+  const label = t("personalProjects.open");
+
+  if (project.link.kind === "internal" && project.link.fullPage) {
+    return (
+      <a href={project.link.path} className={openLinkClassName}>
+        {label}
+      </a>
+    );
+  }
+
+  if (project.link.kind === "internal") {
+    return (
+      <Link to={project.link.path} className={openLinkClassName}>
+        {label}
+      </Link>
+    );
+  }
+
+  if (project.link.kind === "external") {
+    return (
+      <a
+        href={project.link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={openLinkClassName}
+      >
+        {label}
+      </a>
+    );
+  }
+
+  return null;
+};
+
 const ProjectList = ({ projects }: ProjectListProps) => {
   const { t } = useLanguage();
-  const projectLinkClassName =
-    "ml-3 inline-flex items-center rounded-md border border-border px-2.5 py-1 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200";
 
   return (
-    <ul className="space-y-6">
-      {projects.map((project) => (
-        <li key={project.id} className="text-sm text-muted-foreground leading-relaxed">
-          <span>{t(project.descriptionKey)}</span>
-          {project.link.kind === "internal" ? (
-            <Link to={project.link.path} className={projectLinkClassName}>
-              {t("personalProjects.view")}
-            </Link>
-          ) : null}
-          {project.link.kind === "external" ? (
-            <a
-              href={project.link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={projectLinkClassName}
-            >
-              {t("personalProjects.view")}
-            </a>
-          ) : null}
+    <ul className="space-y-8">
+      {projects.map((project, index) => (
+        <li key={project.id}>
+          <div className="mb-1.5 flex items-baseline justify-between gap-4">
+            <div className="flex min-w-0 items-baseline gap-2.5">
+              <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="text-sm font-medium text-foreground">{t(project.titleKey)}</span>
+            </div>
+            <ProjectOpenLink project={project} />
+          </div>
+          <p className="text-sm leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
         </li>
       ))}
     </ul>
