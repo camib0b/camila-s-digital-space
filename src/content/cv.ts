@@ -1,7 +1,7 @@
 import type { TranslationKey } from "@/i18n/types";
 
 export type CvJobId = "acfin" | "finapsys" | "a3" | "visionary";
-export type CvProjectId = "ava" | "fleetOptimizer";
+export type CvProjectId = "ava" | "carpeta" | "fleetOptimizer";
 export type CvLeadershipId = "player" | "coach" | "videoAnalyst";
 
 export interface CvProject {
@@ -12,6 +12,7 @@ export interface CvProject {
   impactKey?: TranslationKey;
   technologies: string[];
   href?: string;
+  externalHref?: string;
 }
 
 export interface CvJob {
@@ -27,7 +28,7 @@ export interface CvLeadership {
   id: CvLeadershipId;
   roleKey: TranslationKey;
   organizationKey: TranslationKey;
-  descriptionKey: TranslationKey;
+  descriptionKey?: TranslationKey;
 }
 
 export const cvProjects: CvProject[] = [
@@ -38,6 +39,14 @@ export const cvProjects: CvProject[] = [
     descriptionKey: "cv.ava.description",
     technologies: ["C++"],
     href: "/ava",
+  },
+  {
+    id: "carpeta",
+    titleKey: "cv.carpeta.title",
+    typeKey: "cv.carpeta.type",
+    descriptionKey: "cv.carpeta.description",
+    technologies: [],
+    externalHref: "https://carpeta.cl/",
   },
   {
     id: "fleetOptimizer",
@@ -88,13 +97,11 @@ export const cvLeadership: CvLeadership[] = [
     id: "player",
     roleKey: "cv.player.role",
     organizationKey: "cv.player.organization",
-    descriptionKey: "cv.player.description",
   },
   {
     id: "coach",
     roleKey: "cv.coach.role",
     organizationKey: "cv.coach.organization",
-    descriptionKey: "cv.coach.description",
   },
   {
     id: "videoAnalyst",

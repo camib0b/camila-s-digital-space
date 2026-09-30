@@ -115,6 +115,15 @@ const CV = () => {
                     >
                       {t(project.titleKey)}
                     </Link>
+                  ) : project.externalHref ? (
+                    <a
+                      href={project.externalHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-foreground text-sm hover:text-muted-foreground transition-colors link-underline"
+                    >
+                      {t(project.titleKey)}
+                    </a>
                   ) : (
                     <p className="font-medium text-foreground text-sm">{t(project.titleKey)}</p>
                   )}
@@ -212,7 +221,9 @@ const CV = () => {
                   <span className="font-medium text-foreground">{t(item.roleKey)}</span>
                   <span className="text-muted-foreground"> — {t(item.organizationKey)}</span>
                 </p>
-                <p className="text-sm text-muted-foreground">{t(item.descriptionKey)}</p>
+                {item.descriptionKey ? (
+                  <p className="text-sm text-muted-foreground">{t(item.descriptionKey)}</p>
+                ) : null}
               </div>
             ))}
           </div>
