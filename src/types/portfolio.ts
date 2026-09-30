@@ -1,13 +1,14 @@
 /** A priced portfolio holding. JSON field remains `stocks` (public API). */
 export interface Holding {
   ticker: string;
-  shares: number;
-  totalCost: number;
   currentPrice: number;
   changePercent: number;
-  currentValue: number;
   /** Present when the API priced this holding from the latest trade instead of a live quote. */
   stale?: boolean;
+  /** Weight of this holding in the portfolio, as a percent string from the API. */
+  allocation: string;
+  /** Gain versus cost basis, as a percent string from the API. */
+  gainPercent: string;
 }
 
 export interface AiModelOption {
@@ -16,11 +17,8 @@ export interface AiModelOption {
 }
 
 export interface PortfolioResponse {
-  totalValue: string;
-  totalInvested: string;
-  totalGain: string;
   totalReturnPct: string;
-  /** Public JSON key; values are priced holdings. */
+  /** Public JSON key; values are priced holdings without share or dollar amounts. */
   stocks: Holding[];
   aiInsight: string | null;
   lastUpdated: string;
@@ -36,7 +34,4 @@ export interface AiInsightResponse {
   error?: string;
 }
 
-export interface HoldingWithMetrics extends Holding {
-  allocation: string;
-  gainPercent: string;
-}
+export type HoldingWithMetrics = Holding;

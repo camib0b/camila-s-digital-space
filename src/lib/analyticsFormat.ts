@@ -14,15 +14,6 @@ export function formatPercentagePoints(decimal: number, digits = 2): string {
   return `${sign}${scaled.toFixed(digits)} pp`;
 }
 
-export function formatUsd(value: number): string {
-  return value.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-}
-
 export function numberTone(value: number): string {
   if (value > 0) {
     return "text-number-positive";

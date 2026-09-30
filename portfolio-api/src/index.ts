@@ -5,6 +5,12 @@ import { computeHoldings, fetchTransactions, latestTradePriceByTicker } from "./
 import { buildPortfolioHistory } from "./history";
 import { buildAnalyticsReport } from "./analytics/load";
 import { syncMarketData } from "./marketData";
+import {
+  toPublicAnalyticsReport,
+  toPublicHistoryResponse,
+  toPublicHoldings,
+  toPublicPortfolioResponse,
+} from "./publicPortfolio";
 import { fetchQuote, resolveHoldingQuote } from "./quotes";
 
 async function getPortfolioSnapshot(env: Env) {
@@ -72,17 +78,7 @@ export default {
         const snapshot = await getPortfolioSnapshot(env);
 
         return Response.json(
-          {
-            totalValue: snapshot.totalValue.toFixed(2),
-            totalInvested: snapshot.totalInvested.toFixed(2),
-            totalGain: snapshot.totalGain.toFixed(2),
-            totalReturnPct: snapshot.totalReturnPct.toFixed(2),
-            stocks: snapshot.holdings,
-            aiInsight: null,
-            lastUpdated: new Date().toISOString(),
-            count: snapshot.holdingsCount,
-            aiModels: [{ id: "grok", label: "Grok (xAI)" }],
-          },
+          toPublicPortfolioResponse(snapshot, new Date().toISOString()),
           { headers: CORS_HEADERS }
         );
       }
@@ -90,7 +86,7 @@ export default {
       if (url.pathname === "/api/analytics" && request.method === "GET") {
         try {
           const report = await buildAnalyticsReport(env);
-          return Response.json(report, { headers: CORS_HEADERS });
+          return Response.json(toPublicAnalyticsReport(report), { headers: CORS_HEADERS });
         } catch (error) {
           const message = error instanceof Error ? error.message : "Unknown error";
           const tablesMissing = /no such table/i.test(message);
@@ -109,13 +105,7 @@ export default {
         const transactions = await fetchTransactions(env);
         const history = await buildPortfolioHistory(env, transactions);
 
-        return Response.json(
-          {
-            ...history,
-            lastUpdated: new Date().toISOString(),
-          },
-          { headers: CORS_HEADERS }
-        );
+        return Response.json(toPublicHistoryResponse(history), { headers: CORS_HEADERS });
       }
 
       if (url.pathname === "/api/portfolio/ai-insight" && request.method === "POST") {
@@ -140,7 +130,8 @@ export default {
 
         const language = body.language === "es" ? "es" : "en";
         const snapshot = await getPortfolioSnapshot(env);
-        const aiPrompt = buildAiPrompt(snapshot.holdings, snapshot.totalValue, language);
+        const publicHoldings = toPublicHoldings(snapshot.holdings, snapshot.totalValue);
+        const aiPrompt = buildAiPrompt(publicHoldings, language);
         const result = await generateAiInsight(env, modelKey, aiPrompt);
 
         if (result.ok === false) {

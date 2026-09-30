@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   CartesianGrid,
   Line,
@@ -10,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { formatPercentagePoints, formatSignedPercent, formatUsd, numberTone, sourceTag } from "@/lib/analyticsFormat";
+import { formatPercentagePoints, formatSignedPercent, numberTone, sourceTag } from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport, type PerformanceBlock } from "@/types/portfolioAnalytics";
 import { MethodNote, Panel, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
 
@@ -39,28 +38,19 @@ function EndLabel({
   );
 }
 
-function PerformanceChart({
-  performance,
-  mode,
-}: {
-  performance: PerformanceBlock;
-  mode: "dollars" | "percent";
-}) {
+function PerformanceChart({ performance }: { performance: PerformanceBlock }) {
   const reducedMotion = usePrefersReducedMotion();
   const { t } = useLanguage();
   const data = performance.series.map((point) => ({
     date: point.date,
-    portfolio: mode === "dollars" ? point.portfolioValue : point.cumulativeTimeWeightedReturn * 100,
+    portfolio: point.cumulativeTimeWeightedReturn * 100,
     benchmark:
-      mode === "dollars"
-        ? point.counterfactualValue
-        : point.cumulativeBenchmarkReturn === null
-          ? null
-          : point.cumulativeBenchmarkReturn * 100,
+      point.cumulativeBenchmarkReturn === null ? null : point.cumulativeBenchmarkReturn * 100,
   }));
   const lastIndex = data.length - 1;
-  const drawdown = mode === "dollars" ? performance.maxDrawdown : null;
-  const drawdownPoint = drawdown === null ? undefined : data.find((point) => point.date === drawdown.troughDate);
+  const drawdown = performance.maxDrawdown;
+  const drawdownPoint =
+    drawdown === null ? undefined : data.find((point) => point.date === drawdown.troughDate);
 
   return (
     <div className="h-[260px] w-full">
@@ -79,9 +69,7 @@ function PerformanceChart({
             tickLine={false}
             axisLine={false}
             width={64}
-            tickFormatter={(value: number) =>
-              mode === "dollars" ? formatUsd(value) : formatSignedPercent(value / 100, 0)
-            }
+            tickFormatter={(value: number) => formatSignedPercent(value / 100, 0)}
           />
           <Tooltip
             cursor={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 1 }}
@@ -94,11 +82,9 @@ function PerformanceChart({
                   <p>{label}</p>
                   {payload.map((entry) => (
                     <p key={String(entry.dataKey)}>
-                      {entry.dataKey === "portfolio" ? t("portfolio.analytics.portfolio") : t("portfolio.analytics.counterfactual")}
+                      {entry.dataKey === "portfolio" ? t("portfolio.analytics.portfolio") : "VOO"}
                       {": "}
-                      {mode === "dollars"
-                        ? formatUsd(Number(entry.value))
-                        : formatSignedPercent(Number(entry.value) / 100)}
+                      {formatSignedPercent(Number(entry.value) / 100)}
                     </p>
                   ))}
                 </div>
@@ -166,7 +152,6 @@ function PerformanceChart({
 
 export function PerformanceSection({ report }: { report: AnalyticsReport }) {
   const { t } = useLanguage();
-  const [mode, setMode] = useState<"dollars" | "percent">("dollars");
   const performance = report.performance;
   if (isUnavailable(performance)) {
     return (
@@ -182,42 +167,16 @@ export function PerformanceSection({ report }: { report: AnalyticsReport }) {
 
   return (
     <Panel title={t("portfolio.analytics.performance")}>
-      <div className="mb-4 flex gap-2">
-        {(["dollars", "percent"] as const).map((option) => (
-          <button
-            key={option}
-            type="button"
-            aria-pressed={mode === option}
-            onClick={() => setMode(option)}
-            className={`border px-2 py-1 text-[10px] uppercase tracking-[0.14em] ${
-              mode === option ? "border-foreground text-foreground" : "border-border text-muted-foreground"
-            }`}
-          >
-            {option === "dollars" ? t("portfolio.analytics.dollars") : t("portfolio.analytics.percent")}
-          </button>
-        ))}
-      </div>
-      <PerformanceChart performance={performance} mode={mode} />
-      <dl className="mt-4 grid grid-cols-2 gap-px border border-border bg-border md:grid-cols-4">
-        {[
-          [t("portfolio.analytics.value"), formatUsd(performance.portfolioValue)],
-          [
-            t("portfolio.analytics.counterfactualValue"),
-            performance.counterfactualValue === null
-              ? performance.counterfactualReason ?? t("portfolio.analytics.unavailable")
-              : formatUsd(performance.counterfactualValue),
-          ],
-          [
-            t("portfolio.analytics.simple"),
-            performance.simpleReturn === null ? t("portfolio.analytics.unavailable") : formatSignedPercent(performance.simpleReturn),
-          ],
-          [t("portfolio.analytics.netInvested"), formatUsd(performance.netInvested)],
-        ].map(([label, value]) => (
-          <div key={label} className="bg-card px-3 py-2">
-            <dt className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{label}</dt>
-            <dd className="mt-1 text-right font-mono text-sm tabular-nums">{value}</dd>
-          </div>
-        ))}
+      <PerformanceChart performance={performance} />
+      <dl className="mt-4 border border-border px-3 py-2">
+        <dt className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+          {t("portfolio.analytics.simple")}
+        </dt>
+        <dd className="mt-1 text-right font-mono text-sm tabular-nums">
+          {performance.simpleReturn === null
+            ? t("portfolio.analytics.unavailable")
+            : formatSignedPercent(performance.simpleReturn)}
+        </dd>
       </dl>
       <p className="mt-3 text-xs text-muted-foreground">
         {t("portfolio.analytics.simpleLabel")}
@@ -229,7 +188,8 @@ export function PerformanceSection({ report }: { report: AnalyticsReport }) {
       </p>
       {performance.maxDrawdown !== null && (
         <p className="mt-1 font-mono text-xs tabular-nums text-muted-foreground">
-          {t("portfolio.analytics.drawdown")} {formatSignedPercent(performance.maxDrawdown.drawdown)} · {performance.maxDrawdown.peakDate} → {performance.maxDrawdown.troughDate}
+          {t("portfolio.analytics.drawdown")} {formatSignedPercent(performance.maxDrawdown.drawdown)} ·{" "}
+          {performance.maxDrawdown.peakDate} → {performance.maxDrawdown.troughDate}
         </p>
       )}
       {report.ledger.dividendRecordCount === 0 && (
@@ -244,7 +204,6 @@ export function PerformanceSection({ report }: { report: AnalyticsReport }) {
           String.raw`r_t=\frac{V_t}{V_{t-1}+F_t}-1`,
           String.raw`\mathrm{TWR}=\prod_t(1+r_t)-1`,
           String.raw`(1+\mathrm{TWR})^{365/\mathrm{days}}-1`,
-          String.raw`C_t=C_{t-1}\cdot\frac{TR_t}{TR_{t-1}}+F_t`,
         ]}
         notes={[
           t("portfolio.analytics.methodPerformance"),

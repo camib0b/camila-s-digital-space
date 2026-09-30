@@ -7,8 +7,6 @@ export interface UnavailableBlock {
 
 export interface PerformanceSeriesPoint {
   date: string;
-  portfolioValue: number;
-  counterfactualValue: number | null;
   cumulativeTimeWeightedReturn: number;
   cumulativeBenchmarkReturn: number | null;
 }
@@ -40,13 +38,9 @@ export interface PerformanceBlock {
   calendarDayCount: number;
   simpleReturn: number | null;
   simpleReturnLabel: string;
-  netInvested: number;
-  portfolioValue: number;
   benchmark: BenchmarkBlock | UnavailableBlock;
   excessReturn: number | null;
   excessLabel: string;
-  counterfactualValue: number | null;
-  counterfactualReason: string | null;
   maxDrawdown: { peakDate: string; troughDate: string; drawdown: number } | null;
   skippedValuationDates: number;
   valuationGapNote: string | null;
@@ -72,7 +66,6 @@ export interface RiskBlock {
   requestedWeeks: number;
   portfolioVolatility: number;
   weightsSum: number;
-  cashMarketValue: number;
   cashWeightOfPortfolio: number;
   cashTreatment: string;
   label: string;
@@ -139,7 +132,6 @@ export interface AnalyticsReport {
     dividendRecordCount: number;
     dividendCaveat: string | null;
     externalFlowMethod: string;
-    feeTotal: number;
     warnings: string[];
     listings: {
       ticker: string;

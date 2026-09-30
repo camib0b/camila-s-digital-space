@@ -19,8 +19,7 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
         <>
           <p className="mb-3 text-xs text-muted-foreground">{t("portfolio.analytics.exAnte")}</p>
           <p className="mb-3 text-xs text-muted-foreground">
-            {t("portfolio.analytics.cashExcluded")}{" "}
-            {formatSignedPercent(risk.cashWeightOfPortfolio)} · {risk.cashMarketValue.toLocaleString("en-US", { style: "currency", currency: "USD" })}
+            {t("portfolio.analytics.cashExcluded")} {formatSignedPercent(risk.cashWeightOfPortfolio)}
           </p>
           <div className="h-[280px] w-full">
             <ResponsiveContainer width="100%" height="100%">
