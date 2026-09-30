@@ -1,10 +1,10 @@
-import { Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { Github, Languages, Linkedin, Mail, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHeader from "@/components/PageHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CONTACT_EMAIL } from "@/content/contact";
 import { SOCIAL_LINKS } from "@/content/social";
-import { cvJobs, cvLeadership, cvProjects, cvSkills } from "@/content/cv";
+import { cvJobs, cvLeadership, cvProjects } from "@/content/cv";
 
 const CV = () => {
   const { t } = useLanguage();
@@ -55,6 +55,13 @@ const CV = () => {
               GitHub
             </a>
           </div>
+          <p className="mt-3 flex max-w-xl items-start gap-1.5 text-xs leading-relaxed text-muted-foreground">
+            <Languages className="mt-0.5 h-3 w-3 shrink-0" />
+            <span>
+              <span className="font-medium text-foreground">{t("cv.languages.pair")}</span>
+              <span> — {t("cv.languages.note")}</span>
+            </span>
+          </p>
         </section>
 
         <div className="border-b border-border mb-10" />
@@ -178,35 +185,6 @@ const CV = () => {
             <p className="text-xs text-muted-foreground/70 mt-1">
               {t("cv.education.courseworkLabel")}: {t("cv.education.coursework")}
             </p>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
-            {t("cv.skills")}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[
-              { label: t("cv.languages"), items: cvSkills.languages },
-              { label: t("cv.frameworks"), items: cvSkills.frameworks },
-              { label: t("cv.tools"), items: cvSkills.tools },
-            ].map((group) => (
-              <div key={group.label}>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
-                  {group.label}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {group.items.map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
           </div>
         </section>
 

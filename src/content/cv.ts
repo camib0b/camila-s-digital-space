@@ -110,9 +110,3 @@ export const cvLeadership: CvLeadership[] = [
     descriptionKey: "cv.videoAnalyst.description",
   },
 ];
-
-export const cvSkills = {
-  languages: ["TypeScript", "Python", "SQL", "C++"],
-  frameworks: ["Vue.js", "React", "Tailwind CSS"],
-  tools: ["Looker", "LookML", "BigQuery", "Git", "Firebase"],
-};
