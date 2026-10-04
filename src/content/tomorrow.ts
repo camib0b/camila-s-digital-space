@@ -2,7 +2,7 @@ import type { Language } from "@/i18n/types";
 
 export const TOMORROW_DATE = "2026-10-05";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-10-04T00:33:00-03:00";
+export const SOURCED_AT = "2026-10-04T20:25:00-03:00";
 
 export type LocalizedText = Record<Language, string>;
 
@@ -41,13 +41,13 @@ export const tomorrowPageText = {
   transit: { es: "Traslado", en: "Transit" } satisfies LocalizedText,
   first: { es: "Primer bloque", en: "First block" } satisfies LocalizedText,
   note: {
-    es: "Ancla: clases 11:00 — salir de Casa 10:00. Gimnasio 07:30–09:20 (bloque estimado). Sin lavado de pelo. Si el listado no entra, recorta accesorios: última serie ~09:05, salir del gym 09:20, Casa ~09:45. Proteína + carbos tras la última serie. Chaqueta ligera (~11 °C temprano, máx ~21 °C; llovizna recién a la noche).",
-    en: "Anchor: class 11:00 — leave Home 10:00. Gym 07:30–09:20 (estimate). No hair wash. If the list does not fit, cut accessories: last set ~09:05, leave the gym 09:20, Home ~09:45. Protein + carbs after the last set. Light jacket (~11 °C early, high ~21 °C; drizzle only late).",
+    es: "Ancla: clases 11:00 — salir de Casa 10:00. Gimnasio 07:30–09:20 (bloque estimado). Sin lavado de pelo. Si el listado no entra, recorta accesorios: última serie ~09:05, salir del gym 09:20, Casa ~09:45. Proteína + carbos tras la última serie. Chaqueta + cortaviento para la tarde (~9 °C temprano, máx ~17 °C; lluvia desde ~16:00).",
+    en: "Anchor: class 11:00 — leave Home 10:00. Gym 07:30–09:20 (estimate). No hair wash. If the list does not fit, cut accessories: last set ~09:05, leave the gym 09:20, Home ~09:45. Protein + carbs after the last set. Jacket plus a rain shell for the afternoon (~9 °C early, high ~17 °C; rain from ~16:00).",
   } satisfies LocalizedText,
   later: { es: "Más tarde", en: "Later today" } satisfies LocalizedText,
   laterBody: {
-    es: "Clases 11:00–13:30 (bdd + innovación). Almuerzo real. Mila 16:00–17:30. Cena y luces ~22:30 — el martes empieza temprano.",
-    en: "Classes 11:00–13:30 (bdd + innovación). Real lunch. Mila 16:00–17:30. Dinner and lights ~22:30 — Tuesday starts early.",
+    es: "Clases 11:00–13:30 (bdd + innovación). Almuerzo real. Mila 16:00–17:30. Noche: A4 arqui primero, luego repaso liviano de la Tarea 1 bdd. Luces ~22:30 — el martes empieza temprano.",
+    en: "Classes 11:00–13:30 (bdd + innovación). Real lunch. Mila 16:00–17:30. Evening: A4 arqui first, then a light review of Tarea 1 bdd. Lights ~22:30 — Tuesday starts early.",
   } satisfies LocalizedText,
   upcoming: { es: "Próximo", en: "Upcoming" } satisfies LocalizedText,
   upcomingBody: {
@@ -56,16 +56,16 @@ export const tomorrowPageText = {
   } satisfies LocalizedText,
   night: { es: "La noche anterior", en: "The night before" } satisfies LocalizedText,
   source: {
-    es: "Desde Google Calendar · 4 oct 2026, 00:33",
-    en: "From Google Calendar · 4 Oct 2026, 00:33",
+    es: "Desde Google Calendar · 4 oct 2026, 20:25",
+    en: "From Google Calendar · 4 Oct 2026, 20:25",
   } satisfies LocalizedText,
   map: { es: "Mapa", en: "Map" } satisfies LocalizedText,
 };
 
 export const nightBefore: LocalizedText[] = [
   {
-    es: "Luces apagadas ahora (~00:40). Hacia la alarma 06:25 son ~6 h — no alargues la noche.",
-    en: "Lights out now (~00:40). That is ~6 h before the 06:25 alarm — do not stretch the night.",
+    es: "Luces apagadas ~22:15 — 8 h hasta la alarma 06:25.",
+    en: "Lights out ~22:15 — 8 h before the 06:25 alarm.",
   },
   {
     es: "Alarma 06:25, backup 06:35. Salir de Casa al gimnasio 07:05. Ancla: salir a Universidad 10:00.",
@@ -76,8 +76,8 @@ export const nightBefore: LocalizedText[] = [
     en: "Pack the gym towel. Protein + carbs ready. Gym bag and backpack.",
   },
   {
-    es: "Chaqueta ligera (~11 °C temprano, máx ~21 °C).",
-    en: "Light jacket (~11 °C early, high ~21 °C).",
+    es: "Chaqueta + cortaviento para la tarde (~9 °C temprano, máx ~17 °C, lluvia desde ~16:00).",
+    en: "Jacket plus a rain shell for the afternoon (~9 °C early, high ~17 °C, rain from ~16:00).",
   },
 ];
 
@@ -203,8 +203,8 @@ export const laterBlocks: ScheduleBlock[] = [
     end: "22:30",
     title: { es: "Cena · cierre", en: "Dinner · wind-down" },
     detail: {
-      es: "Cena real. Luces ~22:30 — el martes empieza temprano.",
-      en: "Real dinner. Lights ~22:30 — Tuesday starts early.",
+      es: "Cena real. A4 arqui, luego repaso T1 bdd. Luces ~22:30 — el martes empieza temprano.",
+      en: "Real dinner. A4 arqui, then T1 bdd review. Lights ~22:30 — Tuesday starts early.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -216,22 +216,31 @@ export const upcomingItems: UpcomingItem[] = [
     id: "a4-arqui",
     when: { es: "mar 6 oct · 14:50", en: "Tue 6 Oct · 14:50" },
     title: { es: "A4 arqui", en: "A4 arqui" },
-    detail: { es: "Tarea. Antes del bloque del martes.", en: "Assignment. Before Tuesday's block." },
+    detail: { es: "Tarea. Cerrarla el lunes en la noche.", en: "Assignment. Close it Monday evening." },
   },
   {
-    id: "t2-bdd",
-    when: { es: "jue 8 oct · 23:59", en: "Thu 8 Oct · 23:59" },
-    title: { es: "T2 bdd · entrega", en: "T2 bdd · deadline" },
-    detail: {
-      es: "Entrega Bases de Datos (IIC2413). Empujar entre martes y jueves.",
-      en: "Bases de Datos (IIC2413) deadline. Push it Tuesday through Thursday.",
-    },
+    id: "oral-t1-bdd",
+    when: { es: "mié 7 oct · 13:30", en: "Wed 7 Oct · 13:30" },
+    title: { es: "Revisión oral T1 bdd", en: "T1 bdd oral review" },
+    detail: { es: "Calificada. Repasa tus respuestas de la Tarea 1.", en: "Graded. Review your own Tarea 1 answers." },
+  },
+  {
+    id: "acfin",
+    when: { es: "jue 8 oct · 15:00", en: "Thu 8 Oct · 15:00" },
+    title: { es: "Seguimiento ACFIN", en: "Seguimiento ACFIN" },
+    detail: { es: "Remoto. Llevar avance para mostrar.", en: "Remote. Bring progress to show." },
   },
   {
     id: "ucb-cogs",
     when: { es: "jue 8 oct · 21:00", en: "Thu 8 Oct · 21:00" },
     title: { es: "UC B vs COGS", en: "UC B vs COGS" },
     detail: { es: "Juegas.", en: "You play." },
+  },
+  {
+    id: "t2-bdd",
+    when: { es: "jue 8 oct · 23:59", en: "Thu 8 Oct · 23:59" },
+    title: { es: "T2 bdd · entrega", en: "T2 bdd · deadline" },
+    detail: { es: "Entrega Bases de Datos (IIC2413). Cerrarla antes del partido del jueves.", en: "Bases de Datos (IIC2413) deadline. Close it out before Thursday's match." },
   },
 ];
 
