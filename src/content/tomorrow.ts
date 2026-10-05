@@ -1,8 +1,8 @@
 import type { Language } from "@/i18n/types";
 
-export const TOMORROW_DATE = "2026-10-05";
+export const TOMORROW_DATE = "2026-10-06";
 export const TIMEZONE = "America/Santiago";
-export const SOURCED_AT = "2026-10-04T20:25:00-03:00";
+export const SOURCED_AT = "2026-10-05T20:25:00-03:00";
 
 export type LocalizedText = Record<Language, string>;
 
@@ -29,11 +29,11 @@ export interface UpcomingItem {
 
 export const tomorrowPageText = {
   back: { es: "Volver", en: "Back" } satisfies LocalizedText,
-  kicker: { es: "lunes 5 de octubre", en: "monday 5 october" } satisfies LocalizedText,
+  kicker: { es: "martes 6 de octubre", en: "tuesday 6 october" } satisfies LocalizedText,
   title: { es: "Mañana", en: "Morning" } satisfies LocalizedText,
   subtitle: {
-    es: "Gimnasio 07:30. Alarma 06:25, salir de Casa 10:00. Clases 11:00. Mila 16:00.",
-    en: "Gym 07:30. Alarm 06:25, leave Home 10:00. Class 11:00. Mila 16:00.",
+    es: "Sin gimnasio. Alarma 06:40, salir 07:20. Clases 08:20 (arqui + web). A4 arqui 14:50. Hockey 19:30.",
+    en: "No gym. Alarm 06:40, leave 07:20. Classes 08:20 (arqui + web). A4 arqui 14:50. Hockey 19:30.",
   } satisfies LocalizedText,
   timezone: { es: "Santiago · UTC−3", en: "Santiago · UTC−3" } satisfies LocalizedText,
   blocksLabel: { es: "Bloques", en: "Blocks" } satisfies LocalizedText,
@@ -41,13 +41,13 @@ export const tomorrowPageText = {
   transit: { es: "Traslado", en: "Transit" } satisfies LocalizedText,
   first: { es: "Primer bloque", en: "First block" } satisfies LocalizedText,
   note: {
-    es: "Ancla: clases 11:00 — salir de Casa 10:00. Gimnasio 07:30–09:20 (bloque estimado). Sin lavado de pelo. Si el listado no entra, recorta accesorios: última serie ~09:05, salir del gym 09:20, Casa ~09:45. Proteína + carbos tras la última serie. Chaqueta + cortaviento para la tarde (~9 °C temprano, máx ~17 °C; lluvia desde ~16:00).",
-    en: "Anchor: class 11:00 — leave Home 10:00. Gym 07:30–09:20 (estimate). No hair wash. If the list does not fit, cut accessories: last set ~09:05, leave the gym 09:20, Home ~09:45. Protein + carbs after the last set. Jacket plus a rain shell for the afternoon (~9 °C early, high ~17 °C; rain from ~16:00).",
+    es: "Ancla: clase 08:20 — salir de Casa 07:20. Sin gimnasio: el entrenamiento de hockey 19:30 es la sesión del día (el lunes fue gimnasio completo). Entregar A4 arqui antes de 14:50. Chaqueta abrigada + cortaviento (~11 °C temprano, máx ~14 °C; lluvia intermitente todo el día).",
+    en: "Anchor: class 08:20 — leave Home 07:20. No gym: hockey training at 19:30 is the day's session (Monday was a full gym day). Submit A4 arqui before 14:50. Warm jacket plus a rain shell (~11 °C early, high ~14 °C; on-and-off rain all day).",
   } satisfies LocalizedText,
   later: { es: "Más tarde", en: "Later today" } satisfies LocalizedText,
   laterBody: {
-    es: "Clases 11:00–13:30 (bdd + innovación). Almuerzo real. Mila 16:00–17:30. Noche: A4 arqui primero, luego repaso liviano de la Tarea 1 bdd. Luces ~22:30 — el martes empieza temprano.",
-    en: "Classes 11:00–13:30 (bdd + innovación). Real lunch. Mila 16:00–17:30. Evening: A4 arqui first, then a light review of Tarea 1 bdd. Lights ~22:30 — Tuesday starts early.",
+    es: "Clases 08:20–11:00 (arqui + web). Almuerzo y entrega de A4 arqui antes de 14:50. Tarde: repaso de la Tarea 1 bdd para la oral del miércoles. Entrenamiento de hockey 19:30–21:00; proteína + carbos al terminar. Luces ~23:00 — el miércoles sales a las 10:00.",
+    en: "Classes 08:20–11:00 (arqui + web). Lunch and submit A4 arqui before 14:50. Afternoon: review Tarea 1 bdd for Wednesday's oral. Hockey training 19:30–21:00; protein + carbs right after. Lights ~23:00 — Wednesday you leave at 10:00.",
   } satisfies LocalizedText,
   upcoming: { es: "Próximo", en: "Upcoming" } satisfies LocalizedText,
   upcomingBody: {
@@ -56,28 +56,28 @@ export const tomorrowPageText = {
   } satisfies LocalizedText,
   night: { es: "La noche anterior", en: "The night before" } satisfies LocalizedText,
   source: {
-    es: "Desde Google Calendar · 4 oct 2026, 20:25",
-    en: "From Google Calendar · 4 Oct 2026, 20:25",
+    es: "Desde Google Calendar · 5 oct 2026, 20:25",
+    en: "From Google Calendar · 5 Oct 2026, 20:25",
   } satisfies LocalizedText,
   map: { es: "Mapa", en: "Map" } satisfies LocalizedText,
 };
 
 export const nightBefore: LocalizedText[] = [
   {
-    es: "Luces apagadas ~22:15 — 8 h hasta la alarma 06:25.",
-    en: "Lights out ~22:15 — 8 h before the 06:25 alarm.",
+    es: "Luces apagadas ~22:40 — 8 h hasta la alarma 06:40.",
+    en: "Lights out ~22:40 — 8 h before the 06:40 alarm.",
   },
   {
-    es: "Alarma 06:25, backup 06:35. Salir de Casa al gimnasio 07:05. Ancla: salir a Universidad 10:00.",
-    en: "Alarm 06:25, backup 06:35. Leave Home for the gym 07:05. Anchor: leave for University 10:00.",
+    es: "Alarma 06:40, backup 06:50. Salir de Casa 07:20 (clase 08:20).",
+    en: "Alarm 06:40, backup 06:50. Leave Home 07:20 (class 08:20).",
   },
   {
-    es: "Empacar toalla de gimnasio. Proteína + carbos listas. Bolso de gym y mochila.",
-    en: "Pack the gym towel. Protein + carbs ready. Gym bag and backpack.",
+    es: "Mochila de clase y botella listas. El bolso de hockey se arma en la tarde.",
+    en: "Class bag and bottle ready. Pack the hockey bag in the afternoon.",
   },
   {
-    es: "Chaqueta + cortaviento para la tarde (~9 °C temprano, máx ~17 °C, lluvia desde ~16:00).",
-    en: "Jacket plus a rain shell for the afternoon (~9 °C early, high ~17 °C, rain from ~16:00).",
+    es: "Chaqueta abrigada + cortaviento (~11 °C temprano, máx ~14 °C, lluvia intermitente).",
+    en: "Warm jacket plus a rain shell (~11 °C early, high ~14 °C, on-and-off rain).",
   },
 ];
 
@@ -85,71 +85,25 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "wake",
     kind: "plan",
-    start: "06:25",
-    end: "07:05",
-    title: { es: "Despertar · salir", en: "Wake · leave" },
+    start: "06:40",
+    end: "07:00",
+    title: { es: "Despertar · hidratar", en: "Wake · hydrate" },
     detail: {
-      es: "400–500 ml de agua al despertar; hidratar hasta ~600–800 ml. Pre-entreno: agua o un bocado mínimo. Sales a las 07:05.",
-      en: "400–500 ml water on waking; sip to ~600–800 ml. Pre-workout: water or a tiny bite. Leave at 07:05.",
+      es: "400–500 ml de agua al despertar; hidratar hasta ~600–800 ml. Desayuno simple.",
+      en: "400–500 ml water on waking; sip to ~600–800 ml. Simple breakfast.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "drive-gym",
-    kind: "transit",
-    start: "07:05",
-    end: "07:30",
-    title: { es: "Auto al gimnasio", en: "Drive to gym" },
-    detail: { es: "25 min.", en: "25 min." },
-    location: { es: "Hacia el gimnasio", en: "To the gym" },
-    tag: { es: "Traslados", en: "Transit" },
-  },
-  {
-    id: "gym",
-    kind: "event",
-    start: "07:30",
-    end: "09:05",
-    title: { es: "Gimnasio", en: "Gym" },
-    detail: {
-      es: "Trabajo hasta ~09:05. Si no entra el listado, recorta accesorios — no la salida.",
-      en: "Work until ~09:05. If the list does not fit, cut accessories — not the leave time.",
-    },
-    location: { es: "Gimnasio", en: "Gym" },
-    tag: { es: "Calendario", en: "Calendar" },
-  },
-  {
-    id: "shower",
+    id: "buffer",
     kind: "plan",
-    start: "09:05",
-    end: "09:20",
-    title: { es: "Ducha · sin lavado de pelo", en: "Shower · no hair wash" },
+    start: "07:00",
+    end: "07:20",
+    title: { es: "Margen · salir", en: "Buffer · leave" },
     detail: {
-      es: "~15 min. Proteína + carbos. Salir del gym 09:20.",
-      en: "~15 min. Protein + carbs. Leave the gym 09:20.",
-    },
-    location: { es: "Gimnasio", en: "Gym" },
-    tag: { es: "Plan", en: "Plan" },
-  },
-  {
-    id: "drive-home",
-    kind: "transit",
-    start: "09:20",
-    end: "09:45",
-    title: { es: "Auto a Casa", en: "Drive to Home" },
-    detail: { es: "25 min. Llegas ~09:45.", en: "25 min. Home ~09:45." },
-    location: { es: "Hacia Casa", en: "To Home" },
-    tag: { es: "Traslados", en: "Transit" },
-  },
-  {
-    id: "home-buffer",
-    kind: "plan",
-    start: "09:45",
-    end: "10:00",
-    title: { es: "Casa · salir", en: "Home · leave" },
-    detail: {
-      es: "Mochila. Sales a las 10:00 — no a las 10:10.",
-      en: "Backpack. Leave at 10:00 — not 10:10.",
+      es: "Mochila, botella, cortaviento. Salir a las 07:20 en punto.",
+      en: "Bag, bottle, rain shell. Leave at 07:20 sharp.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -157,10 +111,13 @@ export const morningBlocks: ScheduleBlock[] = [
   {
     id: "transit-uni",
     kind: "transit",
-    start: "10:00",
-    end: "10:55",
+    start: "07:20",
+    end: "08:15",
     title: { es: "Transporte a Universidad", en: "Transit to University" },
-    detail: { es: "Una hora, puerta a sala.", en: "One hour, door to classroom." },
+    detail: {
+      es: "Una hora, puerta a sala. Clase 08:20.",
+      en: "One hour, door to classroom. Class at 08:20.",
+    },
     location: { es: "Hacia Universidad", en: "To University" },
     tag: { es: "Traslados", en: "Transit" },
   },
@@ -168,43 +125,79 @@ export const morningBlocks: ScheduleBlock[] = [
 
 export const laterBlocks: ScheduleBlock[] = [
   {
-    id: "clases",
+    id: "classes",
     kind: "event",
-    start: "11:00",
-    end: "13:30",
-    title: { es: "Clases · bdd + innovación", en: "Classes · bdd + innovación" },
-    detail: { es: "11:00 bdd · 12:20 innovación. Agua a mano.", en: "11:00 bdd · 12:20 innovación. Water on hand." },
+    start: "08:20",
+    end: "11:00",
+    title: { es: "Clases · arqui + web", en: "Classes · arqui + web" },
+    detail: {
+      es: "08:20 arqui · 09:40 web. Agua a mano.",
+      en: "08:20 arqui · 09:40 web. Water on hand.",
+    },
     location: { es: "Universidad", en: "University" },
     tag: { es: "Calendario", en: "Calendar" },
   },
   {
-    id: "lunch",
+    id: "a4",
     kind: "plan",
-    start: "13:30",
-    end: "15:30",
-    title: { es: "Almuerzo · margen", en: "Lunch · buffer" },
-    detail: { es: "Comida real. Margen para Mila a las 16:00.", en: "Real meal. Buffer for Mila at 16:00." },
+    start: "12:00",
+    end: "14:50",
+    title: { es: "Almuerzo · entregar A4 arqui", en: "Lunch · submit A4 arqui" },
+    detail: {
+      es: "De vuelta en Casa ~12:00. Comida real, revisión final y entrega antes de 14:50.",
+      en: "Home ~12:00. Real meal, final check, and submit before 14:50.",
+    },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
   },
   {
-    id: "mila",
-    kind: "event",
-    start: "16:00",
+    id: "oral-prep",
+    kind: "plan",
+    start: "15:00",
     end: "17:30",
-    title: { es: "Mila Dittborn", en: "Mila Dittborn" },
-    detail: { es: "Clase de mates 16:00–17:30.", en: "Math class 16:00–17:30." },
+    title: { es: "Repaso oral T1 bdd", en: "T1 bdd oral prep" },
+    detail: {
+      es: "Repasa tus respuestas de la Tarea 1 para el miércoles 13:30.",
+      en: "Review your own Tarea 1 answers for Wednesday 13:30.",
+    },
+    location: { es: "Casa", en: "Home" },
+    tag: { es: "Plan", en: "Plan" },
+  },
+  {
+    id: "pre-training",
+    kind: "plan",
+    start: "17:30",
+    end: "18:55",
+    title: { es: "Colación · bolso de hockey", en: "Snack · hockey bag" },
+    detail: {
+      es: "Colación ~17:45 (carbos + algo de proteína). Bolso de hockey y botella. Salir 18:55.",
+      en: "Snack ~17:45 (carbs + a little protein). Hockey bag and bottle. Leave 18:55.",
+    },
+    location: { es: "Casa", en: "Home" },
+    tag: { es: "Plan", en: "Plan" },
+  },
+  {
+    id: "training",
+    kind: "event",
+    start: "19:30",
+    end: "21:00",
+    title: { es: "Entrenamiento de hockey", en: "Hockey training" },
+    detail: {
+      es: "25 min en auto. Proteína + carbos al terminar.",
+      en: "25 min drive. Protein + carbs right after.",
+    },
+    location: { es: "Club", en: "Club" },
     tag: { es: "Calendario", en: "Calendar" },
   },
   {
     id: "wind-down",
     kind: "plan",
-    start: "17:30",
-    end: "22:30",
+    start: "21:30",
+    end: "23:00",
     title: { es: "Cena · cierre", en: "Dinner · wind-down" },
     detail: {
-      es: "Cena real. A4 arqui, luego repaso T1 bdd. Luces ~22:30 — el martes empieza temprano.",
-      en: "Real dinner. A4 arqui, then T1 bdd review. Lights ~22:30 — Tuesday starts early.",
+      es: "Cena real. Luces ~23:00 — el miércoles sales a las 10:00.",
+      en: "Real dinner. Lights ~23:00 — Wednesday you leave at 10:00.",
     },
     location: { es: "Casa", en: "Home" },
     tag: { es: "Plan", en: "Plan" },
@@ -213,16 +206,10 @@ export const laterBlocks: ScheduleBlock[] = [
 
 export const upcomingItems: UpcomingItem[] = [
   {
-    id: "a4-arqui",
-    when: { es: "mar 6 oct · 14:50", en: "Tue 6 Oct · 14:50" },
-    title: { es: "A4 arqui", en: "A4 arqui" },
-    detail: { es: "Tarea. Cerrarla el lunes en la noche.", en: "Assignment. Close it Monday evening." },
-  },
-  {
     id: "oral-t1-bdd",
     when: { es: "mié 7 oct · 13:30", en: "Wed 7 Oct · 13:30" },
     title: { es: "Revisión oral T1 bdd", en: "T1 bdd oral review" },
-    detail: { es: "Calificada. Repasa tus respuestas de la Tarea 1.", en: "Graded. Review your own Tarea 1 answers." },
+    detail: { es: "Calificada. Repasa tus respuestas de la Tarea 1 — martes en la tarde.", en: "Graded. Review your own Tarea 1 answers — Tuesday afternoon." },
   },
   {
     id: "acfin",
@@ -240,7 +227,7 @@ export const upcomingItems: UpcomingItem[] = [
     id: "t2-bdd",
     when: { es: "jue 8 oct · 23:59", en: "Thu 8 Oct · 23:59" },
     title: { es: "T2 bdd · entrega", en: "T2 bdd · deadline" },
-    detail: { es: "Entrega Bases de Datos (IIC2413). Cerrarla antes del partido del jueves.", en: "Bases de Datos (IIC2413) deadline. Close it out before Thursday's match." },
+    detail: { es: "Entrega Bases de Datos (IIC2413). Miércoles en la noche + jueves; cerrarla antes del partido.", en: "Bases de Datos (IIC2413) deadline. Wednesday night + Thursday; close it before the match." },
   },
 ];
 
@@ -274,6 +261,6 @@ export function googleMapsSearchUrl(query: string): string {
 export const TOMORROW_SUMMARY_STATS = {
   blocks: String(morningBlocks.length),
   committed: "3",
-  transit: "1h 45m",
-  first: "06:25",
+  transit: "55 min",
+  first: "06:40",
 };
