@@ -59,7 +59,9 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
   const instrument = resolvedTicker ? instrumentByTicker(resolvedTicker) : undefined;
   const label = resolvedTicker ?? (isin ? canonicalCompanyLabel(isin, name ?? isin) : (name ?? ""));
   const tooltipId = useId();
+  const detailsButtonId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
   const [pinned, setPinned] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -134,9 +136,12 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
       ? `${t("portfolio.ticker.heldVia")} ${heldVia.join(", ")}`
       : "";
 
+  const focusStaysInPopover = (next: EventTarget | null) =>
+    next instanceof Node && (popoverRef.current?.contains(next) === true || next === triggerRef.current);
+
   const openDetails = () => {
     if (resolvedTicker) {
-      details?.openDetails(resolvedTicker);
+      details?.openDetails(resolvedTicker, triggerRef.current);
     }
     setHovered(false);
     setPinned(false);
@@ -155,14 +160,30 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
         aria-label={line2.length > 0 ? `${label}, ${line1}, ${line2}` : `${label}, ${line1}`}
         aria-controls={visible ? tooltipId : undefined}
         aria-haspopup={resolvedTicker ? "dialog" : undefined}
-        aria-expanded={details?.openTicker === resolvedTicker}
+        aria-expanded={visible || details?.openTicker === resolvedTicker}
         onMouseEnter={() => {
           cancelClose();
           setHovered(true);
         }}
         onMouseLeave={scheduleClose}
         onFocus={() => setFocused(true)}
-        onBlur={scheduleClose}
+        onBlur={(event) => {
+          if (focusStaysInPopover(event.relatedTarget)) {
+            return;
+          }
+          scheduleClose();
+        }}
+        onKeyDown={(event) => {
+          if (event.key !== "Tab" || event.shiftKey || !visible) {
+            return;
+          }
+          const detailsButton = document.getElementById(detailsButtonId);
+          if (detailsButton === null) {
+            return;
+          }
+          event.preventDefault();
+          detailsButton.focus();
+        }}
         onClick={(event) => {
           if (event.detail === 0 && resolvedTicker) {
             openDetails();
@@ -181,6 +202,7 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
       {visible && position
         ? createPortal(
             <div
+              ref={popoverRef}
               id={tooltipId}
               style={{ top: position.top, left: position.left }}
               className="fixed z-50 w-max max-w-[16rem] border border-border bg-background px-2 py-1.5 text-left font-mono text-[11px] font-normal normal-case leading-snug tracking-normal text-foreground shadow-none"
@@ -192,11 +214,18 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
               {line3.length > 0 ? <span className="mt-0.5 block text-muted-foreground">{line3}</span> : null}
               {resolvedTicker ? (
                 <button
+                  id={detailsButtonId}
                   type="button"
                   className="mt-1.5 border-0 bg-transparent p-0 text-[10px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                   onClick={openDetails}
+                  onKeyDown={(event) => {
+                    if (event.key === "Tab" && event.shiftKey) {
+                      event.preventDefault();
+                      triggerRef.current?.focus();
+                    }
+                  }}
                 >
-                  {t("portfolio.ticker.details")}
+                  {t("portfolio.ticker.details")} →
                 </button>
               ) : null}
             </div>,

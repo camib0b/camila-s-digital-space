@@ -9,7 +9,7 @@ import {
   sourceTag,
 } from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport } from "@/types/portfolioAnalytics";
-import { TickerAxisTick } from "@/components/portfolio/TickerLabel";
+import TickerLabel, { TickerAxisTick } from "@/components/portfolio/TickerLabel";
 import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
 
 export function RiskSection({ report }: { report: AnalyticsReport }) {
@@ -64,7 +64,11 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                     }
                     return (
                       <div className={chartTooltipClassName}>
-                        <p>{label}</p>
+                        <p>
+                          {typeof label === "string" && label.length > 0 ? (
+                            <TickerLabel ticker={label} className="font-mono text-[11px]" />
+                          ) : null}
+                        </p>
                         {payload.map((entry) => (
                           <p key={String(entry.dataKey)}>
                             {entry.dataKey === "capital" ? t("portfolio.analytics.capital") : t("portfolio.analytics.riskShare")}

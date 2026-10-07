@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { ExposureBlock } from "@/types/portfolioAnalytics";
 
 interface TickerDetailsContextValue {
   weightsByTicker: Readonly<Record<string, string>>;
   exposure: ExposureBlock | null;
   openTicker: string | null;
-  openDetails: (ticker: string) => void;
+  openDetails: (ticker: string, returnFocus?: HTMLElement | null) => void;
   closeDetails: () => void;
   setExposure: (exposure: ExposureBlock | null) => void;
 }
@@ -21,17 +21,34 @@ export function TickerDetailsProvider({
 }) {
   const [exposure, setExposure] = useState<ExposureBlock | null>(null);
   const [openTicker, setOpenTicker] = useState<string | null>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+
+  const openDetails = useCallback((ticker: string, returnFocus?: HTMLElement | null) => {
+    if (returnFocusRef.current === null && returnFocus) {
+      returnFocusRef.current = returnFocus;
+    }
+    setOpenTicker(ticker);
+  }, []);
+
+  const closeDetails = useCallback(() => {
+    setOpenTicker(null);
+    const returnFocus = returnFocusRef.current;
+    returnFocusRef.current = null;
+    window.requestAnimationFrame(() => {
+      returnFocus?.focus();
+    });
+  }, []);
 
   const value = useMemo<TickerDetailsContextValue>(
     () => ({
       weightsByTicker,
       exposure,
       openTicker,
-      openDetails: (ticker: string) => setOpenTicker(ticker),
-      closeDetails: () => setOpenTicker(null),
+      openDetails,
+      closeDetails,
       setExposure,
     }),
-    [weightsByTicker, exposure, openTicker],
+    [weightsByTicker, exposure, openTicker, openDetails, closeDetails],
   );
 
   return <TickerDetailsContext.Provider value={value}>{children}</TickerDetailsContext.Provider>;

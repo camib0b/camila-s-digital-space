@@ -18,6 +18,7 @@ function stackedRow(row: LookThroughRow) {
   const values: Record<string, number | string> = {
     name: canonicalCompanyLabel(row.isin, row.name),
     companyName: row.name,
+    isin: row.isin,
     direct: 0,
     VOO: 0,
     VXUS: 0,
@@ -120,12 +121,14 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
                 if (!active || payload === undefined || payload.length === 0) {
                   return null;
                 }
-                const row = payload[0]?.payload as { name?: string; companyName?: string } | undefined;
+                const row = payload[0]?.payload as { name?: string; companyName?: string; isin?: string } | undefined;
                 const label = row?.name ?? "";
                 const companyName = row?.companyName ?? label;
                 return (
                   <div className={chartTooltipClassName}>
-                    <p>{label}</p>
+                    <p>
+                      <TickerLabel isin={row?.isin} name={companyName} className="font-mono text-[11px]" />
+                    </p>
                     {companyName !== label ? <p className="text-muted-foreground">{companyName}</p> : null}
                     {payload.map((entry) => (
                       <p key={String(entry.dataKey)}>

@@ -49,7 +49,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     kind: "equity-fund",
     role: "core",
     roleApproved: true,
-    tracks: "S&P 500",
+    tracks: "S&P 500 Index",
   },
   {
     ticker: "VXUS",
@@ -60,7 +60,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     kind: "equity-fund",
     role: "diversification",
     roleApproved: true,
-    tracks: "FTSE All-World ex US Index",
+    tracks: "FTSE Global All Cap ex US Index",
   },
   {
     ticker: "BND",
@@ -82,7 +82,6 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     kind: "stock",
     role: "conviction",
     roleApproved: true,
-    sectorKey: "portfolio.sector.cloud",
   },
   {
     ticker: "TSLA",
@@ -93,7 +92,6 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     kind: "stock",
     role: "conviction",
     roleApproved: true,
-    sectorKey: "portfolio.sector.autos",
   },
   {
     ticker: "SHOP",
@@ -104,7 +102,6 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     kind: "stock",
     role: "conviction",
     roleApproved: true,
-    sectorKey: "portfolio.sector.commerce",
   },
   {
     ticker: "ROBO",

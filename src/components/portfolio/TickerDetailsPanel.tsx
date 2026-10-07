@@ -4,52 +4,78 @@ import { formatPercent } from "@/lib/analyticsFormat";
 import {
   KIND_LABEL_KEY,
   ROLE_LABEL_KEY,
-  canonicalCompanyLabel,
   instrumentByTicker,
   showHoldingWeightInDetails,
 } from "@/lib/tickerCatalog";
 import type { ExposureContribution, LookThroughRow } from "@/types/portfolioAnalytics";
 import { useTickerDetails } from "@/components/portfolio/TickerDetailsContext";
+import TickerLabel from "@/components/portfolio/TickerLabel";
 
 function stockContributions(isin: string, rows: readonly LookThroughRow[]): ExposureContribution[] {
   return rows.find((row) => row.isin === isin)?.contributions ?? [];
 }
 
-function fundConstituents(ticker: string, rows: readonly LookThroughRow[]): { label: string; weight: number }[] {
+function fundConstituents(
+  ticker: string,
+  rows: readonly LookThroughRow[],
+): { isin: string; name: string; weight: number }[] {
   return rows
     .map((row) => {
       const contribution = row.contributions.find((item) => item.source === ticker);
       if (contribution === undefined || contribution.weight <= 0) {
         return null;
       }
-      return { label: canonicalCompanyLabel(row.isin, row.name), weight: contribution.weight };
+      return { isin: row.isin, name: row.name, weight: contribution.weight };
     })
-    .filter((row): row is { label: string; weight: number } => row !== null)
+    .filter((row): row is { isin: string; name: string; weight: number } => row !== null)
     .sort((left, right) => right.weight - left.weight)
     .slice(0, 8);
 }
+
+const FOCUSABLE_SELECTOR = "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])";
 
 const TickerDetailsPanel = () => {
   const { t } = useLanguage();
   const details = useTickerDetails();
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLElement>(null);
   const ticker = details?.openTicker ?? null;
   const instrument = ticker ? instrumentByTicker(ticker) : undefined;
+  const closeDetails = details?.closeDetails;
 
   useEffect(() => {
-    if (ticker === null) {
+    if (ticker === null || closeDetails === undefined) {
       return;
     }
     closeRef.current?.focus();
-    const closeOnEscape = (event: KeyboardEvent) => {
+    const trapFocus = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        details?.closeDetails();
+        closeDetails();
+        return;
+      }
+      if (event.key !== "Tab" || dialogRef.current === null) {
+        return;
+      }
+      const focusable = [...dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)].filter(
+        (element) => !element.hasAttribute("disabled"),
+      );
+      if (focusable.length === 0) {
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [ticker, details]);
+    document.addEventListener("keydown", trapFocus);
+    return () => document.removeEventListener("keydown", trapFocus);
+  }, [ticker, closeDetails]);
 
   if (details === null || ticker === null || instrument === undefined) {
     return null;
@@ -81,6 +107,7 @@ const TickerDetailsPanel = () => {
         onClick={details.closeDetails}
       />
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
@@ -122,7 +149,11 @@ const TickerDetailsPanel = () => {
                   className="flex items-baseline justify-between gap-3 border-b border-border px-3 py-2 last:border-b-0"
                 >
                   <span className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                    {contribution.source === "direct" ? t("portfolio.analytics.direct") : contribution.source}
+                    {contribution.source === "direct" ? (
+                      t("portfolio.analytics.direct")
+                    ) : (
+                      <TickerLabel ticker={contribution.source} className="font-mono text-[10px]" />
+                    )}
                   </span>
                   <span className="font-mono text-xs tabular-nums">{formatPercent(contribution.weight)}</span>
                 </li>
@@ -138,10 +169,10 @@ const TickerDetailsPanel = () => {
             <ul className="border border-border">
               {constituents.map((constituent) => (
                 <li
-                  key={constituent.label}
+                  key={constituent.isin}
                   className="flex items-baseline justify-between gap-3 border-b border-border px-3 py-2 last:border-b-0"
                 >
-                  <span className="font-mono text-xs">{constituent.label}</span>
+                  <TickerLabel isin={constituent.isin} name={constituent.name} className="font-mono text-xs" />
                   <span className="font-mono text-xs tabular-nums">{formatPercent(constituent.weight)}</span>
                 </li>
               ))}

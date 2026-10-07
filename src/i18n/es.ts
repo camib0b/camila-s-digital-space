@@ -354,7 +354,7 @@ const es: Record<TranslationKey, string> = {
     "portfolio.ticker.exchange": "Bolsa",
     "portfolio.ticker.issuer": "Emisor",
     "portfolio.ticker.isin": "ISIN",
-    "portfolio.ticker.tracks": "Replica",
+    "portfolio.ticker.tracks": "Réplica",
     "portfolio.ticker.sector": "Sector",
     "portfolio.ticker.role": "Rol",
     "portfolio.ticker.weight": "Peso",
