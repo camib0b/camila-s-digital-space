@@ -104,7 +104,7 @@ const TickerLabel = ({ ticker, className }: TickerLabelProps) => {
         ref={triggerRef}
         type="button"
         className={cn(
-          "border-0 bg-transparent p-0 text-left font-medium text-xs text-inherit no-underline shadow-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm",
+          "border-0 bg-transparent p-0 text-left text-xs text-inherit no-underline shadow-none transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
           className
         )}
         aria-label={`${ticker}, ${fundName}`}
@@ -130,7 +130,7 @@ const TickerLabel = ({ ticker, className }: TickerLabelProps) => {
               id={tooltipId}
               role="tooltip"
               style={{ top: position.top, left: position.left }}
-              className="pointer-events-none fixed z-50 w-max max-w-[14rem] rounded-md bg-popover px-2 py-1 text-[10px] font-normal normal-case leading-snug tracking-normal text-popover-foreground shadow-sm ring-1 ring-border"
+              className="pointer-events-none fixed z-50 w-max max-w-[14rem] border border-border bg-background px-2 py-1.5 font-mono text-[11px] font-normal normal-case leading-snug tracking-normal text-foreground shadow-none"
             >
               {fundName}
             </span>,

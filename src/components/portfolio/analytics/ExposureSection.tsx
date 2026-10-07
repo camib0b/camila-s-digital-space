@@ -1,8 +1,8 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { formatPercent, sourceTag } from "@/lib/analyticsFormat";
+import { chartAxisTick, chartTooltipClassName, formatPercent, sourceTag } from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport, type LookThroughRow } from "@/types/portfolioAnalytics";
-import { MethodNote, Panel, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
+import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
 
 const FUND_COLORS: Record<string, string> = {
   direct: "hsl(var(--series-portfolio))",
@@ -77,7 +77,7 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
             <CartesianGrid stroke="hsl(var(--border))" horizontal={false} />
             <XAxis
               type="number"
-              tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+              tick={chartAxisTick}
               tickLine={false}
               axisLine={false}
               tickFormatter={(value: number) => `${value.toFixed(0)}%`}
@@ -86,18 +86,18 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
               type="category"
               dataKey="name"
               width={108}
-              tick={{ fill: "hsl(var(--foreground))", fontSize: 10 }}
+              tick={{ ...chartAxisTick, fill: "hsl(var(--foreground))", fontSize: 10 }}
               tickLine={false}
               axisLine={false}
             />
             <Tooltip
-              cursor={{ fill: "hsl(var(--muted))" }}
+              cursor={{ fill: "hsl(var(--foreground) / 0.04)" }}
               content={({ active, payload, label }) => {
                 if (!active || payload === undefined) {
                   return null;
                 }
                 return (
-                  <div className="border border-border bg-background px-2 py-1.5 font-mono text-[11px]">
+                  <div className={chartTooltipClassName}>
                     <p>{label}</p>
                     {payload.map((entry) => (
                       <p key={String(entry.dataKey)}>
@@ -122,12 +122,18 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <p className="mt-2 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.14em]">
-        <span className="text-series-portfolio">{t("portfolio.analytics.direct")}</span>
-        <span>VOO</span>
-        <span className="text-series-benchmark">VXUS</span>
-        <span className="text-muted-foreground">ROBO</span>
-      </p>
+      <SeriesLegend
+        items={[
+          {
+            label: t("portfolio.analytics.direct"),
+            swatchClassName: "bg-series-portfolio",
+            labelClassName: "text-series-portfolio",
+          },
+          { label: "VOO", swatchClassName: "bg-foreground", labelClassName: "text-foreground" },
+          { label: "VXUS", swatchClassName: "bg-series-benchmark", labelClassName: "text-series-benchmark" },
+          { label: "ROBO", swatchClassName: "bg-muted-foreground", labelClassName: "text-muted-foreground" },
+        ]}
+      />
       <dl className="mt-4 grid grid-cols-3 gap-px border border-border bg-border">
         {[
           [t("portfolio.analytics.bonds"), formatPercent(exposure.bondWeight)],
@@ -143,7 +149,8 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
       <h3 className="mb-2 mt-5 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
         {t("portfolio.analytics.overlap")}
       </h3>
-      <div className="grid grid-cols-4 gap-px border border-border bg-border text-center font-mono text-[11px]">
+      <div className="overflow-x-auto">
+        <div className="grid min-w-[16rem] grid-cols-4 gap-px border border-border bg-border text-center font-mono text-[11px]">
         <div className="bg-card" />
         {funds.map((fund) => (
           <div key={fund} className="bg-card px-2 py-1 text-muted-foreground">
@@ -159,7 +166,7 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
               return (
                 <div
                   key={`${rowFund}-${columnFund}`}
-                  className="bg-card px-2 py-2 tabular-nums"
+                  className="bg-card px-2 py-2 tabular-nums text-foreground"
                   style={
                     overlap === null
                       ? undefined
@@ -172,6 +179,7 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
             })}
           </div>
         ))}
+        </div>
       </div>
       {roboListing !== undefined && (
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{roboListing.identificationNote}</p>

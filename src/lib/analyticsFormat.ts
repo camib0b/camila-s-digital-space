@@ -27,3 +27,13 @@ export function numberTone(value: number): string {
 export function sourceTag(parts: readonly string[]): string {
   return `SRC: ${parts.filter((part) => part.length > 0).join(" · ")}`;
 }
+
+/** Axis ticks for /capital charts. Colors stay on the existing theme tokens. */
+export const chartAxisTick = {
+  fill: "hsl(var(--muted-foreground))",
+  fontSize: 11,
+  fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+} as const;
+
+export const chartTooltipClassName =
+  "border border-border bg-background px-2 py-1.5 font-mono text-[11px] text-foreground";

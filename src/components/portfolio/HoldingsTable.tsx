@@ -21,7 +21,7 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
       </h2>
       <table className="w-full table-fixed border-collapse">
         <thead>
-          <tr className="border-b border-border text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+          <tr className="border-b border-border text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
             <th className="w-[34%] pb-2 pr-2 text-left font-medium">{t("portfolio.holdings.ticker")}</th>
             <th className="w-[33%] px-2 pb-2 text-right font-medium">{t("portfolio.holdings.weight")}</th>
             <th className="w-[33%] pb-2 pl-2 text-right font-medium">{t("portfolio.holdings.return")}</th>
@@ -32,7 +32,10 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
             const gainPercent = parseFloat(holding.gainPercent);
             const showLastTradePrice = holding.stale === true && Number.isFinite(holding.currentPrice);
             return (
-              <tr key={holding.ticker} className="border-b border-border last:border-b-0">
+              <tr
+                key={holding.ticker}
+                className="border-b border-border transition-colors last:border-b-0 hover:bg-muted/40 active:bg-muted/40"
+              >
                 <td className="py-2.5 pr-2 align-top">
                   <TickerLabel ticker={holding.ticker} className="font-mono text-xs" />
                   {showLastTradePrice ? (

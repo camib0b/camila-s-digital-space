@@ -40,7 +40,14 @@ export default function PortfolioAnalytics() {
 
   if (analytics.isError || analytics.data === undefined) {
     const message = analytics.error instanceof Error ? analytics.error.message : t("portfolio.analytics.error");
-    return <p className="mb-12 text-sm text-number-negative">{message}</p>;
+    return (
+      <div className="mb-12 border border-border bg-card px-4 py-5 md:px-5">
+        <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+          {t("portfolio.analytics.unavailable")}
+        </p>
+        <p className="mt-2 text-sm text-number-negative">{message}</p>
+      </div>
+    );
   }
 
   const report = analytics.data;
@@ -104,7 +111,7 @@ export default function PortfolioAnalytics() {
       <PerformanceSection report={report} />
       <RiskSection report={report} />
       <ExposureSection report={report} />
-      <p className="text-center text-[11px] tracking-wide text-muted-foreground">{t("portfolio.analytics.disclaimer")}</p>
+      <p className="text-[11px] tracking-wide text-muted-foreground">{t("portfolio.analytics.disclaimer")}</p>
     </div>
   );
 }
