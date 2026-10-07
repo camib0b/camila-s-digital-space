@@ -1,8 +1,16 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { formatPercent, formatSignedPercent, numberTone, sourceTag } from "@/lib/analyticsFormat";
+import {
+  chartAxisTick,
+  chartTooltipClassName,
+  formatPercent,
+  formatSignedPercent,
+  numberTone,
+  sourceTag,
+} from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport } from "@/types/portfolioAnalytics";
-import { MethodNote, Panel, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
+import TickerLabel, { TickerAxisTick } from "@/components/portfolio/TickerLabel";
+import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
 
 export function RiskSection({ report }: { report: AnalyticsReport }) {
   const { t } = useLanguage();
@@ -35,7 +43,7 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                 <CartesianGrid stroke="hsl(var(--border))" horizontal={false} />
                 <XAxis
                   type="number"
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+                  tick={chartAxisTick}
                   tickLine={false}
                   axisLine={false}
                   tickFormatter={(value: number) => `${value.toFixed(0)}%`}
@@ -43,20 +51,24 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                 <YAxis
                   type="category"
                   dataKey="ticker"
-                  width={52}
-                  tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
+                  width={64}
+                  tick={<TickerAxisTick labelWidth={60} />}
                   tickLine={false}
                   axisLine={false}
                 />
                 <Tooltip
-                  cursor={{ fill: "hsl(var(--muted))" }}
+                  cursor={{ fill: "hsl(var(--foreground) / 0.04)" }}
                   content={({ active, payload, label }) => {
                     if (!active || payload === undefined) {
                       return null;
                     }
                     return (
-                      <div className="border border-border bg-background px-2 py-1.5 font-mono text-[11px]">
-                        <p>{label}</p>
+                      <div className={chartTooltipClassName}>
+                        <p>
+                          {typeof label === "string" && label.length > 0 ? (
+                            <TickerLabel ticker={label} className="font-mono text-[11px]" />
+                          ) : null}
+                        </p>
                         {payload.map((entry) => (
                           <p key={String(entry.dataKey)}>
                             {entry.dataKey === "capital" ? t("portfolio.analytics.capital") : t("portfolio.analytics.riskShare")}
@@ -68,16 +80,35 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                     );
                   }}
                 />
-                <Bar dataKey="capital" fill="hsl(var(--series-portfolio))" barSize={6} isAnimationActive={!reducedMotion} animationDuration={250} />
-                <Bar dataKey="risk" fill="hsl(var(--series-benchmark))" barSize={6} isAnimationActive={!reducedMotion} animationDuration={250} />
+                <Bar dataKey="capital" fill="hsl(var(--foreground))" barSize={7} isAnimationActive={!reducedMotion} animationDuration={250} />
+                <Bar
+                  dataKey="risk"
+                  fill="hsl(var(--foreground) / 0.08)"
+                  stroke="hsl(var(--foreground))"
+                  strokeWidth={1.25}
+                  barSize={7}
+                  isAnimationActive={!reducedMotion}
+                  animationDuration={250}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <p className="mt-2 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-            <span className="text-series-portfolio">{t("portfolio.analytics.capital")}</span>
-            {" · "}
-            <span className="text-series-benchmark">{t("portfolio.analytics.riskShare")}</span>
-          </p>
+          <SeriesLegend
+            items={[
+              {
+                itemKey: "capital",
+                label: t("portfolio.analytics.capital"),
+                swatchClassName: "h-2 w-3 bg-foreground",
+                labelClassName: "text-foreground",
+              },
+              {
+                itemKey: "risk",
+                label: t("portfolio.analytics.riskShare"),
+                swatchClassName: "h-2 w-3 border border-foreground bg-foreground/10",
+                labelClassName: "text-foreground",
+              },
+            ]}
+          />
           <p className="mt-3 text-right font-mono text-sm tabular-nums">
             σ {formatPercent(risk.portfolioVolatility)} · Σw {risk.weightsSum.toFixed(4)}
           </p>

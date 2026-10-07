@@ -1,6 +1,7 @@
 import katex from "katex";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import "katex/dist/katex.min.css";
+import { cn } from "@/lib/utils";
 
 export function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
@@ -19,7 +20,12 @@ export function Formula({ tex }: { tex: string }) {
     () => katex.renderToString(tex, { throwOnError: false, displayMode: true }),
     [tex],
   );
-  return <div className="overflow-x-auto text-sm text-foreground" dangerouslySetInnerHTML={{ __html: html }} />;
+  return (
+    <div
+      className="overflow-x-auto text-foreground [&_.katex]:text-[0.95em] [&_.katex-display]:my-1"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }
 
 export function MethodNote({
@@ -33,7 +39,7 @@ export function MethodNote({
 }) {
   return (
     <details className="mt-4 border-t border-border">
-      <summary className="cursor-pointer list-none py-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground [&::-webkit-details-marker]:hidden">
+      <summary className="cursor-pointer list-none py-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
         {title}
       </summary>
       <div className="space-y-3 pb-2">
@@ -57,8 +63,25 @@ export function SourceFooter({ tag }: { tag: string }) {
 export function UnavailableNote({ label, reason }: { label: string; reason: string }) {
   return (
     <div className="border border-border px-3 py-4">
-      <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
+      <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
       <p className="mt-2 text-sm text-foreground">{reason}</p>
+    </div>
+  );
+}
+
+export function SeriesLegend({
+  items,
+}: {
+  items: readonly { itemKey: string; label: ReactNode; swatchClassName: string; labelClassName: string }[];
+}) {
+  return (
+    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+      {items.map((item) => (
+        <span key={item.itemKey} className="inline-flex items-center gap-2">
+          <span className={cn("inline-block h-px w-3", item.swatchClassName)} aria-hidden="true" />
+          <span className={`text-[10px] uppercase tracking-[0.14em] ${item.labelClassName}`}>{item.label}</span>
+        </span>
+      ))}
     </div>
   );
 }

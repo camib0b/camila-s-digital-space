@@ -9,7 +9,14 @@ import {
   YAxis,
 } from "recharts";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { formatPercentagePoints, formatSignedPercent, numberTone, sourceTag } from "@/lib/analyticsFormat";
+import {
+  chartAxisTick,
+  chartTooltipClassName,
+  formatPercentagePoints,
+  formatSignedPercent,
+  numberTone,
+  sourceTag,
+} from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport, type PerformanceBlock } from "@/types/portfolioAnalytics";
 import { MethodNote, Panel, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
 
@@ -32,7 +39,14 @@ function EndLabel({
     return <g />;
   }
   return (
-    <text x={cx + 8} y={cy + (text === "VOO" ? 11 : -8)} fill={color} fontSize={11} dominantBaseline="middle">
+    <text
+      x={cx + 8}
+      y={cy + (text === "VOO" ? 11 : -8)}
+      fill={color}
+      fontSize={11}
+      fontFamily={chartAxisTick.fontFamily}
+      dominantBaseline="middle"
+    >
       {text}
     </text>
   );
@@ -57,15 +71,9 @@ function PerformanceChart({ performance }: { performance: PerformanceBlock }) {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 12, right: 88, left: 0, bottom: 0 }}>
           <CartesianGrid stroke="hsl(var(--border))" vertical={false} />
-          <XAxis
-            dataKey="date"
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
-            tickLine={false}
-            axisLine={false}
-            minTickGap={28}
-          />
+          <XAxis dataKey="date" tick={chartAxisTick} tickLine={false} axisLine={false} minTickGap={28} />
           <YAxis
-            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+            tick={chartAxisTick}
             tickLine={false}
             axisLine={false}
             width={64}
@@ -78,7 +86,7 @@ function PerformanceChart({ performance }: { performance: PerformanceBlock }) {
                 return null;
               }
               return (
-                <div className="border border-border bg-background px-2 py-1.5 font-mono text-[11px] text-foreground">
+                <div className={chartTooltipClassName}>
                   <p>{label}</p>
                   {payload.map((entry) => (
                     <p key={String(entry.dataKey)}>
@@ -141,6 +149,7 @@ function PerformanceChart({ performance }: { performance: PerformanceBlock }) {
                 position: "top",
                 fill: "hsl(var(--muted-foreground))",
                 fontSize: 10,
+                fontFamily: chartAxisTick.fontFamily,
               }}
             />
           )}
@@ -172,13 +181,17 @@ export function PerformanceSection({ report }: { report: AnalyticsReport }) {
         <dt className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
           {t("portfolio.analytics.simple")}
         </dt>
-        <dd className="mt-1 text-right font-mono text-sm tabular-nums">
+        <dd
+          className={`mt-1 text-right font-mono text-sm tabular-nums ${
+            performance.simpleReturn === null ? "" : numberTone(performance.simpleReturn)
+          }`}
+        >
           {performance.simpleReturn === null
             ? t("portfolio.analytics.unavailable")
             : formatSignedPercent(performance.simpleReturn)}
         </dd>
       </dl>
-      <p className="mt-3 text-xs text-muted-foreground">
+      <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
         {t("portfolio.analytics.simpleLabel")}
         {" · "}
         {t("portfolio.analytics.excessLabel")}
@@ -187,8 +200,12 @@ export function PerformanceSection({ report }: { report: AnalyticsReport }) {
         {benchmarkText}
       </p>
       {performance.maxDrawdown !== null && (
-        <p className="mt-1 font-mono text-xs tabular-nums text-muted-foreground">
-          {t("portfolio.analytics.drawdown")} {formatSignedPercent(performance.maxDrawdown.drawdown)} ·{" "}
+        <p className="mt-1 text-right font-mono text-xs tabular-nums text-muted-foreground">
+          {t("portfolio.analytics.drawdown")}{" "}
+          <span className={numberTone(performance.maxDrawdown.drawdown)}>
+            {formatSignedPercent(performance.maxDrawdown.drawdown)}
+          </span>
+          {" · "}
           {performance.maxDrawdown.peakDate} → {performance.maxDrawdown.troughDate}
         </p>
       )}
