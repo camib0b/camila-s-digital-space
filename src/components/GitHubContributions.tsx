@@ -1,4 +1,4 @@
-import { useState, type FocusEvent, type MouseEvent } from "react";
+import { useLayoutEffect, useRef, useState, type FocusEvent, type MouseEvent } from "react";
 import { useGithubContributions } from "@/hooks/useGithubContributions";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
@@ -40,9 +40,66 @@ const GitHubContributions = () => {
   const { language, t } = useLanguage();
   const { contributions, isLoading, isError } = useGithubContributions();
   const [tooltip, setTooltip] = useState<CalendarTooltip | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const userHasScrolledRef = useRef(false);
+  const pendingUserScrollFrameRef = useRef<number | null>(null);
+
+  const weekCount = contributions?.weeks.length ?? skeletonWeekCount();
+
+  useLayoutEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) {
+      return;
+    }
+
+    scrollContainerToLatestContributions(scrollContainer);
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (userHasScrolledRef.current || pendingUserScrollFrameRef.current !== null) {
+        return;
+      }
+      scrollContainerToLatestContributions(scrollContainer);
+    });
+    resizeObserver.observe(scrollContainer);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [isLoading, weekCount]);
 
   const hideTooltip = () => {
     setTooltip(null);
+  };
+
+  const handleCalendarScroll = () => {
+    hideTooltip();
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) {
+      return;
+    }
+
+    if (isScrolledToLatestContributions(scrollContainer)) {
+      if (pendingUserScrollFrameRef.current !== null) {
+        cancelAnimationFrame(pendingUserScrollFrameRef.current);
+        pendingUserScrollFrameRef.current = null;
+      }
+      return;
+    }
+
+    if (pendingUserScrollFrameRef.current !== null) {
+      return;
+    }
+
+    // Content swaps can emit a scroll event before useLayoutEffect pins the
+    // right edge. Wait a frame so that correction is not treated as a user scroll.
+    pendingUserScrollFrameRef.current = requestAnimationFrame(() => {
+      pendingUserScrollFrameRef.current = null;
+      const containerAfterFrame = scrollContainerRef.current;
+      if (!containerAfterFrame || isScrolledToLatestContributions(containerAfterFrame)) {
+        return;
+      }
+      userHasScrolledRef.current = true;
+    });
   };
 
   const showTooltip = (
@@ -57,7 +114,6 @@ const GitHubContributions = () => {
     });
   };
 
-  const weekCount = contributions?.weeks.length ?? skeletonWeekCount();
   const monthCells = contributions
     ? monthLabelCells(contributions.months, contributions.weeks, language)
     : [{ label: "", span: skeletonWeekCount() }];
@@ -94,11 +150,12 @@ const GitHubContributions = () => {
             </div>
 
             <div
+              ref={scrollContainerRef}
               className="min-w-0 flex-1 overflow-x-auto pb-1"
               role="region"
               aria-label={t("github.label")}
               aria-busy={isLoading}
-              onScroll={hideTooltip}
+              onScroll={handleCalendarScroll}
             >
               <div
                 className="inline-block"
@@ -214,6 +271,71 @@ const GitHubContributions = () => {
     </div>
   );
 };
+
+const SCROLL_EDGE_TOLERANCE_PX = 1;
+
+let rightToLeftRightEdgeIsZeroCache: boolean | null = null;
+
+function scrollContainerToLatestContributions(scrollContainer: HTMLElement): void {
+  const maximumScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+  if (maximumScrollLeft <= SCROLL_EDGE_TOLERANCE_PX) {
+    return;
+  }
+
+  const latestScrollLeft = scrollLeftForVisualRightEdge(scrollContainer, maximumScrollLeft);
+  if (Math.abs(scrollContainer.scrollLeft - latestScrollLeft) <= SCROLL_EDGE_TOLERANCE_PX) {
+    return;
+  }
+
+  scrollContainer.scrollLeft = latestScrollLeft;
+}
+
+function isScrolledToLatestContributions(scrollContainer: HTMLElement): boolean {
+  const maximumScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+  if (maximumScrollLeft <= SCROLL_EDGE_TOLERANCE_PX) {
+    return true;
+  }
+
+  const latestScrollLeft = scrollLeftForVisualRightEdge(scrollContainer, maximumScrollLeft);
+  return Math.abs(scrollContainer.scrollLeft - latestScrollLeft) <= SCROLL_EDGE_TOLERANCE_PX;
+}
+
+// Weeks stay in DOM order, oldest on the left and newest on the right.
+// scrollLeft = scrollWidth - clientWidth opens on that right edge in LTR.
+// RTL scrollports use either 0 or that same maximum for the visual right edge;
+// flipping flex direction would reverse the chronology, so only the scroll offset changes.
+function scrollLeftForVisualRightEdge(scrollContainer: HTMLElement, maximumScrollLeft: number): number {
+  if (getComputedStyle(scrollContainer).direction !== "rtl") {
+    return maximumScrollLeft;
+  }
+  return rightToLeftRightEdgeIsZero() ? 0 : maximumScrollLeft;
+}
+
+function rightToLeftRightEdgeIsZero(): boolean {
+  if (rightToLeftRightEdgeIsZeroCache !== null) {
+    return rightToLeftRightEdgeIsZeroCache;
+  }
+  if (!document.body) {
+    return false;
+  }
+
+  const probe = document.createElement("div");
+  const content = document.createElement("div");
+  probe.dir = "rtl";
+  probe.style.direction = "rtl";
+  probe.style.position = "absolute";
+  probe.style.top = "-9999px";
+  probe.style.width = "4px";
+  probe.style.height = "1px";
+  probe.style.overflow = "scroll";
+  content.style.width = "8px";
+  content.style.height = "1px";
+  probe.appendChild(content);
+  document.body.appendChild(probe);
+  rightToLeftRightEdgeIsZeroCache = probe.scrollLeft === 0;
+  probe.remove();
+  return rightToLeftRightEdgeIsZeroCache;
+}
 
 function skeletonWeekCount(): number {
   const start = Date.parse(`${CONTRIBUTION_CALENDAR_START_DATE}T00:00:00Z`);
