@@ -1,18 +1,28 @@
+import type { ReactNode } from "react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { chartAxisTick, chartTooltipClassName, formatPercent, sourceTag } from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport, type LookThroughRow } from "@/types/portfolioAnalytics";
+import TickerLabel, { TickerAxisTick } from "@/components/portfolio/TickerLabel";
+import { canonicalCompanyLabel } from "@/lib/tickerCatalog";
 import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
 
 const FUND_COLORS: Record<string, string> = {
-  direct: "hsl(var(--series-portfolio))",
-  VOO: "hsl(var(--foreground))",
-  VXUS: "hsl(var(--series-benchmark))",
-  ROBO: "hsl(var(--muted-foreground))",
+  direct: "hsl(var(--foreground))",
+  VOO: "hsl(var(--series-portfolio))",
+  VXUS: "hsl(var(--foreground) / 0.42)",
+  ROBO: "hsl(var(--foreground) / 0.16)",
 };
 
 function stackedRow(row: LookThroughRow) {
-  const values: Record<string, number | string> = { name: row.name, direct: 0, VOO: 0, VXUS: 0, ROBO: 0 };
+  const values: Record<string, number | string> = {
+    name: canonicalCompanyLabel(row.isin, row.name),
+    companyName: row.name,
+    direct: 0,
+    VOO: 0,
+    VXUS: 0,
+    ROBO: 0,
+  };
   for (const contribution of row.contributions) {
     const key = contribution.source === "direct" ? "direct" : contribution.source;
     if (key in values) {
@@ -53,17 +63,31 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
         <Concentration
           label={t("portfolio.analytics.apparent")}
           value={
-            exposure.apparentCompany === null
-              ? t("portfolio.analytics.unavailable")
-              : `${exposure.apparentCompany.ticker} ${formatPercent(exposure.apparentCompany.weight)}`
+            exposure.apparentCompany === null ? (
+              t("portfolio.analytics.unavailable")
+            ) : (
+              <span className="inline-flex items-baseline justify-end gap-2">
+                <TickerLabel ticker={exposure.apparentCompany.ticker} className="font-mono text-sm" />
+                <span>{formatPercent(exposure.apparentCompany.weight)}</span>
+              </span>
+            )
           }
         />
         <Concentration
           label={t("portfolio.analytics.effective")}
           value={
-            exposure.effectiveCompany === null
-              ? t("portfolio.analytics.unavailable")
-              : `${exposure.effectiveCompany.name} ${formatPercent(exposure.effectiveCompany.weight)}`
+            exposure.effectiveCompany === null ? (
+              t("portfolio.analytics.unavailable")
+            ) : (
+              <span className="inline-flex items-baseline justify-end gap-2">
+                <TickerLabel
+                  isin={exposure.effectiveCompany.isin}
+                  name={exposure.effectiveCompany.name}
+                  className="font-mono text-sm"
+                />
+                <span>{formatPercent(exposure.effectiveCompany.weight)}</span>
+              </span>
+            )
           }
         />
       </div>
@@ -86,19 +110,23 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
               type="category"
               dataKey="name"
               width={108}
-              tick={{ ...chartAxisTick, fill: "hsl(var(--foreground))", fontSize: 10 }}
+              tick={<TickerAxisTick labelWidth={104} />}
               tickLine={false}
               axisLine={false}
             />
             <Tooltip
               cursor={{ fill: "hsl(var(--foreground) / 0.04)" }}
-              content={({ active, payload, label }) => {
-                if (!active || payload === undefined) {
+              content={({ active, payload }) => {
+                if (!active || payload === undefined || payload.length === 0) {
                   return null;
                 }
+                const row = payload[0]?.payload as { name?: string; companyName?: string } | undefined;
+                const label = row?.name ?? "";
+                const companyName = row?.companyName ?? label;
                 return (
                   <div className={chartTooltipClassName}>
                     <p>{label}</p>
+                    {companyName !== label ? <p className="text-muted-foreground">{companyName}</p> : null}
                     {payload.map((entry) => (
                       <p key={String(entry.dataKey)}>
                         {String(entry.dataKey)}: {Number(entry.value).toFixed(2)}%
@@ -125,13 +153,29 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
       <SeriesLegend
         items={[
           {
+            itemKey: "direct",
             label: t("portfolio.analytics.direct"),
-            swatchClassName: "bg-series-portfolio",
-            labelClassName: "text-series-portfolio",
+            swatchClassName: "h-2 w-3 bg-foreground",
+            labelClassName: "text-foreground",
           },
-          { label: "VOO", swatchClassName: "bg-foreground", labelClassName: "text-foreground" },
-          { label: "VXUS", swatchClassName: "bg-series-benchmark", labelClassName: "text-series-benchmark" },
-          { label: "ROBO", swatchClassName: "bg-muted-foreground", labelClassName: "text-muted-foreground" },
+          {
+            itemKey: "VOO",
+            label: <TickerLabel ticker="VOO" className="font-mono text-[10px]" />,
+            swatchClassName: "h-2 w-3 bg-series-portfolio",
+            labelClassName: "text-foreground",
+          },
+          {
+            itemKey: "VXUS",
+            label: <TickerLabel ticker="VXUS" className="font-mono text-[10px]" />,
+            swatchClassName: "h-2 w-3 bg-foreground/40",
+            labelClassName: "text-foreground",
+          },
+          {
+            itemKey: "ROBO",
+            label: <TickerLabel ticker="ROBO" className="font-mono text-[10px]" />,
+            swatchClassName: "h-2 w-3 bg-foreground/15",
+            labelClassName: "text-foreground",
+          },
         ]}
       />
       <dl className="mt-4 grid grid-cols-3 gap-px border border-border bg-border">
@@ -154,12 +198,14 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
         <div className="bg-card" />
         {funds.map((fund) => (
           <div key={fund} className="bg-card px-2 py-1 text-muted-foreground">
-            {fund}
+            <TickerLabel ticker={fund} className="font-mono text-[11px]" />
           </div>
         ))}
         {funds.map((rowFund) => (
           <div key={rowFund} className="contents">
-            <div className="bg-card px-2 py-2 text-muted-foreground">{rowFund}</div>
+            <div className="bg-card px-2 py-2 text-muted-foreground">
+              <TickerLabel ticker={rowFund} className="font-mono text-[11px]" />
+            </div>
             {funds.map((columnFund) => {
               const overlap = overlapValue(rowFund, columnFund);
               const intensity = overlap === null ? 0 : Math.min(1, overlap / 0.5);
@@ -205,7 +251,7 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
   );
 }
 
-function Concentration({ label, value }: { label: string; value: string }) {
+function Concentration({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="bg-card px-3 py-3">
       <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{label}</p>

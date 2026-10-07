@@ -9,6 +9,7 @@ import {
   sourceTag,
 } from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport } from "@/types/portfolioAnalytics";
+import { TickerAxisTick } from "@/components/portfolio/TickerLabel";
 import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
 
 export function RiskSection({ report }: { report: AnalyticsReport }) {
@@ -50,8 +51,8 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                 <YAxis
                   type="category"
                   dataKey="ticker"
-                  width={52}
-                  tick={{ ...chartAxisTick, fill: "hsl(var(--foreground))" }}
+                  width={64}
+                  tick={<TickerAxisTick labelWidth={60} />}
                   tickLine={false}
                   axisLine={false}
                 />
@@ -75,22 +76,32 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                     );
                   }}
                 />
-                <Bar dataKey="capital" fill="hsl(var(--series-portfolio))" barSize={6} isAnimationActive={!reducedMotion} animationDuration={250} />
-                <Bar dataKey="risk" fill="hsl(var(--series-benchmark))" barSize={6} isAnimationActive={!reducedMotion} animationDuration={250} />
+                <Bar dataKey="capital" fill="hsl(var(--foreground))" barSize={7} isAnimationActive={!reducedMotion} animationDuration={250} />
+                <Bar
+                  dataKey="risk"
+                  fill="hsl(var(--foreground) / 0.08)"
+                  stroke="hsl(var(--foreground))"
+                  strokeWidth={1.25}
+                  barSize={7}
+                  isAnimationActive={!reducedMotion}
+                  animationDuration={250}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
           <SeriesLegend
             items={[
               {
+                itemKey: "capital",
                 label: t("portfolio.analytics.capital"),
-                swatchClassName: "bg-series-portfolio",
-                labelClassName: "text-series-portfolio",
+                swatchClassName: "h-2 w-3 bg-foreground",
+                labelClassName: "text-foreground",
               },
               {
+                itemKey: "risk",
                 label: t("portfolio.analytics.riskShare"),
-                swatchClassName: "bg-series-benchmark",
-                labelClassName: "text-series-benchmark",
+                swatchClassName: "h-2 w-3 border border-foreground bg-foreground/10",
+                labelClassName: "text-foreground",
               },
             ]}
           />

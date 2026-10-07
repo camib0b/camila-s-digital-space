@@ -2,10 +2,9 @@ import type { InstrumentListing } from "./compute";
 
 /**
  * US-listed instruments in the ledger, plus VOO as the benchmark.
- * ROBO is the NYSE Arca ROBO Global Robotics and Automation Index ETF.
- * Trades on 2026-09-25 printed 80.57, 80.73, and 80.90, inside that listing's
- * same-day range. The L&G UCITS USD line (LSE, ISIN IE00BMW3QX54, accumulating)
- * closed at 32.74 USD the same day, so it is not this position.
+ * ROBO stays the NYSE Arca ETF (ISIN US3015057074). Camila described the
+ * L&G UCITS line, but the fills do not match it. See the ROBO identificationNote.
+ * The price symbol remains the US ticker. Do not point Finnhub or Yahoo at LSE:ROBO.
  */
 export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
   {
@@ -61,12 +60,13 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
   {
     ticker: "SHOP",
     name: "Shopify Inc.",
-    exchange: "NYSE",
+    exchange: "Nasdaq Global Select Market",
     currency: "USD",
     distributionPolicy: "none",
     isin: "CA82509L1076",
     kind: "stock",
-    identificationNote: "NYSE listing of Shopify. The NYSE and TSX lines share ISIN CA82509L1076, which is how VXUS holdings are matched.",
+    identificationNote:
+      "Nasdaq Global Select Market listing of Shopify Class A shares since 31 Mar 2025 (SEC filings through 2026). The Nasdaq and TSX lines share ISIN CA82509L1076, which is how VXUS holdings are matched.",
   },
   {
     ticker: "ROBO",
@@ -77,7 +77,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     isin: "US3015057074",
     kind: "equity-fund",
     identificationNote:
-      "NYSE Arca listing of the ROBO Global Robotics and Automation Index ETF (distributing, USD). Ledger trades on 2026-09-25 at 80.57–80.90 match this listing and do not match L&G ROBO Global Robotics and Automation UCITS ETF USD Accumulating (LSE ticker ROBO, ISIN IE00BMW3QX54), which closed at 32.74 USD that day. US ROBO prices are not a substitute for that UCITS line; they are the listing the ledger prices identify.",
+      "NYSE Arca ROBO Global Robotics and Automation Index ETF (ISIN US3015057074, distributing, issuer Exchange Traded Concepts Trust). Ledger buys on 2026-09-25 at 80.57, 80.73, and 80.90 sit inside that day's US range (low 80.43, close 81.06). A fill near 81.92 on 2026-10-07 sits inside that day's US range (81.28–82.24). The L&G UCITS USD line (LSE: ROBO, ISIN IE00BMW3QX54) traded near 30–36 USD from May through 7 Oct 2026, so it is not this position. Finnhub and Yahoo keep symbol ROBO, which is this US listing.",
   },
   {
     ticker: "ILF",

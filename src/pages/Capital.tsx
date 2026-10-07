@@ -4,6 +4,8 @@ import PortfolioAnalytics from "@/components/portfolio/analytics/PortfolioAnalyt
 import AiInsightPanel from "@/components/portfolio/AiInsightPanel";
 import HoldingsTable from "@/components/portfolio/HoldingsTable";
 import PortfolioLoadingScreen from "@/components/portfolio/PortfolioLoadingScreen";
+import { TickerDetailsProvider } from "@/components/portfolio/TickerDetailsContext";
+import TickerDetailsPanel from "@/components/portfolio/TickerDetailsPanel";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
 import { numberTone } from "@/lib/analyticsFormat";
@@ -57,6 +59,9 @@ const Capital = () => {
 
   const totalReturnPercent = parseFloat(portfolio.totalReturnPct);
   const totalReturnLabel = `${totalReturnPercent >= 0 ? "+" : ""}${totalReturnPercent}%`;
+  const weightsByTicker = Object.fromEntries(
+    holdingsWithMetrics.map((holding) => [holding.ticker, holding.allocation]),
+  );
   const summaryStats = [
     {
       label: t("portfolio.stats.return"),
@@ -76,6 +81,7 @@ const Capital = () => {
 
       <PageHeader backLabel="home" containerClassName={capitalHeaderClassName} />
 
+      <TickerDetailsProvider weightsByTicker={weightsByTicker}>
       <div className="container px-6 md:px-8 max-w-5xl mx-auto py-16 relative z-10">
         <div className="mb-12">
           <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">
@@ -88,16 +94,13 @@ const Capital = () => {
           </p>
         </div>
 
-        <div className="mb-12 grid grid-cols-2 gap-px">
-          {summaryStats.map((stat) => (
-            <div key={stat.label} className="border border-border bg-card px-3 py-3">
-              <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{stat.label}</p>
-              <p className={`mt-2 text-right font-mono text-lg tabular-nums ${stat.className}`}>{stat.value}</p>
-            </div>
-          ))}
-        </div>
-
-        <PortfolioAnalytics />
+        <PortfolioAnalytics
+          headline={summaryStats.map((stat) => ({
+            label: stat.label,
+            value: stat.value,
+            tone: stat.className,
+          }))}
+        />
 
         <HoldingsTable holdings={holdingsWithMetrics} />
 
@@ -129,6 +132,8 @@ const Capital = () => {
           </button>
         </div>
       </div>
+      <TickerDetailsPanel />
+      </TickerDetailsProvider>
     </main>
   );
 };

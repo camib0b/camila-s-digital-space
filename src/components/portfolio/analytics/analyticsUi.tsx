@@ -1,6 +1,7 @@
 import katex from "katex";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import "katex/dist/katex.min.css";
+import { cn } from "@/lib/utils";
 
 export function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
@@ -71,13 +72,13 @@ export function UnavailableNote({ label, reason }: { label: string; reason: stri
 export function SeriesLegend({
   items,
 }: {
-  items: readonly { label: string; swatchClassName: string; labelClassName: string }[];
+  items: readonly { itemKey: string; label: ReactNode; swatchClassName: string; labelClassName: string }[];
 }) {
   return (
     <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
       {items.map((item) => (
-        <span key={item.label} className="inline-flex items-center gap-2">
-          <span className={`inline-block h-px w-3 ${item.swatchClassName}`} aria-hidden="true" />
+        <span key={item.itemKey} className="inline-flex items-center gap-2">
+          <span className={cn("inline-block h-px w-3", item.swatchClassName)} aria-hidden="true" />
           <span className={`text-[10px] uppercase tracking-[0.14em] ${item.labelClassName}`}>{item.label}</span>
         </span>
       ))}

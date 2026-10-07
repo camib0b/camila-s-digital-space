@@ -11,6 +11,18 @@ function formatHoldingPrice(price: number): string {
   return `$${price.toFixed(2)}`;
 }
 
+function formatPercentCell(value: string, signed: boolean): string {
+  if (value.trim().length === 0) {
+    return "—";
+  }
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) {
+    return "—";
+  }
+  const prefix = signed && numeric > 0 ? "+" : "";
+  return `${prefix}${value}%`;
+}
+
 const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
   const { t } = useLanguage();
 
@@ -48,13 +60,12 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
                   ) : null}
                 </td>
                 <td className="whitespace-nowrap px-2 py-2.5 text-right align-top font-mono text-xs tabular-nums">
-                  {holding.allocation}%
+                  {formatPercentCell(holding.allocation, false)}
                 </td>
                 <td
-                  className={`whitespace-nowrap py-2.5 pl-2 text-right align-top font-mono text-xs tabular-nums ${numberTone(gainPercent)}`}
+                  className={`whitespace-nowrap py-2.5 pl-2 text-right align-top font-mono text-xs tabular-nums ${Number.isFinite(gainPercent) ? numberTone(gainPercent) : ""}`}
                 >
-                  {gainPercent > 0 ? "+" : ""}
-                  {holding.gainPercent}%
+                  {formatPercentCell(holding.gainPercent, true)}
                 </td>
               </tr>
             );

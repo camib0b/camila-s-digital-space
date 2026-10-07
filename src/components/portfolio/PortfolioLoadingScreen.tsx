@@ -42,18 +42,19 @@ const PortfolioLoadingScreen = () => {
           </div>
         </div>
 
-        <div className="mb-6 grid grid-cols-2 gap-px">
-          {Array.from({ length: 2 }, (_, index) => (
+        <div className="mb-6 grid grid-cols-1 gap-px sm:grid-cols-3">
+          {Array.from({ length: 3 }, (_, index) => (
             <div key={index} className="border border-border bg-card px-3 py-3">
               <SkeletonBlock className="mb-3 h-2 w-16" />
               <SkeletonBlock className="ml-auto h-5 w-14" />
+              <SkeletonBlock className="ml-auto mt-2 h-2 w-20" />
             </div>
           ))}
         </div>
 
-        <div className="-mx-6 mb-6 flex gap-px overflow-x-auto px-6 pb-1 md:mx-0 md:px-0">
-          {Array.from({ length: 5 }, (_, index) => (
-            <div key={index} className="min-w-[10.5rem] flex-1 border border-border bg-card px-3 py-3">
+        <div className="mb-6 grid grid-cols-2 gap-px md:grid-cols-4">
+          {Array.from({ length: 4 }, (_, index) => (
+            <div key={index} className="border border-border bg-card px-3 py-3">
               <SkeletonBlock className="mb-3 h-2 w-16" />
               <SkeletonBlock className="ml-auto h-5 w-14" />
               <SkeletonBlock className="ml-auto mt-2 h-2 w-20" />
