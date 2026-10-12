@@ -59,7 +59,7 @@ const en = {
     "experience.a3.description": "Board KPI reporting for a portfolio of eleven hotels.",
     "experience.visionary.title": "E-commerce & operations",
     "experience.visionary.company": "Visionary",
-    "experience.visionary.period": "Internship 2021 – 2022",
+    "experience.visionary.period": "Gap year 2021 – 2022",
     "experience.visionary.description": "Day-to-day e-commerce and POS: orders, inventory, wholesale, and in-store coverage.",
 
     // Personal projects
@@ -193,7 +193,7 @@ const en = {
     "cv.a3.bullet3": "Drafted a per-hotel monthly report mockup covering PnL, forecast, channels, segments, and FTE.",
     "cv.visionary.title": "E-commerce & operations",
     "cv.visionary.company": "Visionary",
-    "cv.visionary.period": "Internship 2021 – 2022",
+    "cv.visionary.period": "Gap year 2021 – 2022",
     "cv.visionary.bullet1": "Owned e-commerce, point-of-sale, and distributor operations across Shopify and BSale.",
     "cv.visionary.bullet2": "Built sales and inventory forecasts.",
     "cv.visionary.bullet3": "Tracked conversion rate, average ticket, and margin to coordinate pricing, promotions, and replenishment.",

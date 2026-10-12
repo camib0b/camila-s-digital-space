@@ -61,7 +61,7 @@ const es: Record<TranslationKey, string> = {
     "experience.a3.description": "Reporting de KPIs de directorio para un portafolio de once hoteles.",
     "experience.visionary.title": "E-commerce y operaciones",
     "experience.visionary.company": "Visionary",
-    "experience.visionary.period": "Práctica 2021 – 2022",
+    "experience.visionary.period": "Año sabático 2021 – 2022",
     "experience.visionary.description": "Operación diaria de e-commerce y PDV: pedidos, inventario, mayorista y cobertura en tienda.",
 
     // Personal projects
@@ -195,7 +195,7 @@ const es: Record<TranslationKey, string> = {
     "cv.a3.bullet3": "Armé una maqueta de reporte mensual por hotel: PnL, forecast, canales, segmentos y FTE.",
     "cv.visionary.title": "E-commerce y operaciones",
     "cv.visionary.company": "Visionary",
-    "cv.visionary.period": "Práctica 2021 – 2022",
+    "cv.visionary.period": "Año sabático 2021 – 2022",
     "cv.visionary.bullet1": "Llevé operaciones de e-commerce, PDV y distribución en Shopify y BSale.",
     "cv.visionary.bullet2": "Construí pronósticos de ventas e inventario.",
     "cv.visionary.bullet3": "Seguí tasa de conversión, ticket promedio y margen para coordinar precios, promociones y reposición.",

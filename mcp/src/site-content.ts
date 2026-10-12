@@ -55,7 +55,7 @@ export const experience = [
     id: "visionary",
     title: "E-commerce & operations",
     company: "Visionary",
-    period: "Internship 2021 – 2022",
+    period: "Gap year 2021 – 2022",
     description:
       "Day-to-day e-commerce and POS: orders, inventory, wholesale, and in-store coverage.",
   },
