@@ -12,7 +12,7 @@ export const profile = {
   tagline:
     "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA, a native field-hockey video product. Clips the same night.",
   summary:
-    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
@@ -41,21 +41,21 @@ export const experience = [
     id: "finapsys",
     title: "Frontend",
     company: "Finapsys (health tech B2B SaaS)",
-    period: "Summer 2024",
+    period: "Summer Internship 2024",
     description: "Shipped production UI for a health-tech product.",
   },
   {
     id: "a3",
     title: "Hotel asset reporting",
     company: "A3 Property Investments",
-    period: "Summer 2023",
+    period: "Summer Internship 2023",
     description: "Board KPI reporting for a portfolio of eleven hotels.",
   },
   {
     id: "visionary",
     title: "E-commerce & operations",
     company: "Visionary",
-    period: "2021 – 2022",
+    period: "Gap year 2021 – 2022",
     description:
       "Day-to-day e-commerce and POS: orders, inventory, wholesale, and in-store coverage.",
   },
