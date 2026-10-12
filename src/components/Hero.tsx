@@ -42,7 +42,7 @@ const Hero = () => {
 
           <div className="flex items-center gap-5 animate-fade-up-delay-3 mb-6">
             <Link
-              to="/cv"
+              to="/resume"
               className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline flex items-center gap-1.5"
             >
               <FileText className="w-3.5 h-3.5" />

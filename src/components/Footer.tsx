@@ -23,7 +23,7 @@ const Footer = () => {
 
           <div className="flex items-center gap-4">
             <Link
-              to="/cv"
+              to="/resume"
               className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               aria-label="CV"
             >

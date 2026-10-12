@@ -1,0 +1,27 @@
+# Copy to `.dev.vars` in this directory (repo root) for local `npx wrangler dev`.
+# Do not commit `.dev.vars` or real secret values.
+#
+# Production secrets (site Worker — camilaescudero):
+#   npx wrangler secret put XAI_API_KEY
+#   npx wrangler secret put JEV_API_KEY
+#
+# Optional: validate Cloudflare Access JWT on /api/cv/* when the SPA is not on ctx.access
+# (hostname/path Access still required for /cv in production).
+#   CV_ACCESS_TEAM_DOMAIN=https://<your-team>.cloudflareaccess.com
+#   CV_ACCESS_AUD=<Access application AUD tag>
+
+# xAI — job posting analysis and CV tailoring (https://console.x.ai/)
+XAI_API_KEY=
+
+# TypeSafe Jev — change validation (https://console.typesafe.ai/keys)
+JEV_API_KEY=
+
+# Comma-separated emails allowed to call CV tailor APIs (must match Access identity when enabled).
+CV_OWNER_EMAIL=camilaescuderob@gmail.com,camilaescuderob@uc.cl
+
+# Cloudflare Access JWT validation (optional locally; use access.dev in wrangler.jsonc to simulate Access).
+CV_ACCESS_TEAM_DOMAIN=
+CV_ACCESS_AUD=
+
+# Local only: allow /api/cv/* without Access JWT when keys above are unset (never enable in production).
+CV_ALLOW_LOCAL_AUTH=true

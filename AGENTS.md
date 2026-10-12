@@ -12,13 +12,14 @@ lockfile:
 | `portfolio-api` | `portfolio-api/` | Cloudflare Worker (D1 + Workers AI + Finnhub/xAI/GitHub) | `npx wrangler dev`, `npx wrangler deploy` — see `portfolio-api/README.md` |
 | `ava-checkout` | `ava-checkout/` | Cloudflare Worker (MercadoPago checkout + license email) | `npx wrangler dev`, `npx wrangler deploy` — see `ava-checkout/README.md` |
 | `mcp` | `mcp/` | Cloudflare Worker MCP server with OAuth | `npm run dev`, `npx wrangler deploy` — see `mcp/README.md` |
+| Site Worker | repo root (`wrangler.jsonc`, `site-worker/`) | SPA assets + `/api/*` (AVA interest, CV tailor) | `npm run build`, `npx wrangler dev`, `npx wrangler deploy` |
 
 The startup update script runs `npm ci` in all four directories, so dependencies
 are already installed when an agent starts.
 
 ### Frontend (main product)
 
-- `npm run dev` serves on `http://localhost:8080/` (host/port fixed in `vite.config.ts`). Routes: `/`, `/cv`, `/ava`, `/capital` (investment dashboard), `/tomorrow`.
+- `npm run dev` serves on `http://localhost:8080/` (host/port fixed in `vite.config.ts`). Routes: `/`, `/resume` (public CV), `/cv` (private tailor tool — protect with Access in production), `/ava`, `/capital` (investment dashboard), `/tomorrow`.
 - The frontend reads its API base from `VITE_PORTFOLIO_API_URL` (see `.env.example`). When unset it falls back to the deployed production Worker `https://portfolio-api.camilaescuderob.workers.dev/api/portfolio` (see `src/lib/portfolioApi.ts`), so the site — including the live-data `/capital` page — works standalone without running the local Worker, as long as egress is allowed.
 - AVA checkout (`/ava`) posts to `VITE_AVA_CHECKOUT_URL` or `/api/ava` (see `src/lib/avaCheckoutApi.ts`). Payment, license-admin, and mail secrets live only in `ava-checkout`. The trial `.dmg` URL is public `VITE_AVA_DMG_URL`.
 - Lint reports only warnings (0 errors); it also lints the workers' generated `worker-configuration.d.ts`, which is expected.
@@ -31,3 +32,4 @@ are already installed when an agent starts.
 - `portfolio-api` local setup: copy `portfolio-api/.dev.vars.example` to `portfolio-api/.dev.vars`, then seed the local D1 DB from the repo-root schema: `cd portfolio-api && npx wrangler d1 execute portfolio-holdings --local --file=../schema.sql`. `GET /api/portfolio` then works even without a Finnhub key (quote prices fall back to `0`, see `src/quotes.ts`); the `/api/portfolio/ai-insight` endpoint additionally needs the `AI`/`XAI_API_KEY` path.
 - After editing `portfolio-api/data/camila-stock-portfolio.csv`, follow the **portfolio-ledger-sync** skill (`.cursor/skills/portfolio-ledger-sync/SKILL.md`) so `ledger.json`, `ledger-seed.sql`, `schema.sql`, and remote D1 stay aligned.
 - `.dev.vars` is git-ignored; never commit real secret values.
+- **CV tailor local setup:** copy [`.dev.vars.example`](.dev.vars.example) to `.dev.vars` at the repo root and set `XAI_API_KEY`, `JEV_API_KEY`, and `CV_OWNER_EMAIL`. Production uses `npx wrangler secret put XAI_API_KEY` and `npx wrangler secret put JEV_API_KEY`. Protect `/cv` and `/api/cv/*` with Cloudflare Access in Zero Trust; optional `CV_ACCESS_TEAM_DOMAIN` and `CV_ACCESS_AUD` in `.dev.vars` validate the `Cf-Access-Jwt-Assertion` header on API routes. For local API testing without Access, `CV_ALLOW_LOCAL_AUTH=true` in `.dev.vars` only (see example comments).

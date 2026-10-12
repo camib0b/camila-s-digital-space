@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Home from "./pages/Home";
 import CV from "./pages/CV";
+import CVTailor from "./pages/CVTailor";
 import Ava from "./pages/Ava";
 import Capital from "./pages/Capital";
 import NotFound from "./pages/NotFound";
@@ -20,7 +21,8 @@ const App = () => (
           <TooltipProvider>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/cv" element={<CV />} />
+              <Route path="/resume" element={<CV />} />
+              <Route path="/cv" element={<CVTailor />} />
               <Route path="/ava" element={<Ava />} />
               <Route path="/ava/" element={<Ava />} />
               <Route path="/capital" element={<Capital />} />

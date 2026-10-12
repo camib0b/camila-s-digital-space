@@ -1,6 +1,10 @@
 import { EmailMessage } from "cloudflare:email";
+import { handleCvApi, type CvHandlerEnvironment } from "./cv-handlers";
+import type { CvWorkerContext } from "./cv-auth";
 
 const INTEREST_PATH = "/api/ava-interest";
+const CV_API_PREFIX = "/api/cv";
+
 const FIELD_CHARACTER_LIMIT = 200;
 const USER_AGENT_CHARACTER_LIMIT = 300;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,14 +28,14 @@ interface SignupAlertEmail {
   send(message: EmailMessage): Promise<unknown>;
 }
 
-interface SiteEnvironment {
+interface SiteEnvironment extends CvHandlerEnvironment {
   AVA_INTEREST: InterestDatabase;
   ASSETS: AssetsBinding;
   AVA_ALERT?: SignupAlertEmail;
   AVA_ALERT_TO?: string;
 }
 
-interface WorkerContext {
+interface WorkerContext extends CvWorkerContext {
   waitUntil(promise: Promise<unknown>): void;
 }
 
@@ -61,11 +65,15 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname.length > 1 ? url.pathname.replace(/\/+$/, "") : url.pathname;
 
-    if (path !== INTEREST_PATH || request.method !== "POST") {
-      return environment.ASSETS.fetch(request);
+    if (path === INTEREST_PATH && request.method === "POST") {
+      return saveInterestSignup(request, environment, context);
     }
 
-    return saveInterestSignup(request, environment, context);
+    if (path === CV_API_PREFIX || path.startsWith(`${CV_API_PREFIX}/`)) {
+      return handleCvApi(request, environment, context, path);
+    }
+
+    return environment.ASSETS.fetch(request);
   },
 };
 

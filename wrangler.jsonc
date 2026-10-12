@@ -21,6 +21,11 @@
 			"binding": "AVA_INTEREST",
 			"database_name": "ava-interest",
 			"database_id": "f6286d54-7d63-44da-847f-92b3feff7cdf"
+		},
+		{
+			"binding": "CV_HISTORY",
+			"database_name": "cv-tailor-history",
+			"database_id": "6d4a2457-a05b-48d7-bbb5-679462b6e78c"
 		}
 	],
 	"send_email": [
@@ -29,7 +34,8 @@
 		}
 	],
 	"vars": {
-		"AVA_ALERT_TO": "camilaescudero@uc.cl"
+		"AVA_ALERT_TO": "camilaescudero@uc.cl",
+		"CV_OWNER_EMAIL": "camilaescuderob@gmail.com,camilaescuderob@uc.cl"
 	},
 	"observability": {
 	  "enabled": false,

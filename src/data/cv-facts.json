@@ -1,0 +1,290 @@
+{
+  "rules": {
+    "mandatorySkillLabels": ["Excel avanzado", "Microsoft Office (Word, PowerPoint)"],
+    "acfinFraming": "Analytics products for investor clients in structured credit; never describe as building Looker dashboards.",
+    "internshipsMarkedInDates": true,
+    "visionaryFraming": "Gap-year role between school and university.",
+    "forbiddenProductNamesOnBusinessCvs": ["Cloudflare Workers", "Cloudflare Pages", "Cloudflare R2", "Cloudflare D1", "Cloudflare KV"],
+    "maxBulletWords": 28
+  },
+  "contact": {
+    "name": "Camila Escudero",
+    "location": "Santiago, Chile",
+    "email": "camilaescuderob@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/camilaescudero/",
+    "github": "https://github.com/camib0b"
+  },
+  "headline": {
+    "en": "Analytics products · video analysis software",
+    "es": "Productos de analítica · software de análisis de video"
+  },
+  "summaryBullets": [
+    {
+      "id": "summary.acfin",
+      "en": "At ACFIN I build analytics products that put structured-credit metrics in front of investor clients.",
+      "es": "En ACFIN construyo productos de analítica que ponen métricas de crédito estructurado frente a clientes inversionistas."
+    },
+    {
+      "id": "summary.ava",
+      "en": "AVA is a shipped macOS product for tagging field-hockey matches and exporting clips the same night.",
+      "es": "AVA es un producto macOS en producción para marcar partidos de hockey y exportar clips esa misma noche."
+    },
+    {
+      "id": "summary.education",
+      "en": "UC Chile — Ingeniería Civil Industrial with an IT diploma; expected graduation July 2027.",
+      "es": "UC Chile — Ingeniería Civil Industrial con diploma TI; titulación esperada julio 2027."
+    }
+  ],
+  "education": {
+    "degree": {
+      "en": "Ingeniería Civil Industrial",
+      "es": "Ingeniería Civil Industrial"
+    },
+    "institution": {
+      "en": "Pontificia Universidad Católica de Chile",
+      "es": "Pontificia Universidad Católica de Chile"
+    },
+    "period": {
+      "en": "2020 – Jul 2027 (Expected)",
+      "es": "2020 – jul 2027 (Esperado)"
+    },
+    "details": {
+      "en": "Diploma in information technology (TI)",
+      "es": "Diploma en Tecnologías de la Información (TI)"
+    },
+    "graduationMonth": "2027-07",
+    "coursework": {
+      "en": "Optimization Methods, Data Structures, Databases, Web Technologies, Operations Management",
+      "es": "Métodos de Optimización, Estructuras de Datos, Bases de Datos, Tecnologías Web, Gestión de Operaciones"
+    }
+  },
+  "languages": {
+    "pair": {
+      "en": "English · Spanish",
+      "es": "Inglés · español"
+    },
+    "note": {
+      "en": "Native in both. English first, raised in the United States until age 7; Santiago since.",
+      "es": "Nivel nativo en ambos. Inglés primero: criada en Estados Unidos hasta los 7 años; Santiago desde entonces."
+    }
+  },
+  "skills": [
+    { "id": "skill.excel", "label": "Excel avanzado" },
+    { "id": "skill.office", "label": "Microsoft Office (Word, PowerPoint)" },
+    { "id": "skill.sql", "label": "SQL" },
+    { "id": "skill.python", "label": "Python" },
+    { "id": "skill.typescript", "label": "TypeScript" },
+    { "id": "skill.vue", "label": "Vue.js" },
+    { "id": "skill.looker", "label": "Looker" },
+    { "id": "skill.lookml", "label": "LookML" },
+    { "id": "skill.bigquery", "label": "BigQuery" },
+    { "id": "skill.firebase", "label": "Firebase" },
+    { "id": "skill.pinia", "label": "Pinia" },
+    { "id": "skill.cpp", "label": "C++" },
+    { "id": "skill.gurobi", "label": "Gurobi" },
+    { "id": "skill.pandas", "label": "Pandas" },
+    { "id": "skill.git", "label": "Git" },
+    { "id": "skill.shopify", "label": "Shopify" },
+    { "id": "skill.bsale", "label": "BSale" }
+  ],
+  "roles": [
+    {
+      "id": "role.acfin",
+      "title": { "en": "Analytics products", "es": "Productos de analítica" },
+      "company": { "en": "ACFIN", "es": "ACFIN" },
+      "period": { "en": "Feb 2026 – Present", "es": "Feb 2026 – Actualidad" },
+      "isInternship": false,
+      "technologies": ["Looker", "LookML", "BigQuery", "SQL", "Python"],
+      "priority": 100,
+      "bullets": [
+        {
+          "id": "acfin.b1",
+          "priority": 90,
+          "en": "Live structured-credit books: dirty dates, partitions, and FX so the same book can be read in more than one currency.",
+          "es": "Libros vivos de crédito estructurado: fechas sucias, particiones y FX para leer el mismo libro en más de una divisa."
+        },
+        {
+          "id": "acfin.b2",
+          "priority": 85,
+          "en": "Warehouse and semantic-layer modeling for portfolio metrics the product presents to clients.",
+          "es": "Modelación de warehouse y capa semántica para métricas de portafolio que presenta el producto a clientes."
+        },
+        {
+          "id": "acfin.b3",
+          "priority": 80,
+          "en": "Scaled factoring analytics across clients via automation, including embed, download, and session consumption.",
+          "es": "Escalé analítica de factoring entre clientes con automatización, incluido consumo por embed, descarga y sesión."
+        }
+      ]
+    },
+    {
+      "id": "role.finapsys",
+      "title": { "en": "Frontend", "es": "Frontend" },
+      "company": { "en": "Finapsys (health tech B2B SaaS)", "es": "Finapsys (health tech B2B SaaS)" },
+      "period": { "en": "Summer 2024 (Internship)", "es": "Verano 2024 (Práctica)" },
+      "isInternship": true,
+      "technologies": ["Vue 3", "TypeScript", "Pinia", "Firebase"],
+      "priority": 70,
+      "bullets": [
+        {
+          "id": "finapsys.b1",
+          "priority": 75,
+          "en": "Shipped views for FONASA cases and payments: daily-report tables, a reusable data table, and dataset download.",
+          "es": "Entregué vistas para casos y pagos FONASA: tablas de reportes diarios, tabla reutilizable y descarga de datos."
+        },
+        {
+          "id": "finapsys.b2",
+          "priority": 70,
+          "en": "Built nested sidebar navigation and Pinia stores wired to Firebase callables in the Angular-to-Vue rewrite.",
+          "es": "Armé navegación anidada del sidebar y stores Pinia conectados a callables de Firebase en la migración Angular a Vue."
+        },
+        {
+          "id": "finapsys.b3",
+          "priority": 65,
+          "en": "Added password recovery and SMS 2FA on login, plus a responsive layout for dashboard graphs.",
+          "es": "Agregué recuperación de contraseña y 2FA por SMS en el login, y layout responsive para gráficos del dashboard."
+        }
+      ]
+    },
+    {
+      "id": "role.a3",
+      "title": { "en": "Hotel asset reporting", "es": "Reporting de activos hoteleros" },
+      "company": { "en": "A3 Property Investments", "es": "A3 Property Investments" },
+      "period": { "en": "Summer 2023 (Internship)", "es": "Verano 2023 (Práctica)" },
+      "isInternship": true,
+      "technologies": [],
+      "priority": 60,
+      "bullets": [
+        {
+          "id": "a3.b1",
+          "priority": 68,
+          "en": "Prepared board KPIs (OCC, ADR, RevPAR, RGI vs CompSet) from STR and internal sources.",
+          "es": "Preparé KPIs de directorio (OCC, ADR, RevPAR, RGI vs CompSet) desde STR y fuentes internas."
+        },
+        {
+          "id": "a3.b2",
+          "priority": 62,
+          "en": "Modeled how an airline contract would move RGI versus the competitive set for board analysis.",
+          "es": "Modelé cómo un convenio de aerolínea movería el RGI frente al CompSet para análisis de directorio."
+        },
+        {
+          "id": "a3.b3",
+          "priority": 58,
+          "en": "Drafted a per-hotel monthly report mockup covering PnL, forecast, channels, segments, and FTE.",
+          "es": "Armé maqueta de reporte mensual por hotel: PnL, forecast, canales, segmentos y FTE."
+        }
+      ]
+    },
+    {
+      "id": "role.visionary",
+      "title": { "en": "E-commerce & operations (gap year)", "es": "E-commerce y operaciones (año sabático)" },
+      "company": { "en": "Visionary", "es": "Visionary" },
+      "period": { "en": "2021 – 2022 (Gap year)", "es": "2021 – 2022 (Año sabático)" },
+      "isInternship": false,
+      "gapYear": true,
+      "technologies": ["Shopify", "BSale"],
+      "priority": 50,
+      "bullets": [
+        {
+          "id": "visionary.b1",
+          "priority": 55,
+          "en": "Owned e-commerce, point-of-sale, and distributor operations across Shopify and BSale.",
+          "es": "Llevé operaciones de e-commerce, PDV y distribución en Shopify y BSale."
+        },
+        {
+          "id": "visionary.b2",
+          "priority": 50,
+          "en": "Built sales and inventory forecasts.",
+          "es": "Construí pronósticos de ventas e inventario."
+        },
+        {
+          "id": "visionary.b3",
+          "priority": 48,
+          "en": "Tracked conversion rate, average ticket, and margin to coordinate pricing, promotions, and replenishment.",
+          "es": "Seguí tasa de conversión, ticket promedio y margen para coordinar precios, promociones y reposición."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "project.ava",
+      "title": { "en": "AVA", "es": "AVA" },
+      "type": { "en": "Product", "es": "Producto" },
+      "priority": 75,
+      "bullets": [
+        {
+          "id": "ava.b1",
+          "priority": 72,
+          "en": "Field-hockey video analysis: load a match, tag key moments, and send clips the same day.",
+          "es": "Análisis de video de hockey: abres el partido, marcas momentos clave y los clips salen el mismo día."
+        }
+      ],
+      "technologies": ["C++"]
+    },
+    {
+      "id": "project.carpeta",
+      "title": { "en": "Carpeta", "es": "Carpeta" },
+      "type": { "en": "Product", "es": "Producto" },
+      "priority": 55,
+      "bullets": [
+        {
+          "id": "carpeta.b1",
+          "priority": 52,
+          "en": "Team libraries of match clips, filtered by concept, fed from AVA.",
+          "es": "Bibliotecas de clips de partidos por concepto, alimentadas desde AVA."
+        }
+      ],
+      "technologies": []
+    },
+    {
+      "id": "project.fleet",
+      "title": {
+        "en": "Aircraft Fleet Engine Allocation Optimizer",
+        "es": "Optimizador de Asignación de Motores de Flota de Aeronaves"
+      },
+      "type": {
+        "en": "Course Project — Optimization Methods",
+        "es": "Proyecto de Curso — Métodos de Optimización"
+      },
+      "priority": 45,
+      "bullets": [
+        {
+          "id": "fleet.b1",
+          "priority": 44,
+          "en": "Optimization tool to allocate engines across a fleet, minimizing maintenance cost under schedule constraints.",
+          "es": "Herramienta de optimización para asignar motores en una flota, minimizando costo de mantenimiento bajo restricciones de horario."
+        }
+      ],
+      "technologies": ["Python", "Linear Programming", "Gurobi", "Pandas"]
+    }
+  ],
+  "athletics": [
+    {
+      "id": "ath.player",
+      "role": { "en": "Field hockey player", "es": "Jugadora de hockey" },
+      "organization": { "en": "Since 2008", "es": "Desde 2008" }
+    },
+    {
+      "id": "ath.coach",
+      "role": { "en": "Coach", "es": "Entrenadora" },
+      "organization": {
+        "en": "Youth teams — UC and Selección Nacional, 2023–present",
+        "es": "Equipos juveniles — UC y Selección Nacional, 2023–actualidad"
+      }
+    },
+    {
+      "id": "ath.video",
+      "role": { "en": "Video analyst", "es": "Analista de video" },
+      "organization": { "en": "Field hockey", "es": "Hockey sobre césped" },
+      "description": {
+        "en": "Technical video at the Ladies Junior World Cup, Santiago (Dec 2025); recurring video analysis for youth programs since.",
+        "es": "Video técnico en la Copa del Mundo Junior Femenino, Santiago (dic 2025); análisis de video recurrente para programas juveniles desde entonces."
+      }
+    }
+  ],
+  "todos": [
+    "TODO: Confirm whether Finapsys internship should be labeled Verano vs Summer consistently on Spanish CVs only.",
+    "TODO: Add any additional approved skill labels from home page Skills section if they should appear on business CVs."
+  ]
+}

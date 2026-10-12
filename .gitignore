@@ -26,3 +26,9 @@ bun.lockb
 *.njsproj
 *.sln
 *.sw?
+
+# Wrangler local secrets (main site Worker at repo root)
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.wrangler/
