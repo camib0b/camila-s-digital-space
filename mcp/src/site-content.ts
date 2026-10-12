@@ -12,7 +12,7 @@ export const profile = {
   tagline:
     "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA, a native field-hockey video product. Clips the same night.",
   summary:
-    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating 2026.",
+    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
