@@ -12,10 +12,13 @@ const ThemeToggle = () => {
       variant="ghost"
       size="sm"
       onClick={toggleTheme}
-      className="h-8 w-8 p-0 text-muted-foreground/90 hover:text-foreground hover:bg-accent/30"
+      className="pressable h-8 w-8 p-0 text-muted-foreground/90 hover:text-foreground hover:bg-accent/30"
       aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
     >
-      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      <span className="theme-toggle-icon" aria-hidden="true">
+        <Sun data-visible={isDark ? "true" : "false"} />
+        <Moon data-visible={isDark ? "false" : "true"} />
+      </span>
     </Button>
   );
 };

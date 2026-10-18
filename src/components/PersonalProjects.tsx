@@ -12,7 +12,7 @@ interface ProjectListProps {
 }
 
 const openLinkClassName =
-  "shrink-0 text-sm text-foreground transition-colors duration-200 link-underline hover:text-muted-foreground";
+  "pressable shrink-0 text-sm text-foreground transition-colors duration-200 link-underline hover:text-muted-foreground";
 
 const ProjectOpenLink = ({ project }: { project: PersonalProject }) => {
   const { t } = useLanguage();

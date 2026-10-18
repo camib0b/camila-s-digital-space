@@ -57,27 +57,29 @@ const SocialLinkControl = ({
         <Icon className="w-4 h-4" />
       </button>
 
-      {isExpanded && (
-        <div className="flex items-center gap-1.5">
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200 select-all whitespace-nowrap"
-          >
-            {displayUrl}
-          </a>
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200"
-            aria-label={t("social.openInNewTab")}
-          >
-            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-          </a>
-        </div>
-      )}
+      <div
+        className="contact-reveal"
+        data-state={isExpanded ? "open" : "closed"}
+        inert={isExpanded ? undefined : true}
+      >
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pressable inline-block text-xs text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200 select-all whitespace-nowrap"
+        >
+          {displayUrl}
+        </a>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200"
+          aria-label={t("social.openInNewTab")}
+        >
+          <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+        </a>
+      </div>
     </div>
   );
 };

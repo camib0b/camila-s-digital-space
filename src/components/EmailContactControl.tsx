@@ -69,25 +69,26 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
         <Mail className="w-4 h-4" />
       </button>
 
-      {isExpanded && (
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground select-all whitespace-nowrap">
-            {CONTACT_EMAIL}
+      <div
+        className="contact-reveal"
+        data-state={isExpanded ? "open" : "closed"}
+        inert={isExpanded ? undefined : true}
+      >
+        <span className="text-xs text-muted-foreground select-all whitespace-nowrap">
+          {CONTACT_EMAIL}
+        </span>
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+          aria-label={hasCopied ? t("contact.copied") : t("contact.copyEmail")}
+        >
+          <span className="copy-status-icon">
+            <Copy data-visible={hasCopied ? "false" : "true"} aria-hidden="true" />
+            <Check data-visible={hasCopied ? "true" : "false"} aria-hidden="true" />
           </span>
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-            aria-label={hasCopied ? t("contact.copied") : t("contact.copyEmail")}
-          >
-            {hasCopied ? (
-              <Check className="w-3.5 h-3.5" aria-hidden="true" />
-            ) : (
-              <Copy className="w-3.5 h-3.5" aria-hidden="true" />
-            )}
-          </button>
-        </div>
-      )}
+        </button>
+      </div>
 
       {hasCopied && (
         <div
