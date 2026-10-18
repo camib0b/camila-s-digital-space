@@ -1,11 +1,19 @@
-# Project info
+# camilaescudero.cl
 
-## What technologies are used for this project?
+Personal site for Camila Escudero — analytics products, portfolio, and AVA.
 
-This project is built with:
+## Stack
 
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Commands
+
+- `npm run dev` — local dev server (port 8080)
+- `npm run build` — production build
+- `npm run lint` — ESLint
+
+See [AGENTS.md](./AGENTS.md) for the full monorepo layout (Workers, MCP, checkout).
