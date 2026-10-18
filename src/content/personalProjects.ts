@@ -31,18 +31,18 @@ export const personalProjects: PersonalProject[] = [
     link: { kind: "external", url: "https://carpeta.cl/" },
   },
   {
-    id: "tomorrow",
-    category: "small-tool",
-    titleKey: "personalProjects.tomorrow.title",
-    descriptionKey: "personalProjects.tomorrow",
-    link: { kind: "internal", path: "/tomorrow" },
-  },
-  {
     id: "capital",
     category: "small-tool",
     titleKey: "personalProjects.capital.title",
     descriptionKey: "personalProjects.capital",
     link: { kind: "internal", path: "/capital" },
+  },
+  {
+    id: "tomorrow",
+    category: "small-tool",
+    titleKey: "personalProjects.tomorrow.title",
+    descriptionKey: "personalProjects.tomorrow",
+    link: { kind: "internal", path: "/tomorrow" },
   },
   {
     id: "xml-viz",

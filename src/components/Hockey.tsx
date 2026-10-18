@@ -18,14 +18,7 @@ const Hockey = () => {
                 key={role.id}
                 className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1"
               >
-                <div>
-                  <p className="font-medium text-foreground">{t(role.roleKey)}</p>
-                  {role.organizationKey ? (
-                    <p className="text-sm text-muted-foreground">
-                      {t(role.organizationKey)}
-                    </p>
-                  ) : null}
-                </div>
+                <p className="font-medium text-foreground">{t(role.roleKey)}</p>
                 <p className="text-xs text-muted-foreground font-mono shrink-0">
                   {t(role.periodKey)}
                 </p>

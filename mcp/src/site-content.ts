@@ -35,7 +35,7 @@ export const experience = [
     company: "ACFIN",
     period: "Feb 2026 – Present",
     description:
-      "Product and platform for client-facing structured-credit metrics and reports. Dirty dates, partitions, FX. Embed, download, session — how people consume the numbers.",
+      "Investor-facing analytics for structured-credit portfolios: reconciled credit metrics, multi-currency books, self-serve data export, and automated rollout across 8 factoring clients.",
   },
   {
     id: "finapsys",
@@ -86,20 +86,20 @@ export const projects = [
     url: "https://www.raycast.com/camib0b/zodme",
   },
   {
+    id: "capital",
+    name: "Capital",
+    category: "small-tool",
+    description:
+      "Portfolio analytics: returns versus a VOO benchmark, risk, and look-through exposure. Live market data with automated daily closes. AI commentary on request.",
+    url: `${SITE_URL}/capital`,
+  },
+  {
     id: "tomorrow",
     name: "Daily planner",
     category: "small-tool",
     description:
       "Daily planner. Reads a Google Calendar and writes the day. Runs at 9:30 AM.",
     url: `${SITE_URL}/tomorrow`,
-  },
-  {
-    id: "capital",
-    name: "Capital",
-    category: "small-tool",
-    description:
-      "Live holdings and prices, with return, risk, and look-through exposure.",
-    url: `${SITE_URL}/capital`,
   },
   {
     id: "xml-viz",
