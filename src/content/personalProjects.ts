@@ -31,6 +31,13 @@ export const personalProjects: PersonalProject[] = [
     link: { kind: "external", url: "https://carpeta.cl/" },
   },
   {
+    id: "publishing-pipeline",
+    category: "project",
+    titleKey: "personalProjects.publishingPipeline.title",
+    descriptionKey: "personalProjects.publishingPipeline",
+    link: { kind: "none" },
+  },
+  {
     id: "capital",
     category: "small-tool",
     titleKey: "personalProjects.capital.title",

@@ -73,6 +73,9 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
     "personalProjects.clipLibrary.title": "Carpeta",
     "personalProjects.clipLibrary": "De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
+    "personalProjects.publishingPipeline.title": "Pipeline de publicación agéntico",
+    "personalProjects.publishingPipeline":
+      "Publicar un partido tomaba unos 50 minutos de trabajo manual: exportar los clips uno por uno, subirlos a YouTube y conectar la biblioteca. Ahora AVA exporta los clips por lotes y un agente separado los recodifica, los aloja de forma nativa en carpeta.cl, escribe la base de datos, sube el XML de scouting, mantiene un respaldo en YouTube y verifica cada paso. Unos 5 minutos de mi tiempo por partido. 23 partidos, 175 clips y 3 bibliotecas de equipo hasta ahora, unas 17 horas ahorradas. Las cifras de tiempo son estimaciones mías.",
     "personalProjects.open": "Abrir",
     "personalProjects.smallTools.label": "Herramientas pequeñas",
     "personalProjects.smallTools.description":
@@ -169,6 +172,10 @@ const es: Record<TranslationKey, string> = {
     "cv.carpeta.type": "Producto",
     "cv.carpeta.description":
       "Bibliotecas por equipo de clips de partidos, filtradas por concepto, alimentadas desde AVA.",
+    "cv.publishingPipeline.title": "Pipeline de publicación agéntico",
+    "cv.publishingPipeline.type": "Caso de estudio",
+    "cv.publishingPipeline.description":
+      "Construí un pipeline de publicación independiente para carpeta.cl: un agente de IA recodifica video, aloja clips, escribe la base de datos, sube XML de scouting y verifica cada paso. 23 partidos y 175 clips publicados; trabajo manual por partido de ~50 a ~5 min (estimado).",
     "cv.fleetOptimizer.title": "Optimizador de Asignación de Motores de Flota de Aeronaves",
     "cv.fleetOptimizer.type": "Proyecto de Curso — Métodos de Optimización",
     "cv.fleetOptimizer.description": "Desarrollé una herramienta de optimización para asignar motores a través de una flota de aeronaves minimizando costos de mantenimiento mientras cumple restricciones de horarios de vuelo.",

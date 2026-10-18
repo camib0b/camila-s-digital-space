@@ -71,6 +71,9 @@ const en = {
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
     "personalProjects.clipLibrary.title": "Carpeta",
     "personalProjects.clipLibrary": "End to end: game footage library of clips tagged in my own C++ analysis app, published on Cloudflare. Open to players, coaches and analysts alike.",
+    "personalProjects.publishingPipeline.title": "Agentic publishing pipeline",
+    "personalProjects.publishingPipeline":
+      "Publishing a match used to take about 50 minutes of manual work: exporting clips one by one, uploading to YouTube, wiring up the library. Now AVA batch-exports the clips and a separate agent re-encodes them, hosts them natively on carpeta.cl, writes the database, uploads the scouting XML, keeps a YouTube backup, and verifies each step. About 5 minutes of my time per match. 23 matches, 175 clips, 3 team libraries so far, roughly 17 hours saved. Time figures are my own estimates.",
     "personalProjects.open": "Open",
     "personalProjects.smallTools.label": "Small tools",
     "personalProjects.smallTools.description":
@@ -167,6 +170,10 @@ const en = {
     "cv.carpeta.type": "Product",
     "cv.carpeta.description":
       "Team libraries of match clips, filtered by concept, fed from AVA.",
+    "cv.publishingPipeline.title": "Agentic publishing pipeline",
+    "cv.publishingPipeline.type": "Case study",
+    "cv.publishingPipeline.description":
+      "Built an independent publishing pipeline for carpeta.cl: an AI agent re-encodes video, hosts clips, writes the database, uploads scouting XML, and verifies each step. 23 matches and 175 clips published; manual work per match from ~50 to ~5 min (estimated).",
     "cv.fleetOptimizer.title": "Aircraft Fleet Engine Allocation Optimizer",
     "cv.fleetOptimizer.type": "Course Project — Optimization Methods",
     "cv.fleetOptimizer.description": "Developed an optimization tool to allocate engines across an aircraft fleet minimizing maintenance costs while meeting flight schedule constraints.",

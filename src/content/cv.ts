@@ -24,7 +24,7 @@ export function cvTechnologyLabel(
 }
 
 export type CvJobId = "acfin" | "finapsys" | "a3" | "visionary";
-export type CvProjectId = "ava" | "carpeta" | "fleetOptimizer";
+export type CvProjectId = "ava" | "carpeta" | "publishingPipeline" | "fleetOptimizer";
 export type CvLeadershipId = "player" | "coach.uc" | "coach.national" | "videoAnalyst";
 
 export interface CvProject {
@@ -70,6 +70,13 @@ export const cvProjects: CvProject[] = [
     descriptionKey: "cv.carpeta.description",
     technologies: [],
     externalHref: "https://carpeta.cl/",
+  },
+  {
+    id: "publishingPipeline",
+    titleKey: "cv.publishingPipeline.title",
+    typeKey: "cv.publishingPipeline.type",
+    descriptionKey: "cv.publishingPipeline.description",
+    technologies: [],
   },
   {
     id: "fleetOptimizer",
