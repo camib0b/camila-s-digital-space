@@ -197,7 +197,7 @@ const en = {
     "cv.selectedProjects": "Selected Projects",
     "cv.workExperience": "Work Experience",
     "cv.education": "Education",
-    "cv.leadershipAthletics": "Hockey",
+    "cv.leadershipAthletics": "Field Hockey",
     "cv.languages.pair": "English and Spanish, native",
     "cv.skill.bi": "BI: Looker / LookML (semantic modeling)",
     "cv.skill.excel": "Advanced Excel",
@@ -248,15 +248,12 @@ const en = {
     "cv.education.courseworkLabel": "Coursework",
     "cv.education.coursework":
       "Optimization Methods, Data Structures, Databases, Web Technologies, Operations Management",
-    "cv.player.role": "Field hockey player",
+    "cv.player.role": "Player",
     "cv.player.organization": "Since 2008",
-    "cv.coach.uc.role": "Coach",
-    "cv.coach.uc.organization": "UC, U-12 and U-16, 2023–present",
-    "cv.coach.national.role": "Assistant coach",
-    "cv.coach.national.organization": "Chilean national team, 2023–present",
+    "cv.coaching.role": "Coaching",
+    "cv.coaching.organization": "2023–present",
     "cv.videoAnalyst.role": "Video analyst",
-    "cv.videoAnalyst.organization": "Field hockey",
-    "cv.videoAnalyst.description": "Technical video at the Ladies Junior World Cup, Santiago (Dec 2025); recurring video analysis for youth programs since.",
+    "cv.videoAnalyst.organization": "2025–present",
 
     // AVA
     "ava.document.title": "AVA · field hockey",
