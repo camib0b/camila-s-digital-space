@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import LanguageToggle from "@/components/LanguageToggle";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
+import AvaProductShots from "@/components/ava/AvaProductShots";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
 import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_INTEREST_EMAIL, AVA_STATS } from "@/content/ava";
@@ -155,6 +156,7 @@ const Ava = () => {
                 </article>
               ))}
             </div>
+            <AvaProductShots />
           </div>
         </section>
 
