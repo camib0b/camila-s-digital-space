@@ -9,6 +9,7 @@ import Ava from "./pages/Ava";
 import Capital from "./pages/Capital";
 import NotFound from "./pages/NotFound";
 import Tomorrow from "./pages/Tomorrow";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <LanguageProvider>
           <TooltipProvider>
             <Routes>
