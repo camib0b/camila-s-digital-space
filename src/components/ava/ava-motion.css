@@ -8,12 +8,14 @@
 
 .ava-cta,
 .ava-text-link {
-  transition: transform 160ms var(--ease-out);
+  /* Release snaps. The press duration is set on :active. */
+  transition: transform 100ms var(--ease-out);
 }
 
 .ava-cta:active,
 .ava-text-link:active {
   transform: scale(0.97);
+  transition-duration: 160ms;
 }
 
 .ava-cta:disabled,
@@ -34,32 +36,14 @@
   }
 }
 
-.ava-media {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--ava-fg) 6%, var(--ava-bg));
-}
-
-.ava-media-skeleton {
-  position: absolute;
-  inset: 0;
-  background: color-mix(in srgb, var(--ava-fg) 8%, var(--ava-bg));
-}
-
-.ava-media-image {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+/* Product shots. The loading plate is .ava-shot-frame (flat --ava-bg, #070708)
+   inside the 1px .ava-shot hairline. No shimmer. The bitmap wipes once. */
+.ava-shot-image {
   clip-path: inset(0 0 100% 0);
   transition: clip-path 600ms var(--ease-in-out);
-  transition-delay: var(--ava-media-reveal-delay, 0ms);
 }
 
-.ava-media[data-visible="true"] .ava-media-image {
+.ava-shot-frame[data-visible="true"] .ava-shot-image {
   clip-path: inset(0 0 0 0);
 }
 
@@ -84,14 +68,14 @@
     }
   }
 
-  .ava-media-image {
+  .ava-shot-image {
     clip-path: none;
     opacity: 0;
     transition: opacity 200ms var(--ease-out);
     transition-delay: 0ms;
   }
 
-  .ava-media[data-visible="true"] .ava-media-image {
+  .ava-shot-frame[data-visible="true"] .ava-shot-image {
     opacity: 1;
     clip-path: none;
   }

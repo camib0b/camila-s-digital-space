@@ -22,14 +22,15 @@ import export640Webp from "@/assets/ava/export-640.webp";
 import export1280Webp from "@/assets/ava/export-1280.webp";
 import export1920Webp from "@/assets/ava/export-1920.webp";
 import export2560Webp from "@/assets/ava/export-2560.webp";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { TranslationKey } from "@/i18n/types";
 
-/** macOS window crop, including the #070708 gutter. Keep in sync with `.ava-shot-image`. */
+/** macOS window crop, including the #070708 gutter. */
 const DESKTOP_SHOT_WIDTH = 2972;
 const DESKTOP_SHOT_HEIGHT = 1878;
 
-/** Exported-clip crop. Wider than the desktop window. Keep in sync with `.ava-shot[data-shot="export"] .ava-shot-image`. */
+/** Exported-clip crop. Wider than the desktop window. */
 const EXPORTED_CLIP_WIDTH = 3164;
 const EXPORTED_CLIP_HEIGHT = 1878;
 
@@ -120,35 +121,110 @@ function sourceSet(sources: ShotSources): string {
   return `${sources[640]} 640w, ${sources[1280]} 1280w, ${sources[1920]} 1920w, ${sources[2560]} 2560w`;
 }
 
-const AvaProductShots = () => {
+function AvaProductShot({ shot }: { shot: ProductShot }) {
   const { t } = useLanguage();
+  const frameRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const [hasDecodedImage, setHasDecodedImage] = useState(false);
+  const [isInView, setIsInView] = useState(false);
 
+  useEffect(() => {
+    if (!isInView) {
+      return;
+    }
+
+    const image = imageRef.current;
+    if (!image) {
+      return;
+    }
+
+    // A fully clipped lazy image has no visible intersection, so the browser
+    // never fetches it and the reveal cannot start. The frame is in view;
+    // load the bitmap now.
+    if (image.loading !== "eager") {
+      image.loading = "eager";
+    }
+
+    if (image.complete && image.naturalWidth > 0) {
+      setHasDecodedImage(true);
+    }
+  }, [isInView]);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) {
+      return undefined;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry?.isIntersecting) {
+          return;
+        }
+        setIsInView(true);
+        observer.disconnect();
+      },
+      { rootMargin: "0px 0px -100px 0px", threshold: 0 },
+    );
+
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+
+  const isRevealed = hasDecodedImage && isInView;
+
+  return (
+    <figure className="ava-shot" data-shot={shot.id}>
+      <div
+        className="ava-shot-frame"
+        ref={frameRef}
+        data-visible={isRevealed ? "true" : "false"}
+      >
+        <picture>
+          <source type="image/avif" srcSet={sourceSet(shot.avif)} sizes={SHOT_SIZES} />
+          <source type="image/webp" srcSet={sourceSet(shot.webp)} sizes={SHOT_SIZES} />
+          <img
+            ref={imageRef}
+            className="ava-shot-image"
+            src={shot.webp[1280]}
+            srcSet={sourceSet(shot.webp)}
+            sizes={SHOT_SIZES}
+            width={shot.width}
+            height={shot.height}
+            style={{ aspectRatio: `${shot.width} / ${shot.height}` }}
+            alt={t(shot.altKey)}
+            loading="lazy"
+            decoding="async"
+            onLoad={(event) => {
+              if (event.currentTarget.naturalWidth > 0) {
+                setHasDecodedImage(true);
+              }
+            }}
+            onError={() => {
+              setHasDecodedImage(true);
+            }}
+          />
+        </picture>
+      </div>
+      <figcaption className="ava-shot-caption">
+        <p className="ava-kicker">{t(shot.kickerKey)}</p>
+        <p className="ava-shot-caption-text">{t(shot.captionKey)}</p>
+      </figcaption>
+    </figure>
+  );
+}
+
+const AvaProductShots = () => {
   return (
     <div className="ava-shots">
       {PRODUCT_SHOTS.map((shot) => (
-        <figure className="ava-shot" data-shot={shot.id} key={shot.id}>
-          <div className="ava-shot-frame">
-            <picture>
-              <source type="image/avif" srcSet={sourceSet(shot.avif)} sizes={SHOT_SIZES} />
-              <source type="image/webp" srcSet={sourceSet(shot.webp)} sizes={SHOT_SIZES} />
-              <img
-                className="ava-shot-image"
-                src={shot.webp[1280]}
-                srcSet={sourceSet(shot.webp)}
-                sizes={SHOT_SIZES}
-                width={shot.width}
-                height={shot.height}
-                alt={t(shot.altKey)}
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-          </div>
-          <figcaption className="ava-shot-caption">
-            <p className="ava-kicker">{t(shot.kickerKey)}</p>
-            <p className="ava-shot-caption-text">{t(shot.captionKey)}</p>
-          </figcaption>
-        </figure>
+        <AvaProductShot shot={shot} key={shot.id} />
       ))}
     </div>
   );
