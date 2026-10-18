@@ -1047,69 +1047,163 @@ button.ava-cta:disabled {
 .ava-clip-window {
   position: relative;
   margin-top: 1.75rem;
-  height: 5.5rem;
+  height: 6.25rem;
+  user-select: none;
+}
+
+.ava-clip-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.85rem;
+  height: 2rem;
+}
+
+.ava-clip-track-line,
+.ava-clip-span {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.ava-clip-track-line {
+  left: 0;
+  right: 0;
+  background: var(--ava-rule);
 }
 
 .ava-clip-span {
-  position: absolute;
-  left: 8%;
-  right: 18%;
-  top: 1.65rem;
-  height: 1px;
   background: var(--ava-fg);
-}
-
-.ava-clip-span::before,
-.ava-clip-span::after {
-  content: "";
-  position: absolute;
-  top: -4px;
-  width: 1px;
-  height: 9px;
-  background: var(--ava-fg);
-}
-
-.ava-clip-span::before {
-  left: 0;
-}
-
-.ava-clip-span::after {
-  right: 0;
 }
 
 .ava-clip-mark {
   position: absolute;
-  left: 42%;
-  top: 1.15rem;
+  top: 50%;
   width: 9px;
   height: 9px;
   background: var(--ava-fg);
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
-.ava-clip-labels {
+.ava-clip-handle {
   position: absolute;
-  left: 8%;
-  right: 18%;
-  top: 2.35rem;
-  display: flex;
-  justify-content: space-between;
+  top: 0;
+  width: 1.5rem;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  touch-action: none;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.ava-clip-handle[data-active="true"] {
+  z-index: 3;
+}
+
+.ava-clip-handle:focus {
+  outline: none;
+}
+
+.ava-clip-handle:focus-visible {
+  outline: 1px solid var(--ava-fg);
+  outline-offset: 4px;
+}
+
+.ava-clip-handle::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 9px;
+  background-color: var(--ava-fg);
+  transform: translate(-50%, -50%);
+}
+
+.ava-clip-readout {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 3rem;
+  height: 1rem;
+  pointer-events: none;
+}
+
+.ava-clip-readout span {
+  position: absolute;
+  top: 0;
+  left: clamp(2.75rem, var(--readout-position), calc(100% - 2.75rem));
+  transform: translateX(-50%);
   font-family: var(--ava-mono);
   font-size: 0.625rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
   color: var(--ava-muted);
+  white-space: nowrap;
 }
 
 .ava-clip-center {
   position: absolute;
-  left: 42%;
-  top: 3.35rem;
+  top: 4.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
   transform: translateX(-50%);
   font-family: var(--ava-mono);
   font-size: 0.625rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.ava-clip-length {
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--ava-fg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ava-clip-handle {
+    cursor: ew-resize;
+  }
+
+  .ava-clip-handle::before {
+    transition:
+      width 100ms var(--ease-out),
+      height 100ms var(--ease-out),
+      background-color 100ms var(--ease-out);
+  }
+
+  .ava-clip-handle:hover::before,
+  .ava-clip-handle:focus-visible::before,
+  .ava-clip-handle[data-active="true"]::before {
+    width: 2px;
+    height: 15px;
+    background-color: var(--ava-fg);
+    transition-duration: 150ms;
+  }
+
+  .ava-clip-window[data-dragging] .ava-clip-handle::before {
+    transition: none;
+  }
+
+  .ava-clip-window[data-dragging],
+  .ava-clip-window[data-dragging] .ava-clip-handle {
+    cursor: ew-resize;
+  }
 }
 
 .ava-stats {
@@ -1342,5 +1436,9 @@ button.ava-cta:disabled {
   .ava-event:active,
   .ava-event[data-pressed] {
     transform: none;
+  }
+
+  .ava-clip-handle::before {
+    transition: none;
   }
 }
