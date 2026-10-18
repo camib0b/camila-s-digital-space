@@ -14,12 +14,24 @@ import presentation640Webp from "@/assets/ava/presentation-640.webp";
 import presentation1280Webp from "@/assets/ava/presentation-1280.webp";
 import presentation1920Webp from "@/assets/ava/presentation-1920.webp";
 import presentation2560Webp from "@/assets/ava/presentation-2560.webp";
+import export640Avif from "@/assets/ava/export-640.avif";
+import export1280Avif from "@/assets/ava/export-1280.avif";
+import export1920Avif from "@/assets/ava/export-1920.avif";
+import export2560Avif from "@/assets/ava/export-2560.avif";
+import export640Webp from "@/assets/ava/export-640.webp";
+import export1280Webp from "@/assets/ava/export-1280.webp";
+import export1920Webp from "@/assets/ava/export-1920.webp";
+import export2560Webp from "@/assets/ava/export-2560.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { TranslationKey } from "@/i18n/types";
 
-/** Cropped screenshot pixels. Keep in sync with `.ava-shot-image` aspect-ratio. */
-const SHOT_FRAME_WIDTH = 2972;
-const SHOT_FRAME_HEIGHT = 1878;
+/** macOS window crop, including the #070708 gutter. Keep in sync with `.ava-shot-image`. */
+const DESKTOP_SHOT_WIDTH = 2972;
+const DESKTOP_SHOT_HEIGHT = 1878;
+
+/** Exported-clip crop. Wider than the desktop window. Keep in sync with `.ava-shot[data-shot="export"] .ava-shot-image`. */
+const EXPORTED_CLIP_WIDTH = 3164;
+const EXPORTED_CLIP_HEIGHT = 1878;
 
 const SHOT_SIZES = "(min-width: 1216px) 1112px, (min-width: 500px) 92vw, calc(100vw - 2.5rem)";
 
@@ -31,7 +43,9 @@ interface ShotSources {
 }
 
 interface ProductShot {
-  id: "tagging" | "presentation";
+  id: "tagging" | "presentation" | "export";
+  width: number;
+  height: number;
   kickerKey: TranslationKey;
   captionKey: TranslationKey;
   altKey: TranslationKey;
@@ -42,6 +56,8 @@ interface ProductShot {
 const PRODUCT_SHOTS: ProductShot[] = [
   {
     id: "tagging",
+    width: DESKTOP_SHOT_WIDTH,
+    height: DESKTOP_SHOT_HEIGHT,
     kickerKey: "ava.shots.tagging.kicker",
     captionKey: "ava.shots.tagging.caption",
     altKey: "ava.shots.tagging.alt",
@@ -60,6 +76,8 @@ const PRODUCT_SHOTS: ProductShot[] = [
   },
   {
     id: "presentation",
+    width: DESKTOP_SHOT_WIDTH,
+    height: DESKTOP_SHOT_HEIGHT,
     kickerKey: "ava.shots.presentation.kicker",
     captionKey: "ava.shots.presentation.caption",
     altKey: "ava.shots.presentation.alt",
@@ -76,6 +94,26 @@ const PRODUCT_SHOTS: ProductShot[] = [
       2560: presentation2560Webp,
     },
   },
+  {
+    id: "export",
+    width: EXPORTED_CLIP_WIDTH,
+    height: EXPORTED_CLIP_HEIGHT,
+    kickerKey: "ava.shots.export.kicker",
+    captionKey: "ava.shots.export.caption",
+    altKey: "ava.shots.export.alt",
+    avif: {
+      640: export640Avif,
+      1280: export1280Avif,
+      1920: export1920Avif,
+      2560: export2560Avif,
+    },
+    webp: {
+      640: export640Webp,
+      1280: export1280Webp,
+      1920: export1920Webp,
+      2560: export2560Webp,
+    },
+  },
 ];
 
 function sourceSet(sources: ShotSources): string {
@@ -88,7 +126,7 @@ const AvaProductShots = () => {
   return (
     <div className="ava-shots">
       {PRODUCT_SHOTS.map((shot) => (
-        <figure className="ava-shot" key={shot.id}>
+        <figure className="ava-shot" data-shot={shot.id} key={shot.id}>
           <div className="ava-shot-frame">
             <picture>
               <source type="image/avif" srcSet={sourceSet(shot.avif)} sizes={SHOT_SIZES} />
@@ -98,8 +136,8 @@ const AvaProductShots = () => {
                 src={shot.webp[1280]}
                 srcSet={sourceSet(shot.webp)}
                 sizes={SHOT_SIZES}
-                width={SHOT_FRAME_WIDTH}
-                height={SHOT_FRAME_HEIGHT}
+                width={shot.width}
+                height={shot.height}
                 alt={t(shot.altKey)}
                 loading="lazy"
                 decoding="async"

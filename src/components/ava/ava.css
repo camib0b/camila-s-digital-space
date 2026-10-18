@@ -910,6 +910,11 @@ button.ava-cta:disabled {
   aspect-ratio: 2972 / 1878;
 }
 
+/* Exported clip is a wider crop than the desktop window shots. */
+.ava-shot[data-shot="export"] .ava-shot-image {
+  aspect-ratio: 3164 / 1878;
+}
+
 .ava-shot-caption {
   display: grid;
   gap: 0.4rem;
