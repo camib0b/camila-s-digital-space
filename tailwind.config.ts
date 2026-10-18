@@ -17,13 +17,12 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          "Inter",
+          "Roboto",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
-          "Roboto",
           "Helvetica",
           "Arial",
           "Apple Color Emoji",
