@@ -74,6 +74,8 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.clipLibrary.title": "Carpeta",
     "personalProjects.clipLibrary": "De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
     "personalProjects.publishingPipeline.title": "Pipeline de publicación agéntico",
+    "personalProjects.publishingPipeline.connectLabel": "Cómo se conectan",
+    "personalProjects.publishingPipeline.connectsTo": "a",
     "personalProjects.publishingPipeline":
       "Publicar un partido pasó de unos 50 minutos de trabajo manual a una sola activación, con verificaciones y un respaldo, en unos 5 minutos de mi tiempo. Unas 17 horas ahorradas hasta ahora; las cifras de tiempo son estimaciones mías.",
     "personalProjects.publishingPipeline.diagram.intro": "Por partido, en orden.",

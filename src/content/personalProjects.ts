@@ -5,7 +5,7 @@ export type PersonalProjectLink =
   | { kind: "external"; url: string }
   | { kind: "none" };
 
-export type PersonalProjectCategory = "project" | "small-tool";
+export type PersonalProjectCategory = "project" | "connector" | "small-tool";
 
 export interface PersonalProject {
   id: string;
@@ -32,7 +32,7 @@ export const personalProjects: PersonalProject[] = [
   },
   {
     id: "publishing-pipeline",
-    category: "project",
+    category: "connector",
     titleKey: "personalProjects.publishingPipeline.title",
     descriptionKey: "personalProjects.publishingPipeline",
     link: { kind: "none" },
