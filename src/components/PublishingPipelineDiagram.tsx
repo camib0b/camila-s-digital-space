@@ -160,7 +160,7 @@ const PublishingPipelineDiagram = () => {
   const accessibleName = publishingPipelineAccessibleName(t);
 
   return (
-    <figure className="mt-5">
+    <figure className="mt-4">
       <div role="img" aria-label={accessibleName} className="relative">
         <ol className="sr-only">
           {DIAGRAM_STEP_KEYS.map((stepKey, stepIndex) => (

@@ -66,8 +66,16 @@ const ProjectList = ({ projects }: ProjectListProps) => {
             </div>
             <ProjectOpenLink project={project} />
           </div>
-          <p className="text-sm leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
           {project.id === "publishing-pipeline" ? <PublishingPipelineDiagram /> : null}
+          <p
+            className={
+              project.id === "publishing-pipeline"
+                ? "mt-5 text-sm leading-relaxed text-muted-foreground"
+                : "text-sm leading-relaxed text-muted-foreground"
+            }
+          >
+            {t(project.descriptionKey)}
+          </p>
         </li>
       ))}
     </ul>

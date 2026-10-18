@@ -75,7 +75,7 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.clipLibrary": "De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
     "personalProjects.publishingPipeline.title": "Pipeline de publicación agéntico",
     "personalProjects.publishingPipeline":
-      "Publicar un partido tomaba unos 50 minutos de trabajo manual: exportar los clips uno por uno, subirlos a YouTube y conectar la biblioteca. Ahora AVA exporta los clips por lotes y un agente separado los recodifica, los aloja de forma nativa en carpeta.cl, escribe la base de datos, sube el XML de scouting, mantiene un respaldo en YouTube y verifica cada paso. Unos 5 minutos de mi tiempo por partido. 23 partidos, 175 clips y 3 bibliotecas de equipo hasta ahora, unas 17 horas ahorradas. Las cifras de tiempo son estimaciones mías.",
+      "Publicar un partido pasó de unos 50 minutos de trabajo manual a una sola activación, con verificaciones y un respaldo, en unos 5 minutos de mi tiempo. Unas 17 horas ahorradas hasta ahora; las cifras de tiempo son estimaciones mías.",
     "personalProjects.publishingPipeline.diagram.intro": "Por partido, en orden.",
     "personalProjects.publishingPipeline.diagram.list.1": "Recibir el metraje del partido.",
     "personalProjects.publishingPipeline.diagram.list.2":
