@@ -3,7 +3,7 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.acfin": "Productos de analítica en ACFIN: la plataforma que presenta métricas y reportes de crédito estructurado a los clientes.",
+    "hero.acfin": "Productos de analítica en ACFIN: la plataforma que presenta métricas y reportes de crédito estructurado a los clientes, con un panel de inversionistas para una importante administradora de activos chilena.",
     "hero.ava": "AVA, un producto nativo de análisis de video para hockey. Clips esa misma noche.",
     "hero.cta.work": "Trabajo",
     "hero.cta.cv": "CV",
@@ -224,7 +224,7 @@ const es: Record<TranslationKey, string> = {
     "cv.acfin.period": "Feb 2026 – Actualidad",
     "cv.acfin.bullet1": "Analítica de cara a inversionistas para portafolios de crédito estructurado, con métricas de crédito conciliadas: morosidad, tasas de default a 90 y 180 días, yield, flujo de caja y una matriz de transición.",
     "cv.acfin.bullet2": "Libros multimoneda PEN/USD con un conversor de divisas, y una exportación de datos en Excel de autoservicio con permisos por usuario.",
-    "cv.acfin.bullet3": "Capa semántica en BigQuery y LookML. Despliegue a 8 clientes más de factoring, automatizado mediante la API de Looker. Diagnóstico de usuarios embebidos duplicados.",
+    "cv.acfin.bullet3": "Capa semántica en BigQuery y LookML. Construí el panel de inversionistas que usa una importante administradora de activos chilena para monitorear su participación en un grupo de 8 empresas de factoring; despliegue automatizado mediante la API de Looker. Diagnóstico de usuarios embebidos duplicados.",
     "cv.finapsys.title": "Frontend",
     "cv.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "cv.finapsys.period": "Práctica de verano 2024",
