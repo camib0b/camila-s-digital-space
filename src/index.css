@@ -51,6 +51,9 @@
     --series-benchmark: 220 6% 46%;
     --number-positive: 152 32% 28%;
     --number-negative: 0 48% 38%;
+
+    /* Emil Kowalski strong ease-out. Shared by landing-page motion. */
+    --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .dark {
@@ -163,6 +166,16 @@
   .portfolio-skeleton-block {
     opacity: 0.55;
   }
+
+  .animate-fade-up,
+  .animate-fade-up-delay-1,
+  .animate-fade-up-delay-2,
+  .animate-fade-up-delay-3,
+  .animate-fade-up-delay-4 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @layer components {
@@ -172,11 +185,17 @@
 
   .link-underline::after {
     content: "";
-    @apply absolute w-full h-px bottom-0 left-0 bg-foreground origin-bottom-right transition-transform duration-300 scale-x-0;
+    @apply absolute w-full h-px bottom-0 left-0 bg-foreground origin-bottom-right scale-x-0;
   }
 
-  .link-underline:hover::after {
-    @apply scale-x-100 origin-bottom-left;
+  @media (hover: hover) {
+    .link-underline::after {
+      transition: transform 250ms var(--ease-out-strong);
+    }
+
+    .link-underline:hover::after {
+      @apply scale-x-100 origin-bottom-left;
+    }
   }
 }
 
@@ -214,5 +233,137 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+}
+
+/* Landing motion. Close duration matches REVEAL_CLOSE_DURATION_MS. */
+.contact-reveal {
+  opacity: 0;
+  transform: translateX(-4px);
+  pointer-events: none;
+  transition:
+    opacity 120ms var(--ease-out-strong),
+    transform 120ms var(--ease-out-strong);
+}
+
+.contact-reveal[data-state="open"] {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  transition-duration: 180ms, 180ms;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+}
+
+.copy-swap-icon-stack,
+.theme-toggle-icon-stack {
+  display: inline-grid;
+  place-items: center;
+}
+
+.copy-swap-icon-stack {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.copy-swap-icon,
+.theme-toggle-icon {
+  grid-area: 1 / 1;
+}
+
+.copy-swap-icon {
+  transition:
+    opacity 150ms var(--ease-out-strong),
+    transform 150ms var(--ease-out-strong),
+    filter 150ms var(--ease-out-strong);
+}
+
+.copy-swap-icon[data-visible="false"] {
+  opacity: 0;
+  transform: scale(0.8);
+  filter: blur(2px);
+}
+
+.copy-swap-icon[data-visible="true"] {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
+.theme-toggle-icon {
+  transition:
+    opacity 200ms var(--ease-out-strong),
+    transform 200ms var(--ease-out-strong);
+}
+
+.theme-toggle-icon[data-visible="false"] {
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+.theme-toggle-icon[data-visible="true"] {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+/* Press feedback. Colour timing stays at the existing 200ms hover. */
+.text-press {
+  display: inline-block;
+}
+
+.link-underline,
+.text-press,
+button.theme-toggle {
+  transition:
+    color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 100ms var(--ease-out-strong);
+}
+
+.link-underline:active,
+.text-press:active,
+button.theme-toggle:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-reveal,
+  .contact-reveal[data-state="open"] {
+    transform: none;
+    transition: opacity 120ms var(--ease-out-strong);
+  }
+
+  .contact-reveal[data-state="open"] {
+    transition-duration: 180ms;
+
+    @starting-style {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  .copy-swap-icon,
+  .copy-swap-icon[data-visible="false"],
+  .copy-swap-icon[data-visible="true"] {
+    transform: none;
+    filter: none;
+    transition: opacity 150ms var(--ease-out-strong);
+  }
+
+  .theme-toggle-icon,
+  .theme-toggle-icon[data-visible="false"],
+  .theme-toggle-icon[data-visible="true"] {
+    transform: none;
+    transition: opacity 200ms var(--ease-out-strong);
+  }
+
+  .link-underline:active,
+  .text-press:active,
+  button.theme-toggle:active {
+    transform: none;
   }
 }
