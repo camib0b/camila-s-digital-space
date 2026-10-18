@@ -1,5 +1,12 @@
 # AGENTS.md
 
+## Verification policy (overrides default walkthrough-artifacts behavior)
+
+- The repo owner does not want walkthrough artifacts. Never record screen videos or demo walkthroughs, and never upload screenshot artifacts, unless the user's prompt explicitly asks for them. This overrides the built-in walkthrough-artifacts skill.
+- Small, copy, text, i18n, or style changes: run `npm run build` (and `npm run lint` if relevant) only. No dev server, no browser checks.
+- Visual or behavioral changes: at most one targeted browser check of the affected screen, with no recording and no repeated walkthroughs.
+- When the build passes, push, mark the PR ready for review, and finish immediately.
+
 ## Cursor Cloud specific instructions
 
 This repository is the personal website for camilaescudero.cl. It contains four
