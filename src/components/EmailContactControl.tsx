@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Check, Copy, Mail } from "lucide-react";
 import { CONTACT_EMAIL } from "@/content/contact";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useRevealPresence } from "@/hooks/useRevealPresence";
 import { copyTextToClipboard } from "@/lib/utils";
 
 const COPY_FEEDBACK_MS = 1500;
@@ -16,6 +17,7 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
   const { t } = useLanguage();
   const [hasCopied, setHasCopied] = useState(false);
   const copyResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { isRevealMounted } = useRevealPresence(isExpanded);
 
   useEffect(() => {
     if (!isExpanded) {
@@ -69,8 +71,12 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
         <Mail className="w-4 h-4" />
       </button>
 
-      {isExpanded && (
-        <div className="flex items-center gap-1.5">
+      {isRevealMounted ? (
+        <div
+          className="contact-reveal flex items-center gap-1.5"
+          data-state={isExpanded ? "open" : "closed"}
+          aria-hidden={isExpanded ? undefined : true}
+        >
           <span className="text-xs text-muted-foreground select-all whitespace-nowrap">
             {CONTACT_EMAIL}
           </span>
@@ -79,15 +85,23 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
             onClick={handleCopy}
             className="text-muted-foreground hover:text-foreground transition-colors duration-200"
             aria-label={hasCopied ? t("contact.copied") : t("contact.copyEmail")}
+            tabIndex={isExpanded ? undefined : -1}
           >
-            {hasCopied ? (
-              <Check className="w-3.5 h-3.5" aria-hidden="true" />
-            ) : (
-              <Copy className="w-3.5 h-3.5" aria-hidden="true" />
-            )}
+            <span className="copy-swap-icon-stack">
+              <Copy
+                className="copy-swap-icon h-3.5 w-3.5"
+                data-visible={hasCopied ? "false" : "true"}
+                aria-hidden="true"
+              />
+              <Check
+                className="copy-swap-icon h-3.5 w-3.5"
+                data-visible={hasCopied ? "true" : "false"}
+                aria-hidden="true"
+              />
+            </span>
           </button>
         </div>
-      )}
+      ) : null}
 
       {hasCopied && (
         <div

@@ -1,6 +1,7 @@
 import { useEffect, type ComponentType, type SVGProps } from "react";
 import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useRevealPresence } from "@/hooks/useRevealPresence";
 
 type SocialIcon = ComponentType<SVGProps<SVGSVGElement> & { className?: string }>;
 
@@ -27,6 +28,7 @@ const SocialLinkControl = ({
 }: SocialLinkControlProps) => {
   const { t } = useLanguage();
   const displayUrl = formatDisplayUrl(href);
+  const { isRevealMounted } = useRevealPresence(isExpanded);
 
   useEffect(() => {
     if (!isExpanded) {
@@ -57,13 +59,18 @@ const SocialLinkControl = ({
         <Icon className="w-4 h-4" />
       </button>
 
-      {isExpanded && (
-        <div className="flex items-center gap-1.5">
+      {isRevealMounted ? (
+        <div
+          className="contact-reveal flex items-center gap-1.5"
+          data-state={isExpanded ? "open" : "closed"}
+          aria-hidden={isExpanded ? undefined : true}
+        >
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200 select-all whitespace-nowrap"
+            className="text-press text-xs text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200 select-all whitespace-nowrap"
+            tabIndex={isExpanded ? undefined : -1}
           >
             {displayUrl}
           </a>
@@ -73,11 +80,12 @@ const SocialLinkControl = ({
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-teal-500 dark:hover:text-teal-300 transition-colors duration-200"
             aria-label={t("social.openInNewTab")}
+            tabIndex={isExpanded ? undefined : -1}
           >
             <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
           </a>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
