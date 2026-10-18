@@ -2,21 +2,23 @@ export const AVA_ACCESS_EMAIL = "camilaescuderob@gmail.com";
 export const AVA_ACCESS_SUBJECT = "AVA";
 export const AVA_INTEREST_EMAIL = "camilaescudero@uc.cl";
 
+// Letter keys match the AVA desktop game controls in camib0b/asiatica-va
+// (AVA_V01_cpp/components/GameControls.cpp).
 export const AVA_EVENTS = [
-  { token: "Goal", es: "Gol", en: "Goal" },
-  { token: "Shot", es: "Tiro", en: "Shot" },
-  { token: "PC", es: "Corto", en: "PC" },
-  { token: "PC Foul", es: "Falta de PC", en: "PC Foul" },
-  { token: "Card", es: "Tarjeta", en: "Card" },
-  { token: "Pass", es: "Pase", en: "Pass" },
-  { token: "Circle Entry", es: "Ingreso área", en: "Circle Entry" },
-  { token: "16-yd", es: "16 yd", en: "16-yd" },
-  { token: "50-yd", es: "50 yd", en: "50-yd" },
-  { token: "75-yd", es: "75 yd", en: "75-yd" },
-  { token: "Turnover", es: "Pérdida", en: "Turnover" },
-  { token: "Special", es: "Special", en: "Special" },
-  { token: "PS", es: "Penal", en: "PS" },
-  { token: "S.O.", es: "S.O.", en: "S.O." },
+  { token: "Goal", shortcut: "F", es: "Gol", en: "Goal" },
+  { token: "Shot", shortcut: "D", es: "Tiro", en: "Shot" },
+  { token: "PC", shortcut: "R", es: "Corto", en: "PC" },
+  { token: "PC Foul", shortcut: "S", es: "Falta de PC", en: "PC Foul" },
+  { token: "Card", shortcut: "V", es: "Tarjeta", en: "Card" },
+  { token: "Pass", shortcut: "Z", es: "Pase", en: "Pass" },
+  { token: "Circle Entry", shortcut: "A", es: "Ingreso área", en: "Circle Entry" },
+  { token: "16-yd", shortcut: "Q", es: "16 yd", en: "16-yd" },
+  { token: "50-yd", shortcut: "W", es: "50 yd", en: "50-yd" },
+  { token: "75-yd", shortcut: "E", es: "75 yd", en: "75-yd" },
+  { token: "Turnover", shortcut: "C", es: "Pérdida", en: "Turnover" },
+  { token: "Special", shortcut: "X", es: "Special", en: "Special" },
+  { token: "PS", shortcut: "B", es: "Penal", en: "PS" },
+  { token: "S.O.", shortcut: "N", es: "S.O.", en: "S.O." },
 ] as const;
 
 export const AVA_TIMELINE_MARKS: { at: number; token: (typeof AVA_EVENTS)[number]["token"] }[] = [

@@ -1,4 +1,12 @@
-import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type ReactNode,
+  type RefObject,
+} from "react";
 import { Link } from "react-router-dom";
 import { renderWithCarpetaLinks } from "@/components/ava/avaCarpetaLink";
 import LanguageToggle from "@/components/LanguageToggle";
@@ -46,20 +54,216 @@ const CONCAT_STEPS = [
 ] as const;
 
 const TAG_FLASH_DURATION_MS = 150;
+const TAG_SECTION_ROOT_MARGIN = "-8% 0px -8% 0px";
+
+type TagShortcutActivation = {
+  press: () => void;
+  release: () => void;
+};
 
 type KeyboardTagCellProps = {
   token: string;
   label: string;
+  shortcut: string;
+  registerTagActivation: (shortcut: string, activation: TagShortcutActivation | null) => void;
 };
 
 function isTagActivationKey(key: string): boolean {
   return key === "Enter" || key === " ";
 }
 
-function KeyboardTagCell({ token, label }: KeyboardTagCellProps) {
+function shortcutLetter(event: KeyboardEvent): string | null {
+  if (event.key.length !== 1 || !/^[a-z]$/i.test(event.key)) {
+    return null;
+  }
+
+  return event.key.toUpperCase();
+}
+
+function hasKeyboardModifier(event: KeyboardEvent): boolean {
+  return event.metaKey || event.ctrlKey || event.altKey || event.shiftKey;
+}
+
+function isTextEntryTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  if (target.isContentEditable) {
+    return true;
+  }
+
+  return target.closest("input, textarea, select, [contenteditable='true'], [role='textbox']") !== null;
+}
+
+function holdIdentity(event: KeyboardEvent): string {
+  if (event.code.startsWith("Key")) {
+    return event.code;
+  }
+
+  return event.key;
+}
+
+function useTagKeyboardShortcuts(
+  sectionRef: RefObject<HTMLElement | null>,
+  activationsRef: RefObject<Map<string, TagShortcutActivation>>,
+) {
+  useEffect(() => {
+    const section = sectionRef.current;
+    const activations = activationsRef.current;
+    if (!section || !activations) {
+      return undefined;
+    }
+
+    const heldShortcuts = new Map<string, string>();
+    let isInView = false;
+    let isFocused = section.contains(document.activeElement);
+    let detachKeyboardListeners: (() => void) | null = null;
+
+    const releaseHeldShortcuts = () => {
+      for (const shortcut of heldShortcuts.values()) {
+        activations.get(shortcut)?.release();
+      }
+      heldShortcuts.clear();
+    };
+
+    const detachKeyboard = () => {
+      detachKeyboardListeners?.();
+      detachKeyboardListeners = null;
+    };
+
+    const attachKeyboard = () => {
+      if (detachKeyboardListeners) {
+        return;
+      }
+
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.isComposing || isTextEntryTarget(event.target) || hasKeyboardModifier(event)) {
+          return;
+        }
+
+        const shortcut = shortcutLetter(event);
+        if (!shortcut || !activations.has(shortcut)) {
+          return;
+        }
+
+        event.preventDefault();
+        const identity = holdIdentity(event);
+        if (event.repeat || heldShortcuts.has(identity)) {
+          return;
+        }
+
+        heldShortcuts.set(identity, shortcut);
+        activations.get(shortcut)?.press();
+      };
+
+      const releaseHold = (identity: string) => {
+        const shortcut = heldShortcuts.get(identity);
+        if (!shortcut) {
+          return;
+        }
+
+        heldShortcuts.delete(identity);
+        activations.get(shortcut)?.release();
+      };
+
+      const handleKeyUp = (event: KeyboardEvent) => {
+        releaseHold(holdIdentity(event));
+
+        const letter = shortcutLetter(event);
+        if (!letter) {
+          return;
+        }
+
+        for (const [identity, shortcut] of heldShortcuts) {
+          if (shortcut === letter) {
+            releaseHold(identity);
+          }
+        }
+      };
+
+      const releaseOnFocusLoss = () => {
+        releaseHeldShortcuts();
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("keyup", handleKeyUp);
+      window.addEventListener("blur", releaseOnFocusLoss);
+      detachKeyboardListeners = () => {
+        window.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("keyup", handleKeyUp);
+        window.removeEventListener("blur", releaseOnFocusLoss);
+      };
+    };
+
+    const syncListening = () => {
+      if (isInView || isFocused) {
+        attachKeyboard();
+        return;
+      }
+
+      detachKeyboard();
+      releaseHeldShortcuts();
+    };
+
+    const handleFocusIn = () => {
+      isFocused = true;
+      syncListening();
+    };
+
+    const handleFocusOut = (event: FocusEvent) => {
+      const nextTarget = event.relatedTarget;
+      if (nextTarget instanceof Node && section.contains(nextTarget)) {
+        return;
+      }
+
+      isFocused = false;
+      syncListening();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        releaseHeldShortcuts();
+      }
+    };
+
+    let observer: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver === "undefined") {
+      isInView = true;
+    } else {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[entries.length - 1];
+          isInView = Boolean(entry?.isIntersecting);
+          syncListening();
+        },
+        { root: null, rootMargin: TAG_SECTION_ROOT_MARGIN, threshold: 0 },
+      );
+      observer.observe(section);
+    }
+
+    section.addEventListener("focusin", handleFocusIn);
+    section.addEventListener("focusout", handleFocusOut);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    syncListening();
+
+    return () => {
+      observer?.disconnect();
+      section.removeEventListener("focusin", handleFocusIn);
+      section.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      detachKeyboard();
+      releaseHeldShortcuts();
+    };
+  }, [activationsRef, sectionRef]);
+}
+
+function KeyboardTagCell({ token, label, shortcut, registerTagActivation }: KeyboardTagCellProps) {
   const [isFlashing, setIsFlashing] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pressTagRef = useRef<() => void>(() => {});
+  const releaseTagRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     return () => {
@@ -81,22 +285,48 @@ function KeyboardTagCell({ token, label }: KeyboardTagCellProps) {
     }, TAG_FLASH_DURATION_MS);
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+  const pressTag = () => {
+    setIsPressed(true);
+    flashTag();
+  };
+
+  const releaseTag = () => {
+    setIsPressed(false);
+  };
+
+  pressTagRef.current = pressTag;
+  releaseTagRef.current = releaseTag;
+
+  useEffect(() => {
+    registerTagActivation(shortcut, {
+      press: () => {
+        pressTagRef.current();
+      },
+      release: () => {
+        releaseTagRef.current();
+      },
+    });
+
+    return () => {
+      registerTagActivation(shortcut, null);
+    };
+  }, [registerTagActivation, shortcut]);
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (!isTagActivationKey(event.key)) {
       return;
     }
 
     event.preventDefault();
-    setIsPressed(true);
-    flashTag();
+    pressTag();
   };
 
-  const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyUp = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (!isTagActivationKey(event.key)) {
       return;
     }
 
-    setIsPressed(false);
+    releaseTag();
   };
 
   const handleBlur = () => {
@@ -109,6 +339,7 @@ function KeyboardTagCell({ token, label }: KeyboardTagCellProps) {
       role="button"
       tabIndex={0}
       aria-label={`${token}, ${label}`}
+      aria-keyshortcuts={shortcut}
       data-flash={isFlashing ? "" : undefined}
       data-pressed={isPressed ? "" : undefined}
       onClick={flashTag}
@@ -118,6 +349,9 @@ function KeyboardTagCell({ token, label }: KeyboardTagCellProps) {
     >
       <dt>{token}</dt>
       <dd>{label}</dd>
+      <kbd className="ava-event-key" aria-hidden="true">
+        {shortcut}
+      </kbd>
     </div>
   );
 }
@@ -146,6 +380,19 @@ function renderLinkedPhrase(text: string, label: string, href: string, openInNew
 
 const Ava = () => {
   const { language, t } = useLanguage();
+  const tagSectionRef = useRef<HTMLElement>(null);
+  const tagActivationsRef = useRef<Map<string, TagShortcutActivation>>(new Map());
+  const registerTagActivation = useCallback((shortcut: string, activation: TagShortcutActivation | null) => {
+    const normalizedShortcut = shortcut.toUpperCase();
+    if (activation) {
+      tagActivationsRef.current.set(normalizedShortcut, activation);
+      return;
+    }
+
+    tagActivationsRef.current.delete(normalizedShortcut);
+  }, []);
+
+  useTagKeyboardShortcuts(tagSectionRef, tagActivationsRef);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -270,7 +517,7 @@ const Ava = () => {
           </div>
         </section>
 
-        <section className="ava-section">
+        <section className="ava-section" ref={tagSectionRef}>
           <div className="ava-shell ava-section-head">
             <p className="ava-kicker">{t("ava.events.kicker")}</p>
             <h2>{t("ava.events.headline")}</h2>
@@ -282,6 +529,8 @@ const Ava = () => {
                 key={event.token}
                 token={event.token}
                 label={language === "es" ? event.es : event.en}
+                shortcut={event.shortcut}
+                registerTagActivation={registerTagActivation}
               />
             ))}
           </dl>
