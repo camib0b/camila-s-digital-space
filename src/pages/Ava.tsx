@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { renderWithCarpetaLinks } from "@/components/ava/avaCarpetaLink";
 import LanguageToggle from "@/components/LanguageToggle";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
@@ -180,9 +181,7 @@ const Ava = () => {
             <div className="ava-clip">
               <p className="ava-kicker">{t("ava.clip.kicker")}</p>
               <p className="ava-section-body">{t("ava.clip.body")}</p>
-              <p className="ava-section-body">
-                {renderLinkedPhrase(t("ava.clip.example"), "carpeta.cl", "https://carpeta.cl/", true)}
-              </p>
+              <p className="ava-section-body">{renderWithCarpetaLinks(t("ava.clip.example"))}</p>
               <div className="ava-clip-window" aria-hidden="true">
                 <div className="ava-clip-span" />
                 <div className="ava-clip-mark" />
@@ -230,7 +229,7 @@ const Ava = () => {
             <p className="ava-kicker">{t("ava.origin.kicker")}</p>
             <div>
               <h2>{t("ava.origin.headline")}</h2>
-              <p className="ava-section-body">{t("ava.origin.body")}</p>
+              <p className="ava-section-body">{renderWithCarpetaLinks(t("ava.origin.body"))}</p>
             </div>
           </div>
         </section>
