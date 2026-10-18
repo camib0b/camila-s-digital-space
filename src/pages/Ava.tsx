@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { renderWithCarpetaLinks } from "@/components/ava/avaCarpetaLink";
 import LanguageToggle from "@/components/LanguageToggle";
@@ -43,6 +43,83 @@ const CONCAT_STEPS = [
   { index: "02", titleKey: "ava.concat.step2.title", bodyKey: "ava.concat.step2.body" },
   { index: "03", titleKey: "ava.concat.step3.title", bodyKey: "ava.concat.step3.body" },
 ] as const;
+
+const TAG_FLASH_DURATION_MS = 150;
+
+type KeyboardTagCellProps = {
+  token: string;
+  label: string;
+};
+
+function isTagActivationKey(key: string): boolean {
+  return key === "Enter" || key === " ";
+}
+
+function KeyboardTagCell({ token, label }: KeyboardTagCellProps) {
+  const [isFlashing, setIsFlashing] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (flashTimeoutRef.current !== null) {
+        clearTimeout(flashTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const flashTag = () => {
+    if (flashTimeoutRef.current !== null) {
+      clearTimeout(flashTimeoutRef.current);
+    }
+
+    setIsFlashing(true);
+    flashTimeoutRef.current = setTimeout(() => {
+      flashTimeoutRef.current = null;
+      setIsFlashing(false);
+    }, TAG_FLASH_DURATION_MS);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!isTagActivationKey(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+    setIsPressed(true);
+    flashTag();
+  };
+
+  const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!isTagActivationKey(event.key)) {
+      return;
+    }
+
+    setIsPressed(false);
+  };
+
+  const handleBlur = () => {
+    setIsPressed(false);
+  };
+
+  return (
+    <div
+      className="ava-event"
+      role="button"
+      tabIndex={0}
+      aria-label={`${token}, ${label}`}
+      data-flash={isFlashing ? "" : undefined}
+      data-pressed={isPressed ? "" : undefined}
+      onClick={flashTag}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
+      onBlur={handleBlur}
+    >
+      <dt>{token}</dt>
+      <dd>{label}</dd>
+    </div>
+  );
+}
 
 function renderLinkedPhrase(text: string, label: string, href: string, openInNewTab = false): ReactNode {
   const labelIndex = text.indexOf(label);
@@ -208,10 +285,11 @@ const Ava = () => {
           </div>
           <dl className="ava-events">
             {AVA_EVENTS.map((event) => (
-              <div className="ava-event" key={event.token}>
-                <dt>{event.token}</dt>
-                <dd>{language === "es" ? event.es : event.en}</dd>
-              </div>
+              <KeyboardTagCell
+                key={event.token}
+                token={event.token}
+                label={language === "es" ? event.es : event.en}
+              />
             ))}
           </dl>
           <ul className="ava-follow">
