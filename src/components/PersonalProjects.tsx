@@ -145,7 +145,8 @@ const PersonalProjects = () => {
     <section id="personal-projects" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-8">
+          <GitHubContributions />
+          <h2 className="mb-8 text-sm font-medium uppercase tracking-wider text-foreground">
             {t("personalProjects.label")}
           </h2>
           {projectsBeforeConnector.length > 0 ? (
@@ -160,7 +161,6 @@ const PersonalProjects = () => {
               />
             </div>
           ) : null}
-          <GitHubContributions />
         </div>
       </div>
     </section>

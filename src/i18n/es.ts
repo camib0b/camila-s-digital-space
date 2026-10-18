@@ -133,7 +133,7 @@ const es: Record<TranslationKey, string> = {
       "XML de análisis de entrada; conteo de tags, grupos de etiquetas y una línea de tiempo del partido de salida. El archivo se queda en el navegador.",
 
     // GitHub
-    "github.label": "Contribuciones",
+    "github.label": "Contribuciones en GitHub",
     "github.summary": "{n} contribuciones en el último año",
     "github.less": "menos",
     "github.more": "más",
