@@ -72,6 +72,8 @@ const en = {
     "personalProjects.clipLibrary.title": "Carpeta",
     "personalProjects.clipLibrary": "End to end: game footage library of clips tagged in my own C++ analysis app, published on Cloudflare. Open to players, coaches and analysts alike.",
     "personalProjects.publishingPipeline.title": "Agentic publishing pipeline",
+    "personalProjects.publishingPipeline.connectLabel": "How they connect",
+    "personalProjects.publishingPipeline.connectsTo": "to",
     "personalProjects.publishingPipeline":
       "Publishing a match went from about 50 minutes of manual work to one trigger, with checks and a fallback, in about 5 minutes of my time. Roughly 17 hours saved so far; the time figures are my own estimates.",
     "personalProjects.publishingPipeline.diagram.intro": "Per game, in order.",
