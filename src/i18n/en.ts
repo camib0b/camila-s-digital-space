@@ -131,7 +131,7 @@ const en = {
       "Analysis XML in; tag counts, label groups, and a match timeline out. The file stays in the browser.",
 
     // GitHub
-    "github.label": "Contributions",
+    "github.label": "GitHub contributions",
     "github.summary": "{n} contributions in the last year",
     "github.less": "less",
     "github.more": "more",

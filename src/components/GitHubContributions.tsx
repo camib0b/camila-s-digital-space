@@ -119,7 +119,7 @@ const GitHubContributions = () => {
     : [{ label: "", span: skeletonWeekCount() }];
 
   return (
-    <div id="github" className="mt-12">
+    <div id="github" className="mb-10 md:mb-12">
       <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
         {t("github.label")}
       </h3>
