@@ -56,3 +56,28 @@ export const AVA_CONCAT_FILES = [
 ] as const;
 
 export const AVA_CONCAT_TOTAL_LABEL = "64:36";
+
+/**
+ * Lead/lag limits from the AVA desktop app (EventDefaults kMinLeadLagMs / kMaxLeadLagMs).
+ * The presentation spin boxes use the same range, a 0.5s step, and a " s" suffix.
+ */
+export const AVA_CLIP_MINIMUM_LEAD_LAG_MILLISECONDS = 0;
+export const AVA_CLIP_MAXIMUM_LEAD_LAG_MILLISECONDS = 60_000;
+export const AVA_CLIP_KEYBOARD_STEP_MILLISECONDS = 500;
+export const AVA_CLIP_KEYBOARD_LARGE_STEP_MILLISECONDS = 5_000;
+
+/** ClipTrimBar and PresentationQueue refuse a clip shorter than 500ms. */
+export const AVA_CLIP_MINIMUM_DURATION_MILLISECONDS = 500;
+
+/** Opening illustration. Labels read −4.0 s / +6.0 s before the visitor drags. */
+export const AVA_CLIP_DEFAULT_LEAD_MILLISECONDS = 4_000;
+export const AVA_CLIP_DEFAULT_LAG_MILLISECONDS = 6_000;
+
+/**
+ * Presentation window half-width. WorkWindow keeps this fixed for the life of a drag:
+ * max(25s, max(lead, lag) + 5s). Computed from the defaults so the track does not rescale.
+ */
+export const AVA_CLIP_WINDOW_HALF_MILLISECONDS = Math.max(
+  25_000,
+  Math.max(AVA_CLIP_DEFAULT_LEAD_MILLISECONDS, AVA_CLIP_DEFAULT_LAG_MILLISECONDS) + 5_000,
+);

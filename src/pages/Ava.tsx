@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 
 import { Link } from "react-router-dom";
 import { renderWithCarpetaLinks } from "@/components/ava/avaCarpetaLink";
 import LanguageToggle from "@/components/LanguageToggle";
+import AvaClipBar from "@/components/ava/AvaClipBar";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
 import AvaProductShots from "@/components/ava/AvaProductShots";
@@ -259,15 +260,7 @@ const Ava = () => {
               <p className="ava-kicker">{t("ava.clip.kicker")}</p>
               <p className="ava-section-body">{t("ava.clip.body")}</p>
               <p className="ava-section-body">{renderWithCarpetaLinks(t("ava.clip.example"))}</p>
-              <div className="ava-clip-window" aria-hidden="true">
-                <div className="ava-clip-span" />
-                <div className="ava-clip-mark" />
-                <div className="ava-clip-labels">
-                  <span>{t("ava.clip.lead")}</span>
-                  <span>{t("ava.clip.lag")}</span>
-                </div>
-                <div className="ava-clip-center">{t("ava.clip.mark")}</div>
-              </div>
+              <AvaClipBar />
               <div className="ava-stats">
                 {AVA_STATS.map((stat) => (
                   <span key={stat.id}>{language === "es" ? stat.es : stat.en}</span>
