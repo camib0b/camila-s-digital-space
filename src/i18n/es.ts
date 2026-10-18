@@ -169,7 +169,7 @@ const es: Record<TranslationKey, string> = {
     "hockey.label": "Hockey sobre césped",
     "hockey.player.role": "Jugadora",
     "hockey.player.period": "Desde 2008",
-    "hockey.coaching.role": "Entrenamiento",
+    "hockey.coaching.role": "Entrenadora",
     "hockey.coaching.period": "2023–actualidad",
     "hockey.videoAnalyst.role": "Analista de video",
     "hockey.videoAnalyst.period": "2025–actualidad",
