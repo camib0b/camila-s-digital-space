@@ -882,6 +882,49 @@ button.ava-cta:disabled {
   color: var(--ava-muted);
 }
 
+.ava-shots {
+  display: grid;
+  gap: clamp(2.5rem, 6vh, 4rem);
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  padding-top: clamp(2rem, 5vh, 3rem);
+  border-top: 1px solid var(--ava-rule);
+}
+
+.ava-shot {
+  margin: 0;
+  border: 1px solid var(--ava-rule);
+  background: var(--ava-bg);
+}
+
+/* Reserved image box. Flat background only — no skeleton, no motion. */
+.ava-shot-frame {
+  position: relative;
+  background: var(--ava-bg);
+  line-height: 0;
+}
+
+.ava-shot-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2972 / 1878;
+}
+
+.ava-shot-caption {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem 1rem;
+  border-top: 1px solid var(--ava-rule);
+}
+
+.ava-shot-caption-text {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ava-muted);
+}
+
 .ava-steps {
   display: grid;
   grid-template-columns: 1fr;
