@@ -6,6 +6,7 @@ import AvaInterestForm from "@/components/ava/AvaInterestForm";
 import AvaProductShots from "@/components/ava/AvaProductShots";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
+import "@/components/ava/ava-motion.css";
 import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_INTEREST_EMAIL, AVA_STATS } from "@/content/ava";
 import { useLanguage } from "@/contexts/LanguageContext";
 

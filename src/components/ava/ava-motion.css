@@ -1,0 +1,98 @@
+/* AVA landing motion. Curves are the shared vocabulary, not one-off beziers.
+   Reduced motion keeps a short opacity change and drops movement. */
+
+.ava-root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.ava-cta,
+.ava-text-link {
+  transition: transform 160ms var(--ease-out);
+}
+
+.ava-cta:active,
+.ava-text-link:active {
+  transform: scale(0.97);
+}
+
+.ava-cta:disabled,
+.ava-cta:disabled:active {
+  transform: none;
+}
+
+.ava-interest-status {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+.ava-media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ava-fg) 6%, var(--ava-bg));
+}
+
+.ava-media-skeleton {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--ava-fg) 8%, var(--ava-bg));
+}
+
+.ava-media-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 600ms var(--ease-in-out);
+  transition-delay: var(--ava-media-reveal-delay, 0ms);
+}
+
+.ava-media[data-visible="true"] .ava-media-image {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ava-cta,
+  .ava-text-link {
+    transition: none;
+  }
+
+  .ava-cta:active,
+  .ava-text-link:active {
+    transform: none;
+  }
+
+  .ava-interest-status {
+    transform: none;
+    transition: opacity 200ms var(--ease-out);
+
+    @starting-style {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  .ava-media-image {
+    clip-path: none;
+    opacity: 0;
+    transition: opacity 200ms var(--ease-out);
+    transition-delay: 0ms;
+  }
+
+  .ava-media[data-visible="true"] .ava-media-image {
+    opacity: 1;
+    clip-path: none;
+  }
+}
