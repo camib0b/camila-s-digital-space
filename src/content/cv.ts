@@ -1,5 +1,28 @@
 import type { TranslationKey } from "@/i18n/types";
 
+const translatedTechnologyKeys = [
+  "cv.skill.bi",
+  "cv.skill.excel",
+  "cv.skill.office",
+] as const satisfies readonly TranslationKey[];
+
+type TranslatedCvTechnology = (typeof translatedTechnologyKeys)[number];
+
+function isTranslatedCvTechnology(technology: string): technology is TranslatedCvTechnology {
+  return (translatedTechnologyKeys as readonly string[]).includes(technology);
+}
+
+/** Literal tool names stay as written. Skill lines that differ by language use a translation key. */
+export function cvTechnologyLabel(
+  technology: string,
+  translate: (key: TranslationKey) => string,
+): string {
+  if (isTranslatedCvTechnology(technology)) {
+    return translate(technology);
+  }
+  return technology;
+}
+
 export type CvJobId = "acfin" | "finapsys" | "a3" | "visionary";
 export type CvProjectId = "ava" | "carpeta" | "fleetOptimizer";
 export type CvLeadershipId = "player" | "coach.uc" | "coach.national" | "videoAnalyst";
@@ -64,7 +87,14 @@ export const cvJobs: CvJob[] = [
     companyKey: "cv.acfin.company",
     periodKey: "cv.acfin.period",
     bulletKeys: ["cv.acfin.bullet1", "cv.acfin.bullet2", "cv.acfin.bullet3"],
-    technologies: ["Looker", "LookML", "BigQuery", "SQL", "Python"],
+    technologies: [
+      "cv.skill.bi",
+      "BigQuery",
+      "SQL",
+      "Python",
+      "cv.skill.excel",
+      "cv.skill.office",
+    ],
   },
   {
     id: "finapsys",

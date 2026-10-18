@@ -1,13 +1,15 @@
-export type HockeyRoleId = "player" | "coach.uc" | "coach.national" | "videoAnalyst";
-export type HockeyRoleWithOrganizationId = "coach.uc" | "coach.national";
+export type HockeyRoleId = "player" | "coaching" | "videoAnalyst";
 
 export interface HockeyRole {
   id: HockeyRoleId;
   roleKey: `hockey.${HockeyRoleId}.role`;
-  organizationKey?: `hockey.${HockeyRoleWithOrganizationId}.organization`;
   periodKey: `hockey.${HockeyRoleId}.period`;
 }
 
+/**
+ * Home hockey lines. Coaching replaces the separate UC coach and national-team
+ * assistant-coach lines. Both ran from 2023 and are still open, so the span is 2023–present.
+ */
 export const hockeyRoles: HockeyRole[] = [
   {
     id: "player",
@@ -15,16 +17,9 @@ export const hockeyRoles: HockeyRole[] = [
     periodKey: "hockey.player.period",
   },
   {
-    id: "coach.uc",
-    roleKey: "hockey.coach.uc.role",
-    organizationKey: "hockey.coach.uc.organization",
-    periodKey: "hockey.coach.uc.period",
-  },
-  {
-    id: "coach.national",
-    roleKey: "hockey.coach.national.role",
-    organizationKey: "hockey.coach.national.organization",
-    periodKey: "hockey.coach.national.period",
+    id: "coaching",
+    roleKey: "hockey.coaching.role",
+    periodKey: "hockey.coaching.period",
   },
   {
     id: "videoAnalyst",

@@ -13,7 +13,7 @@ import { numberTone } from "@/lib/analyticsFormat";
 const capitalHeaderClassName =
   "container px-6 md:px-8 max-w-5xl mx-auto flex items-center justify-between h-12";
 
-/** Public route: `/capital` — live investment portfolio dashboard. */
+/** Public route: `/capital` — portfolio analytics for returns, risk, and exposure. */
 const Capital = () => {
   const { t } = useLanguage();
   const {

@@ -4,7 +4,7 @@ import PageHeader from "@/components/PageHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CONTACT_EMAIL } from "@/content/contact";
 import { SOCIAL_LINKS } from "@/content/social";
-import { cvJobs, cvLeadership, cvProjects } from "@/content/cv";
+import { cvJobs, cvLeadership, cvProjects, cvTechnologyLabel } from "@/content/cv";
 
 const CV = () => {
   const { t } = useLanguage();
@@ -57,10 +57,7 @@ const CV = () => {
           </div>
           <p className="mt-3 flex max-w-xl items-start gap-1.5 text-xs leading-relaxed text-muted-foreground">
             <Languages className="mt-0.5 h-3 w-3 shrink-0" />
-            <span>
-              <span className="font-medium text-foreground">{t("cv.languages.pair")}</span>
-              <span> — {t("cv.languages.note")}</span>
-            </span>
+            <span className="font-medium text-foreground">{t("cv.languages.pair")}</span>
           </p>
         </section>
 
@@ -92,14 +89,17 @@ const CV = () => {
                 </ul>
                 {job.technologies.length > 0 ? (
                   <div className="flex flex-wrap gap-1.5">
-                    {job.technologies.map((technology) => (
-                      <span
-                        key={technology}
-                        className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-                      >
-                        {technology}
-                      </span>
-                    ))}
+                    {job.technologies.map((technology) => {
+                      const label = cvTechnologyLabel(technology, t);
+                      return (
+                        <span
+                          key={label}
+                          className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
+                        >
+                          {label}
+                        </span>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
@@ -152,14 +152,17 @@ const CV = () => {
                 ) : null}
                 {project.technologies.length > 0 ? (
                   <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.map((technology) => (
-                      <span
-                        key={technology}
-                        className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-                      >
-                        {technology}
-                      </span>
-                    ))}
+                    {project.technologies.map((technology) => {
+                      const label = cvTechnologyLabel(technology, t);
+                      return (
+                        <span
+                          key={label}
+                          className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
+                        >
+                          {label}
+                        </span>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
