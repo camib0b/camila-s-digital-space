@@ -5,6 +5,7 @@ import {
   type PersonalProject,
 } from "@/content/personalProjects";
 import GitHubContributions from "@/components/GitHubContributions";
+import PublishingPipelineDiagram from "@/components/PublishingPipelineDiagram";
 
 interface ProjectListProps {
   projects: PersonalProject[];
@@ -66,6 +67,7 @@ const ProjectList = ({ projects }: ProjectListProps) => {
             <ProjectOpenLink project={project} />
           </div>
           <p className="text-sm leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
+          {project.id === "publishing-pipeline" ? <PublishingPipelineDiagram /> : null}
         </li>
       ))}
     </ul>
