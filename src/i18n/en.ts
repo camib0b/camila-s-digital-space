@@ -222,7 +222,7 @@ const en = {
     "cv.acfin.period": "Feb 2026 – Present",
     "cv.acfin.bullet1": "Investor-facing analytics for structured-credit portfolios: reconciled delinquency, default rates at 90 and 180 days, yield, cash flow, and a transition matrix.",
     "cv.acfin.bullet2": "Multi-currency PEN/USD books with a currency converter, and a self-serve Excel data export with per-user permissions.",
-    "cv.acfin.bullet3": "A BigQuery and LookML semantic layer. Rollout to 8 more factoring clients, automated through the Looker API. Diagnosed duplicate embedded users.",
+    "cv.acfin.bullet3": "A BigQuery and LookML semantic layer. Built the investor dashboard a major Chilean asset manager uses to monitor its stake in a group of 8 factoring companies; rollout automated through the Looker API. Diagnosed duplicate embedded users.",
     "cv.finapsys.title": "Frontend",
     "cv.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "cv.finapsys.period": "Summer Internship 2024",
