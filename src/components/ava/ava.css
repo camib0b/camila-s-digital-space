@@ -896,7 +896,8 @@ button.ava-cta:disabled {
   background: var(--ava-bg);
 }
 
-/* Reserved image box. Flat background only — no skeleton, no motion. */
+/* Reserved image box. Flat --ava-bg plate; the 1px hairline is .ava-shot's border.
+   Each image's width and height set its ratio. The reveal is in ava-motion.css. */
 .ava-shot-frame {
   position: relative;
   background: var(--ava-bg);
@@ -907,12 +908,6 @@ button.ava-cta:disabled {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 2972 / 1878;
-}
-
-/* Exported clip is a wider crop than the desktop window shots. */
-.ava-shot[data-shot="export"] .ava-shot-image {
-  aspect-ratio: 3164 / 1878;
 }
 
 .ava-shot-caption {

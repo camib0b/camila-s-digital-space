@@ -1,0 +1,82 @@
+/* AVA landing motion. Curves are the shared vocabulary, not one-off beziers.
+   Reduced motion keeps a short opacity change and drops movement. */
+
+.ava-root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.ava-cta,
+.ava-text-link {
+  /* Release snaps. The press duration is set on :active. */
+  transition: transform 100ms var(--ease-out);
+}
+
+.ava-cta:active,
+.ava-text-link:active {
+  transform: scale(0.97);
+  transition-duration: 160ms;
+}
+
+.ava-cta:disabled,
+.ava-cta:disabled:active {
+  transform: none;
+}
+
+.ava-interest-status {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+/* Product shots. The loading plate is .ava-shot-frame (flat --ava-bg, #070708)
+   inside the 1px .ava-shot hairline. No shimmer. The bitmap wipes once. */
+.ava-shot-image {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 600ms var(--ease-in-out);
+}
+
+.ava-shot-frame[data-visible="true"] .ava-shot-image {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ava-cta,
+  .ava-text-link {
+    transition: none;
+  }
+
+  .ava-cta:active,
+  .ava-text-link:active {
+    transform: none;
+  }
+
+  .ava-interest-status {
+    transform: none;
+    transition: opacity 200ms var(--ease-out);
+
+    @starting-style {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  .ava-shot-image {
+    clip-path: none;
+    opacity: 0;
+    transition: opacity 200ms var(--ease-out);
+    transition-delay: 0ms;
+  }
+
+  .ava-shot-frame[data-visible="true"] .ava-shot-image {
+    opacity: 1;
+    clip-path: none;
+  }
+}
