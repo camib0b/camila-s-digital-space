@@ -199,7 +199,7 @@ const es: Record<TranslationKey, string> = {
     "cv.selectedProjects": "Proyectos Seleccionados",
     "cv.workExperience": "Experiencia Laboral",
     "cv.education": "Educación",
-    "cv.leadershipAthletics": "Hockey",
+    "cv.leadershipAthletics": "Hockey césped",
     "cv.languages.pair": "Inglés nativo · Español nativo",
     "cv.skill.bi": "BI: Looker / LookML (modelado semántico)",
     "cv.skill.excel": "Excel avanzado",
@@ -250,15 +250,12 @@ const es: Record<TranslationKey, string> = {
     "cv.education.courseworkLabel": "Asignaturas",
     "cv.education.coursework":
       "Métodos de Optimización, Estructuras de Datos, Bases de Datos, Tecnologías Web, Gestión de Operaciones",
-    "cv.player.role": "Jugadora de hockey",
+    "cv.player.role": "Jugadora",
     "cv.player.organization": "Desde 2008",
-    "cv.coach.uc.role": "Entrenadora",
-    "cv.coach.uc.organization": "UC, Sub-12 y Sub-16, 2023–actualidad",
-    "cv.coach.national.role": "Entrenadora asistente",
-    "cv.coach.national.organization": "Selección Nacional, 2023–actualidad",
+    "cv.coaching.role": "Entrenadora",
+    "cv.coaching.organization": "2023–actualidad",
     "cv.videoAnalyst.role": "Analista de video",
-    "cv.videoAnalyst.organization": "Hockey sobre césped",
-    "cv.videoAnalyst.description": "Video técnico en la Copa del Mundo Junior Femenino, Santiago (dic 2025); análisis de video recurrente para programas juveniles desde entonces.",
+    "cv.videoAnalyst.organization": "2025–actualidad",
 
     // AVA
     "ava.document.title": "AVA · hockey sobre césped",

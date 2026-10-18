@@ -25,7 +25,7 @@ export function cvTechnologyLabel(
 
 export type CvJobId = "acfin" | "finapsys" | "a3" | "visionary";
 export type CvProjectId = "ava" | "carpeta" | "publishingPipeline" | "fleetOptimizer";
-export type CvLeadershipId = "player" | "coach.uc" | "coach.national" | "videoAnalyst";
+export type CvLeadershipId = "player" | "coaching" | "videoAnalyst";
 
 export interface CvProject {
   id: CvProjectId;
@@ -136,19 +136,13 @@ export const cvLeadership: CvLeadership[] = [
     organizationKey: "cv.player.organization",
   },
   {
-    id: "coach.uc",
-    roleKey: "cv.coach.uc.role",
-    organizationKey: "cv.coach.uc.organization",
-  },
-  {
-    id: "coach.national",
-    roleKey: "cv.coach.national.role",
-    organizationKey: "cv.coach.national.organization",
+    id: "coaching",
+    roleKey: "cv.coaching.role",
+    organizationKey: "cv.coaching.organization",
   },
   {
     id: "videoAnalyst",
     roleKey: "cv.videoAnalyst.role",
     organizationKey: "cv.videoAnalyst.organization",
-    descriptionKey: "cv.videoAnalyst.description",
   },
 ];
