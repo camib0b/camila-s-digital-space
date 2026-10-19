@@ -35,14 +35,6 @@ export const AVA_TIMELINE_MARKS: { at: number; token: (typeof AVA_EVENTS)[number
 
 export const MATCH_MINUTES = 60;
 
-export const AVA_STATS = [
-  { id: "possession", es: "Posesión", en: "Possession" },
-  { id: "entries", es: "Ingresos", en: "Entries" },
-  { id: "shots", es: "Tiros", en: "Shots" },
-  { id: "pcs", es: "Cortos", en: "PCs" },
-  { id: "turnovers", es: "Pérdidas", en: "Turnovers" },
-] as const;
-
 export const AVA_FOLLOW_UPS = [
   { id: "result", es: "Resultado", en: "Result", bodyKey: "ava.follow.result" },
   { id: "zone", es: "Zona", en: "Zone", bodyKey: "ava.follow.zone" },
