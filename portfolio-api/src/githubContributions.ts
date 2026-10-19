@@ -1,12 +1,18 @@
 import { CORS_HEADERS, GITHUB_CONTRIBUTIONS_PATH } from "./cors";
+import {
+  clipCalendarFromDate,
+  earliestHistoryStartDate,
+  formatUtcDate,
+  mergeContributionCalendars,
+  yearlyContributionRanges,
+} from "./githubContributionCalendar";
 
 export const GITHUB_CONTRIBUTIONS_CACHE_MAX_AGE_SECONDS = 6 * 60 * 60;
 
 const DEFAULT_GITHUB_USERNAME = "camib0b";
 const GITHUB_GRAPHQL_URL = "https://api.github.com/graphql";
 const GITHUB_USER_AGENT = "camila-s-digital-space (https://camilaescudero.cl)";
-/** Inclusive start of the public heatmap (GitHub's default is the trailing year). */
-const CONTRIBUTION_CALENDAR_START_DATE = "2025-12-01";
+const CONTRIBUTIONS_CACHE_VERSION = "multi-year-v1";
 
 const CONTRIBUTION_LEVELS = [
   "NONE",
@@ -39,9 +45,19 @@ export interface GithubContributionMonth {
 export interface GithubContributionsPayload {
   totalContributions: number;
   generatedAt: string;
+  /** Inclusive first calendar day included in `weeks`. */
+  historyStartDate: string;
   months: GithubContributionMonth[];
   weeks: GithubContributionWeek[];
 }
+
+const GITHUB_USER_META_QUERY = `
+query($login: String!) {
+  user(login: $login) {
+    createdAt
+  }
+}
+`;
 
 const CONTRIBUTION_CALENDAR_QUERY = `
 query($login: String!, $from: DateTime!, $to: DateTime!) {
@@ -112,7 +128,7 @@ export async function handleGithubContributionsRequest(
 function githubContributionsCacheKey(request: Request): Request {
   const url = new URL(GITHUB_CONTRIBUTIONS_PATH, request.url);
   url.search = "";
-  url.searchParams.set("from", CONTRIBUTION_CALENDAR_START_DATE);
+  url.searchParams.set("v", CONTRIBUTIONS_CACHE_VERSION);
   return new Request(url.toString(), { method: "GET" });
 }
 
@@ -148,30 +164,64 @@ async function fetchContributionCalendar(env: Env): Promise<GithubContributionsP
   }
 
   const login = env.GITHUB_USERNAME?.trim() || DEFAULT_GITHUB_USERNAME;
+  const accountCreatedAt = await fetchGithubUserCreatedAt(login, token);
+  const historyStartDate = earliestHistoryStartDate(accountCreatedAt);
+  const today = formatUtcDate(new Date());
+  const ranges = yearlyContributionRanges(historyStartDate, today);
 
-  const githubResponse = await fetch(GITHUB_GRAPHQL_URL, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      "User-Agent": GITHUB_USER_AGENT,
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-    body: JSON.stringify({
-      query: CONTRIBUTION_CALENDAR_QUERY,
-      variables: {
-        login,
-        ...contributionCalendarRange(),
-      },
-    }),
+  const calendars = await Promise.all(
+    ranges.map((range) => fetchContributionCalendarRange(login, token, range))
+  );
+
+  const mergedCalendar = mergeContributionCalendars(calendars);
+  const clippedCalendar = clipCalendarFromDate(mergedCalendar, historyStartDate);
+
+  return {
+    totalContributions: clippedCalendar.totalContributions,
+    generatedAt: new Date().toISOString(),
+    historyStartDate,
+    months: clippedCalendar.months,
+    weeks: clippedCalendar.weeks,
+  };
+}
+
+async function fetchGithubUserCreatedAt(login: string, token: string): Promise<string | null> {
+  const githubResponse = await githubGraphqlRequest(token, {
+    query: GITHUB_USER_META_QUERY,
+    variables: { login },
   });
 
-  const githubBody: unknown = await parseJsonBody(githubResponse);
-
-  if (!githubResponse.ok) {
-    throw new GithubContributionsError(githubAuthorizationErrorMessage(githubResponse.status), 502);
+  const graph = asRecord(githubResponse);
+  if (!graph) {
+    throw new GithubContributionsError("GitHub returned an unexpected response", 502);
   }
+
+  const graphqlErrors = graph.errors;
+  if (Array.isArray(graphqlErrors) && graphqlErrors.length > 0) {
+    throw new GithubContributionsError(firstGraphqlErrorMessage(graphqlErrors), 502);
+  }
+
+  const user = asRecord(asRecord(graph.data)?.user);
+  if (!user) {
+    throw new GithubContributionsError("GitHub user not found", 404);
+  }
+
+  return typeof user.createdAt === "string" ? user.createdAt : null;
+}
+
+async function fetchContributionCalendarRange(
+  login: string,
+  token: string,
+  range: { from: string; to: string }
+): Promise<Omit<GithubContributionsPayload, "generatedAt" | "historyStartDate">> {
+  const githubBody = await githubGraphqlRequest(token, {
+    query: CONTRIBUTION_CALENDAR_QUERY,
+    variables: {
+      login,
+      from: `${range.from}T00:00:00.000Z`,
+      to: `${range.to}T23:59:59.999Z`,
+    },
+  });
 
   const graph = asRecord(githubBody);
   if (!graph) {
@@ -188,14 +238,32 @@ async function fetchContributionCalendar(env: Env): Promise<GithubContributionsP
     throw new GithubContributionsError("GitHub user not found", 404);
   }
 
-  const clippedCalendar = clipCalendarToStartDate(calendar);
+  return calendar;
+}
 
-  return {
-    totalContributions: clippedCalendar.totalContributions,
-    generatedAt: new Date().toISOString(),
-    months: clippedCalendar.months,
-    weeks: clippedCalendar.weeks,
-  };
+async function githubGraphqlRequest(
+  token: string,
+  body: Record<string, unknown>
+): Promise<unknown> {
+  const githubResponse = await fetch(GITHUB_GRAPHQL_URL, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      "User-Agent": GITHUB_USER_AGENT,
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    body: JSON.stringify(body),
+  });
+
+  const githubBody: unknown = await parseJsonBody(githubResponse);
+
+  if (!githubResponse.ok) {
+    throw new GithubContributionsError(githubAuthorizationErrorMessage(githubResponse.status), 502);
+  }
+
+  return githubBody;
 }
 
 async function parseJsonBody(response: Response): Promise<unknown> {
@@ -223,50 +291,9 @@ function firstGraphqlErrorMessage(errors: unknown[]): string {
   return "GitHub request failed";
 }
 
-function contributionCalendarRange(): { from: string; to: string } {
-  return {
-    from: `${CONTRIBUTION_CALENDAR_START_DATE}T00:00:00.000Z`,
-    to: new Date().toISOString(),
-  };
-}
-
-function clipCalendarToStartDate(
-  calendar: Omit<GithubContributionsPayload, "generatedAt">
-): Omit<GithubContributionsPayload, "generatedAt"> {
-  const weeks: GithubContributionWeek[] = [];
-
-  for (const week of calendar.weeks) {
-    const contributionDays = week.contributionDays.filter(
-      (day) => day.date >= CONTRIBUTION_CALENDAR_START_DATE
-    );
-    if (contributionDays.length === 0) {
-      continue;
-    }
-    weeks.push({
-      firstDay: contributionDays[0].date,
-      contributionDays,
-    });
-  }
-
-  const months = calendar.months.filter(
-    (month) => month.firstDay >= CONTRIBUTION_CALENDAR_START_DATE
-  );
-
-  const totalContributions = weeks.reduce(
-    (sum, week) =>
-      sum +
-      week.contributionDays.reduce((weekSum, day) => weekSum + day.contributionCount, 0),
-    0
-  );
-
-  return {
-    totalContributions,
-    months,
-    weeks,
-  };
-}
-
-function readContributionCalendar(data: unknown): Omit<GithubContributionsPayload, "generatedAt"> | null {
+function readContributionCalendar(
+  data: unknown
+): Omit<GithubContributionsPayload, "generatedAt" | "historyStartDate"> | null {
   const dataRecord = asRecord(data);
   const user = asRecord(dataRecord?.user);
   if (dataRecord && dataRecord.user === null) {

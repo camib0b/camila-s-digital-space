@@ -1,6 +1,3 @@
-/** Inclusive start of the contributions heatmap (YYYY-MM-DD). */
-export const CONTRIBUTION_CALENDAR_START_DATE = "2025-12-01";
-
 export const CONTRIBUTION_LEVELS = [
   "NONE",
   "FIRST_QUARTILE",
@@ -32,6 +29,8 @@ export interface GithubContributionMonth {
 export interface GithubContributionsPayload {
   totalContributions: number;
   generatedAt: string;
+  /** Inclusive first calendar day in `weeks` (portfolio-api; omitted on older workers). */
+  historyStartDate?: string;
   months: GithubContributionMonth[];
   weeks: GithubContributionWeek[];
 }

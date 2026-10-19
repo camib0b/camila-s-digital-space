@@ -10,7 +10,7 @@ Cloudflare Worker that serves this site’s private data (investment portfolio a
 | `GET` | `/api/portfolio/history` | Historical portfolio value |
 | `GET` | `/api/analytics` | Time-weighted return, VOO counterfactual, risk contribution, Sharpe, and look-through exposure. Reads stored prices; it does not fetch vendors. |
 | `POST` | `/api/portfolio/ai-insight` | On-demand AI insight |
-| `GET` | `/api/github/contributions` | Last ~365 days of GitHub contributions (GraphQL). Cached ~6 hours. |
+| `GET` | `/api/github/contributions` | Up to three years of GitHub contributions (multiple yearly GraphQL ranges stitched). Cached ~6 hours. |
 
 ## Secrets
 
@@ -49,3 +49,13 @@ For local development, copy [`.dev.vars.example`](.dev.vars.example) to `.dev.va
 npm install
 npx wrangler dev
 ```
+
+## Deploy
+
+After changing Worker code (including GitHub contributions), deploy from this directory:
+
+```bash
+npm run deploy
+```
+
+That runs `wrangler deploy` for the `portfolio-api` Worker. GitHub Actions in this repo do not auto-deploy the Worker; merge the PR and run deploy (or your usual release process) so `/api/github/contributions` picks up API changes.
