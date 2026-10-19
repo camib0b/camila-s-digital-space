@@ -8,9 +8,8 @@ import type {
 } from "@/types/githubContributions";
 
 const CONTRIBUTION_ROW_COUNT = 7;
-const CELL_GAP_PX = 1;
-const MINIMUM_CELL_SIZE_PX = 3;
-const MAXIMUM_CELL_SIZE_PX = 5;
+/** Gap scales with cell size (1px at a 5px cell in the original layout). */
+const GAP_TO_CELL_RATIO = 1 / 5;
 /** Room for the 3px wave so the crop does not clip the settle. */
 const WAVE_CLEARANCE_PX = 6;
 const WAVE_AMPLITUDE_PX = 3;
@@ -33,6 +32,7 @@ const CONTRIBUTION_LEVEL_CLASS: Record<ContributionLevel, string> = {
 
 interface ContributionFrameMetrics {
   cellSizePx: number;
+  gapPx: number;
   visibleWeekCount: number;
 }
 
@@ -57,6 +57,8 @@ const GitHubContributions = () => {
   const [frameMetrics, setFrameMetrics] = useState<ContributionFrameMetrics | null>(null);
   const [introPhase, setIntroPhase] = useState<ContributionIntroPhase>("pending");
 
+  const availableWeekCount = contributions?.weeks.length ?? 0;
+
   useLayoutEffect(() => {
     const frame = frameRef.current;
     if (!frame) {
@@ -65,7 +67,11 @@ const GitHubContributions = () => {
 
     const measureFrame = () => {
       const bounds = frame.getBoundingClientRect();
-      const nextMetrics = metricsForContributionFrame(bounds.width, bounds.height);
+      const nextMetrics = metricsForContributionFrame(
+        bounds.width,
+        bounds.height,
+        availableWeekCount
+      );
       setFrameMetrics((currentMetrics) =>
         sameFrameMetrics(currentMetrics, nextMetrics) ? currentMetrics : nextMetrics
       );
@@ -78,7 +84,7 @@ const GitHubContributions = () => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [availableWeekCount]);
 
   useLayoutEffect(() => {
     if (introStartedRef.current || !contributions || !frameMetrics) {
@@ -114,9 +120,10 @@ const GitHubContributions = () => {
     contributions && frameMetrics
       ? contributions.weeks.slice(-frameMetrics.visibleWeekCount)
       : [];
-  const cellSizePx = frameMetrics?.cellSizePx ?? MINIMUM_CELL_SIZE_PX;
+  const cellSizePx = frameMetrics?.cellSizePx ?? 3;
+  const gapPx = frameMetrics?.gapPx ?? 1;
   const patternStyle: ContributionPatternStyle = {
-    gap: CELL_GAP_PX,
+    gap: gapPx,
     "--contribution-intro-offset": `${CONTRIBUTION_INTRO_OFFSET_MS}ms`,
     "--contribution-column-duration": `${COLUMN_ENTER_DURATION_MS}ms`,
     "--contribution-column-stagger": `${columnStaggerMilliseconds(visibleWeeks.length)}ms`,
@@ -129,7 +136,7 @@ const GitHubContributions = () => {
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       {visibleWeeks.length > 0 ? (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.36] dark:opacity-[0.32]">
+        <div className="absolute inset-y-0 left-0 flex items-center">
           <div className="flex flex-nowrap" style={patternStyle}>
             {visibleWeeks.map((week, columnIndex) => (
               <ContributionWeekColumn
@@ -137,6 +144,7 @@ const GitHubContributions = () => {
                 week={week}
                 columnIndex={columnIndex}
                 cellSizePx={cellSizePx}
+                gapPx={gapPx}
                 introPhase={introPhase}
               />
             ))}
@@ -151,6 +159,7 @@ interface ContributionWeekColumnProps {
   week: GithubContributionWeek;
   columnIndex: number;
   cellSizePx: number;
+  gapPx: number;
   introPhase: ContributionIntroPhase;
 }
 
@@ -158,12 +167,13 @@ const ContributionWeekColumn = ({
   week,
   columnIndex,
   cellSizePx,
+  gapPx,
   introPhase,
 }: ContributionWeekColumnProps) => {
   const columnStyle: ContributionColumnStyle = {
     "--column-index": columnIndex,
     "--wave-offset": `${waveOffsetPx(columnIndex).toFixed(2)}px`,
-    gap: CELL_GAP_PX,
+    gap: gapPx,
   };
 
   return (
@@ -177,7 +187,7 @@ const ContributionWeekColumn = ({
           key={day?.date ?? `empty-row-${rowIndex}`}
           className={cn(
             "block rounded-[1px]",
-            day ? CONTRIBUTION_LEVEL_CLASS[day.contributionLevel] : "bg-transparent"
+            day ? CONTRIBUTION_LEVEL_CLASS[day.contributionLevel] : CONTRIBUTION_LEVEL_CLASS.NONE
           )}
           style={{ width: cellSizePx, height: cellSizePx }}
         />
@@ -186,21 +196,24 @@ const ContributionWeekColumn = ({
   );
 };
 
-function metricsForContributionFrame(frameWidthPx: number, frameHeightPx: number): ContributionFrameMetrics {
-  if (frameWidthPx <= 0 || frameHeightPx <= 0) {
-    return { cellSizePx: MINIMUM_CELL_SIZE_PX, visibleWeekCount: 0 };
+function metricsForContributionFrame(
+  frameWidthPx: number,
+  frameHeightPx: number,
+  availableWeekCount: number
+): ContributionFrameMetrics {
+  if (frameWidthPx <= 0 || frameHeightPx <= 0 || availableWeekCount < 1) {
+    return { cellSizePx: 3, gapPx: 0.6, visibleWeekCount: 0 };
   }
 
-  const usableHeightPx = Math.max(0, frameHeightPx - WAVE_CLEARANCE_PX);
-  const gapsHeightPx = CELL_GAP_PX * (CONTRIBUTION_ROW_COUNT - 1);
-  const rawCellSizePx = Math.floor((usableHeightPx - gapsHeightPx) / CONTRIBUTION_ROW_COUNT);
-  const cellSizePx = Math.min(MAXIMUM_CELL_SIZE_PX, Math.max(MINIMUM_CELL_SIZE_PX, rawCellSizePx));
-  const columnStridePx = cellSizePx + CELL_GAP_PX;
-  const visibleWeekCount = Math.floor((frameWidthPx + CELL_GAP_PX) / columnStridePx);
+  const weekCount = availableWeekCount;
+  const columnStrideFactor = weekCount + (weekCount - 1) * GAP_TO_CELL_RATIO;
+  const cellSizePx = frameWidthPx / columnStrideFactor;
+  const gapPx = cellSizePx * GAP_TO_CELL_RATIO;
 
   return {
     cellSizePx,
-    visibleWeekCount: Math.max(0, visibleWeekCount),
+    gapPx,
+    visibleWeekCount: weekCount,
   };
 }
 
@@ -211,6 +224,7 @@ function sameFrameMetrics(
   return (
     currentMetrics !== null &&
     currentMetrics.cellSizePx === nextMetrics.cellSizePx &&
+    currentMetrics.gapPx === nextMetrics.gapPx &&
     currentMetrics.visibleWeekCount === nextMetrics.visibleWeekCount
   );
 }
