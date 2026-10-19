@@ -78,7 +78,7 @@ const PublishingPipelineBand = ({ project }: { project: PersonalProject }) => {
           <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
             {t("personalProjects.publishingPipeline.connectLabel")}
           </span>
-          <span className="text-sm font-medium text-foreground">{t(project.titleKey)}</span>
+          <span className="text-base font-medium text-foreground">{t(project.titleKey)}</span>
         </div>
         <p className="flex items-center gap-2 text-xs text-foreground">
           <span>{sourceName}</span>
@@ -105,7 +105,7 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
               <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
                 {String(startingNumber + index).padStart(2, "0")}
               </span>
-              <span className="text-sm font-medium text-foreground">{t(project.titleKey)}</span>
+              <span className="text-base font-medium text-foreground">{t(project.titleKey)}</span>
             </div>
             <ProjectOpenLink project={project} />
           </div>
