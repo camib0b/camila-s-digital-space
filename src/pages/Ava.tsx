@@ -410,12 +410,15 @@ const Ava = () => {
   return (
     <div className="ava-root">
       <header className="ava-chrome">
-        <span className="ava-wordmark">AVA</span>
-        <div className="ava-chrome-end">
-          <LanguageToggle />
+        <nav className="ava-chrome-crumb" aria-label={t("ava.document.title")}>
           <Link to="/" className="ava-site-link">
             {t("ava.nav.home")}
           </Link>
+          <span className="ava-chrome-sep" aria-hidden="true">/</span>
+          <span className="ava-wordmark">AVA</span>
+        </nav>
+        <div className="ava-chrome-end">
+          <LanguageToggle />
         </div>
       </header>
 
