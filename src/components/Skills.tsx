@@ -1,3 +1,4 @@
+import CurtainReveal from "@/components/CurtainReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Skills = () => {
@@ -26,7 +27,7 @@ const Skills = () => {
             {t("skills.label")}
           </h2>
 
-          <div className="space-y-8">
+          <CurtainReveal className="space-y-8">
             {skillCategories.map((category) => (
               <div key={category.title}>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3">
@@ -44,7 +45,7 @@ const Skills = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </CurtainReveal>
         </div>
       </div>
     </section>
