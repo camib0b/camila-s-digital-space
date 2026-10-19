@@ -41,11 +41,11 @@
     --shadow-elev-2: 0 4px 12px rgba(0,0,0,0.08);
     --shadow-elev-3: 0 8px 24px rgba(0,0,0,0.10);
 
-    --contrib-empty: 220 9% 87%;
-    --contrib-q1: 172 24% 78%;
-    --contrib-q2: 172 32% 64%;
-    --contrib-q3: 172 36% 48%;
-    --contrib-q4: 172 38% 36%;
+    --contrib-empty: 220 8% 86%;
+    --contrib-q1: 172 46% 72%;
+    --contrib-q2: 172 52% 58%;
+    --contrib-q3: 172 54% 46%;
+    --contrib-q4: 172 56% 38%;
 
     --series-portfolio: 200 16% 32%;
     --series-benchmark: 220 6% 46%;
@@ -97,10 +97,10 @@
     --shadow-elev-3: 0 8px 24px rgba(0,0,0,0.4);
 
     --contrib-empty: 220 8% 16%;
-    --contrib-q1: 172 35% 16%;
-    --contrib-q2: 172 40% 24%;
-    --contrib-q3: 172 45% 36%;
-    --contrib-q4: 172 50% 48%;
+    --contrib-q1: 172 42% 22%;
+    --contrib-q2: 172 48% 32%;
+    --contrib-q3: 172 52% 42%;
+    --contrib-q4: 172 56% 52%;
 
     --series-portfolio: 200 18% 74%;
     --series-benchmark: 220 8% 64%;
