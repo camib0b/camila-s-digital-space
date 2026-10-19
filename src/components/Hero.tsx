@@ -52,12 +52,6 @@ const Hero = () => {
               <FileText className="w-3.5 h-3.5" />
               {t("hero.cta.cv")}
             </Link>
-            <a
-              href="#after-hero"
-              className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline"
-            >
-              {t("hero.cta.work")}
-            </a>
           </div>
 
           <div className="flex items-center gap-4 animate-fade-up-delay-4">
