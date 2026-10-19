@@ -4,7 +4,7 @@ const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.acfin": "Productos de analítica en ACFIN: la plataforma que presenta métricas y reportes de crédito estructurado a los clientes.",
-    "hero.ava": "AVA, un producto nativo de análisis de video para hockey. Clips esa misma noche.",
+    "hero.ava": "AVA, un producto nativo de análisis de video para hockey. De importar a exportar en un solo programa.",
     "hero.cta.work": "Trabajo",
     "hero.cta.cv": "CV",
 
@@ -197,7 +197,7 @@ const es: Record<TranslationKey, string> = {
     // CV Page
     "cv.back": "Volver",
     "cv.role": "Productos de analítica · software de análisis de video",
-    "cv.summary": "En ACFIN construyo los productos de analítica que ponen métricas de crédito estructurado frente a los clientes. AVA es un producto macOS en producción para marcar partidos y exportar clips esa misma noche, con base en entrenamiento y trabajo de video en torneos. UC Chile, Ingeniería Civil Industrial + diploma TI (2027).",
+    "cv.summary": "En ACFIN construyo los productos de analítica que ponen métricas de crédito estructurado frente a los clientes. AVA es un producto macOS en producción para importar, marcar, analizar, presentar y exportar en un solo programa—concatena al importar, marcar y presentar en la misma app—con base en entrenamiento y video en torneos. UC Chile, Ingeniería Civil Industrial + diploma TI (2027).",
     "cv.selectedProjects": "Proyectos Seleccionados",
     "cv.workExperience": "Experiencia Laboral",
     "cv.education": "Educación",
@@ -209,7 +209,7 @@ const es: Record<TranslationKey, string> = {
     "cv.footerNote": "Productos de analítica en ACFIN",
     "cv.ava.title": "AVA",
     "cv.ava.type": "Producto",
-    "cv.ava.description": "Producto de análisis de video para hockey sobre césped. Abres el partido, marcas los momentos clave y los clips salen el mismo día.",
+    "cv.ava.description": "Análisis de video de hockey sobre césped para macOS. Importas y unes archivos de cámara, luego marcas, analizas, presentas y exportas en un programa.",
     "cv.carpeta.title": "Carpeta",
     "cv.carpeta.type": "Producto",
     "cv.carpeta.description":

@@ -10,9 +10,9 @@ export const profile = {
   name: "Camila Escudero",
   location: "Santiago, Chile",
   tagline:
-    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA, a native field-hockey video product. Clips the same night.",
+    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA, a native field-hockey video product. Import through export in one program.",
   summary:
-    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a field-hockey video analysis product for macOS: clips the same night. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
+    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a shipped macOS product to import, tag, analyze, present, and export in one program. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
@@ -67,7 +67,7 @@ export const projects = [
     name: "AVA",
     category: "personal-project",
     description:
-      "Field-hockey video analysis for macOS, built because the market lacked a technical analyst. Tag the match as you watch; clips go out the same night.",
+      "Field-hockey video analysis for macOS. Import and join camera files, then tag, analyze, present, and export in one program.",
     url: `${SITE_URL}/ava`,
   },
   {
