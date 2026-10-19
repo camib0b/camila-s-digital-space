@@ -1,6 +1,5 @@
 import { Github, Languages, Linkedin, Mail, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import CurtainReveal from "@/components/CurtainReveal";
 import PageHeader from "@/components/PageHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CONTACT_EMAIL } from "@/content/contact";
@@ -68,7 +67,7 @@ const CV = () => {
           <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
             {t("cv.workExperience")}
           </h2>
-          <CurtainReveal className="space-y-6">
+          <div className="space-y-6">
             {cvJobs.map((job) => (
               <div key={job.id}>
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
@@ -105,14 +104,14 @@ const CV = () => {
                 ) : null}
               </div>
             ))}
-          </CurtainReveal>
+          </div>
         </section>
 
         <section className="mb-10">
           <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
             {t("cv.selectedProjects")}
           </h2>
-          <CurtainReveal className="space-y-6">
+          <div className="space-y-6">
             {cvProjects.map((project) => (
               <div key={project.id}>
                 <div className="flex items-baseline justify-between gap-2 mb-1">
@@ -168,37 +167,35 @@ const CV = () => {
                 ) : null}
               </div>
             ))}
-          </CurtainReveal>
+          </div>
         </section>
 
         <section className="mb-10">
           <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
             {t("cv.education")}
           </h2>
-          <CurtainReveal>
-            <div>
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
-                <div>
-                  <p className="font-medium text-foreground text-sm">{t("cv.education.degree")}</p>
-                  <p className="text-sm text-muted-foreground">{t("cv.education.institution")}</p>
-                </div>
-                <span className="text-xs text-muted-foreground font-mono shrink-0">
-                  {t("cv.education.period")}
-                </span>
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+              <div>
+                <p className="font-medium text-foreground text-sm">{t("cv.education.degree")}</p>
+                <p className="text-sm text-muted-foreground">{t("cv.education.institution")}</p>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">{t("cv.education.details")}</p>
-              <p className="text-xs text-muted-foreground/70 mt-1">
-                {t("cv.education.courseworkLabel")}: {t("cv.education.coursework")}
-              </p>
+              <span className="text-xs text-muted-foreground font-mono shrink-0">
+                {t("cv.education.period")}
+              </span>
             </div>
-          </CurtainReveal>
+            <p className="text-sm text-muted-foreground mt-1">{t("cv.education.details")}</p>
+            <p className="text-xs text-muted-foreground/70 mt-1">
+              {t("cv.education.courseworkLabel")}: {t("cv.education.coursework")}
+            </p>
+          </div>
         </section>
 
         <section>
           <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
             {t("cv.leadershipAthletics")}
           </h2>
-          <CurtainReveal className="space-y-3">
+          <div className="space-y-3">
             {cvLeadership.map((item) => (
               <div key={item.id}>
                 <p className="text-sm">
@@ -210,7 +207,7 @@ const CV = () => {
                 ) : null}
               </div>
             ))}
-          </CurtainReveal>
+          </div>
         </section>
       </div>
 
