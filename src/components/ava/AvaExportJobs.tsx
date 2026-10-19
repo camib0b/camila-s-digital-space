@@ -1,11 +1,11 @@
-import type { CSSProperties } from "react";
 import { AVA_EVENTS } from "@/content/ava";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+/** Fewest clips per game → fastest bar; most clips → slowest. Shared cycle in ava.css. */
 const EXPORT_JOBS = [
-  { token: "PC", progress: 0.72, durationSeconds: 2.8, delaySeconds: -0.4 },
-  { token: "Goal", progress: 0.44, durationSeconds: 3.6, delaySeconds: -1.8 },
-  { token: "Circle Entry", progress: 0.9, durationSeconds: 2.3, delaySeconds: -1.1 },
+  { token: "Goal", fillClass: "ava-export-fill--goal" },
+  { token: "PC", fillClass: "ava-export-fill--pc" },
+  { token: "Circle Entry", fillClass: "ava-export-fill--circle-entry" },
 ] as const;
 
 type ExportJob = (typeof EXPORT_JOBS)[number];
@@ -19,14 +19,6 @@ function exportJobLabel(token: ExportJob["token"], language: "en" | "es"): strin
   return language === "es" ? event.es : event.en;
 }
 
-function exportJobFillStyle(job: ExportJob): CSSProperties {
-  return {
-    width: `${job.progress * 100}%`,
-    animationDuration: `${job.durationSeconds}s`,
-    animationDelay: `${job.delaySeconds}s`,
-  };
-}
-
 const AvaExportJobs = () => {
   const { language, t } = useLanguage();
 
@@ -38,7 +30,7 @@ const AvaExportJobs = () => {
           <li className="ava-export-job" key={job.token}>
             <span className="ava-export-label">{exportJobLabel(job.token, language)}</span>
             <span className="ava-export-track" aria-hidden="true">
-              <span className="ava-export-fill" style={exportJobFillStyle(job)} />
+              <span className={`ava-export-fill ${job.fillClass}`} />
             </span>
           </li>
         ))}

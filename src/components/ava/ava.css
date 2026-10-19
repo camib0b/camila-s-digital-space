@@ -1043,6 +1043,7 @@ button.ava-cta:disabled {
 }
 
 .ava-export {
+  --ava-export-cycle: 6s;
   margin: 0;
 }
 
@@ -1102,13 +1103,27 @@ button.ava-cta:disabled {
 
 .ava-export-fill {
   display: block;
+  width: 100%;
   height: 100%;
   background: var(--ava-fg);
+  transform: scaleX(0);
   transform-origin: left center;
-  animation-name: ava-export-fill;
-  animation-timing-function: var(--ease-in-out);
+  animation-duration: var(--ava-export-cycle);
+  animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-direction: alternate;
+  animation-fill-mode: both;
+}
+
+.ava-export-fill--goal {
+  animation-name: ava-export-fill-goal;
+}
+
+.ava-export-fill--pc {
+  animation-name: ava-export-fill-pc;
+}
+
+.ava-export-fill--circle-entry {
+  animation-name: ava-export-fill-circle-entry;
 }
 
 .ava-clip {
@@ -1472,12 +1487,61 @@ button.ava-cta:disabled {
   }
 }
 
-@keyframes ava-export-fill {
-  from {
-    transform: scaleX(0.18);
+/* One timeline: Goal finishes ~1.1s, PC ~2.5s, Circle Entry ~4.3s; hold 1s; snap to 0. */
+@keyframes ava-export-fill-goal {
+  0% {
+    transform: scaleX(0);
   }
-  to {
+
+  18% {
     transform: scaleX(1);
+  }
+
+  89% {
+    transform: scaleX(1);
+  }
+
+  89.01%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes ava-export-fill-pc {
+  0% {
+    transform: scaleX(0);
+  }
+
+  42% {
+    transform: scaleX(1);
+  }
+
+  89% {
+    transform: scaleX(1);
+  }
+
+  89.01%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes ava-export-fill-circle-entry {
+  0% {
+    transform: scaleX(0);
+  }
+
+  72% {
+    transform: scaleX(1);
+  }
+
+  89% {
+    transform: scaleX(1);
+  }
+
+  89.01%,
+  100% {
+    transform: scaleX(0);
   }
 }
 
@@ -1488,8 +1552,16 @@ button.ava-cta:disabled {
     animation: none;
   }
 
-  .ava-export-fill {
-    transform: none;
+  .ava-export-fill--goal {
+    transform: scaleX(1);
+  }
+
+  .ava-export-fill--pc {
+    transform: scaleX(0.68);
+  }
+
+  .ava-export-fill--circle-entry {
+    transform: scaleX(0.38);
   }
 
   .ava-playhead {
