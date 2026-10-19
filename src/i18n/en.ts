@@ -120,9 +120,6 @@ const en = {
     "personalProjects.smallTools.label": "Small tools",
     "personalProjects.smallTools.description":
       "Utilities I shipped for my own use. Small on purpose.",
-    "personalProjects.tomorrow.title": "Tomorrow",
-    "personalProjects.tomorrow":
-      "Planned the night before: an agent turns my Google Calendar into a timed day plan and commits it to this site.",
     "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Portfolio analytics: returns versus a VOO benchmark, risk, and look-through exposure. Live market data with automated daily closes. AI commentary on request.",

@@ -8,7 +8,6 @@ import CV from "./pages/CV";
 import Ava from "./pages/Ava";
 import Capital from "./pages/Capital";
 import NotFound from "./pages/NotFound";
-import Tomorrow from "./pages/Tomorrow";
 import ScrollToTop from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -26,7 +25,6 @@ const App = () => (
               <Route path="/ava" element={<Ava />} />
               <Route path="/ava/" element={<Ava />} />
               <Route path="/capital" element={<Capital />} />
-              <Route path="/tomorrow" element={<Tomorrow />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>

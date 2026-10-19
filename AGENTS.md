@@ -25,7 +25,7 @@ are already installed when an agent starts.
 
 ### Frontend (main product)
 
-- `npm run dev` serves on `http://localhost:8080/` (host/port fixed in `vite.config.ts`). Routes: `/`, `/cv`, `/ava`, `/capital` (investment dashboard), `/tomorrow`.
+- `npm run dev` serves on `http://localhost:8080/` (host/port fixed in `vite.config.ts`). Routes: `/`, `/cv`, `/ava`, `/capital` (investment dashboard).
 - The frontend reads its API base from `VITE_PORTFOLIO_API_URL` (see `.env.example`). When unset it falls back to the deployed production Worker `https://portfolio-api.camilaescuderob.workers.dev/api/portfolio` (see `src/lib/portfolioApi.ts`), so the site — including the live-data `/capital` page — works standalone without running the local Worker, as long as egress is allowed.
 - AVA checkout (`/ava`) posts to `VITE_AVA_CHECKOUT_URL` or `/api/ava` (see `src/lib/avaCheckoutApi.ts`). Payment, license-admin, and mail secrets live only in `ava-checkout`. The trial `.dmg` URL is public `VITE_AVA_DMG_URL`.
 - Lint reports only warnings (0 errors); it also lints the workers' generated `worker-configuration.d.ts`, which is expected.

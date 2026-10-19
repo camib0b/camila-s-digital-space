@@ -101,14 +101,6 @@ export const projects = [
     url: `${SITE_URL}/capital`,
   },
   {
-    id: "tomorrow",
-    name: "Daily planner",
-    category: "small-tool",
-    description:
-      "Daily planner. Reads a Google Calendar and writes the day. Runs at 9:30 AM.",
-    url: `${SITE_URL}/tomorrow`,
-  },
-  {
     id: "xml-viz",
     name: "XML Viz",
     category: "small-tool",
