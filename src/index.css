@@ -125,7 +125,7 @@
     font-family: var(--font-body);
   }
 
-  h1 { @apply text-3xl md:text-5xl font-medium tracking-tight leading-[1.1] text-foreground; }
+  h1 { @apply text-4xl md:text-6xl font-medium tracking-tight leading-[1.1] text-foreground; }
   h2 { @apply text-xl md:text-2xl font-medium tracking-tight leading-[1.2] text-foreground; }
   h3 { @apply text-lg font-medium tracking-tight leading-[1.3] text-foreground; }
 

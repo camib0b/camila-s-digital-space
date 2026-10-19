@@ -36,10 +36,10 @@ const Hero = () => {
           </div>
 
           <div className="mb-10 animate-fade-up-delay-2 space-y-2 max-w-lg">
-            <p className="text-base text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               {t("hero.acfin")}
             </p>
-            <p className="text-base text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               {t("hero.ava")}
             </p>
           </div>

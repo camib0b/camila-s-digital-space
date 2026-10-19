@@ -1,8 +1,8 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.acfin": "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients.",
-    "hero.ava": "AVA, a native field-hockey video product. Import through export in one program.",
+    "hero.acfin": "Analytics products at ACFIN.",
+    "hero.ava": "Building AVA, a field-hockey video app.",
     "hero.cta.work": "Work",
     "hero.cta.cv": "View CV",
 
