@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { useGithubContributions } from "@/hooks/useGithubContributions";
-import { heroContributionWeekCount } from "@/lib/heroContributionGrid";
+import { buildHeroContributionColumns, heroContributionLayout } from "@/lib/heroContributionGrid";
 import { cn } from "@/lib/utils";
 import type {
   ContributionLevel,
@@ -30,7 +30,7 @@ const CONTRIBUTION_LEVEL_CLASS: Record<ContributionLevel, string> = {
 interface ContributionFrameMetrics {
   cellSizePx: number;
   gapPx: number;
-  visibleWeekCount: number;
+  targetWeekCount: number;
 }
 
 type ContributionIntroPhase = "pending" | "playing" | "settled";
@@ -55,8 +55,6 @@ const GitHubContributions = () => {
   const [introPhase, setIntroPhase] = useState<ContributionIntroPhase>("pending");
   const [viewportIsMd, setViewportIsMd] = useState(false);
 
-  const availableWeekCount = contributions?.weeks.length ?? 0;
-
   useLayoutEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
     const updateViewport = () => setViewportIsMd(mediaQuery.matches);
@@ -73,7 +71,7 @@ const GitHubContributions = () => {
 
     const measureFrame = () => {
       const bounds = frame.getBoundingClientRect();
-      const nextMetrics = heroContributionWeekCount(bounds.width, availableWeekCount, viewportIsMd);
+      const nextMetrics = heroContributionLayout(bounds.width, viewportIsMd);
       setFrameMetrics((currentMetrics) =>
         sameFrameMetrics(currentMetrics, nextMetrics) ? currentMetrics : nextMetrics
       );
@@ -86,20 +84,19 @@ const GitHubContributions = () => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [availableWeekCount, viewportIsMd]);
+  }, [viewportIsMd]);
 
   useLayoutEffect(() => {
     if (introStartedRef.current || !contributions || !frameMetrics) {
       return;
     }
 
-    const columnCount = Math.min(frameMetrics.visibleWeekCount, contributions.weeks.length);
-    if (columnCount < 1) {
+    if (frameMetrics.targetWeekCount < 1) {
       return;
     }
 
     introStartedRef.current = true;
-    playingColumnCountRef.current = columnCount;
+    playingColumnCountRef.current = frameMetrics.targetWeekCount;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setIntroPhase(prefersReducedMotion ? "settled" : "playing");
   }, [contributions, frameMetrics]);
@@ -118,9 +115,9 @@ const GitHubContributions = () => {
     };
   }, [introPhase]);
 
-  const visibleWeeks =
+  const displayColumns =
     contributions && frameMetrics
-      ? contributions.weeks.slice(-frameMetrics.visibleWeekCount)
+      ? buildHeroContributionColumns(contributions.weeks, frameMetrics.targetWeekCount)
       : [];
   const cellSizePx = frameMetrics?.cellSizePx ?? 4;
   const gapPx = frameMetrics?.gapPx ?? 0.8;
@@ -128,7 +125,7 @@ const GitHubContributions = () => {
     gap: gapPx,
     "--contribution-intro-offset": `${CONTRIBUTION_INTRO_OFFSET_MS}ms`,
     "--contribution-column-duration": `${COLUMN_ENTER_DURATION_MS}ms`,
-    "--contribution-column-stagger": `${columnStaggerMilliseconds(visibleWeeks.length)}ms`,
+    "--contribution-column-stagger": `${columnStaggerMilliseconds(displayColumns.length)}ms`,
   };
 
   return (
@@ -137,12 +134,12 @@ const GitHubContributions = () => {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
-      {visibleWeeks.length > 0 ? (
+      {displayColumns.length > 0 ? (
         <div className="absolute inset-y-0 left-1/2 flex -translate-x-1/2 items-center">
           <div className="flex flex-nowrap" style={patternStyle}>
-            {visibleWeeks.map((week, columnIndex) => (
+            {displayColumns.map((week, columnIndex) => (
               <ContributionWeekColumn
-                key={week.firstDay}
+                key={week?.firstDay ?? `padding-${columnIndex}`}
                 week={week}
                 columnIndex={columnIndex}
                 cellSizePx={cellSizePx}
@@ -158,7 +155,7 @@ const GitHubContributions = () => {
 };
 
 interface ContributionWeekColumnProps {
-  week: GithubContributionWeek;
+  week: GithubContributionWeek | null;
   columnIndex: number;
   cellSizePx: number;
   gapPx: number;
@@ -178,13 +175,15 @@ const ContributionWeekColumn = ({
     gap: gapPx,
   };
 
+  const rows = week ? weekRows(week) : Array.from({ length: CONTRIBUTION_ROW_COUNT }, () => null);
+
   return (
     <div
       className="contribution-week flex shrink-0 flex-col"
       data-intro={introPhase === "playing" ? "playing" : "settled"}
       style={columnStyle}
     >
-      {weekRows(week).map((day, rowIndex) => (
+      {rows.map((day, rowIndex) => (
         <span
           key={day?.date ?? `empty-row-${rowIndex}`}
           className={cn(
@@ -206,7 +205,7 @@ function sameFrameMetrics(
     currentMetrics !== null &&
     currentMetrics.cellSizePx === nextMetrics.cellSizePx &&
     currentMetrics.gapPx === nextMetrics.gapPx &&
-    currentMetrics.visibleWeekCount === nextMetrics.visibleWeekCount
+    currentMetrics.targetWeekCount === nextMetrics.targetWeekCount
   );
 }
 

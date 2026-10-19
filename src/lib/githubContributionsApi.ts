@@ -35,25 +35,36 @@ export async function fetchGithubContributions(): Promise<GithubContributionsPay
 
 function parseGithubContributionsPayload(value: unknown): GithubContributionsPayload | null {
   const record = asRecord(value);
-  if (
-    !record ||
-    typeof record.totalContributions !== "number" ||
-    typeof record.generatedAt !== "string" ||
-    typeof record.historyStartDate !== "string"
-  ) {
+  if (!record || typeof record.totalContributions !== "number" || typeof record.generatedAt !== "string") {
     return null;
   }
   if (!Array.isArray(record.months) || !Array.isArray(record.weeks)) {
     return null;
   }
 
+  const months = record.months.map(parseMonth).filter(isNonNull);
+  const weeks = record.weeks.map(parseWeek).filter(isNonNull);
+  const historyStartDate =
+    typeof record.historyStartDate === "string"
+      ? record.historyStartDate
+      : inferHistoryStartDate(weeks);
+
   return {
     totalContributions: record.totalContributions,
     generatedAt: record.generatedAt,
-    historyStartDate: record.historyStartDate,
-    months: record.months.map(parseMonth).filter(isNonNull),
-    weeks: record.weeks.map(parseWeek).filter(isNonNull),
+    historyStartDate,
+    months,
+    weeks,
   };
+}
+
+function inferHistoryStartDate(weeks: GithubContributionWeek[]): string | undefined {
+  if (weeks.length === 0) {
+    return undefined;
+  }
+
+  const firstWeek = weeks[0];
+  return firstWeek.contributionDays[0]?.date ?? firstWeek.firstDay;
 }
 
 function parseMonth(value: unknown): GithubContributionMonth | null {

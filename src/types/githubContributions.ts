@@ -29,8 +29,8 @@ export interface GithubContributionMonth {
 export interface GithubContributionsPayload {
   totalContributions: number;
   generatedAt: string;
-  /** Inclusive first calendar day included in `weeks` (from portfolio-api). */
-  historyStartDate: string;
+  /** Inclusive first calendar day in `weeks` (portfolio-api; omitted on older workers). */
+  historyStartDate?: string;
   months: GithubContributionMonth[];
   weeks: GithubContributionWeek[];
 }
