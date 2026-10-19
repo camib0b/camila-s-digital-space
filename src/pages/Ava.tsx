@@ -36,13 +36,39 @@ const CONCAT_STEPS = [
 const TAG_FLASH_DURATION_MS = 150;
 const TAG_SECTION_ROOT_MARGIN = "-8% 0px -8% 0px";
 
+// ANSI letter rows: the home row sits 0.25 key right of Q, the bottom row 0.75.
+const TAG_KEYBOARD_ROWS = [
+  { id: "top", shortcuts: ["Q", "W", "E", "R"] },
+  { id: "home", shortcuts: ["A", "S", "D", "F"] },
+  { id: "bottom", shortcuts: ["Z", "X", "C", "V", "B", "N"] },
+] as const satisfies readonly {
+  id: "top" | "home" | "bottom";
+  shortcuts: readonly (typeof AVA_EVENTS)[number]["shortcut"][];
+}[];
+
+const placedTagShortcuts = new Set<string>(TAG_KEYBOARD_ROWS.flatMap((row) => [...row.shortcuts]));
+
+for (const event of AVA_EVENTS) {
+  if (!placedTagShortcuts.has(event.shortcut)) {
+    throw new Error(`Place ${event.token} (${event.shortcut}) on the tag keyboard.`);
+  }
+}
+
+function tagEventForShortcut(shortcut: (typeof AVA_EVENTS)[number]["shortcut"]) {
+  const event = AVA_EVENTS.find((item) => item.shortcut === shortcut);
+  if (!event) {
+    throw new Error(`Missing AVA tag event for ${shortcut}.`);
+  }
+
+  return event;
+}
+
 type TagShortcutActivation = {
   press: () => void;
   release: () => void;
 };
 
 type KeyboardTagCellProps = {
-  token: string;
   label: string;
   shortcut: string;
   registerTagActivation: (shortcut: string, activation: TagShortcutActivation | null) => void;
@@ -238,7 +264,7 @@ function useTagKeyboardShortcuts(
   }, [activationsRef, sectionRef]);
 }
 
-function KeyboardTagCell({ token, label, shortcut, registerTagActivation }: KeyboardTagCellProps) {
+function KeyboardTagCell({ label, shortcut, registerTagActivation }: KeyboardTagCellProps) {
   const [isFlashing, setIsFlashing] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -318,7 +344,7 @@ function KeyboardTagCell({ token, label, shortcut, registerTagActivation }: Keyb
       className="ava-event"
       role="button"
       tabIndex={0}
-      aria-label={`${token}, ${label}`}
+      aria-label={label}
       aria-keyshortcuts={shortcut}
       data-flash={isFlashing ? "" : undefined}
       data-pressed={isPressed ? "" : undefined}
@@ -327,8 +353,7 @@ function KeyboardTagCell({ token, label, shortcut, registerTagActivation }: Keyb
       onKeyUp={handleKeyUp}
       onBlur={handleBlur}
     >
-      <dt>{token}</dt>
-      <dd>{label}</dd>
+      <span className="ava-event-label">{label}</span>
       <kbd className="ava-event-key" aria-hidden="true">
         {shortcut}
       </kbd>
@@ -484,22 +509,32 @@ const Ava = () => {
         </section>
 
         <section className="ava-section" ref={tagSectionRef}>
-          <div className="ava-shell ava-section-head">
-            <p className="ava-kicker">{t("ava.events.kicker")}</p>
-            <h2>{t("ava.events.headline")}</h2>
-            <p className="ava-section-body">{t("ava.events.body")}</p>
+          <div className="ava-shell">
+            <div className="ava-section-head">
+              <p className="ava-kicker">{t("ava.events.kicker")}</p>
+              <h2>{t("ava.events.headline")}</h2>
+              <p className="ava-section-body">{t("ava.events.body")}</p>
+            </div>
+            <div className="ava-tag-keyboard">
+              <div className="ava-events">
+                {TAG_KEYBOARD_ROWS.map((row) => (
+                  <div className="ava-event-row" data-row={row.id} key={row.id}>
+                    {row.shortcuts.map((shortcut) => {
+                      const event = tagEventForShortcut(shortcut);
+                      return (
+                        <KeyboardTagCell
+                          key={event.token}
+                          label={language === "es" ? event.es : event.en}
+                          shortcut={event.shortcut}
+                          registerTagActivation={registerTagActivation}
+                        />
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <dl className="ava-events">
-            {AVA_EVENTS.map((event) => (
-              <KeyboardTagCell
-                key={event.token}
-                token={event.token}
-                label={language === "es" ? event.es : event.en}
-                shortcut={event.shortcut}
-                registerTagActivation={registerTagActivation}
-              />
-            ))}
-          </dl>
           <ul className="ava-follow">
             {AVA_FOLLOW_UPS.map((item) => (
               <li key={item.id}>
