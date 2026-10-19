@@ -3,7 +3,6 @@ const en = {
     "hero.location": "Santiago, Chile",
     "hero.acfin": "Analytics products at ACFIN.",
     "hero.ava": "Building AVA, a field-hockey video app.",
-    "hero.cta.work": "Work",
     "hero.cta.cv": "View CV",
 
     // Dashboard
