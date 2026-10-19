@@ -1000,64 +1000,73 @@ button.ava-cta:disabled {
   color: var(--ava-muted);
 }
 
-.ava-steps {
+.ava-export {
+  margin: 0;
+}
+
+.ava-export-jobs {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 1.35rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
 @media (min-width: 860px) {
-  .ava-steps {
+  .ava-export-jobs {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
   }
 }
 
-.ava-step {
-  position: relative;
-  padding: 1.75rem 0 2.25rem;
-  border-top: 1px solid var(--ava-rule);
+.ava-export-job {
+  min-width: 0;
 }
 
 @media (min-width: 860px) {
-  .ava-step {
-    padding: 2rem var(--ava-pad) 0 0;
-    border-top: 0;
+  .ava-export-job {
+    padding-right: var(--ava-pad);
     border-right: 1px solid var(--ava-rule);
-    min-height: 22rem;
   }
 
-  .ava-step:not(:first-child) {
+  .ava-export-job:not(:first-child) {
     padding-left: var(--ava-pad);
   }
 
-  .ava-step:last-child {
+  .ava-export-job:last-child {
     border-right: 0;
     padding-right: 0;
   }
 }
 
-.ava-step-index {
+.ava-export-label {
   display: block;
   font-family: var(--ava-mono);
-  font-size: clamp(2.75rem, 6vw, 4.25rem);
+  font-size: 0.6875rem;
   font-weight: 400;
-  letter-spacing: -0.06em;
-  line-height: 1;
-  color: color-mix(in srgb, var(--ava-fg) 22%, transparent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ava-fg);
 }
 
-.ava-step h3 {
-  margin: 1.25rem 0 0;
-  font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: -0.03em;
+.ava-export-track {
+  display: block;
+  height: 2px;
+  margin-top: 0.85rem;
+  background: var(--ava-rule);
+  overflow: hidden;
 }
 
-.ava-step p {
-  margin: 0.85rem 0 0;
-  max-width: 28ch;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--ava-muted);
+.ava-export-fill {
+  display: block;
+  height: 100%;
+  background: var(--ava-fg);
+  transform-origin: left center;
+  animation-name: ava-export-fill;
+  animation-timing-function: var(--ease-in-out);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 .ava-clip {
@@ -1226,30 +1235,6 @@ button.ava-cta:disabled {
   .ava-clip-window[data-dragging] .ava-clip-handle {
     cursor: ew-resize;
   }
-}
-
-.ava-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 0;
-  margin-top: 1.5rem;
-}
-
-.ava-stats span {
-  font-family: var(--ava-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ava-fg);
-  padding-right: 1rem;
-  margin-right: 1rem;
-  border-right: 1px solid var(--ava-rule);
-}
-
-.ava-stats span:last-child {
-  border-right: 0;
-  margin-right: 0;
-  padding-right: 0;
 }
 
 .ava-origin {
@@ -1445,10 +1430,24 @@ button.ava-cta:disabled {
   }
 }
 
+@keyframes ava-export-fill {
+  from {
+    transform: scaleX(0.18);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ava-playhead,
-  .ava-scan {
+  .ava-scan,
+  .ava-export-fill {
     animation: none;
+  }
+
+  .ava-export-fill {
+    transform: none;
   }
 
   .ava-playhead {

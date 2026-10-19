@@ -12,34 +12,14 @@ import { renderWithCarpetaLinks } from "@/components/ava/avaCarpetaLink";
 import LanguageToggle from "@/components/LanguageToggle";
 import AvaClipBar from "@/components/ava/AvaClipBar";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
+import AvaExportJobs from "@/components/ava/AvaExportJobs";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
 import AvaProductShots from "@/components/ava/AvaProductShots";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
 import "@/components/ava/ava-motion.css";
-import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_INTEREST_EMAIL, AVA_STATS } from "@/content/ava";
+import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_INTEREST_EMAIL } from "@/content/ava";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const HOW_IT_WORKS_STEPS = [
-  {
-    index: "01",
-    kickerKey: "ava.step1.kicker",
-    titleKey: "ava.step1.title",
-    bodyKey: "ava.step1.body",
-  },
-  {
-    index: "02",
-    kickerKey: "ava.step2.kicker",
-    titleKey: "ava.step2.title",
-    bodyKey: "ava.step2.body",
-  },
-  {
-    index: "03",
-    kickerKey: "ava.step3.kicker",
-    titleKey: "ava.step3.title",
-    bodyKey: "ava.step3.body",
-  },
-] as const;
 
 const WORKFLOW_MODES = [
   { kicker: "01", titleKey: "ava.modes.tagging.title", bodyKey: "ava.modes.tagging.body" },
@@ -493,26 +473,12 @@ const Ava = () => {
               <h2>{t("ava.how.title")}</h2>
               <p className="ava-section-body">{t("ava.how.body")}</p>
             </div>
-            <div className="ava-steps">
-              {HOW_IT_WORKS_STEPS.map((step) => (
-                <article className="ava-step" key={step.index}>
-                  <span className="ava-step-index">{step.index}</span>
-                  <p className="ava-kicker">{t(step.kickerKey)}</p>
-                  <h3>{t(step.titleKey)}</h3>
-                  <p>{t(step.bodyKey)}</p>
-                </article>
-              ))}
-            </div>
+            <AvaExportJobs />
             <div className="ava-clip">
               <p className="ava-kicker">{t("ava.clip.kicker")}</p>
               <p className="ava-section-body">{t("ava.clip.body")}</p>
               <p className="ava-section-body">{renderWithCarpetaLinks(t("ava.clip.example"))}</p>
               <AvaClipBar />
-              <div className="ava-stats">
-                {AVA_STATS.map((stat) => (
-                  <span key={stat.id}>{language === "es" ? stat.es : stat.en}</span>
-                ))}
-              </div>
             </div>
           </div>
         </section>
