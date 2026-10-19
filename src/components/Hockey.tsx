@@ -1,5 +1,39 @@
+import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { hockeyRoles } from "@/content/hockey";
+import { hockeyRoles, type HockeyRole } from "@/content/hockey";
+
+const HockeyRoleTitle = ({ role }: { role: HockeyRole }) => {
+  const { t } = useLanguage();
+  const title = t(role.roleKey);
+
+  if (role.href === undefined || role.destinationKey === undefined) {
+    return <p className="font-medium text-foreground">{title}</p>;
+  }
+
+  const destination = t(role.destinationKey);
+  const accessibleName = `${title}. ${destination}. ${t("social.openInNewTab")}`;
+
+  return (
+    <a
+      href={role.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={accessibleName}
+      className="hockey-role-link group inline-flex min-w-0 max-w-full flex-wrap items-baseline font-medium text-foreground"
+    >
+      <span className="link-underline transition-colors duration-200 group-hover:text-muted-foreground group-focus-visible:text-muted-foreground">
+        {title}
+      </span>
+      <ExternalLink
+        className="ml-1.5 h-3.5 w-3.5 shrink-0 self-center text-muted-foreground transition-colors duration-200 group-hover:text-teal-500 group-focus-visible:text-teal-500 dark:group-hover:text-teal-300 dark:group-focus-visible:text-teal-300"
+        aria-hidden="true"
+      />
+      <span className="hockey-destination-hint text-xs font-normal text-muted-foreground" aria-hidden="true">
+        {destination}
+      </span>
+    </a>
+  );
+};
 
 const Hockey = () => {
   const { t } = useLanguage();
@@ -18,18 +52,7 @@ const Hockey = () => {
                 key={role.id}
                 className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1"
               >
-                {role.href ? (
-                  <a
-                    href={role.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium text-foreground transition-colors duration-200 link-underline hover:text-muted-foreground"
-                  >
-                    {t(role.roleKey)}
-                  </a>
-                ) : (
-                  <p className="font-medium text-foreground">{t(role.roleKey)}</p>
-                )}
+                <HockeyRoleTitle role={role} />
                 <p className="text-xs text-muted-foreground font-mono shrink-0">
                   {t(role.periodKey)}
                 </p>

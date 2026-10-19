@@ -166,10 +166,12 @@ const en = {
     "hockey.label": "Field hockey",
     "hockey.player.role": "Player",
     "hockey.player.period": "Since 2008",
+    "hockey.player.destination": "FEHOCH player profile",
     "hockey.coaching.role": "Coaching",
     "hockey.coaching.period": "2023–present",
     "hockey.videoAnalyst.role": "Video analyst",
     "hockey.videoAnalyst.period": "2025–present",
+    "hockey.videoAnalyst.destination": "carpeta.cl, match clips",
 
     // Contact
     "contact.label": "Contact",
