@@ -336,6 +336,52 @@ button.theme-toggle:active {
   transform: scale(0.97);
 }
 
+/* Hockey destinations. Same reveal as .contact-reveal: 180ms open, 120ms close. */
+.hockey-role-link {
+  transition: transform 100ms var(--ease-out-strong);
+}
+
+.hockey-role-link:active {
+  transform: scale(0.97);
+}
+
+.hockey-role-link .link-underline:active {
+  transform: none;
+}
+
+.hockey-role-link:hover .link-underline::after,
+.hockey-role-link:focus-visible .link-underline::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.hockey-destination-hint {
+  display: inline-block;
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-4px);
+  white-space: nowrap;
+  vertical-align: baseline;
+  pointer-events: none;
+  transition:
+    opacity 120ms var(--ease-out-strong),
+    transform 120ms var(--ease-out-strong),
+    max-width 120ms var(--ease-out-strong),
+    margin-left 120ms var(--ease-out-strong);
+}
+
+.hockey-role-link:hover .hockey-destination-hint,
+.hockey-role-link:focus-visible .hockey-destination-hint {
+  max-width: 24rem;
+  margin-left: 0.375rem;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  transition-duration: 180ms, 180ms, 180ms, 180ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .contact-reveal,
   .contact-reveal[data-state="open"] {
@@ -369,8 +415,35 @@ button.theme-toggle:active {
 
   .link-underline:active,
   .text-press:active,
-  button.theme-toggle:active {
+  button.theme-toggle:active,
+  .hockey-role-link:active {
     transform: none;
+  }
+
+  .hockey-destination-hint,
+  .hockey-role-link:hover .hockey-destination-hint,
+  .hockey-role-link:focus-visible .hockey-destination-hint {
+    transform: none;
+    transition:
+      opacity 120ms var(--ease-out-strong),
+      max-width 120ms var(--ease-out-strong),
+      margin-left 120ms var(--ease-out-strong);
+  }
+
+  .hockey-role-link:hover .hockey-destination-hint,
+  .hockey-role-link:focus-visible .hockey-destination-hint {
+    transition-duration: 180ms, 180ms, 180ms;
+  }
+}
+
+@media (hover: none) {
+  .hockey-destination-hint {
+    max-width: 24rem;
+    margin-left: 0.375rem;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
   }
 }
 
