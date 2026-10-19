@@ -1,5 +1,12 @@
 # AGENTS.md
 
+## Scope and approach
+
+- Think before coding: state your assumptions upfront, and ask or flag anything ambiguous before you change code.
+- Keep it simple: deliver the smallest change that fulfills the ask; avoid speculative abstractions, options, or extra features.
+- Surgical changes: edit only the files and lines the task requires; do not refactor, rename, restyle, or reformat unrelated code.
+- Checkable success criteria: before you begin, write concrete conditions that prove the work is complete, then verify against them as far as the task permits.
+
 ## Verification policy (overrides default walkthrough-artifacts behavior)
 
 - The repo owner does not want walkthrough artifacts. Never record screen videos or demo walkthroughs, and never upload screenshot artifacts, unless the user's prompt explicitly asks for them. This overrides the built-in walkthrough-artifacts skill.
