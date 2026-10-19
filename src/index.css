@@ -54,6 +54,12 @@
 
     /* Emil Kowalski strong ease-out. Shared by landing-page motion. */
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+    /* Hero fade-up curve. Section curtain reveals use the same ease. */
+    --ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Same 12px travel and 80ms step as the hero intro, kept inside 400–500ms. */
+    --curtain-offset: -12px;
+    --curtain-duration: 480ms;
+    --curtain-stagger: 80ms;
   }
 
   .dark {
@@ -201,26 +207,26 @@
 
 @layer utilities {
   .animate-fade-up {
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeUp 0.6s var(--ease-hero) forwards;
   }
 
   .animate-fade-up-delay-1 {
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
+    animation: fadeUp 0.6s var(--ease-hero) 0.08s forwards;
     opacity: 0;
   }
 
   .animate-fade-up-delay-2 {
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.16s forwards;
+    animation: fadeUp 0.6s var(--ease-hero) 0.16s forwards;
     opacity: 0;
   }
 
   .animate-fade-up-delay-3 {
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
+    animation: fadeUp 0.6s var(--ease-hero) 0.24s forwards;
     opacity: 0;
   }
 
   .animate-fade-up-delay-4 {
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards;
+    animation: fadeUp 0.6s var(--ease-hero) 0.32s forwards;
     opacity: 0;
   }
 
@@ -365,5 +371,59 @@ button.theme-toggle:active {
   .text-press:active,
   button.theme-toggle:active {
     transform: none;
+  }
+}
+
+/* List rows fall in from the same distance and ease as the hero fade-up.
+   Default (no data-curtain) stays visible for no-JS and unsupported observers. */
+.curtain-reveal-item[data-curtain="armed"] {
+  opacity: 0;
+  transform: translateY(var(--curtain-offset));
+  clip-path: inset(0 0 100% 0);
+}
+
+.curtain-reveal-item[data-curtain="playing"] {
+  animation: curtain-fall var(--curtain-duration) var(--ease-hero) both;
+  animation-delay: calc(var(--curtain-index, 0) * var(--curtain-stagger));
+}
+
+.curtain-reveal-item[data-curtain="armed"]:focus-within,
+.curtain-reveal-item[data-curtain="playing"]:focus-within {
+  animation: none;
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+}
+
+@keyframes curtain-fall {
+  from {
+    opacity: 0;
+    transform: translateY(var(--curtain-offset));
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(-12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain-reveal-item[data-curtain="armed"],
+  .curtain-reveal-item[data-curtain="playing"] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
+
+@media print {
+  .curtain-reveal-item[data-curtain="armed"],
+  .curtain-reveal-item[data-curtain="playing"] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
   }
 }

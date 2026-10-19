@@ -1,3 +1,4 @@
+import CurtainReveal from "@/components/CurtainReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { hockeyRoles } from "@/content/hockey";
 
@@ -12,7 +13,7 @@ const Hockey = () => {
             {t("hockey.label")}
           </h2>
 
-          <div className="space-y-6">
+          <CurtainReveal className="space-y-6">
             {hockeyRoles.map((role) => (
               <div
                 key={role.id}
@@ -24,7 +25,7 @@ const Hockey = () => {
                 </p>
               </div>
             ))}
-          </div>
+          </CurtainReveal>
         </div>
       </div>
     </section>
