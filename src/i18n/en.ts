@@ -2,7 +2,7 @@ const en = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.acfin": "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients.",
-    "hero.ava": "AVA, a native field-hockey video product. Clips the same night.",
+    "hero.ava": "AVA, a native field-hockey video product. Import through export in one program.",
     "hero.cta.work": "Work",
     "hero.cta.cv": "View CV",
 
@@ -195,7 +195,7 @@ const en = {
     // CV Page
     "cv.back": "Back",
     "cv.role": "Analytics products · video analysis software",
-    "cv.summary": "At ACFIN I build the analytics products that put structured-credit metrics in front of clients. AVA is a shipped macOS product for tagging matches and exporting clips the same night, rooted in coaching and tournament video work. UC Chile, Ingeniería Civil Industrial + IT diploma (2027).",
+    "cv.summary": "At ACFIN I build the analytics products that put structured-credit metrics in front of clients. AVA is a shipped macOS product to import, tag, analyze, present, and export in one program—concatenate on import, tag and present in the same app—rooted in coaching and tournament video work. UC Chile, Ingeniería Civil Industrial + IT diploma (2027).",
     "cv.selectedProjects": "Selected Projects",
     "cv.workExperience": "Work Experience",
     "cv.education": "Education",
@@ -207,7 +207,7 @@ const en = {
     "cv.footerNote": "Analytics products at ACFIN",
     "cv.ava.title": "AVA",
     "cv.ava.type": "Product",
-    "cv.ava.description": "Field-hockey video analysis product. Load a match, tag key moments, and send clips the same day.",
+    "cv.ava.description": "Field-hockey video analysis for macOS. Import and join camera files, then tag, analyze, present, and export in one program.",
     "cv.carpeta.title": "Carpeta",
     "cv.carpeta.type": "Product",
     "cv.carpeta.description":
