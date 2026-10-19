@@ -1,5 +1,5 @@
-import { ExternalLink } from "lucide-react";
 import CurtainReveal from "@/components/CurtainReveal";
+import DestinationHintLink from "@/components/DestinationHintLink";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { hockeyRoles, type HockeyRole } from "@/content/hockey";
 
@@ -11,28 +11,12 @@ const HockeyRoleTitle = ({ role }: { role: HockeyRole }) => {
     return <p className="font-medium text-foreground">{title}</p>;
   }
 
-  const destination = t(role.destinationKey);
-  const accessibleName = `${title}. ${destination}. ${t("social.openInNewTab")}`;
-
   return (
-    <a
-      href={role.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={accessibleName}
-      className="hockey-role-link group inline-flex min-w-0 max-w-full flex-wrap items-baseline font-medium text-foreground"
-    >
-      <span className="link-underline transition-colors duration-200 group-hover:text-muted-foreground group-focus-visible:text-muted-foreground">
-        {title}
-      </span>
-      <ExternalLink
-        className="ml-1.5 h-3.5 w-3.5 shrink-0 self-center text-muted-foreground transition-colors duration-200 group-hover:text-teal-500 group-focus-visible:text-teal-500 dark:group-hover:text-teal-300 dark:group-focus-visible:text-teal-300"
-        aria-hidden="true"
-      />
-      <span className="hockey-destination-hint text-xs font-normal text-muted-foreground" aria-hidden="true">
-        {destination}
-      </span>
-    </a>
+    <DestinationHintLink
+      title={title}
+      destination={t(role.destinationKey)}
+      target={{ kind: "external", url: role.href }}
+    />
   );
 };
 

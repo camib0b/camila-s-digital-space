@@ -68,11 +68,14 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.label": "Proyectos personales",
     "personalProjects.raycast.title": "Zodme",
     "personalProjects.raycast": "Extensión de Raycast, publicada y de código abierto. Fecha entra; signo zodiacal + arquetipo corto sale.",
+    "personalProjects.raycast.destination": "raycast.com, extensión Zodme",
     "personalProjects.videoAnalysis.title": "AVA",
     "personalProjects.videoAnalysis": "Del etiquetado de partidos a la entrega en una sola app: C++/Qt, exportación XML compatible con herramientas de análisis establecidas y compilados de clips que alimentan carpeta.cl.",
+    "personalProjects.videoAnalysis.destination": "camilaescudero.cl/ava, app de hockey",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
     "personalProjects.clipLibrary.title": "Carpeta",
     "personalProjects.clipLibrary": "De punta a punta: biblioteca de clips de partidos etiquetados en mi propia app de análisis en C++, publicada en Cloudflare. Abierta a jugadoras, entrenadores y analistas.",
+    "personalProjects.clipLibrary.destination": "carpeta.cl, biblioteca de clips",
     "personalProjects.publishingPipeline.title": "Pipeline de publicación agéntico",
     "personalProjects.publishingPipeline.connectLabel": "Cómo se conectan",
     "personalProjects.publishingPipeline.connectsTo": "a",
@@ -118,16 +121,17 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.publishingPipeline.diagram.youtube.detail": "Si R2 falla",
     "personalProjects.publishingPipeline.diagram.deploys": "Publica",
     "personalProjects.publishingPipeline.diagram.deploy": "carpeta.cl",
-    "personalProjects.open": "Abrir",
     "personalProjects.smallTools.label": "Herramientas pequeñas",
     "personalProjects.smallTools.description":
       "Utilidades que publiqué para uso propio. Chicas a propósito.",
     "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Analítica de portafolio: retornos frente a un benchmark VOO, riesgo y exposición look-through. Datos de mercado en vivo con cierres diarios automatizados. Comentario de IA a pedido.",
+    "personalProjects.capital.destination": "camilaescudero.cl/capital, portafolio",
     "personalProjects.xmlViz.title": "XML Viz",
     "personalProjects.xmlViz":
       "XML de análisis de entrada; conteo de tags, grupos de etiquetas y una línea de tiempo del partido de salida. El archivo se queda en el navegador.",
+    "personalProjects.xmlViz.destination": "camilaescudero.cl/xml, visor local",
 
     // How I work
     "howIWork.label": "Cómo trabajo",

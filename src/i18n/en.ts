@@ -66,11 +66,14 @@ const en = {
     "personalProjects.label": "Personal projects",
     "personalProjects.raycast.title": "Zodme",
     "personalProjects.raycast": "Raycast extension, published and open source. Date in, zodiac sign + short archetype out.",
+    "personalProjects.raycast.destination": "raycast.com, Zodme extension",
     "personalProjects.videoAnalysis.title": "AVA",
     "personalProjects.videoAnalysis": "Game footage tagging to delivery in one app: C++/Qt, XML export compatible with established analysis tools, and compiled clips that feed carpeta.cl.",
+    "personalProjects.videoAnalysis.destination": "camilaescudero.cl/ava, field hockey app",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
     "personalProjects.clipLibrary.title": "Carpeta",
     "personalProjects.clipLibrary": "End to end: game footage library of clips tagged in my own C++ analysis app, published on Cloudflare. Open to players, coaches and analysts alike.",
+    "personalProjects.clipLibrary.destination": "carpeta.cl, clip library",
     "personalProjects.publishingPipeline.title": "Agentic publishing pipeline",
     "personalProjects.publishingPipeline.connectLabel": "How they connect",
     "personalProjects.publishingPipeline.connectsTo": "to",
@@ -116,16 +119,17 @@ const en = {
     "personalProjects.publishingPipeline.diagram.youtube.detail": "If R2 fails",
     "personalProjects.publishingPipeline.diagram.deploys": "Deploys",
     "personalProjects.publishingPipeline.diagram.deploy": "carpeta.cl",
-    "personalProjects.open": "Open",
     "personalProjects.smallTools.label": "Small tools",
     "personalProjects.smallTools.description":
       "Utilities I shipped for my own use. Small on purpose.",
     "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Portfolio analytics: returns versus a VOO benchmark, risk, and look-through exposure. Live market data with automated daily closes. AI commentary on request.",
+    "personalProjects.capital.destination": "camilaescudero.cl/capital, portfolio",
     "personalProjects.xmlViz.title": "XML Viz",
     "personalProjects.xmlViz":
       "Analysis XML in; tag counts, label groups, and a match timeline out. The file stays in the browser.",
+    "personalProjects.xmlViz.destination": "camilaescudero.cl/xml, local viewer",
 
     // How I work
     "howIWork.label": "How I work",

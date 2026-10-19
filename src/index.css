@@ -336,7 +336,8 @@ button.theme-toggle:active {
   transform: scale(0.97);
 }
 
-/* Hockey destinations. Same reveal as .contact-reveal: 180ms open, 120ms close. */
+/* Home destination hints (field hockey, personal projects, small tools).
+   Same reveal as .contact-reveal: 180ms open, 120ms close. */
 .hockey-role-link {
   transition: transform 100ms var(--ease-out-strong);
 }
