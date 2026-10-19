@@ -3,8 +3,8 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.acfin": "Productos de analítica en ACFIN: la plataforma que presenta métricas y reportes de crédito estructurado a los clientes.",
-    "hero.ava": "AVA, un producto nativo de análisis de video para hockey. De importar a exportar en un solo programa.",
+    "hero.acfin": "Productos de analytics en ACFIN.",
+    "hero.ava": "Construyendo AVA, una app de video para hockey césped.",
     "hero.cta.work": "Trabajo",
     "hero.cta.cv": "CV",
 

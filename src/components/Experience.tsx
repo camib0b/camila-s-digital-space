@@ -25,7 +25,7 @@ const Experience = () => {
                     {t(role.periodKey)}
                   </p>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mt-2">
+                <p className="text-base text-muted-foreground leading-relaxed mt-2">
                   {t(role.descriptionKey)}
                 </p>
                 {index < experienceRoles.length - 1 && (

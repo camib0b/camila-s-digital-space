@@ -51,7 +51,7 @@ const PublishingPipelineBand = ({ project }: { project: ConnectorPersonalProject
         </p>
       </div>
       <PublishingPipelineDiagram />
-      <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
+      <p className="mt-5 text-base leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
     </div>
   );
 };
@@ -74,7 +74,7 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
               className="text-base"
             />
           </div>
-          <p className="text-sm leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
+          <p className="text-base leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
         </li>
       ))}
     </CurtainReveal>
@@ -149,7 +149,7 @@ export const SmallTools = () => {
           <h2 className="mb-2 text-sm font-medium uppercase tracking-wider text-foreground">
             {t("personalProjects.smallTools.label")}
           </h2>
-          <p className="mb-8 text-sm leading-relaxed text-muted-foreground">
+          <p className="mb-8 text-base leading-relaxed text-muted-foreground">
             {t("personalProjects.smallTools.description")}
           </p>
           <ProjectList projects={smallToolEntries} />
