@@ -14,19 +14,13 @@ import AvaClipBar from "@/components/ava/AvaClipBar";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaExportJobs from "@/components/ava/AvaExportJobs";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
-import AvaProductShots from "@/components/ava/AvaProductShots";
+import AvaModes from "@/components/ava/AvaModes";
 import AvaSession from "@/components/ava/AvaSession";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
 import "@/components/ava/ava-motion.css";
 import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_INTEREST_EMAIL } from "@/content/ava";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const WORKFLOW_MODES = [
-  { kicker: "01", titleKey: "ava.modes.tagging.title", bodyKey: "ava.modes.tagging.body" },
-  { kicker: "02", titleKey: "ava.modes.analyzing.title", bodyKey: "ava.modes.analyzing.body" },
-  { kicker: "03", titleKey: "ava.modes.presentation.title", bodyKey: "ava.modes.presentation.body" },
-] as const;
 
 const CONCAT_STEPS = [
   { index: "01", titleKey: "ava.concat.step1.title", bodyKey: "ava.concat.step1.body" },
@@ -481,16 +475,7 @@ const Ava = () => {
               <p className="ava-kicker">{t("ava.modes.kicker")}</p>
               <h2>{t("ava.modes.headline")}</h2>
             </div>
-            <div className="ava-modes">
-              {WORKFLOW_MODES.map((mode) => (
-                <article className="ava-mode" key={mode.titleKey}>
-                  <p className="ava-kicker">{mode.kicker}</p>
-                  <h3>{t(mode.titleKey)}</h3>
-                  <p>{t(mode.bodyKey)}</p>
-                </article>
-              ))}
-            </div>
-            <AvaProductShots />
+            <AvaModes />
           </div>
         </section>
 

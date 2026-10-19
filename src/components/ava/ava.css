@@ -953,58 +953,97 @@ button.ava-cta:disabled {
 
 .ava-modes {
   display: grid;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 860px) {
-  .ava-modes {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 .ava-mode {
-  padding: 0.25rem 0 2rem;
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  padding: clamp(2rem, 5vh, 3.25rem) 0;
   border-bottom: 1px solid var(--ava-rule);
+}
+
+.ava-mode:first-child {
+  padding-top: 0;
+}
+
+.ava-mode:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ava-mode-copy,
+.ava-mode-media {
+  min-width: 0;
 }
 
 @media (min-width: 860px) {
   .ava-mode {
-    padding: 0.25rem var(--ava-pad) 0 0;
-    border-bottom: 0;
-    border-right: 1px solid var(--ava-rule);
+    grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+    gap: clamp(2rem, 4vw, 4.5rem);
+    align-items: center;
   }
 
-  .ava-mode:not(:first-child) {
-    padding-left: var(--ava-pad);
+  .ava-mode[data-media="end"] {
+    grid-template-columns: minmax(16rem, 0.75fr) minmax(0, 1.25fr);
   }
 
-  .ava-mode:last-child {
-    border-right: 0;
-    padding-right: 0;
+  .ava-mode[data-media="start"] .ava-mode-copy {
+    order: 2;
   }
 }
 
-.ava-mode h3 {
+.ava-mode-copy h3 {
   margin: 0.7rem 0 0;
-  font-size: 1.35rem;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
   font-weight: 400;
   letter-spacing: -0.03em;
 }
 
-.ava-mode p {
-  margin: 0.85rem 0 0;
-  max-width: 28ch;
-  font-size: 0.95rem;
-  line-height: 1.5;
+.ava-mode-body {
+  margin: 0.9rem 0 0;
+  max-width: 36ch;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--ava-muted);
 }
 
-.ava-shots {
+.ava-mode-gallery {
   display: grid;
-  gap: clamp(2.5rem, 6vh, 4rem);
-  margin-top: clamp(2.5rem, 6vh, 4rem);
-  padding-top: clamp(2rem, 5vh, 3rem);
-  border-top: 1px solid var(--ava-rule);
+  row-gap: 0.85rem;
+}
+
+.ava-mode-gallery-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.ava-mode-gallery-items .ava-shot {
+  width: min(46%, 16rem);
+}
+
+.ava-mode-gallery-items[data-count="1"] {
+  display: grid;
+  justify-items: end;
+}
+
+.ava-mode-gallery-items[data-count="1"] .ava-shot {
+  width: min(84%, 28rem);
+}
+
+@media (min-width: 860px) {
+  .ava-mode-gallery:has(.ava-mode-gallery-items[data-count="1"]) {
+    row-gap: 0;
+  }
+
+  .ava-mode-gallery-items[data-count="1"] .ava-shot {
+    position: relative;
+    z-index: 1;
+    width: min(58%, 22.5rem);
+    margin-top: -2.25rem;
+    box-shadow: 0 0 0 0.45rem var(--ava-bg);
+  }
 }
 
 .ava-shot {
@@ -1028,18 +1067,104 @@ button.ava-cta:disabled {
 }
 
 .ava-shot-caption {
-  display: grid;
-  gap: 0.4rem;
-  padding: 0.85rem 1rem 1rem;
+  margin: 0;
+  padding: 0.7rem 0.85rem 0.8rem;
   border-top: 1px solid var(--ava-rule);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--ava-muted);
 }
 
-.ava-shot-caption-text {
+.ava-analyze {
   margin: 0;
-  max-width: 46rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  border: 1px solid var(--ava-rule);
+  background:
+    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--ava-fg) 5%, transparent), transparent 55%),
+    var(--ava-bg);
+  padding: clamp(1.1rem, 2vw, 1.4rem) clamp(1.1rem, 2.2vw, 1.5rem) 1.15rem;
+}
+
+.ava-analyze-stats {
+  margin-top: 0.85rem;
+}
+
+.ava-analyze-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 0.75fr) minmax(0, 0.9fr);
+  column-gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid var(--ava-rule);
+}
+
+@media (min-width: 480px) {
+  .ava-analyze-row {
+    grid-template-columns: minmax(0, 1fr) 5.5rem 6.25rem;
+  }
+}
+
+.ava-analyze-row.is-head {
+  padding-top: 0.35rem;
+  padding-bottom: 0.65rem;
+}
+
+.ava-analyze-row.is-head [role="columnheader"] {
+  font-family: var(--ava-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  text-align: right;
   color: var(--ava-muted);
+}
+
+.ava-analyze-row.is-possession {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ava-analyze-row [role="rowheader"] {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ava-muted);
+}
+
+.ava-analyze-row [role="cell"] {
+  font-family: var(--ava-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-align: right;
+  color: var(--ava-fg);
+}
+
+.ava-analyze-row.is-possession .ava-analyze-bar {
+  grid-column: 1 / -1;
+  margin-top: 0.55rem;
+}
+
+.ava-analyze-bar {
+  display: flex;
+  height: 2px;
+  background: color-mix(in srgb, var(--ava-fg) 22%, transparent);
+}
+
+.ava-analyze-bar span {
+  display: block;
+  height: 100%;
+  background: var(--ava-fg);
+}
+
+.ava-analyze-note {
+  margin: 0.95rem 0 0;
+  max-width: 46ch;
+  font-family: var(--ava-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--ava-faint);
 }
 
 .ava-export {
