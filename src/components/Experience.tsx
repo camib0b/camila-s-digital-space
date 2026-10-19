@@ -1,3 +1,4 @@
+import CurtainReveal from "@/components/CurtainReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { experienceRoles } from "@/content/experience";
 
@@ -12,7 +13,7 @@ const Experience = () => {
             {t("experience.label")}
           </h2>
 
-          <div className="space-y-8">
+          <CurtainReveal className="space-y-8">
             {experienceRoles.map((role, index) => (
               <div key={role.id} className="group">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
@@ -32,7 +33,7 @@ const Experience = () => {
                 )}
               </div>
             ))}
-          </div>
+          </CurtainReveal>
         </div>
       </div>
     </section>

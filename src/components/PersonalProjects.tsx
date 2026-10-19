@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import CurtainReveal from "@/components/CurtainReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   personalProjects,
@@ -97,7 +98,7 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
   const { t } = useLanguage();
 
   return (
-    <ul className="space-y-8">
+    <CurtainReveal as="ul" className="space-y-8">
       {projects.map((project, index) => (
         <li key={project.id}>
           <div className="mb-1.5 flex items-baseline justify-between gap-4">
@@ -112,7 +113,7 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
           <p className="text-sm leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
         </li>
       ))}
-    </ul>
+    </CurtainReveal>
   );
 };
 
