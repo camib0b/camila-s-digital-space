@@ -45,13 +45,6 @@ export const personalProjects: PersonalProject[] = [
     link: { kind: "internal", path: "/capital" },
   },
   {
-    id: "tomorrow",
-    category: "small-tool",
-    titleKey: "personalProjects.tomorrow.title",
-    descriptionKey: "personalProjects.tomorrow",
-    link: { kind: "internal", path: "/tomorrow" },
-  },
-  {
     id: "xml-viz",
     category: "small-tool",
     titleKey: "personalProjects.xmlViz.title",

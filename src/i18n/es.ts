@@ -122,9 +122,6 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.smallTools.label": "Herramientas pequeñas",
     "personalProjects.smallTools.description":
       "Utilidades que publiqué para uso propio. Chicas a propósito.",
-    "personalProjects.tomorrow.title": "Mañana",
-    "personalProjects.tomorrow":
-      "Planificado la noche anterior: un agente convierte mi Google Calendar en un plan con horas y lo publica en este sitio.",
     "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Analítica de portafolio: retornos frente a un benchmark VOO, riesgo y exposición look-through. Datos de mercado en vivo con cierres diarios automatizados. Comentario de IA a pedido.",

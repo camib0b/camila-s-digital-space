@@ -8,7 +8,7 @@ import path from "path";
  * - `dist/ava/index.html` is 200-served at `/ava/`; `/ava` 307s to `/ava/`
  *
  * Copy the SPA shell into `dist/ava/index.html` so `/ava/` is a folder index
- * (same pattern as `/tomorrow/`) without changing global `html_handling`.
+ * without changing global `html_handling`.
  */
 function copySpaShellToAvaFolder(): Plugin {
   return {
