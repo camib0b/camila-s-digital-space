@@ -1,61 +1,24 @@
-import { Link } from "react-router-dom";
 import CurtainReveal from "@/components/CurtainReveal";
+import DestinationHintLink from "@/components/DestinationHintLink";
+import PublishingPipelineDiagram from "@/components/PublishingPipelineDiagram";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   personalProjects,
+  type ConnectorPersonalProject,
+  type LinkedPersonalProject,
   type PersonalProject,
 } from "@/content/personalProjects";
-import PublishingPipelineDiagram from "@/components/PublishingPipelineDiagram";
 
 interface ProjectListProps {
-  projects: PersonalProject[];
+  projects: LinkedPersonalProject[];
   startingNumber?: number;
 }
 
 interface SectionEntries {
-  projectsBeforeConnector: PersonalProject[];
-  connector: PersonalProject | undefined;
-  projectsAfterConnector: PersonalProject[];
+  projectsBeforeConnector: LinkedPersonalProject[];
+  connector: ConnectorPersonalProject | undefined;
+  projectsAfterConnector: LinkedPersonalProject[];
 }
-
-const openLinkClassName =
-  "shrink-0 text-sm text-foreground transition-colors duration-200 link-underline hover:text-muted-foreground";
-
-const ProjectOpenLink = ({ project }: { project: PersonalProject }) => {
-  const { t } = useLanguage();
-  const label = t("personalProjects.open");
-
-  if (project.link.kind === "internal" && project.link.fullPage) {
-    return (
-      <a href={project.link.path} className={openLinkClassName}>
-        {label}
-      </a>
-    );
-  }
-
-  if (project.link.kind === "internal") {
-    return (
-      <Link to={project.link.path} className={openLinkClassName}>
-        {label}
-      </Link>
-    );
-  }
-
-  if (project.link.kind === "external") {
-    return (
-      <a
-        href={project.link.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={openLinkClassName}
-      >
-        {label}
-      </a>
-    );
-  }
-
-  return null;
-};
 
 const ConnectorMotif = () => (
   <span aria-hidden="true" className="flex w-16 items-center text-foreground/40 sm:w-24">
@@ -66,7 +29,7 @@ const ConnectorMotif = () => (
   </span>
 );
 
-const PublishingPipelineBand = ({ project }: { project: PersonalProject }) => {
+const PublishingPipelineBand = ({ project }: { project: ConnectorPersonalProject }) => {
   const { t } = useLanguage();
   const sourceName = t("personalProjects.videoAnalysis.title");
   const destinationName = t("personalProjects.publishingPipeline.diagram.deploy");
@@ -100,14 +63,16 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
     <CurtainReveal as="ul" className="space-y-8">
       {projects.map((project, index) => (
         <li key={project.id}>
-          <div className="mb-1.5 flex items-baseline justify-between gap-4">
-            <div className="flex min-w-0 items-baseline gap-2.5">
-              <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-                {String(startingNumber + index).padStart(2, "0")}
-              </span>
-              <span className="text-base font-medium text-foreground">{t(project.titleKey)}</span>
-            </div>
-            <ProjectOpenLink project={project} />
+          <div className="mb-1.5 flex min-w-0 items-baseline gap-2.5">
+            <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">
+              {String(startingNumber + index).padStart(2, "0")}
+            </span>
+            <DestinationHintLink
+              title={t(project.titleKey)}
+              destination={t(project.destinationKey)}
+              target={project.link}
+              className="text-base"
+            />
           </div>
           <p className="text-sm leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
         </li>
@@ -116,20 +81,25 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
   );
 };
 
+function isLinkedPersonalProject(project: PersonalProject): project is LinkedPersonalProject {
+  return project.link.kind !== "none";
+}
+
 function splitSectionEntries(entries: PersonalProject[]): SectionEntries {
   const connectorIndex = entries.findIndex((entry) => entry.category === "connector");
   if (connectorIndex === -1) {
     return {
-      projectsBeforeConnector: entries,
+      projectsBeforeConnector: entries.filter(isLinkedPersonalProject),
       connector: undefined,
       projectsAfterConnector: [],
     };
   }
 
+  const connector = entries[connectorIndex];
   return {
-    projectsBeforeConnector: entries.slice(0, connectorIndex),
-    connector: entries[connectorIndex],
-    projectsAfterConnector: entries.slice(connectorIndex + 1),
+    projectsBeforeConnector: entries.slice(0, connectorIndex).filter(isLinkedPersonalProject),
+    connector: connector.link.kind === "none" ? connector : undefined,
+    projectsAfterConnector: entries.slice(connectorIndex + 1).filter(isLinkedPersonalProject),
   };
 }
 
@@ -169,7 +139,7 @@ const PersonalProjects = () => {
 export const SmallTools = () => {
   const { t } = useLanguage();
   const smallToolEntries = personalProjects.filter(
-    (project) => project.category === "small-tool",
+    (project): project is LinkedPersonalProject => project.category === "small-tool",
   );
 
   return (

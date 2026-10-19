@@ -1,19 +1,36 @@
 import type { TranslationKey } from "@/i18n/types";
 
-export type PersonalProjectLink =
-  | { kind: "internal"; path: string; fullPage?: boolean }
-  | { kind: "external"; url: string }
-  | { kind: "none" };
+export type PersonalProjectDestinationKey =
+  | "personalProjects.videoAnalysis.destination"
+  | "personalProjects.clipLibrary.destination"
+  | "personalProjects.capital.destination"
+  | "personalProjects.xmlViz.destination"
+  | "personalProjects.raycast.destination";
 
-export type PersonalProjectCategory = "project" | "connector" | "small-tool";
-
-export interface PersonalProject {
+type PersonalProjectBase = {
   id: string;
-  category: PersonalProjectCategory;
   titleKey: TranslationKey;
   descriptionKey: TranslationKey;
-  link: PersonalProjectLink;
-}
+};
+
+export type LinkedPersonalProject = PersonalProjectBase & {
+  category: "project" | "small-tool";
+  destinationKey: PersonalProjectDestinationKey;
+  link:
+    | { kind: "internal"; path: string; fullPage?: boolean }
+    | { kind: "external"; url: string };
+};
+
+export type ConnectorPersonalProject = PersonalProjectBase & {
+  category: "connector";
+  link: { kind: "none" };
+};
+
+export type PersonalProject = LinkedPersonalProject | ConnectorPersonalProject;
+
+export type PersonalProjectCategory = PersonalProject["category"];
+
+export type PersonalProjectLink = PersonalProject["link"];
 
 export const personalProjects: PersonalProject[] = [
   {
@@ -21,6 +38,7 @@ export const personalProjects: PersonalProject[] = [
     category: "project",
     titleKey: "personalProjects.videoAnalysis.title",
     descriptionKey: "personalProjects.videoAnalysis",
+    destinationKey: "personalProjects.videoAnalysis.destination",
     link: { kind: "internal", path: "/ava" },
   },
   {
@@ -28,6 +46,7 @@ export const personalProjects: PersonalProject[] = [
     category: "project",
     titleKey: "personalProjects.clipLibrary.title",
     descriptionKey: "personalProjects.clipLibrary",
+    destinationKey: "personalProjects.clipLibrary.destination",
     link: { kind: "external", url: "https://carpeta.cl/" },
   },
   {
@@ -42,6 +61,7 @@ export const personalProjects: PersonalProject[] = [
     category: "small-tool",
     titleKey: "personalProjects.capital.title",
     descriptionKey: "personalProjects.capital",
+    destinationKey: "personalProjects.capital.destination",
     link: { kind: "internal", path: "/capital" },
   },
   {
@@ -49,6 +69,7 @@ export const personalProjects: PersonalProject[] = [
     category: "small-tool",
     titleKey: "personalProjects.xmlViz.title",
     descriptionKey: "personalProjects.xmlViz",
+    destinationKey: "personalProjects.xmlViz.destination",
     link: { kind: "internal", path: "/xml/", fullPage: true },
   },
   {
@@ -56,6 +77,7 @@ export const personalProjects: PersonalProject[] = [
     category: "small-tool",
     titleKey: "personalProjects.raycast.title",
     descriptionKey: "personalProjects.raycast",
+    destinationKey: "personalProjects.raycast.destination",
     link: { kind: "external", url: "https://www.raycast.com/camib0b/zodme" },
   },
 ];
