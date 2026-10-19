@@ -54,7 +54,7 @@
 
     /* Emil Kowalski strong ease-out. Shared by landing-page motion. */
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
-    /* Hero fade-up curve. Section curtain reveals use the same ease. */
+    /* Hero fade-up curve. Curtain reveals and the contribution pattern use the same ease. */
     --ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
     /* Same 12px travel and 80ms step as the hero intro, kept inside 400–500ms. */
     --curtain-offset: -12px;
@@ -444,6 +444,43 @@ button.theme-toggle:active {
     transform: none;
     pointer-events: auto;
     transition: none;
+  }
+}
+
+/* Hero contribution pattern. One left-to-right settle, transform and opacity only.
+   Per-column offset is a 3px sine set inline; this curve does not overshoot. */
+.contribution-week {
+  opacity: 1;
+  transform: none;
+}
+
+.contribution-week[data-intro="playing"] {
+  animation-name: contribution-flag;
+  animation-duration: var(--contribution-column-duration, 400ms);
+  animation-timing-function: var(--ease-hero);
+  animation-fill-mode: both;
+  animation-delay: calc(
+    var(--contribution-intro-offset, 80ms) +
+      (var(--column-index, 0) * var(--contribution-column-stagger, 0ms))
+  );
+}
+
+@keyframes contribution-flag {
+  from {
+    opacity: 0;
+    transform: translateY(var(--wave-offset, 0px)) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .contribution-week[data-intro="playing"] {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
