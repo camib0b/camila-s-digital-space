@@ -15,6 +15,7 @@ import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaExportJobs from "@/components/ava/AvaExportJobs";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
 import AvaProductShots from "@/components/ava/AvaProductShots";
+import AvaSession from "@/components/ava/AvaSession";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
 import "@/components/ava/ava-motion.css";
@@ -444,6 +445,8 @@ const Ava = () => {
         </section>
 
         <AvaTimeline language={language} />
+
+        <AvaSession />
 
         <section className="ava-section" id="un-partido">
           <div className="ava-shell">
