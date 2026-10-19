@@ -4,6 +4,7 @@ export interface HockeyRole {
   id: HockeyRoleId;
   roleKey: `hockey.${HockeyRoleId}.role`;
   periodKey: `hockey.${HockeyRoleId}.period`;
+  href?: string;
 }
 
 /**
@@ -15,6 +16,7 @@ export const hockeyRoles: HockeyRole[] = [
     id: "player",
     roleKey: "hockey.player.role",
     periodKey: "hockey.player.period",
+    href: "https://atn.fehoch.cl/en/players/54338395",
   },
   {
     id: "coaching",
@@ -25,5 +27,6 @@ export const hockeyRoles: HockeyRole[] = [
     id: "videoAnalyst",
     roleKey: "hockey.videoAnalyst.role",
     periodKey: "hockey.videoAnalyst.period",
+    href: "https://carpeta.cl/",
   },
 ];
