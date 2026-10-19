@@ -127,19 +127,6 @@ const en = {
     "personalProjects.xmlViz":
       "Analysis XML in; tag counts, label groups, and a match timeline out. The file stays in the browser.",
 
-    // GitHub
-    "github.label": "GitHub contributions",
-    "github.summary": "{n} contributions in the last year",
-    "github.less": "less",
-    "github.more": "more",
-    "github.error": "couldn't load github activity",
-    "github.emptyDay": "no contributions",
-    "github.oneContribution": "1 contribution",
-    "github.nContributions": "{n} contributions",
-    "github.weekdayMon": "mon",
-    "github.weekdayWed": "wed",
-    "github.weekdayFri": "fri",
-
     // How I work
     "howIWork.label": "How I work",
     "howIWork.comesCheap.heading": "Comes cheap",

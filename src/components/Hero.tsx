@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SOCIAL_LINKS } from "@/content/social";
 import EmailContactControl from "./EmailContactControl";
+import GitHubContributions from "./GitHubContributions";
 import SocialLinkControl from "./SocialLinkControl";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
@@ -29,7 +30,10 @@ const Hero = () => {
             {t("hero.location")}
           </p>
 
-          <h1 className="mb-4 animate-fade-up-delay-1">camila escudero</h1>
+          <div className="relative isolate mb-4 w-fit max-w-full">
+            <GitHubContributions />
+            <h1 className="relative z-10 animate-fade-up-delay-1">camila escudero</h1>
+          </div>
 
           <div className="mb-10 animate-fade-up-delay-2 space-y-2 max-w-lg">
             <p className="text-base text-muted-foreground leading-relaxed">

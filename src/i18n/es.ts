@@ -129,19 +129,6 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.xmlViz":
       "XML de análisis de entrada; conteo de tags, grupos de etiquetas y una línea de tiempo del partido de salida. El archivo se queda en el navegador.",
 
-    // GitHub
-    "github.label": "Contribuciones en GitHub",
-    "github.summary": "{n} contribuciones en el último año",
-    "github.less": "menos",
-    "github.more": "más",
-    "github.error": "no se pudo cargar la actividad de github",
-    "github.emptyDay": "sin contribuciones",
-    "github.oneContribution": "1 contribución",
-    "github.nContributions": "{n} contribuciones",
-    "github.weekdayMon": "lun",
-    "github.weekdayWed": "mié",
-    "github.weekdayFri": "vie",
-
     // How I work
     "howIWork.label": "Cómo trabajo",
     "howIWork.comesCheap.heading": "Sale barato",

@@ -5,7 +5,6 @@ import {
   personalProjects,
   type PersonalProject,
 } from "@/content/personalProjects";
-import GitHubContributions from "@/components/GitHubContributions";
 import PublishingPipelineDiagram from "@/components/PublishingPipelineDiagram";
 
 interface ProjectListProps {
@@ -146,7 +145,6 @@ const PersonalProjects = () => {
     <section id="personal-projects" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          <GitHubContributions />
           <h2 className="mb-8 text-sm font-medium uppercase tracking-wider text-foreground">
             {t("personalProjects.label")}
           </h2>
