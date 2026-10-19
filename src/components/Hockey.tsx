@@ -18,7 +18,18 @@ const Hockey = () => {
                 key={role.id}
                 className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1"
               >
-                <p className="font-medium text-foreground">{t(role.roleKey)}</p>
+                {role.href ? (
+                  <a
+                    href={role.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-foreground transition-colors duration-200 link-underline hover:text-muted-foreground"
+                  >
+                    {t(role.roleKey)}
+                  </a>
+                ) : (
+                  <p className="font-medium text-foreground">{t(role.roleKey)}</p>
+                )}
                 <p className="text-xs text-muted-foreground font-mono shrink-0">
                   {t(role.periodKey)}
                 </p>
