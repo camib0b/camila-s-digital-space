@@ -21,7 +21,7 @@ const Experience = () => {
                     <p className="font-medium text-foreground">{t(role.titleKey)}</p>
                     <p className="text-sm text-muted-foreground">{t(role.companyKey)}</p>
                   </div>
-                  <p className="text-xs text-muted-foreground font-mono shrink-0">
+                  <p className="text-xs text-muted-foreground tabular-nums shrink-0">
                     {t(role.periodKey)}
                   </p>
                 </div>

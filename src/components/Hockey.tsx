@@ -38,7 +38,7 @@ const Hockey = () => {
                 className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1"
               >
                 <HockeyRoleTitle role={role} />
-                <p className="text-xs text-muted-foreground font-mono shrink-0">
+                <p className="text-xs text-muted-foreground tabular-nums shrink-0">
                   {t(role.periodKey)}
                 </p>
               </div>
