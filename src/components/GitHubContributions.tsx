@@ -135,7 +135,7 @@ const GitHubContributions = () => {
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       {displayColumns.length > 0 ? (
-        <div className="absolute inset-y-0 left-1/2 flex -translate-x-1/2 items-center">
+        <div className="absolute inset-y-0 left-1/2 flex -translate-x-1/2 items-center opacity-90">
           <div className="flex flex-nowrap" style={patternStyle}>
             {displayColumns.map((week, columnIndex) => (
               <ContributionWeekColumn
