@@ -10,6 +10,7 @@ import type { TranslationKey } from "@/i18n/types";
 
 const PRIMARY_SHOT_SIZES = "(min-width: 860px) 40rem, calc(100vw - 2.5rem)";
 const SECONDARY_SHOT_SIZES = "(min-width: 860px) 22rem, 46vw";
+const FULL_SHOT_SIZES = "(min-width: 1216px) 69rem, calc(100vw - 2.5rem)";
 
 /** Teams in the Tagging and Presentation screenshots. Names stay untranslated. */
 const SAMPLE_TEAM_NAMES = ["Cogs", "Old Girls"] as const;
@@ -66,19 +67,20 @@ function sourceSet(sources: AvaModeShotSources): string {
   return `${sources[640]} 640w, ${sources[1280]} 1280w, ${sources[1920]} 1920w, ${sources[2560]} 2560w`;
 }
 
-function AvaModeShot({
+export function AvaModeShot({
   media,
   role,
 }: {
   media: ResolvedAvaModeMedia;
-  role: "primary" | "secondary";
+  role: "primary" | "secondary" | "full";
 }) {
   const { t } = useLanguage();
   const frameRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const [hasDecodedImage, setHasDecodedImage] = useState(false);
   const [isInView, setIsInView] = useState(false);
-  const sizes = role === "primary" ? PRIMARY_SHOT_SIZES : SECONDARY_SHOT_SIZES;
+  const sizes =
+    role === "full" ? FULL_SHOT_SIZES : role === "primary" ? PRIMARY_SHOT_SIZES : SECONDARY_SHOT_SIZES;
 
   useEffect(() => {
     if (!isInView) {

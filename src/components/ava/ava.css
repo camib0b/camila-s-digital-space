@@ -429,7 +429,8 @@ button.ava-cta:disabled {
   color: var(--ava-muted);
 }
 
-.ava-concat-head h2 {
+.ava-concat-head h2,
+.ava-clip-head h2 {
   max-width: 18ch;
 }
 
@@ -1251,10 +1252,30 @@ button.ava-cta:disabled {
   animation-name: ava-export-fill-circle-entry;
 }
 
-.ava-clip {
+.ava-section-head + .ava-clip-window {
+  margin-top: 0;
+}
+
+.ava-export-block,
+.ava-export-result {
   margin-top: clamp(2.5rem, 6vh, 4rem);
   padding-top: clamp(2rem, 5vh, 3rem);
   border-top: 1px solid var(--ava-rule);
+}
+
+.ava-export-block h3,
+.ava-export-result h3 {
+  margin: 0.7rem 0 0;
+  max-width: 18ch;
+  font-size: clamp(1.45rem, 2.8vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.ava-export-block .ava-export,
+.ava-export-result .ava-shot {
+  margin-top: 1.75rem;
 }
 
 .ava-clip-window {

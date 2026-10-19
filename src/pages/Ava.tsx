@@ -14,12 +14,13 @@ import AvaClipBar from "@/components/ava/AvaClipBar";
 import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaExportJobs from "@/components/ava/AvaExportJobs";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
-import AvaModes from "@/components/ava/AvaModes";
+import AvaModes, { AvaModeShot } from "@/components/ava/AvaModes";
 import AvaSession from "@/components/ava/AvaSession";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
 import "@/components/ava/ava-motion.css";
 import { AVA_EVENTS, AVA_FOLLOW_UPS, AVA_INTEREST_EMAIL } from "@/content/ava";
+import { AVA_EXPORTED_CLIP, resolveAvaModeMedia } from "@/content/avaModes";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const CONCAT_STEPS = [
@@ -481,17 +482,25 @@ const Ava = () => {
 
         <section className="ava-section" id="como-funciona">
           <div className="ava-shell">
-            <div className="ava-section-head">
-              <p className="ava-kicker">{t("ava.how.kicker")}</p>
-              <h2>{t("ava.how.title")}</h2>
-              <p className="ava-section-body">{t("ava.how.body")}</p>
-            </div>
-            <AvaExportJobs />
-            <div className="ava-clip">
+            <div className="ava-section-head ava-clip-head">
               <p className="ava-kicker">{t("ava.clip.kicker")}</p>
+              <h2>{t("ava.clip.title")}</h2>
               <p className="ava-section-body">{t("ava.clip.body")}</p>
               <p className="ava-section-body">{renderWithCarpetaLinks(t("ava.clip.example"))}</p>
-              <AvaClipBar />
+            </div>
+            <AvaClipBar />
+            <div className="ava-export-block">
+              <p className="ava-kicker">{t("ava.how.kicker")}</p>
+              <h3>{t("ava.how.title")}</h3>
+              <p className="ava-section-body">{t("ava.how.body")}</p>
+              <p className="ava-section-body">{t("ava.how.formats")}</p>
+              <AvaExportJobs />
+            </div>
+            <div className="ava-export-result">
+              <p className="ava-kicker">{t("ava.export.result.kicker")}</p>
+              <h3>{t("ava.export.result.title")}</h3>
+              <p className="ava-section-body">{t("ava.export.result.body")}</p>
+              <AvaModeShot media={resolveAvaModeMedia(AVA_EXPORTED_CLIP)} role="full" />
             </div>
           </div>
         </section>

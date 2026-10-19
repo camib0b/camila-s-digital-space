@@ -110,20 +110,18 @@ export const AVA_MODES: readonly AvaMode[] = [
     index: "03",
     titleKey: "ava.modes.presentation.title",
     bodyKey: "ava.modes.presentation.body",
-    media: [
-      { src: "presentation", altKey: "ava.modes.presentation.alt" },
-      {
-        src: "export",
-        altKey: "ava.modes.presentation.exportAlt",
-        width: EXPORTED_CLIP_WIDTH,
-        height: EXPORTED_CLIP_HEIGHT,
-      },
-    ],
+    media: [{ src: "presentation", altKey: "ava.modes.presentation.alt" }],
   },
 ];
 
-for (const mode of AVA_MODES) {
-  for (const item of mode.media) {
-    resolveAvaModeMedia(item);
-  }
+/** Burned-in clip in #como-funciona, after trim and the export bars. Not a mode. */
+export const AVA_EXPORTED_CLIP: AvaModeMediaItem = {
+  src: "export",
+  altKey: "ava.export.clipAlt",
+  width: EXPORTED_CLIP_WIDTH,
+  height: EXPORTED_CLIP_HEIGHT,
+};
+
+for (const item of [...AVA_MODES.flatMap((mode) => mode.media), AVA_EXPORTED_CLIP]) {
+  resolveAvaModeMedia(item);
 }
