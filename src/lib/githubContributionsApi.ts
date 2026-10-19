@@ -1,6 +1,5 @@
 import { PORTFOLIO_API_BASE } from "@/lib/portfolioApi";
 import {
-  CONTRIBUTION_CALENDAR_START_DATE,
   isContributionLevel,
   type GithubContributionDay,
   type GithubContributionMonth,
@@ -36,53 +35,24 @@ export async function fetchGithubContributions(): Promise<GithubContributionsPay
 
 function parseGithubContributionsPayload(value: unknown): GithubContributionsPayload | null {
   const record = asRecord(value);
-  if (!record || typeof record.totalContributions !== "number" || typeof record.generatedAt !== "string") {
+  if (
+    !record ||
+    typeof record.totalContributions !== "number" ||
+    typeof record.generatedAt !== "string" ||
+    typeof record.historyStartDate !== "string"
+  ) {
     return null;
   }
   if (!Array.isArray(record.months) || !Array.isArray(record.weeks)) {
     return null;
   }
 
-  return clipCalendarToStartDate({
+  return {
     totalContributions: record.totalContributions,
     generatedAt: record.generatedAt,
+    historyStartDate: record.historyStartDate,
     months: record.months.map(parseMonth).filter(isNonNull),
     weeks: record.weeks.map(parseWeek).filter(isNonNull),
-  });
-}
-
-function clipCalendarToStartDate(payload: GithubContributionsPayload): GithubContributionsPayload {
-  const weeks: GithubContributionWeek[] = [];
-
-  for (const week of payload.weeks) {
-    const contributionDays = week.contributionDays.filter(
-      (day) => day.date >= CONTRIBUTION_CALENDAR_START_DATE
-    );
-    if (contributionDays.length === 0) {
-      continue;
-    }
-    weeks.push({
-      firstDay: contributionDays[0].date,
-      contributionDays,
-    });
-  }
-
-  const months = payload.months.filter(
-    (month) => month.firstDay >= CONTRIBUTION_CALENDAR_START_DATE
-  );
-
-  const totalContributions = weeks.reduce(
-    (sum, week) =>
-      sum +
-      week.contributionDays.reduce((weekSum, day) => weekSum + day.contributionCount, 0),
-    0
-  );
-
-  return {
-    totalContributions,
-    generatedAt: payload.generatedAt,
-    months,
-    weeks,
   };
 }
 

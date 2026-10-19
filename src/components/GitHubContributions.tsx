@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { useGithubContributions } from "@/hooks/useGithubContributions";
+import { heroContributionWeekCount } from "@/lib/heroContributionGrid";
 import { cn } from "@/lib/utils";
 import type {
   ContributionLevel,
@@ -8,10 +9,6 @@ import type {
 } from "@/types/githubContributions";
 
 const CONTRIBUTION_ROW_COUNT = 7;
-/** Gap scales with cell size (1px at a 5px cell in the original layout). */
-const GAP_TO_CELL_RATIO = 1 / 5;
-/** Room for the 3px wave so the crop does not clip the settle. */
-const WAVE_CLEARANCE_PX = 6;
 const WAVE_AMPLITUDE_PX = 3;
 const WAVE_PHASE_STEP_RADIANS = 0.62;
 
@@ -56,8 +53,17 @@ const GitHubContributions = () => {
   const playingColumnCountRef = useRef(0);
   const [frameMetrics, setFrameMetrics] = useState<ContributionFrameMetrics | null>(null);
   const [introPhase, setIntroPhase] = useState<ContributionIntroPhase>("pending");
+  const [viewportIsMd, setViewportIsMd] = useState(false);
 
   const availableWeekCount = contributions?.weeks.length ?? 0;
+
+  useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateViewport = () => setViewportIsMd(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
 
   useLayoutEffect(() => {
     const frame = frameRef.current;
@@ -67,11 +73,7 @@ const GitHubContributions = () => {
 
     const measureFrame = () => {
       const bounds = frame.getBoundingClientRect();
-      const nextMetrics = metricsForContributionFrame(
-        bounds.width,
-        bounds.height,
-        availableWeekCount
-      );
+      const nextMetrics = heroContributionWeekCount(bounds.width, availableWeekCount, viewportIsMd);
       setFrameMetrics((currentMetrics) =>
         sameFrameMetrics(currentMetrics, nextMetrics) ? currentMetrics : nextMetrics
       );
@@ -84,7 +86,7 @@ const GitHubContributions = () => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [availableWeekCount]);
+  }, [availableWeekCount, viewportIsMd]);
 
   useLayoutEffect(() => {
     if (introStartedRef.current || !contributions || !frameMetrics) {
@@ -120,8 +122,8 @@ const GitHubContributions = () => {
     contributions && frameMetrics
       ? contributions.weeks.slice(-frameMetrics.visibleWeekCount)
       : [];
-  const cellSizePx = frameMetrics?.cellSizePx ?? 3;
-  const gapPx = frameMetrics?.gapPx ?? 1;
+  const cellSizePx = frameMetrics?.cellSizePx ?? 4;
+  const gapPx = frameMetrics?.gapPx ?? 0.8;
   const patternStyle: ContributionPatternStyle = {
     gap: gapPx,
     "--contribution-intro-offset": `${CONTRIBUTION_INTRO_OFFSET_MS}ms`,
@@ -136,7 +138,7 @@ const GitHubContributions = () => {
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       {visibleWeeks.length > 0 ? (
-        <div className="absolute inset-y-0 left-0 flex items-center">
+        <div className="absolute inset-y-0 left-1/2 flex -translate-x-1/2 items-center">
           <div className="flex flex-nowrap" style={patternStyle}>
             {visibleWeeks.map((week, columnIndex) => (
               <ContributionWeekColumn
@@ -195,27 +197,6 @@ const ContributionWeekColumn = ({
     </div>
   );
 };
-
-function metricsForContributionFrame(
-  frameWidthPx: number,
-  frameHeightPx: number,
-  availableWeekCount: number
-): ContributionFrameMetrics {
-  if (frameWidthPx <= 0 || frameHeightPx <= 0 || availableWeekCount < 1) {
-    return { cellSizePx: 3, gapPx: 0.6, visibleWeekCount: 0 };
-  }
-
-  const weekCount = availableWeekCount;
-  const columnStrideFactor = weekCount + (weekCount - 1) * GAP_TO_CELL_RATIO;
-  const cellSizePx = frameWidthPx / columnStrideFactor;
-  const gapPx = cellSizePx * GAP_TO_CELL_RATIO;
-
-  return {
-    cellSizePx,
-    gapPx,
-    visibleWeekCount: weekCount,
-  };
-}
 
 function sameFrameMetrics(
   currentMetrics: ContributionFrameMetrics | null,
