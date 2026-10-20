@@ -85,8 +85,8 @@ const TAG_KEYBOARD_ROWS = [
   slots: readonly TagKeyboardSlot[];
 }[];
 
-// Goal is F in this layout. Shot (D) follows so the hint shows a second tile.
-const PHANTOM_TAG_SHORTCUTS = ["F", "D"] as const satisfies readonly PlacedTagShortcut[];
+// Shot (D) first, then Goal (F). Goal is F in this layout.
+const PHANTOM_TAG_SHORTCUTS = ["D", "F"] as const satisfies readonly PlacedTagShortcut[];
 
 const omittedTagShortcuts = new Set<string>(TAG_KEYBOARD_OMITTED_SHORTCUTS);
 const placedTagShortcuts = new Set<string>(
