@@ -1,18 +1,18 @@
 .ava-section .ava-session-head h2 {
-  max-width: 10em;
+  max-width: min(10em, 100%);
   text-wrap: balance;
 }
 
 .ava-session-aside {
   margin: 1.15rem 0 0;
-  max-width: 46ch;
+  max-width: min(46ch, 100%);
   font-size: 0.95rem;
   line-height: 1.5;
   color: var(--ava-muted);
 }
 
 .ava-session-aside-ava {
-  max-width: 52ch;
+  max-width: min(52ch, 100%);
   color: var(--ava-fg);
   letter-spacing: -0.015em;
 }
@@ -29,6 +29,7 @@
 
 .ava-session-flow li {
   position: relative;
+  min-width: 0;
   margin: 0;
   font-family: var(--ava-mono);
   font-size: 0.6875rem;
@@ -65,5 +66,32 @@
     top: calc(-1.05rem - 2px);
     left: 50%;
     transform: translateX(-50%);
+  }
+}
+
+/* Stack the five steps when the row is too narrow for the labels, including large text. */
+.ava-session {
+  container-type: inline-size;
+}
+
+@container (max-width: 40rem) {
+  .ava-session-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+    padding: 0.1rem 0 0.1rem 1.15rem;
+    border-left: 1px solid var(--ava-fg);
+    border-top: 0;
+  }
+
+  .ava-session-flow li {
+    text-align: start;
+  }
+
+  .ava-session-flow li::before {
+    top: 0.35em;
+    left: calc(-1.15rem - 2px);
+    transform: none;
   }
 }

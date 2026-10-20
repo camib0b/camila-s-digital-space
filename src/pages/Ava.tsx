@@ -616,6 +616,7 @@ function KeyboardTagCell({
       role="button"
       tabIndex={0}
       aria-label={label}
+      title={label}
       aria-keyshortcuts={shortcut}
       data-flash={isFlashing ? "" : undefined}
       data-pressed={isPressed ? "" : undefined}

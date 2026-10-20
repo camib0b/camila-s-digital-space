@@ -22,6 +22,7 @@
   letter-spacing: -0.011em;
   min-height: 100vh;
   isolation: isolate;
+  overflow-wrap: break-word;
 }
 
 .ava-root *,
@@ -41,6 +42,7 @@
 
 .ava-shell {
   width: min(100%, var(--ava-max));
+  min-width: 0;
   margin-inline: auto;
   padding-inline: var(--ava-pad);
 }
@@ -68,7 +70,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 3.25rem;
+  flex-wrap: wrap;
+  row-gap: 0.25rem;
+  height: auto;
+  min-height: 3.25rem;
   padding-inline: var(--ava-pad);
   border-bottom: 1px solid var(--ava-rule);
   background: color-mix(in srgb, var(--ava-bg) 88%, transparent);
@@ -164,6 +169,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  min-width: 0;
   padding: clamp(3rem, 8vh, 6rem) var(--ava-pad) clamp(2.5rem, 6vh, 4.5rem);
   border-bottom: 1px solid var(--ava-rule);
 }
@@ -178,7 +184,7 @@
 
 .ava-hero h1 {
   margin: 1.25rem 0 0;
-  max-width: 14ch;
+  max-width: min(14ch, 100%);
   font-size: clamp(2.75rem, 8vw, 5.75rem);
   font-weight: 400;
   line-height: 0.95;
@@ -188,7 +194,7 @@
 
 .ava-lede {
   margin: 1.5rem 0 0;
-  max-width: 28ch;
+  max-width: min(28ch, 100%);
   font-size: clamp(1.05rem, 2vw, 1.35rem);
   line-height: 1.4;
   color: var(--ava-fg);
@@ -196,7 +202,7 @@
 
 .ava-hero-body {
   margin: 1.25rem 0 0;
-  max-width: 38ch;
+  max-width: min(38ch, 100%);
   font-size: 0.95rem;
   line-height: 1.55;
   color: var(--ava-muted);
@@ -208,11 +214,14 @@
   align-items: baseline;
   gap: 1.25rem 1.75rem;
   margin-top: 2.25rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .ava-cta {
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
   min-height: 2.75rem;
   padding: 0.7rem 1.15rem;
   border: 1px solid var(--ava-fg);
@@ -247,6 +256,7 @@ button.ava-cta:disabled {
 }
 
 .ava-text-link {
+  max-width: 100%;
   font-size: 0.875rem;
   color: var(--ava-fg);
   text-decoration: none;
@@ -271,6 +281,7 @@ button.ava-cta:disabled {
   position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 28rem;
   background:
     radial-gradient(120% 80% at 70% 20%, color-mix(in srgb, var(--ava-fg) 6%, transparent), transparent 55%),
@@ -333,8 +344,10 @@ button.ava-cta:disabled {
 
 .ava-stage-caption {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.35rem 1rem;
+  min-width: 0;
   padding: 0.85rem var(--ava-pad);
   border-top: 1px solid var(--ava-rule);
   font-family: var(--ava-mono);
@@ -342,6 +355,16 @@ button.ava-cta:disabled {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ava-muted);
+}
+
+.ava-stage-caption span:first-child {
+  min-width: 0;
+  flex: 1 1 12rem;
+}
+
+.ava-stage-caption span:last-child {
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .ava-timeline {
@@ -440,7 +463,7 @@ button.ava-cta:disabled {
 
 .ava-section h2 {
   margin: 0.85rem 0 0;
-  max-width: 16ch;
+  max-width: min(16ch, 100%);
   font-size: clamp(1.85rem, 4.5vw, 3.15rem);
   font-weight: 400;
   line-height: 1.05;
@@ -457,7 +480,7 @@ button.ava-cta:disabled {
 
 .ava-concat-head h2,
 .ava-clip-head h2 {
-  max-width: 18ch;
+  max-width: min(18ch, 100%);
 }
 
 .ava-concat {
@@ -476,7 +499,7 @@ button.ava-cta:disabled {
 
 .ava-concat-copy .ava-section-body {
   margin-top: 0;
-  max-width: 38ch;
+  max-width: min(38ch, 100%);
 }
 
 .ava-concat-copy .ava-section-body + .ava-section-body {
@@ -485,7 +508,7 @@ button.ava-cta:disabled {
 
 .ava-concat-diff {
   margin: 1.75rem 0 0;
-  max-width: 28ch;
+  max-width: min(28ch, 100%);
   font-size: clamp(1.05rem, 2vw, 1.35rem);
   line-height: 1.35;
   letter-spacing: -0.02em;
@@ -519,6 +542,7 @@ button.ava-cta:disabled {
 .ava-concat-select {
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
   min-height: 1.85rem;
   padding: 0.28rem 0.65rem;
   border: 1px solid var(--ava-fg);
@@ -564,6 +588,7 @@ button.ava-concat-file {
   flex-direction: column;
   width: 100%;
   min-width: 0;
+  container-type: inline-size;
   margin: 0;
   padding: 0;
   border: 0;
@@ -628,6 +653,7 @@ body.ava-concat-is-dragging * {
   align-items: center;
   justify-content: space-between;
   gap: 0.35rem;
+  min-width: 0;
   font-family: var(--ava-mono);
   font-size: 0.5625rem;
   letter-spacing: 0.12em;
@@ -636,6 +662,7 @@ body.ava-concat-is-dragging * {
 
 .ava-concat-handle {
   display: grid;
+  flex-shrink: 0;
   grid-template-columns: 2px 2px;
   gap: 2px;
 }
@@ -650,7 +677,7 @@ body.ava-concat-is-dragging * {
 .ava-concat-file-name {
   margin-top: 0.45rem;
   font-family: var(--ava-mono);
-  font-size: clamp(0.5rem, 1.7vw, 0.6875rem);
+  font-size: min(clamp(0.5rem, 1.7vw, 0.6875rem), 22cqi);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ava-fg);
@@ -689,9 +716,12 @@ body.ava-concat-is-dragging * {
 .ava-concat-file-time {
   margin-top: 0.45rem;
   font-family: var(--ava-mono);
-  font-size: 0.5625rem;
+  font-size: min(0.5625rem, 18cqi);
   letter-spacing: 0.1em;
   color: var(--ava-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -855,7 +885,7 @@ body.ava-concat-is-dragging * {
 
 .ava-concat-step p {
   margin: 0.85rem 0 0;
-  max-width: 28ch;
+  max-width: min(28ch, 100%);
   font-size: 0.95rem;
   line-height: 1.5;
   color: var(--ava-muted);
@@ -868,7 +898,7 @@ body.ava-concat-is-dragging * {
   letter-spacing: 0.02em;
   text-transform: none;
   color: var(--ava-faint);
-  max-width: 52ch;
+  max-width: min(52ch, 100%);
   line-height: 1.55;
 }
 
@@ -972,22 +1002,40 @@ body.ava-concat-is-dragging * {
 
 .ava-event-label {
   max-width: 100%;
+  min-width: 0;
   font-family: inherit;
-  font-size: clamp(0.4375rem, 19cqi, 0.8125rem);
+  /* 7px is the old 0.4375rem floor at a 16px root. A rem floor outgrows the key when text size rises. */
+  font-size: min(0.8125rem, max(7px, 19cqi));
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: -0.03em;
   color: var(--ava-fg);
+  overflow-wrap: anywhere;
+}
+
+.ava-event:not(.ava-event--control) .ava-event-label {
+  align-self: stretch;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .ava-event--control .ava-event-label {
   font-family: var(--ava-mono);
-  font-size: clamp(0.5rem, calc(var(--ava-key-size) * 0.2), 0.75rem);
+  font-size: min(0.75rem, max(8px, calc(var(--ava-key-size) * 0.2)));
   line-height: 1.2;
   letter-spacing: 0.04em;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   color: var(--ava-muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .ava-event-key {
@@ -1004,8 +1052,10 @@ body.ava-concat-is-dragging * {
   border-radius: 0;
   background: transparent;
   font-family: var(--ava-mono);
-  font-size: clamp(0.5rem, 22cqi, 0.75rem);
+  /* 8px is the old 0.5rem floor at a 16px root, so the glyph stays inside the key at large text. */
+  font-size: min(0.75rem, max(8px, 22cqi));
   font-weight: 400;
+  flex-shrink: 0;
   font-style: normal;
   line-height: 1;
   letter-spacing: 0.04em;
@@ -1085,6 +1135,7 @@ body.ava-concat-is-dragging * {
 
 .ava-follow li {
   list-style: none;
+  min-width: 0;
   padding: 1.25rem var(--ava-pad);
   border-bottom: 1px solid var(--ava-rule);
   font-size: 0.9rem;
@@ -1161,7 +1212,7 @@ body.ava-concat-is-dragging * {
 
 .ava-mode-body {
   margin: 0.9rem 0 0;
-  max-width: 36ch;
+  max-width: min(36ch, 100%);
   font-size: 1rem;
   line-height: 1.55;
   color: var(--ava-muted);
@@ -1259,8 +1310,12 @@ body.ava-concat-is-dragging * {
 
 @media (min-width: 480px) {
   .ava-analyze-row {
-    grid-template-columns: minmax(0, 1fr) 5.5rem 6.25rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 5.5rem) minmax(0, 6.25rem);
   }
+}
+
+.ava-analyze-row > * {
+  min-width: 0;
 }
 
 .ava-analyze-row.is-head {
@@ -1425,7 +1480,7 @@ body.ava-concat-is-dragging * {
 .ava-export-block h3,
 .ava-export-result h3 {
   margin: 0.7rem 0 0;
-  max-width: 18ch;
+  max-width: min(18ch, 100%);
   font-size: clamp(1.45rem, 2.8vw, 2rem);
   font-weight: 400;
   letter-spacing: -0.03em;
@@ -1442,19 +1497,22 @@ body.ava-concat-is-dragging * {
   --clip-nudge-duration: 560ms;
   --clip-nudge-stagger: 150ms;
   --clip-nudge-distance: 8px;
+  --clip-track-offset: 0.85rem;
+  --clip-track-size: 2rem;
+  --clip-readout-gap: 0.15rem;
 
+  container-type: inline-size;
   position: relative;
   margin-top: 1.75rem;
-  height: 6.25rem;
+  min-height: 6.25rem;
+  height: auto;
   user-select: none;
 }
 
 .ava-clip-track {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0.85rem;
-  height: 2rem;
+  position: relative;
+  height: var(--clip-track-size);
+  margin-top: var(--clip-track-offset);
 }
 
 .ava-clip-track-line,
@@ -1543,35 +1601,39 @@ body.ava-concat-is-dragging * {
 }
 
 .ava-clip-readout {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 3rem;
+  position: relative;
   height: 1rem;
+  margin-top: var(--clip-readout-gap);
   pointer-events: none;
 }
 
 .ava-clip-readout span {
   position: absolute;
   top: 0;
-  left: clamp(2.75rem, var(--readout-position), calc(100% - 2.75rem));
+  left: var(--readout-position);
   transform: translateX(-50%);
   font-family: var(--ava-mono);
-  font-size: 0.625rem;
+  font-size: min(0.625rem, 4.2cqi);
   letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
   color: var(--ava-muted);
   white-space: nowrap;
 }
 
+.ava-clip-readout span[data-placed="above"] {
+  top: calc(-1 * (var(--clip-track-offset) + var(--clip-track-size) + var(--clip-readout-gap)));
+}
+
 .ava-clip-center {
-  position: absolute;
-  top: 4.15rem;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
-  transform: translateX(-50%);
+  width: max-content;
+  max-width: 100%;
+  margin-top: var(--clip-readout-gap);
+  margin-inline: auto;
   font-family: var(--ava-mono);
   font-size: 0.625rem;
   letter-spacing: 0.14em;
@@ -1658,7 +1720,7 @@ body.ava-concat-is-dragging * {
   font-size: clamp(1.15rem, 2.4vw, 1.65rem);
   line-height: 1.4;
   letter-spacing: -0.02em;
-  max-width: 28ch;
+  max-width: min(28ch, 100%);
 }
 
 #ava-interest {
