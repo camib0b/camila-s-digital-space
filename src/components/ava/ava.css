@@ -1305,6 +1305,11 @@ button.ava-cta:disabled {
 }
 
 .ava-clip-window {
+  --clip-nudge-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --clip-nudge-duration: 560ms;
+  --clip-nudge-stagger: 150ms;
+  --clip-nudge-distance: 8px;
+
   position: relative;
   margin-top: 1.75rem;
   height: 6.25rem;
@@ -1350,26 +1355,35 @@ button.ava-cta:disabled {
 
 .ava-clip-handle {
   position: absolute;
-  top: 0;
-  width: 1.5rem;
-  height: 100%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
   -webkit-appearance: none;
   appearance: none;
-  min-width: 0;
+  min-width: 44px;
+  min-height: 44px;
   background: transparent;
   color: inherit;
   font: inherit;
   touch-action: none;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  cursor: grab;
   z-index: 2;
 }
 
 .ava-clip-handle[data-active="true"] {
   z-index: 3;
+  cursor: grabbing;
+}
+
+.ava-clip-handle:active,
+.ava-clip-window[data-dragging],
+.ava-clip-window[data-dragging] .ava-clip-handle {
+  cursor: grabbing;
 }
 
 .ava-clip-handle:focus {
@@ -1389,6 +1403,9 @@ button.ava-cta:disabled {
   width: 1px;
   height: 9px;
   background-color: var(--ava-fg);
+  box-shadow:
+    -3px 0 0 var(--ava-fg),
+    3px 0 0 var(--ava-fg);
   transform: translate(-50%, -50%);
 }
 
@@ -1436,33 +1453,56 @@ button.ava-cta:disabled {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .ava-clip-handle {
-    cursor: ew-resize;
-  }
-
   .ava-clip-handle::before {
-    transition:
-      width 100ms var(--ease-out),
-      height 100ms var(--ease-out),
-      background-color 100ms var(--ease-out);
+    transition: height 100ms var(--ease-out);
   }
 
   .ava-clip-handle:hover::before,
   .ava-clip-handle:focus-visible::before,
   .ava-clip-handle[data-active="true"]::before {
-    width: 2px;
     height: 15px;
-    background-color: var(--ava-fg);
     transition-duration: 150ms;
   }
 
   .ava-clip-window[data-dragging] .ava-clip-handle::before {
     transition: none;
   }
+}
 
-  .ava-clip-window[data-dragging],
-  .ava-clip-window[data-dragging] .ava-clip-handle {
-    cursor: ew-resize;
+.ava-clip-window[data-nudge="play"]:not([data-dragging]) .ava-clip-handle[data-handle="lead"] {
+  animation: ava-clip-nudge-lead var(--clip-nudge-duration) var(--clip-nudge-ease) both;
+}
+
+.ava-clip-window[data-nudge="play"]:not([data-dragging]) .ava-clip-handle[data-handle="lag"] {
+  animation: ava-clip-nudge-lag var(--clip-nudge-duration) var(--clip-nudge-ease) var(--clip-nudge-stagger)
+    both;
+}
+
+@keyframes ava-clip-nudge-lead {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+
+  45% {
+    transform: translate(calc(-50% - var(--clip-nudge-distance, 8px)), -50%);
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes ava-clip-nudge-lag {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+
+  45% {
+    transform: translate(calc(-50% + var(--clip-nudge-distance, 8px)), -50%);
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -1747,5 +1787,10 @@ button.ava-cta:disabled {
 
   .ava-clip-handle::before {
     transition: none;
+  }
+
+  .ava-clip-window[data-nudge="play"]:not([data-dragging]) .ava-clip-handle[data-handle="lead"],
+  .ava-clip-window[data-nudge="play"]:not([data-dragging]) .ava-clip-handle[data-handle="lag"] {
+    animation: none;
   }
 }
