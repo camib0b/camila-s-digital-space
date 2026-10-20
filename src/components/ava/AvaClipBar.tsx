@@ -1,7 +1,6 @@
 import {
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
   type AnimationEvent,
@@ -117,8 +116,7 @@ const AvaClipBar = () => {
   const lagHandleRef = useRef<HTMLButtonElement>(null);
   const leadReadoutRef = useRef<HTMLSpanElement>(null);
   const lagReadoutRef = useRef<HTMLSpanElement>(null);
-  const readoutWidthsRef = useRef({ track: 0, lead: 0, lag: 0 });
-  const [readoutMeasureVersion, setReadoutMeasureVersion] = useState(0);
+  const [readoutWidths, setReadoutWidths] = useState({ track: 0, lead: 0, lag: 0 });
   const clipIntervalRef = useRef(clipInterval);
   const dragSessionRef = useRef<DragSession | null>(null);
   clipIntervalRef.current = clipInterval;
@@ -132,16 +130,12 @@ const AvaClipBar = () => {
   const leadLabel = formatLeadLagLabel(clipInterval.leadMilliseconds, "lead");
   const lagLabel = formatLeadLagLabel(clipInterval.lagMilliseconds, "lag");
   const clipLengthLabel = formatClipLengthLabel(clipInterval);
-  const readoutPlacement = useMemo(
-    () =>
-      placeClipReadouts(
-        readoutWidthsRef.current.track,
-        leadPercent,
-        lagPercent,
-        readoutWidthsRef.current.lead,
-        readoutWidthsRef.current.lag,
-      ),
-    [lagPercent, leadPercent, readoutMeasureVersion],
+  const readoutPlacement = placeClipReadouts(
+    readoutWidths.track,
+    leadPercent,
+    lagPercent,
+    readoutWidths.lead,
+    readoutWidths.lag,
   );
 
   useLayoutEffect(() => {
@@ -160,12 +154,12 @@ const AvaClipBar = () => {
         lead: quantize(leadReadout.scrollWidth),
         lag: quantize(lagReadout.scrollWidth),
       };
-      const previous = readoutWidthsRef.current;
-      if (previous.track === next.track && previous.lead === next.lead && previous.lag === next.lag) {
-        return;
-      }
-      readoutWidthsRef.current = next;
-      setReadoutMeasureVersion((version) => version + 1);
+      setReadoutWidths((previous) => {
+        if (previous.track === next.track && previous.lead === next.lead && previous.lag === next.lag) {
+          return previous;
+        }
+        return next;
+      });
     };
 
     measure();
