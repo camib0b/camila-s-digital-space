@@ -296,6 +296,7 @@ const en = {
     "ava.events.kicker": "Tag",
     "ava.events.headline": "The keyboard already speaks hockey.",
     "ava.events.body": "Each event is a key. A second key adds result, zone, and action type. Flick. Push. A note if you need one.",
+    "ava.events.playPause": "Play / Pause",
     "ava.follow.result": "What happened after the mark.",
     "ava.follow.zone": "Where on the pitch.",
     "ava.follow.action": "Flick, Push, and the rest.",
