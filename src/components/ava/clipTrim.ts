@@ -14,8 +14,8 @@ export type ClipInterval = {
   lagMilliseconds: number;
 };
 
-/** ClipTrimBar hit slop: 12px handle plus 6px on each side, measured from the center. */
-export const CLIP_HANDLE_HIT_HALF_WIDTH_PIXELS = 12;
+/** Invisible handle target is 44px, so half of that measured from the center. */
+export const CLIP_HANDLE_HIT_HALF_WIDTH_PIXELS = 22;
 
 type MillisecondBounds = {
   minimumMilliseconds: number;
