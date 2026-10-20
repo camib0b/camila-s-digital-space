@@ -589,7 +589,14 @@ function KeyboardTagCell({
       return;
     }
 
-    event.currentTarget.setPointerCapture(event.pointerId);
+    if (event.currentTarget.setPointerCapture) {
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      } catch {
+        // Some pointers cannot be captured. The pressed state still applies.
+      }
+    }
+
     setIsPressed(true);
   };
 
