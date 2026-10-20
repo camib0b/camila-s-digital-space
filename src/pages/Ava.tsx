@@ -38,9 +38,9 @@ const PHANTOM_VISIBILITY_THRESHOLD = 0.6;
 
 type TagEventShortcut = (typeof AVA_EVENTS)[number]["shortcut"];
 
-// PC Foul (S) and PS (B) stay in the desktop control map, but their tiles are
+// Card (V) and PS (B) stay in the desktop control map, but their tiles are
 // not drawn. Empty slots keep the remaining keys on real QWERTY centers.
-const TAG_KEYBOARD_OMITTED_SHORTCUTS = ["S", "B"] as const satisfies readonly TagEventShortcut[];
+const TAG_KEYBOARD_OMITTED_SHORTCUTS = ["V", "B"] as const satisfies readonly TagEventShortcut[];
 
 type OmittedTagShortcut = (typeof TAG_KEYBOARD_OMITTED_SHORTCUTS)[number];
 type PlacedTagShortcut = Exclude<TagEventShortcut, OmittedTagShortcut>;
@@ -64,7 +64,7 @@ const TAG_KEYBOARD_ROWS = [
     id: "home",
     slots: [
       { kind: "key", shortcut: "A" },
-      { kind: "gap", id: "s" },
+      { kind: "key", shortcut: "S" },
       { kind: "key", shortcut: "D" },
       { kind: "key", shortcut: "F" },
     ],
@@ -75,7 +75,7 @@ const TAG_KEYBOARD_ROWS = [
       { kind: "key", shortcut: "Z" },
       { kind: "key", shortcut: "X" },
       { kind: "key", shortcut: "C" },
-      { kind: "key", shortcut: "V" },
+      { kind: "gap", id: "v" },
       { kind: "gap", id: "b" },
       { kind: "key", shortcut: "N" },
     ],

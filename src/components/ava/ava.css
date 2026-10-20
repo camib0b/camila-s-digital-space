@@ -883,17 +883,19 @@ body.ava-concat-is-dragging * {
 }
 
 .ava-events {
-  /* Spacebar ends at M's right edge: 2.75 pitch inset + 5 keys = 7.75 sizes + 6.75 gaps. */
+  /* Bottom row and spacebar share a right edge at N.
+     0.75 pitch stagger + 6 slots (Z X C, V gap, B gap, N) = 6.75 sizes + 5.75 gaps. */
   --ava-keyboard-inset: 0.15rem;
   --ava-key-gap: clamp(0.15rem, 1.15cqi, 0.45rem);
   --ava-key-size: min(
     5.5rem,
     calc(
-      (100cqi - 6.75 * var(--ava-key-gap) - 2 * var(--ava-keyboard-inset) - 0.35rem) / 7.75
+      (100cqi - 5.75 * var(--ava-key-gap) - 2 * var(--ava-keyboard-inset) - 0.35rem) / 6.75
     )
   );
   --ava-key-pitch: calc(var(--ava-key-size) + var(--ava-key-gap));
-  --ava-space-span: calc(5 * var(--ava-key-size) + 4 * var(--ava-key-gap));
+  /* C through N: the V and B gaps stay in the span so the bar sits under the row. */
+  --ava-space-span: calc(4 * var(--ava-key-size) + 3 * var(--ava-key-gap));
 
   display: flex;
   flex-direction: column;
@@ -919,7 +921,7 @@ body.ava-concat-is-dragging * {
   margin-left: calc(var(--ava-key-pitch) * 0.75);
 }
 
-/* C's left edge. The bar then covers C through M, the natural spacebar span. */
+/* C's left edge through N's right edge, so the bar does not hang past the row. */
 .ava-event-row[data-row="space"] {
   margin-left: calc(var(--ava-key-pitch) * 2.75);
 }
