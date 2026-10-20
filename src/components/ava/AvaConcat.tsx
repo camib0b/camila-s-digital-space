@@ -101,17 +101,22 @@ const AvaConcatGraphic = () => {
     : orderedFileIds;
 
   useEffect(() => {
-    if (!isDragging) return;
-    // A touch that starts on a file must not scroll the page. Other touches still scroll.
-    const blockPageScroll = (event: TouchEvent) => {
+    const fileList = fileListRef.current;
+    if (!fileList) return;
+    // Registered for the life of the diagram. React's root touch listeners are passive,
+    // so this is what actually cancels scrolling once a press starts on a file.
+    const blockScrollWhileArranging = (event: TouchEvent) => {
+      if (!dragSessionRef.current || !event.cancelable) return;
       event.preventDefault();
     };
+    fileList.addEventListener("touchmove", blockScrollWhileArranging, { passive: false });
+    return () => fileList.removeEventListener("touchmove", blockScrollWhileArranging);
+  }, []);
+
+  useEffect(() => {
+    if (!isDragging) return;
     document.body.classList.add(BODY_DRAGGING_CLASS);
-    document.addEventListener("touchmove", blockPageScroll, { passive: false });
-    return () => {
-      document.body.classList.remove(BODY_DRAGGING_CLASS);
-      document.removeEventListener("touchmove", blockPageScroll);
-    };
+    return () => document.body.classList.remove(BODY_DRAGGING_CLASS);
   }, [isDragging]);
 
   useLayoutEffect(() => {
