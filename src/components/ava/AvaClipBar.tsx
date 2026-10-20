@@ -1,5 +1,7 @@
 import {
   useEffect,
+  useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   type AnimationEvent,
@@ -24,6 +26,7 @@ import {
   markOffsetMillisecondsFromPointer,
   percentFromMarkOffset,
   pickClipHandle,
+  placeClipReadouts,
   type ClipHandle,
   type ClipInterval,
 } from "@/components/ava/clipTrim";
@@ -112,6 +115,10 @@ const AvaClipBar = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const leadHandleRef = useRef<HTMLButtonElement>(null);
   const lagHandleRef = useRef<HTMLButtonElement>(null);
+  const leadReadoutRef = useRef<HTMLSpanElement>(null);
+  const lagReadoutRef = useRef<HTMLSpanElement>(null);
+  const readoutWidthsRef = useRef({ track: 0, lead: 0, lag: 0 });
+  const [readoutMeasureVersion, setReadoutMeasureVersion] = useState(0);
   const clipIntervalRef = useRef(clipInterval);
   const dragSessionRef = useRef<DragSession | null>(null);
   clipIntervalRef.current = clipInterval;
@@ -125,6 +132,62 @@ const AvaClipBar = () => {
   const leadLabel = formatLeadLagLabel(clipInterval.leadMilliseconds, "lead");
   const lagLabel = formatLeadLagLabel(clipInterval.lagMilliseconds, "lag");
   const clipLengthLabel = formatClipLengthLabel(clipInterval);
+  const readoutPlacement = useMemo(
+    () =>
+      placeClipReadouts(
+        readoutWidthsRef.current.track,
+        leadPercent,
+        lagPercent,
+        readoutWidthsRef.current.lead,
+        readoutWidthsRef.current.lag,
+      ),
+    [lagPercent, leadPercent, readoutMeasureVersion],
+  );
+
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    const leadReadout = leadReadoutRef.current;
+    const lagReadout = lagReadoutRef.current;
+    if (!track || !leadReadout || !lagReadout) return undefined;
+
+    let cancelled = false;
+    const quantize = (value: number) => Math.round(value * 2) / 2;
+
+    const measure = () => {
+      if (cancelled) return;
+      const next = {
+        track: quantize(track.getBoundingClientRect().width),
+        lead: quantize(leadReadout.scrollWidth),
+        lag: quantize(lagReadout.scrollWidth),
+      };
+      const previous = readoutWidthsRef.current;
+      if (previous.track === next.track && previous.lead === next.lead && previous.lag === next.lag) {
+        return;
+      }
+      readoutWidthsRef.current = next;
+      setReadoutMeasureVersion((version) => version + 1);
+    };
+
+    measure();
+    if (document.fonts) {
+      void document.fonts.ready.then(measure).catch(() => undefined);
+    }
+    if (typeof ResizeObserver === "undefined") {
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    observer.observe(leadReadout);
+    observer.observe(lagReadout);
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
+  }, [lagLabel, leadLabel]);
 
   function updateFromClientX(clientX: number) {
     const dragSession = dragSessionRef.current;
@@ -275,10 +338,18 @@ const AvaClipBar = () => {
         />
       </div>
       <div className="ava-clip-readout" aria-hidden="true">
-        <span style={readoutStyle(leadPercent)}>{leadLabel}</span>
-        <span style={readoutStyle(lagPercent)}>{lagLabel}</span>
+        <span
+          ref={leadReadoutRef}
+          style={readoutStyle(readoutPlacement.leadCenterPercent)}
+          data-placed={readoutPlacement.leadAbove ? "above" : undefined}
+        >
+          {leadLabel}
+        </span>
+        <span ref={lagReadoutRef} style={readoutStyle(readoutPlacement.lagCenterPercent)}>
+          {lagLabel}
+        </span>
       </div>
-      <div className="ava-clip-center" style={{ left: `${percentFromMarkOffset(0)}%` }}>
+      <div className="ava-clip-center">
         <span>{t("ava.clip.mark")}</span>
         <span className="ava-clip-length">{clipLengthLabel}</span>
       </div>

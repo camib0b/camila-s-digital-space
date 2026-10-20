@@ -7,6 +7,10 @@
 - Visual or behavioral changes: at most one targeted browser check of the affected screen, with no recording and no repeated walkthroughs.
 - When the build passes, push, mark the PR ready for review, and finish immediately.
 
+## UI changes
+
+For any UI change, run the break-ui skill (`.cursor/skills/break-ui/SKILL.md`) against the affected pages before opening a PR.
+
 ## Cursor Cloud specific instructions
 
 This repository is the personal website for camilaescudero.cl. It contains four

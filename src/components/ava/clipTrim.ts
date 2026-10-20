@@ -209,3 +209,96 @@ export function formatClipLengthLabel(interval: ClipInterval): string {
 export function ariaSeconds(milliseconds: number): number {
   return Math.round(milliseconds / 100) / 10;
 }
+
+const READOUT_GAP_PIXELS = 8;
+
+export type ClipReadoutPlacement = {
+  leadCenterPercent: number;
+  lagCenterPercent: number;
+  leadAbove: boolean;
+};
+
+/**
+ * Keep the two nowrap readouts inside the track. When the handles are close,
+ * push the labels apart. When the row is too narrow for both, lift lead above
+ * the track so the strings stay readable at the drag extremes.
+ */
+export function placeClipReadouts(
+  trackWidthPixels: number,
+  leadPercent: number,
+  lagPercent: number,
+  leadLabelWidthPixels: number,
+  lagLabelWidthPixels: number,
+): ClipReadoutPlacement {
+  if (trackWidthPixels <= 0 || leadLabelWidthPixels <= 0 || lagLabelWidthPixels <= 0) {
+    return {
+      leadCenterPercent: leadPercent,
+      lagCenterPercent: lagPercent,
+      leadAbove: false,
+    };
+  }
+
+  const toPercent = (pixels: number) => (pixels / trackWidthPixels) * 100;
+  const leadHalfPercent = toPercent(leadLabelWidthPixels / 2);
+  const lagHalfPercent = toPercent(lagLabelWidthPixels / 2);
+  const gapPercent = toPercent(READOUT_GAP_PIXELS);
+
+  const clampCenter = (percent: number, halfPercent: number) => {
+    const safeHalfPercent = Math.min(halfPercent, 50);
+    return Math.min(100 - safeHalfPercent, Math.max(safeHalfPercent, percent));
+  };
+
+  const labelsShareTheRow =
+    leadLabelWidthPixels + lagLabelWidthPixels + READOUT_GAP_PIXELS <= trackWidthPixels;
+
+  if (!labelsShareTheRow) {
+    return {
+      leadCenterPercent: clampCenter(leadPercent, leadHalfPercent),
+      lagCenterPercent: clampCenter(lagPercent, lagHalfPercent),
+      leadAbove: true,
+    };
+  }
+
+  let leadCenterPercent = clampCenter(leadPercent, leadHalfPercent);
+  let lagCenterPercent = clampCenter(lagPercent, lagHalfPercent);
+
+  if (leadCenterPercent > lagCenterPercent) {
+    const midpoint = (leadCenterPercent + lagCenterPercent) / 2;
+    leadCenterPercent = midpoint;
+    lagCenterPercent = midpoint;
+  }
+
+  const minimumSeparation = leadHalfPercent + lagHalfPercent + gapPercent;
+  if (lagCenterPercent - leadCenterPercent < minimumSeparation) {
+    const midpoint = (leadCenterPercent + lagCenterPercent) / 2;
+    let separatedLead = midpoint - minimumSeparation / 2;
+    let separatedLag = midpoint + minimumSeparation / 2;
+    const leadMinimum = Math.min(leadHalfPercent, 50);
+    const lagMaximum = 100 - Math.min(lagHalfPercent, 50);
+
+    if (separatedLead < leadMinimum) {
+      const shift = leadMinimum - separatedLead;
+      separatedLead += shift;
+      separatedLag += shift;
+    }
+    if (separatedLag > lagMaximum) {
+      const shift = separatedLag - lagMaximum;
+      separatedLead -= shift;
+      separatedLag -= shift;
+    }
+
+    const leadFits = separatedLead >= leadMinimum - 0.01;
+    const lagFits = separatedLag <= lagMaximum + 0.01;
+    if (!leadFits || !lagFits || separatedLag - separatedLead < minimumSeparation - 0.01) {
+      return {
+        leadCenterPercent: clampCenter(leadPercent, leadHalfPercent),
+        lagCenterPercent: clampCenter(lagPercent, lagHalfPercent),
+        leadAbove: true,
+      };
+    }
+    leadCenterPercent = separatedLead;
+    lagCenterPercent = separatedLag;
+  }
+
+  return { leadCenterPercent, lagCenterPercent, leadAbove: false };
+}
