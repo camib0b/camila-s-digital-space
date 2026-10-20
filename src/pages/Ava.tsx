@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
   type KeyboardEvent as ReactKeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
   type ReactNode,
   type RefObject,
 } from "react";
@@ -31,20 +32,77 @@ const CONCAT_STEPS = [
 
 const TAG_FLASH_DURATION_MS = 150;
 const TAG_SECTION_ROOT_MARGIN = "-8% 0px -8% 0px";
+const PHANTOM_PRESS_DOWN_MS = 120;
+const PHANTOM_SECOND_KEY_DELAY_MS = 600;
+const PHANTOM_VISIBILITY_THRESHOLD = 0.6;
+
+type TagEventShortcut = (typeof AVA_EVENTS)[number]["shortcut"];
+
+// PC Foul (S) and PS (B) stay in the desktop control map, but their tiles are
+// not drawn. Empty slots keep the remaining keys on real QWERTY centers.
+const TAG_KEYBOARD_OMITTED_SHORTCUTS = ["S", "B"] as const satisfies readonly TagEventShortcut[];
+
+type OmittedTagShortcut = (typeof TAG_KEYBOARD_OMITTED_SHORTCUTS)[number];
+type PlacedTagShortcut = Exclude<TagEventShortcut, OmittedTagShortcut>;
+
+type TagKeyboardSlot =
+  | { readonly kind: "key"; readonly shortcut: PlacedTagShortcut }
+  | { readonly kind: "gap"; readonly id: string };
 
 // ANSI letter rows: the home row sits 0.25 key right of Q, the bottom row 0.75.
 const TAG_KEYBOARD_ROWS = [
-  { id: "top", shortcuts: ["Q", "W", "E", "R"] },
-  { id: "home", shortcuts: ["A", "S", "D", "F"] },
-  { id: "bottom", shortcuts: ["Z", "X", "C", "V", "B", "N"] },
+  {
+    id: "top",
+    slots: [
+      { kind: "key", shortcut: "Q" },
+      { kind: "key", shortcut: "W" },
+      { kind: "key", shortcut: "E" },
+      { kind: "key", shortcut: "R" },
+    ],
+  },
+  {
+    id: "home",
+    slots: [
+      { kind: "key", shortcut: "A" },
+      { kind: "gap", id: "s" },
+      { kind: "key", shortcut: "D" },
+      { kind: "key", shortcut: "F" },
+    ],
+  },
+  {
+    id: "bottom",
+    slots: [
+      { kind: "key", shortcut: "Z" },
+      { kind: "key", shortcut: "X" },
+      { kind: "key", shortcut: "C" },
+      { kind: "key", shortcut: "V" },
+      { kind: "gap", id: "b" },
+      { kind: "key", shortcut: "N" },
+    ],
+  },
 ] as const satisfies readonly {
   id: "top" | "home" | "bottom";
-  shortcuts: readonly (typeof AVA_EVENTS)[number]["shortcut"][];
+  slots: readonly TagKeyboardSlot[];
 }[];
 
-const placedTagShortcuts = new Set<string>(TAG_KEYBOARD_ROWS.flatMap((row) => [...row.shortcuts]));
+// Shot (D) first, then Goal (F). Goal is F in this layout.
+const PHANTOM_TAG_SHORTCUTS = ["D", "F"] as const satisfies readonly PlacedTagShortcut[];
+
+const omittedTagShortcuts = new Set<string>(TAG_KEYBOARD_OMITTED_SHORTCUTS);
+const placedTagShortcuts = new Set<string>(
+  TAG_KEYBOARD_ROWS.flatMap((row) =>
+    row.slots.flatMap((slot) => (slot.kind === "key" ? [slot.shortcut] : [])),
+  ),
+);
 
 for (const event of AVA_EVENTS) {
+  if (omittedTagShortcuts.has(event.shortcut)) {
+    if (placedTagShortcuts.has(event.shortcut)) {
+      throw new Error(`Remove ${event.token} (${event.shortcut}) from the tag keyboard.`);
+    }
+    continue;
+  }
+
   if (!placedTagShortcuts.has(event.shortcut)) {
     throw new Error(`Place ${event.token} (${event.shortcut}) on the tag keyboard.`);
   }
@@ -62,11 +120,13 @@ function tagEventForShortcut(shortcut: (typeof AVA_EVENTS)[number]["shortcut"]) 
 type TagShortcutActivation = {
   press: () => void;
   release: () => void;
+  cancel: () => void;
 };
 
 type KeyboardTagCellProps = {
   label: string;
   shortcut: string;
+  variant?: "concept" | "control";
   registerTagActivation: (shortcut: string, activation: TagShortcutActivation | null) => void;
 };
 
@@ -80,6 +140,34 @@ function shortcutLetter(event: KeyboardEvent): string | null {
   }
 
   return event.key.toUpperCase();
+}
+
+function tagShortcutFromEvent(event: KeyboardEvent): string | null {
+  if (event.key === " " || event.code === "Space") {
+    return "SPACE";
+  }
+
+  return shortcutLetter(event);
+}
+
+function isFocusedTagTile(target: EventTarget | null): boolean {
+  return target instanceof Element && target.closest(".ava-event") !== null;
+}
+
+function ownsSpaceActivation(target: EventTarget | null): boolean {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+
+  if (isFocusedTagTile(target)) {
+    return true;
+  }
+
+  return (
+    target.closest(
+      "a, button, summary, [role='button'], [role='link'], [role='checkbox'], [role='switch'], [role='radio']",
+    ) !== null
+  );
 }
 
 function hasKeyboardModifier(event: KeyboardEvent): boolean {
@@ -144,8 +232,12 @@ function useTagKeyboardShortcuts(
           return;
         }
 
-        const shortcut = shortcutLetter(event);
+        const shortcut = tagShortcutFromEvent(event);
         if (!shortcut || !activations.has(shortcut)) {
+          return;
+        }
+
+        if (shortcut === "SPACE" && ownsSpaceActivation(event.target)) {
           return;
         }
 
@@ -260,12 +352,155 @@ function useTagKeyboardShortcuts(
   }, [activationsRef, sectionRef]);
 }
 
-function KeyboardTagCell({ label, shortcut, registerTagActivation }: KeyboardTagCellProps) {
+function prefersReducedMotion(): boolean {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function usePhantomTagHint(
+  keyboardRef: RefObject<HTMLElement | null>,
+  activationsRef: RefObject<Map<string, TagShortcutActivation>>,
+) {
+  useEffect(() => {
+    const keyboard = keyboardRef.current;
+    if (!keyboard || typeof IntersectionObserver === "undefined" || prefersReducedMotion()) {
+      return undefined;
+    }
+
+    let played = false;
+    let cancelled = false;
+    const timeouts: number[] = [];
+    let detachCancelListeners: (() => void) | null = null;
+
+    const releasePhantomKeys = () => {
+      const activations = activationsRef.current;
+      if (!activations) {
+        return;
+      }
+
+      for (const shortcut of PHANTOM_TAG_SHORTCUTS) {
+        activations.get(shortcut)?.cancel();
+      }
+    };
+
+    const detachInteractionListeners = () => {
+      detachCancelListeners?.();
+      detachCancelListeners = null;
+    };
+
+    const cancel = () => {
+      if (cancelled) {
+        return;
+      }
+
+      cancelled = true;
+      for (const timeoutId of timeouts) {
+        window.clearTimeout(timeoutId);
+      }
+      timeouts.length = 0;
+      releasePhantomKeys();
+      detachInteractionListeners();
+    };
+
+    const queuePress = (shortcut: (typeof PHANTOM_TAG_SHORTCUTS)[number], delayMs: number) => {
+      const pressTimeout = window.setTimeout(() => {
+        if (cancelled) {
+          return;
+        }
+
+        activationsRef.current?.get(shortcut)?.press();
+        const releaseTimeout = window.setTimeout(() => {
+          if (cancelled) {
+            return;
+          }
+
+          activationsRef.current?.get(shortcut)?.release();
+        }, PHANTOM_PRESS_DOWN_MS);
+        timeouts.push(releaseTimeout);
+      }, delayMs);
+      timeouts.push(pressTimeout);
+    };
+
+    let observer: IntersectionObserver | null = null;
+
+    const play = () => {
+      if (played || cancelled || prefersReducedMotion()) {
+        return;
+      }
+
+      played = true;
+      observer?.disconnect();
+      window.addEventListener("pointerdown", cancel, true);
+      window.addEventListener("keydown", cancel, true);
+      detachCancelListeners = () => {
+        window.removeEventListener("pointerdown", cancel, true);
+        window.removeEventListener("keydown", cancel, true);
+      };
+
+      PHANTOM_TAG_SHORTCUTS.forEach((shortcut, index) => {
+        queuePress(shortcut, index * PHANTOM_SECOND_KEY_DELAY_MS);
+      });
+
+      const doneTimeout = window.setTimeout(() => {
+        detachInteractionListeners();
+      }, PHANTOM_SECOND_KEY_DELAY_MS + PHANTOM_PRESS_DOWN_MS);
+      timeouts.push(doneTimeout);
+    };
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[entries.length - 1];
+        if (!entry?.isIntersecting || entry.intersectionRatio < PHANTOM_VISIBILITY_THRESHOLD) {
+          return;
+        }
+
+        play();
+      },
+      { threshold: PHANTOM_VISIBILITY_THRESHOLD },
+    );
+    observer.observe(keyboard);
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const cancelWhenReduced = () => {
+      if (reducedMotion.matches) {
+        cancel();
+        observer.disconnect();
+      }
+    };
+    reducedMotion.addEventListener("change", cancelWhenReduced);
+
+    const suppressIfUsed = () => {
+      if (played) {
+        return;
+      }
+
+      cancelled = true;
+      observer?.disconnect();
+    };
+    keyboard.addEventListener("pointerdown", suppressIfUsed);
+    keyboard.addEventListener("keydown", suppressIfUsed);
+
+    return () => {
+      cancel();
+      observer?.disconnect();
+      reducedMotion.removeEventListener("change", cancelWhenReduced);
+      keyboard.removeEventListener("pointerdown", suppressIfUsed);
+      keyboard.removeEventListener("keydown", suppressIfUsed);
+    };
+  }, [activationsRef, keyboardRef]);
+}
+
+function KeyboardTagCell({
+  label,
+  shortcut,
+  variant = "concept",
+  registerTagActivation,
+}: KeyboardTagCellProps) {
   const [isFlashing, setIsFlashing] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pressTagRef = useRef<() => void>(() => {});
   const releaseTagRef = useRef<() => void>(() => {});
+  const cancelTagRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     return () => {
@@ -296,8 +531,19 @@ function KeyboardTagCell({ label, shortcut, registerTagActivation }: KeyboardTag
     setIsPressed(false);
   };
 
+  const cancelTag = () => {
+    if (flashTimeoutRef.current !== null) {
+      clearTimeout(flashTimeoutRef.current);
+      flashTimeoutRef.current = null;
+    }
+
+    setIsFlashing(false);
+    setIsPressed(false);
+  };
+
   pressTagRef.current = pressTag;
   releaseTagRef.current = releaseTag;
+  cancelTagRef.current = cancelTag;
 
   useEffect(() => {
     registerTagActivation(shortcut, {
@@ -306,6 +552,9 @@ function KeyboardTagCell({ label, shortcut, registerTagActivation }: KeyboardTag
       },
       release: () => {
         releaseTagRef.current();
+      },
+      cancel: () => {
+        cancelTagRef.current();
       },
     });
 
@@ -335,9 +584,35 @@ function KeyboardTagCell({ label, shortcut, registerTagActivation }: KeyboardTag
     setIsPressed(false);
   };
 
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0) {
+      return;
+    }
+
+    if (event.currentTarget.setPointerCapture) {
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      } catch {
+        // Some pointers cannot be captured. The pressed state still applies.
+      }
+    }
+
+    setIsPressed(true);
+  };
+
+  const releasePointerPress = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
+    setIsPressed(false);
+  };
+
+  const className = variant === "control" ? "ava-event ava-event--control" : "ava-event";
+
   return (
     <div
-      className="ava-event"
+      className={className}
       role="button"
       tabIndex={0}
       aria-label={label}
@@ -345,14 +620,21 @@ function KeyboardTagCell({ label, shortcut, registerTagActivation }: KeyboardTag
       data-flash={isFlashing ? "" : undefined}
       data-pressed={isPressed ? "" : undefined}
       onClick={flashTag}
+      onPointerDown={handlePointerDown}
+      onPointerUp={releasePointerPress}
+      onPointerCancel={releasePointerPress}
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
       onBlur={handleBlur}
     >
       <span className="ava-event-label">{label}</span>
-      <kbd className="ava-event-key" aria-hidden="true">
-        {shortcut}
-      </kbd>
+      {variant === "control" ? (
+        <kbd className="ava-event-key ava-event-key--space" aria-hidden="true" />
+      ) : (
+        <kbd className="ava-event-key" aria-hidden="true">
+          {shortcut}
+        </kbd>
+      )}
     </div>
   );
 }
@@ -382,6 +664,7 @@ function renderLinkedPhrase(text: string, label: string, href: string, openInNew
 const Ava = () => {
   const { language, t } = useLanguage();
   const tagSectionRef = useRef<HTMLElement>(null);
+  const tagKeyboardRef = useRef<HTMLDivElement>(null);
   const tagActivationsRef = useRef<Map<string, TagShortcutActivation>>(new Map());
   const registerTagActivation = useCallback((shortcut: string, activation: TagShortcutActivation | null) => {
     const normalizedShortcut = shortcut.toUpperCase();
@@ -394,6 +677,7 @@ const Ava = () => {
   }, []);
 
   useTagKeyboardShortcuts(tagSectionRef, tagActivationsRef);
+  usePhantomTagHint(tagKeyboardRef, tagActivationsRef);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -515,12 +799,16 @@ const Ava = () => {
               <h2>{t("ava.events.headline")}</h2>
               <p className="ava-section-body">{t("ava.events.body")}</p>
             </div>
-            <div className="ava-tag-keyboard">
+            <div className="ava-tag-keyboard" ref={tagKeyboardRef}>
               <div className="ava-events">
                 {TAG_KEYBOARD_ROWS.map((row) => (
                   <div className="ava-event-row" data-row={row.id} key={row.id}>
-                    {row.shortcuts.map((shortcut) => {
-                      const event = tagEventForShortcut(shortcut);
+                    {row.slots.map((slot) => {
+                      if (slot.kind === "gap") {
+                        return <div className="ava-event-spacer" aria-hidden="true" key={slot.id} />;
+                      }
+
+                      const event = tagEventForShortcut(slot.shortcut);
                       return (
                         <KeyboardTagCell
                           key={event.token}
@@ -532,6 +820,14 @@ const Ava = () => {
                     })}
                   </div>
                 ))}
+                <div className="ava-event-row" data-row="space">
+                  <KeyboardTagCell
+                    variant="control"
+                    label={t("ava.events.playPause")}
+                    shortcut="Space"
+                    registerTagActivation={registerTagActivation}
+                  />
+                </div>
               </div>
             </div>
           </div>

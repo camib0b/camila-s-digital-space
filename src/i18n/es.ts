@@ -289,6 +289,7 @@ const es: Record<TranslationKey, string> = {
     "ava.events.kicker": "Marcar",
     "ava.events.headline": "El teclado ya habla hockey.",
     "ava.events.body": "Cada evento es una tecla; una segunda tecla suma resultado, zona y tipo de acción. Flick. Push. Una nota si hace falta.",
+    "ava.events.playPause": "Reproducir / Pausa",
     "ava.follow.result": "Qué pasó después de la marca.",
     "ava.follow.zone": "Dónde en la cancha.",
     "ava.follow.action": "Flick, Push, y el resto.",

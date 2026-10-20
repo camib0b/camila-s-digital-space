@@ -789,34 +789,34 @@ button.ava-cta:disabled {
 .ava-tag-keyboard {
   width: 100%;
   max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-x: contain;
+  min-width: 0;
+  overflow: clip;
   container-type: inline-size;
-  padding: 0.2rem 0.15rem 0.35rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--ava-rule-strong) transparent;
+  /* Room for the 2px focus outline so clipping does not eat the ring. */
+  padding: 0.35rem 0.2rem;
 }
 
 .ava-events {
-  /* Bottom row is widest: 0.75 key of stagger + 6 keys = 6.75 pitches minus one gap. */
-  --ava-key-gap: 0.45rem;
-  --ava-key-size: 4.5rem;
-  --ava-key-size: clamp(
-    4.35rem,
-    calc((100cqi - 5.75 * var(--ava-key-gap) - 0.65rem) / 6.75),
-    6.5rem
+  /* Spacebar ends at M's right edge: 2.75 pitch inset + 5 keys = 7.75 sizes + 6.75 gaps. */
+  --ava-keyboard-inset: 0.15rem;
+  --ava-key-gap: clamp(0.15rem, 1.15cqi, 0.45rem);
+  --ava-key-size: min(
+    5.5rem,
+    calc(
+      (100cqi - 6.75 * var(--ava-key-gap) - 2 * var(--ava-keyboard-inset) - 0.35rem) / 7.75
+    )
   );
   --ava-key-pitch: calc(var(--ava-key-size) + var(--ava-key-gap));
+  --ava-space-span: calc(5 * var(--ava-key-size) + 4 * var(--ava-key-gap));
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--ava-key-gap);
-  width: max-content;
+  width: 100%;
+  min-width: 0;
   margin: 0;
-  /* Bottom padding keeps the horizontal scrollbar from covering the last row. */
-  padding: 0.15rem 0.2rem 0.85rem;
+  padding: 0.1rem var(--ava-keyboard-inset) 0.15rem;
 }
 
 .ava-event-row {
@@ -833,6 +833,18 @@ button.ava-cta:disabled {
   margin-left: calc(var(--ava-key-pitch) * 0.75);
 }
 
+/* C's left edge. The bar then covers C through M, the natural spacebar span. */
+.ava-event-row[data-row="space"] {
+  margin-left: calc(var(--ava-key-pitch) * 2.75);
+}
+
+.ava-event-spacer {
+  flex: 0 0 auto;
+  width: var(--ava-key-size);
+  height: var(--ava-key-size);
+  pointer-events: none;
+}
+
 .ava-event {
   display: flex;
   flex: 0 0 auto;
@@ -842,7 +854,10 @@ button.ava-cta:disabled {
   box-sizing: border-box;
   width: var(--ava-key-size);
   height: var(--ava-key-size);
-  padding: 0.55rem 0.55rem 0.45rem;
+  padding:
+    calc(var(--ava-key-size) * 0.11)
+    calc(var(--ava-key-size) * 0.08)
+    calc(var(--ava-key-size) * 0.09);
   border: 1px solid var(--ava-rule);
   border-bottom-width: 2px;
   border-bottom-color: var(--ava-rule-strong);
@@ -853,20 +868,38 @@ button.ava-cta:disabled {
   touch-action: manipulation;
   container-type: inline-size;
   transition:
-    background-color 100ms var(--ease-out),
-    border-color 100ms var(--ease-out),
-    color 100ms var(--ease-out),
-    transform 100ms var(--ease-out);
+    background-color 120ms var(--ease-out),
+    border-color 120ms var(--ease-out),
+    color 120ms var(--ease-out),
+    transform 120ms var(--ease-out);
+}
+
+.ava-event--control {
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--ava-key-size) * 0.08);
+  width: var(--ava-space-span);
+  background-color: rgba(236, 234, 228, 0.07);
 }
 
 .ava-event-label {
   max-width: 100%;
   font-family: inherit;
-  font-size: clamp(0.6875rem, 15cqi, 0.8125rem);
+  font-size: clamp(0.4375rem, 19cqi, 0.8125rem);
   font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: var(--ava-fg);
+}
+
+.ava-event--control .ava-event-label {
+  font-family: var(--ava-mono);
+  font-size: clamp(0.5rem, calc(var(--ava-key-size) * 0.2), 0.75rem);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--ava-muted);
 }
 
 .ava-event-key {
@@ -883,13 +916,20 @@ button.ava-cta:disabled {
   border-radius: 0;
   background: transparent;
   font-family: var(--ava-mono);
-  font-size: clamp(0.625rem, 16cqi, 0.75rem);
+  font-size: clamp(0.5rem, 22cqi, 0.75rem);
   font-weight: 400;
   font-style: normal;
   line-height: 1;
   letter-spacing: 0.04em;
   color: var(--ava-faint);
   pointer-events: none;
+}
+
+.ava-event-key--space {
+  width: calc(var(--ava-key-size) * 0.95);
+  min-width: 0;
+  height: max(0.4rem, calc(var(--ava-key-size) * 0.13));
+  padding: 0;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -904,13 +944,18 @@ button.ava-cta:disabled {
     border-color: color-mix(in srgb, var(--ava-fg) 40%, transparent);
     transition-duration: 150ms;
   }
+
+  .ava-event--control:hover {
+    background-color: rgba(236, 234, 228, 0.12);
+  }
 }
 
 .ava-event:active,
 .ava-event[data-pressed] {
-  background-color: rgba(236, 234, 228, 0.08);
-  transform: scale(0.97);
-  transition-duration: 100ms;
+  background-color: rgba(236, 234, 228, 0.16);
+  border-color: var(--ava-rule-strong);
+  transform: translateY(2px) scale(0.97);
+  transition-duration: 120ms;
 }
 
 .ava-event:focus-visible {
@@ -931,7 +976,7 @@ button.ava-cta:disabled {
 .ava-event[data-flash][data-pressed] {
   border-color: var(--ava-fg);
   border-bottom-width: 2px;
-  background-color: rgba(236, 234, 228, 0.08);
+  background-color: rgba(236, 234, 228, 0.16);
   box-shadow: none;
 }
 
