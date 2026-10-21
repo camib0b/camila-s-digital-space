@@ -266,7 +266,7 @@ const en = {
     "ava.session.flow.present": "Present",
     "ava.session.flow.export": "Export",
     "ava.session.with.body": "AVA concatenates on import. Tagging and presenting live in the same app, so a change mid-presentation is immediate.",
-    "ava.stage.caption": "One match. Several cameras. One timeline.",
+    "ava.stage.caption": "One match. One timeline.",
     "ava.concat.kicker": "Import",
     "ava.concat.headline": "Drop in every camera file. Tag one match.",
     "ava.concat.lede": "AVA joins your video files into a single continuous game. Analyze the whole match, not a pile of clips.",
