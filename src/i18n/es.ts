@@ -259,7 +259,7 @@ const es: Record<TranslationKey, string> = {
     "ava.cta.how": "Cómo funciona",
     "ava.hero.meta": "macOS",
     "ava.session.kicker": "Un programa",
-    "ava.session.headline": "Varios programas. Una sesión.",
+    "ava.session.headline": "Todo el proceso. Una sola app.",
     "ava.session.lede": "Otras herramientas parten la sesión entre programas, y a veces entre dispositivos.",
     "ava.session.with.kicker": "Con AVA",
     "ava.session.flow.import": "Importar",
