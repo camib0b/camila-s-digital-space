@@ -257,7 +257,7 @@ const en = {
     "ava.cta.how": "How it works",
     "ava.hero.meta": "macOS",
     "ava.session.kicker": "One program",
-    "ava.session.headline": "Several programs. One session.",
+    "ava.session.headline": "The whole pipeline. One app.",
     "ava.session.lede": "Other tools split the session across programs, and sometimes across devices.",
     "ava.session.with.kicker": "With AVA",
     "ava.session.flow.import": "Import",
