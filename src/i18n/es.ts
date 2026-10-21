@@ -268,7 +268,7 @@ const es: Record<TranslationKey, string> = {
     "ava.session.flow.present": "Presentar",
     "ava.session.flow.export": "Exportar",
     "ava.session.with.body": "AVA concatena al importar. Marcar y presentar viven en la misma app, así que un cambio a mitad de la presentación es inmediato.",
-    "ava.stage.caption": "Un partido. Varias cámaras. Una línea de tiempo.",
+    "ava.stage.caption": "Un partido. Una línea de tiempo.",
     "ava.concat.kicker": "Importar",
     "ava.concat.headline": "Elige todos los archivos de la cámara. Etiqueta un solo partido.",
     "ava.concat.lede": "AVA une tus videos en un partido continuo, para que analices el juego completo.",
