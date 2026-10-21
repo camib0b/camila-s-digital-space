@@ -17,53 +17,168 @@
   letter-spacing: -0.015em;
 }
 
+.ava-session-flow-frame {
+  --session-trace-ink: 0.78;
+  --session-trace-residue: 0.22;
+  --session-trace-residue-duration: 320ms;
+  --session-trace-outer: 1.15rem;
+  --session-trace-inner: 1.1rem;
+  position: relative;
+  margin: 1.25rem 0 0;
+  min-width: 0;
+}
+
+.ava-session-trace {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ava-session-trace path {
+  fill: none;
+  stroke: var(--ava-fg);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+.ava-session-flow-frame[data-trace="play"] .ava-session-trace path {
+  animation-name: ava-trace-draw, ava-trace-residue;
+  animation-duration: var(--hop-duration), var(--session-trace-residue-duration);
+  animation-timing-function: var(--ease-out), var(--ease-out);
+  animation-delay: var(--hop-delay), calc(var(--hop-delay) + var(--hop-duration));
+  animation-fill-mode: forwards, forwards;
+  animation-iteration-count: 1, 1;
+}
+
+.ava-session-flow-frame[data-trace="done"] .ava-session-trace path,
+.ava-session-flow-frame[data-trace="static"] .ava-session-trace path {
+  animation: none;
+  stroke-dashoffset: 0;
+  opacity: var(--session-trace-residue);
+}
+
+@keyframes ava-trace-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  14% {
+    opacity: var(--session-trace-ink);
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    opacity: var(--session-trace-ink);
+  }
+}
+
+@keyframes ava-trace-residue {
+  from {
+    opacity: var(--session-trace-ink);
+  }
+
+  to {
+    opacity: var(--session-trace-residue);
+  }
+}
+
 .ava-session-flow {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin: 1.25rem 0 0;
-  padding: 0.1rem 0 0.1rem 1.15rem;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0.2rem 0 0.2rem calc(var(--session-trace-outer) + var(--session-trace-inner));
   list-style: none;
-  border-left: 1px solid var(--ava-fg);
+}
+
+.ava-session-rail {
+  position: absolute;
+  z-index: 0;
+  left: var(--session-trace-outer);
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 1px;
+  background: var(--ava-fg);
+  pointer-events: none;
 }
 
 .ava-session-flow li {
   position: relative;
+  z-index: 1;
   min-width: 0;
   margin: 0;
   font-family: var(--ava-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
+  line-height: 1.35;
   text-transform: uppercase;
   color: var(--ava-fg);
 }
 
-.ava-session-flow li::before {
-  content: "";
+.ava-session-marker {
   position: absolute;
+  z-index: 1;
   top: 0.35em;
-  left: calc(-1.15rem - 2px);
+  left: calc(-1 * var(--session-trace-inner) - 2px);
   width: 5px;
   height: 5px;
   background: var(--ava-fg);
+  box-shadow: 0 0 0 0 transparent;
+  transition: box-shadow 200ms var(--ease-out);
+}
+
+.ava-session-label {
+  background-color: transparent;
+  transition: background-color 200ms var(--ease-out);
+}
+
+.ava-session-flow li[data-trace-landed="true"] .ava-session-marker {
+  box-shadow: 0 0 0 1.5px var(--ava-fg);
+}
+
+.ava-session-flow li[data-trace-landed="true"] .ava-session-label {
+  background-color: color-mix(in srgb, var(--ava-fg) 16%, transparent);
 }
 
 @media (min-width: 720px) {
+  .ava-session-flow-frame {
+    --session-trace-outer: 1.75rem;
+    --session-trace-inner: 1.45rem;
+  }
+
   .ava-session-flow {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0.75rem;
-    padding: 1.05rem 0 0;
-    border-left: 0;
-    border-top: 1px solid var(--ava-fg);
+    padding: calc(var(--session-trace-outer) + var(--session-trace-inner)) 0 0;
+  }
+
+  .ava-session-rail {
+    top: var(--session-trace-outer);
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 1px;
   }
 
   .ava-session-flow li {
     text-align: center;
   }
 
-  .ava-session-flow li::before {
-    top: calc(-1.05rem - 2px);
+  .ava-session-marker {
+    top: calc(-1 * var(--session-trace-inner) - 2px);
     left: 50%;
     transform: translateX(-50%);
   }
@@ -75,23 +190,78 @@
 }
 
 @container (max-width: 40rem) {
+  .ava-session-flow-frame {
+    --session-trace-outer: 1.15rem;
+    --session-trace-inner: 1.1rem;
+  }
+
   .ava-session-flow {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin: 1.25rem 0 0;
-    padding: 0.1rem 0 0.1rem 1.15rem;
-    border-left: 1px solid var(--ava-fg);
-    border-top: 0;
+    gap: 0.85rem;
+    padding: 0.2rem 0 0.2rem calc(var(--session-trace-outer) + var(--session-trace-inner));
+  }
+
+  .ava-session-rail {
+    top: 0.35rem;
+    right: auto;
+    bottom: 0.35rem;
+    left: var(--session-trace-outer);
+    width: 1px;
+    height: auto;
   }
 
   .ava-session-flow li {
     text-align: start;
   }
 
-  .ava-session-flow li::before {
+  .ava-session-marker {
     top: 0.35em;
-    left: calc(-1.15rem - 2px);
+    left: calc(-1 * var(--session-trace-inner) - 2px);
     transform: none;
   }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .ava-session-trace path {
+    animation: none !important;
+    stroke-dashoffset: 0;
+    opacity: var(--session-trace-residue);
+  }
+
+  .ava-session-marker,
+  .ava-session-label {
+    transition: none;
+  }
+}
+
+.ava-session-data-toggle {
+  position: fixed;
+  z-index: 80;
+  left: 50%;
+  bottom: 1rem;
+  display: flex;
+  padding: 0.2rem;
+  background: #d5d5d5;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  font-family: system-ui, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.ava-session-data-toggle button {
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #333;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ava-session-data-toggle button[aria-pressed="true"] {
+  background: #fff;
+  color: #111;
 }
