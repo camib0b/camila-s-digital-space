@@ -279,7 +279,7 @@ const es: Record<TranslationKey, string> = {
     "ava.concat.step1.title": "Selecciona",
     "ava.concat.step1.body": "Todos los archivos del partido — tantos como hagan falta.",
     "ava.concat.step2.title": "Ordena",
-    "ava.concat.step2.body": "Arrastra o mueve a izquierda y derecha para que cuartos y cortes se reproduzcan en orden.",
+    "ava.concat.step2.body": "Arrastra para reordenar, de modo que cuartos y cortes se reproduzcan en orden.",
     "ava.concat.step3.title": "Trabaja",
     "ava.concat.step3.body": "Etiqueta, analiza, presenta y exporta clips en una sola línea de tiempo.",
     "ava.concat.select": "Seleccionar archivo(s) de video",
