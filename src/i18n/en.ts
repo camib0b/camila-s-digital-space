@@ -273,7 +273,7 @@ const en = {
     "ava.concat.body": "Matches rarely arrive as one file. Cameras split by quarter. Cards roll over. Arrange the order and AVA concatenates them. You work the full match on one timeline.",
     "ava.concat.differentiator": "No prep step: pick the files, set the order, and AVA builds the match.",
     "ava.concat.cta": "Select the files. AVA makes them one match.",
-    "ava.concat.honesty": "Copy, do not recode. Same camera, same recording. Not a format mixer.",
+    "ava.concat.honesty": "Joining videos is fast and loses no quality.",
     "ava.concat.step1.title": "Select",
     "ava.concat.step1.body": "Every file that belongs to the match — as many as you need.",
     "ava.concat.step2.title": "Arrange",

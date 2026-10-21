@@ -275,7 +275,7 @@ const es: Record<TranslationKey, string> = {
     "ava.concat.body": "Un partido de hockey césped casi nunca llega en un solo archivo. La cámara corta por cuarto. La tarjeta se llena. Ordenas la secuencia y AVA los concatena. Trabajas el partido entero en una sola línea de tiempo.",
     "ava.concat.differentiator": "Sin pasos previos: eliges los archivos, los ordenas y AVA arma el partido.",
     "ava.concat.cta": "Elige los archivos. AVA arma el partido.",
-    "ava.concat.honesty": "Copia, no recodifica. Misma cámara, misma grabación. No mezcla formatos.",
+    "ava.concat.honesty": "Unir videos es rápido y no pierde calidad.",
     "ava.concat.step1.title": "Selecciona",
     "ava.concat.step1.body": "Todos los archivos del partido — tantos como hagan falta.",
     "ava.concat.step2.title": "Ordena",
