@@ -277,7 +277,7 @@ const en = {
     "ava.concat.step1.title": "Select",
     "ava.concat.step1.body": "Every file that belongs to the match — as many as you need.",
     "ava.concat.step2.title": "Arrange",
-    "ava.concat.step2.body": "Drag or move left and right so quarters and card splits play in sequence.",
+    "ava.concat.step2.body": "Drag to reorder so quarters and card splits play in sequence.",
     "ava.concat.step3.title": "Work",
     "ava.concat.step3.body": "Tag, analyze, present, and export clips on one seekable timeline.",
     "ava.concat.select": "Select video file(s)",
