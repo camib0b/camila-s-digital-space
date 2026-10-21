@@ -47,14 +47,37 @@ type SessionCopy = {
   withKicker: string;
   steps: readonly string[];
   aside: string;
+  replayLabel: string;
 };
+
+function usePrefersReducedMotion(): boolean {
+  const [matches, setMatches] = useState(prefersReducedMotion);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => {
+      setMatches(mediaQuery.matches);
+    };
+    mediaQuery.addEventListener("change", onChange);
+    onChange();
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
+
+  return matches;
+}
 
 function useAvaSessionCopy(): { copy: SessionCopy; worstCaseEnabled: boolean } {
   const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const worstCaseEnabled = import.meta.env.DEV && searchParams.get("data") === "worst";
   if (worstCaseEnabled) {
-    return { copy: AVA_SESSION_WORST_CASE_COPY, worstCaseEnabled };
+    return {
+      worstCaseEnabled,
+      copy: {
+        ...AVA_SESSION_WORST_CASE_COPY,
+        replayLabel: t("ava.session.replay"),
+      },
+    };
   }
   return {
     worstCaseEnabled: false,
@@ -65,6 +88,7 @@ function useAvaSessionCopy(): { copy: SessionCopy; worstCaseEnabled: boolean } {
       withKicker: t("ava.session.with.kicker"),
       steps: SESSION_FLOW.map((stepKey) => t(stepKey)),
       aside: t("ava.session.with.body"),
+      replayLabel: t("ava.session.replay"),
     },
   };
 }
@@ -100,18 +124,22 @@ function SessionDataToggle() {
 
 const AvaSession = () => {
   const { copy } = useAvaSessionCopy();
+  const prefersReducedMotionSetting = usePrefersReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const tracePhaseRef = useRef<SessionTracePhase>("idle");
+  const traceGenerationRef = useRef(0);
   const landingIdRef = useRef(0);
   const highlightTimeoutRef = useRef<number | null>(null);
   const geometrySignatureRef = useRef("");
   const [tracePhase, setTracePhase] = useState<SessionTracePhase>(initialTracePhase);
+  const [traceGeneration, setTraceGeneration] = useState(0);
   const [arcs, setArcs] = useState<SessionTraceArc[]>([]);
   const [frameSize, setFrameSize] = useState({ width: 0, height: 0 });
   const [landedStepIndex, setLandedStepIndex] = useState<number | null>(null);
   tracePhaseRef.current = tracePhase;
+  const isReplayAvailable = !prefersReducedMotionSetting;
   const layoutKey = copy.steps.join("|");
 
   useLayoutEffect(() => {
@@ -220,13 +248,29 @@ const AvaSession = () => {
 
   useEffect(() => {
     if (tracePhase !== "play") return undefined;
+    const generationAtStart = traceGeneration;
     const timeout = window.setTimeout(() => {
+      if (generationAtStart !== traceGenerationRef.current) return;
       landingIdRef.current += 1;
       setLandedStepIndex(null);
       setTracePhase("done");
     }, sessionTraceDurationMs() + SESSION_TRACE_RESIDUE_MS + 500);
     return () => window.clearTimeout(timeout);
-  }, [tracePhase]);
+  }, [tracePhase, traceGeneration]);
+
+  useEffect(() => {
+    if (!prefersReducedMotionSetting) return;
+    if (tracePhaseRef.current === "static") return;
+    hasPlayedSessionTrace = true;
+    tracePhaseRef.current = "static";
+    landingIdRef.current += 1;
+    if (highlightTimeoutRef.current !== null) {
+      window.clearTimeout(highlightTimeoutRef.current);
+      highlightTimeoutRef.current = null;
+    }
+    setLandedStepIndex(null);
+    setTracePhase("static");
+  }, [prefersReducedMotionSetting]);
 
   useEffect(() => {
     return () => {
@@ -248,7 +292,25 @@ const AvaSession = () => {
     }, SESSION_TRACE_HIGHLIGHT_MS);
   }
 
+  function replaySessionTrace() {
+    if (prefersReducedMotion()) return;
+    if (highlightTimeoutRef.current !== null) {
+      window.clearTimeout(highlightTimeoutRef.current);
+      highlightTimeoutRef.current = null;
+    }
+    landingIdRef.current += 1;
+    hasPlayedSessionTrace = true;
+    const nextTraceGeneration = traceGenerationRef.current + 1;
+    traceGenerationRef.current = nextTraceGeneration;
+    tracePhaseRef.current = "play";
+    setLandedStepIndex(null);
+    setTraceGeneration(nextTraceGeneration);
+    setTracePhase("play");
+  }
+
   function onTraceAnimationEnd(event: AnimationEvent<SVGPathElement>) {
+    const eventGeneration = Number(event.currentTarget.dataset.traceGeneration);
+    if (eventGeneration !== traceGenerationRef.current) return;
     if (tracePhaseRef.current !== "play") return;
     const path = event.currentTarget;
     const toIndex = Number(path.dataset.toIndex);
@@ -291,9 +353,12 @@ const AvaSession = () => {
               ref={frameRef}
               data-trace={tracePhase}
               data-trace-order={TRACE_ORDER}
+              data-trace-generation={traceGeneration}
+              data-trace-replayable={isReplayAvailable ? "true" : undefined}
               style={frameStyle}
             >
               <svg
+                key={traceGeneration}
                 className="ava-session-trace"
                 aria-hidden="true"
                 focusable="false"
@@ -314,6 +379,7 @@ const AvaSession = () => {
                       data-to={arc.toId}
                       data-to-index={arc.toIndex}
                       data-trace-terminal={arc.terminal ? "true" : undefined}
+                      data-trace-generation={traceGeneration}
                       data-end-x={arc.endX}
                       data-end-y={arc.endY}
                       onAnimationEnd={onTraceAnimationEnd}
@@ -334,6 +400,14 @@ const AvaSession = () => {
                   </li>
                 ))}
               </ol>
+              {isReplayAvailable ? (
+                <button
+                  type="button"
+                  className="ava-session-replay"
+                  aria-label={copy.replayLabel}
+                  onClick={replaySessionTrace}
+                />
+              ) : null}
             </div>
             <p className="ava-session-aside ava-session-aside-ava">{copy.aside}</p>
           </div>

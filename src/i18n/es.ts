@@ -267,6 +267,7 @@ const es: Record<TranslationKey, string> = {
     "ava.session.flow.analyze": "Analizar",
     "ava.session.flow.present": "Presentar",
     "ava.session.flow.export": "Exportar",
+    "ava.session.replay": "Repetir animación de la sesión",
     "ava.session.with.body": "AVA concatena al importar. Marcar y presentar viven en la misma app, así que un cambio a mitad de la presentación es inmediato.",
     "ava.stage.caption": "Un partido. Una línea de tiempo.",
     "ava.concat.kicker": "Importar",

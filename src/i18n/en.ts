@@ -265,6 +265,7 @@ const en = {
     "ava.session.flow.analyze": "Analyze",
     "ava.session.flow.present": "Present",
     "ava.session.flow.export": "Export",
+    "ava.session.replay": "Replay session animation",
     "ava.session.with.body": "AVA concatenates on import. Tagging and presenting live in the same app, so a change mid-presentation is immediate.",
     "ava.stage.caption": "One match. One timeline.",
     "ava.concat.kicker": "Import",
