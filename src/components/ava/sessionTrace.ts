@@ -101,6 +101,18 @@ export function isSessionTraceInView(entry: IntersectionObserverEntry): boolean 
   return entry.isIntersecting && visibleFraction >= SESSION_TRACE_VISIBILITY_RATIO;
 }
 
+/** True when 60% of the section is visible, or the section fills 60% of the viewport. */
+export function sessionTraceSectionOccupiesView(section: HTMLElement): boolean {
+  const rect = section.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  if (viewportHeight <= 0 || rect.height <= 0) return false;
+  const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+  if (visibleHeight <= 0) return false;
+  const visibleRatio = visibleHeight / rect.height;
+  const viewportFraction = visibleHeight / viewportHeight;
+  return visibleRatio >= SESSION_TRACE_VISIBILITY_RATIO || viewportFraction >= SESSION_TRACE_VISIBILITY_RATIO;
+}
+
 function sketchUnit(hopIndex: number, channel: number): number {
   const raw = Math.sin(hopIndex * 127.1 + channel * 311.7) * 43758.5453123;
   return raw - Math.floor(raw);

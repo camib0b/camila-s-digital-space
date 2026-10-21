@@ -9,6 +9,7 @@ import {
   isSessionTraceInView,
   measureSessionTrace,
   sessionTraceDurationMs,
+  sessionTraceSectionOccupiesView,
   sessionTraceStepOrder,
   type SessionTraceArc,
 } from "@/components/ava/sessionTrace";
@@ -153,6 +154,14 @@ const AvaSession = () => {
     let cancelled = false;
     let observer: IntersectionObserver | null = null;
     let fontTimer = 0;
+    let tryStart: (() => void) | null = null;
+
+    const stopWatching = () => {
+      observer?.disconnect();
+      if (!tryStart) return;
+      window.removeEventListener("scroll", tryStart);
+      window.removeEventListener("resize", tryStart);
+    };
 
     const begin = () => {
       if (cancelled || hasPlayedSessionTrace) return;
@@ -160,18 +169,25 @@ const AvaSession = () => {
         setTracePhase("static");
         return;
       }
+      tryStart = () => {
+        if (cancelled || hasPlayedSessionTrace) return;
+        if (!sessionTraceSectionOccupiesView(section)) return;
+        hasPlayedSessionTrace = true;
+        setTracePhase("play");
+        stopWatching();
+      };
       observer = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
-          if (!entry || cancelled || hasPlayedSessionTrace) return;
-          if (!isSessionTraceInView(entry)) return;
-          hasPlayedSessionTrace = true;
-          setTracePhase("play");
-          observer?.disconnect();
+          if (!entry || !isSessionTraceInView(entry)) return;
+          tryStart?.();
         },
-        { threshold: [0.2, 0.4, 0.6, 0.8, 1] },
+        { threshold: [0, 0.25, 0.5, 0.6, 0.75, 1] },
       );
       observer.observe(section);
+      window.addEventListener("scroll", tryStart, { passive: true });
+      window.addEventListener("resize", tryStart);
+      tryStart();
     };
 
     const fontsReady = document.fonts?.ready ?? Promise.resolve();
@@ -190,14 +206,14 @@ const AvaSession = () => {
       landingIdRef.current += 1;
       setLandedStepIndex(null);
       setTracePhase("static");
-      observer?.disconnect();
+      stopWatching();
     };
     motionQuery.addEventListener("change", onMotionChange);
 
     return () => {
       cancelled = true;
       window.clearTimeout(fontTimer);
-      observer?.disconnect();
+      stopWatching();
       motionQuery.removeEventListener("change", onMotionChange);
     };
   }, [tracePhase]);
