@@ -164,6 +164,41 @@ const PUBLISHING_PIPELINE_ANIMATION_CSS = `
   }
 }
 
+.publishing-pipeline .pipeline-toggle-chevron {
+  display: inline-flex;
+  flex: none;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.publishing-pipeline .pipeline-toggle-chevron.is-open {
+  transform: rotate(90deg);
+}
+
+.publishing-pipeline .pipeline-toggle-chevron-glyph {
+  display: block;
+}
+
+.publishing-pipeline .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph {
+  animation: publishing-pipeline-chevron-nudge 4s ease-in-out infinite;
+}
+
+.publishing-pipeline .pipeline-toggle:hover .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph,
+.publishing-pipeline .pipeline-toggle:focus-visible .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph {
+  animation: none;
+  transform: translate3d(2px, 0, 0);
+  transition: transform 0.18s ease;
+}
+
+@keyframes publishing-pipeline-chevron-nudge {
+  0%, 78%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  86% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
+
 @media (max-width: 767px) {
   .publishing-pipeline .pipeline-step[data-flow="main"] {
     animation-name: publishing-pipeline-step-down;
@@ -179,6 +214,19 @@ const PUBLISHING_PIPELINE_ANIMATION_CSS = `
     opacity: 1;
     transform: none;
     stroke-dashoffset: 0;
+  }
+
+  .publishing-pipeline .pipeline-toggle-chevron,
+  .publishing-pipeline .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph,
+  .publishing-pipeline .pipeline-toggle:hover .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph,
+  .publishing-pipeline .pipeline-toggle:focus-visible .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+
+  .publishing-pipeline .pipeline-toggle-chevron.is-open {
+    transform: rotate(90deg);
   }
 }
 `;
@@ -329,14 +377,11 @@ const VideoUploadBranch = ({
 );
 
 const DisclosureChevron = ({ expanded }: { expanded: boolean }) => (
-  <svg
-    viewBox="0 0 10 10"
-    className={cn("h-2.5 w-2.5 shrink-0", expanded && "rotate-90")}
-    fill="none"
-    aria-hidden="true"
-  >
-    <path d="M2 1.5L7.5 5L2 8.5" stroke="currentColor" strokeWidth="1" />
-  </svg>
+  <span className={cn("pipeline-toggle-chevron", expanded && "is-open")} aria-hidden="true">
+    <svg viewBox="0 0 10 10" className="pipeline-toggle-chevron-glyph h-2.5 w-2.5" fill="none">
+      <path d="M2 1.5L7.5 5L2 8.5" stroke="currentColor" strokeWidth="1" />
+    </svg>
+  </span>
 );
 
 const PublishingPipelineStages = () => {
@@ -470,7 +515,7 @@ const PublishingPipelineDiagram = () => {
       <style>{PUBLISHING_PIPELINE_ANIMATION_CSS}</style>
       <button
         type="button"
-        className="inline-flex appearance-none items-center gap-1.5 border-0 bg-transparent p-0 font-mono text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+        className="pipeline-toggle inline-flex appearance-none items-center gap-1.5 border-0 bg-transparent p-0 font-mono text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground"
         aria-expanded={isOpen}
         aria-controls={diagramId}
         onClick={toggleDiagram}
