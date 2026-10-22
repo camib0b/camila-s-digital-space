@@ -1,6 +1,6 @@
 import type { FFmpeg } from "@ffmpeg/ffmpeg";
-import coreJavaScriptUrl from "@ffmpeg/core?url";
-import coreWasmUrl from "@ffmpeg/core/wasm?url";
+const coreJavaScriptUrl = "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/esm/ffmpeg-core.js";
+const coreWasmUrl = "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/esm/ffmpeg-core.wasm";
 import { ConcatCancelledError, throwIfCancelled, type ConvertTarget } from "@/lib/concat/types";
 
 let ffmpegInstance: FFmpeg | null = null;
