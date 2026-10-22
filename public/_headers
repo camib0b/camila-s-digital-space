@@ -1,0 +1,8 @@
+# Vite emits ffmpeg-core as a hashed file under /assets. Workers static
+# assets must serve it as application/wasm. The site worker sets the same
+# header when it handles *.wasm first.
+/*.wasm
+  Content-Type: application/wasm
+
+/assets/*.wasm
+  Content-Type: application/wasm

@@ -6,9 +6,11 @@
 		"directory": "./dist",
 		"not_found_handling": "single-page-application",
 		"binding": "ASSETS",
-		// API routes run the worker first. Every other path stays on the asset
-		// pipeline, so SPA fallback keeps working.
-		"run_worker_first": ["/api/*"]
+		// API routes and wasm files run the worker first. Every other path stays
+		// on the asset pipeline, so SPA fallback keeps working.
+		// The worker sets Content-Type: application/wasm. public/_headers sets
+		// the same type when the asset pipeline serves the file instead.
+		"run_worker_first": ["/api/*", "*.wasm", "/assets/*.wasm"]
 	},
 	"d1_databases": [
 		{

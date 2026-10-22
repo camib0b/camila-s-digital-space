@@ -35,6 +35,21 @@ interface WorkerContext {
   waitUntil(promise: Promise<unknown>): void;
 }
 
+async function wasmAsset(request: Request, environment: SiteEnvironment): Promise<Response> {
+  const assetResponse = await environment.ASSETS.fetch(request);
+  const contentType = assetResponse.headers.get("content-type") ?? "";
+  if (contentType.startsWith("text/html")) {
+    return assetResponse;
+  }
+  const headers = new Headers(assetResponse.headers);
+  headers.set("content-type", "application/wasm");
+  return new Response(assetResponse.body, {
+    status: assetResponse.status,
+    statusText: assetResponse.statusText,
+    headers,
+  });
+}
+
 function jsonResponse(body: Record<string, unknown>, status: number): Response {
   return new Response(JSON.stringify(body), {
     status,
@@ -61,11 +76,15 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname.length > 1 ? url.pathname.replace(/\/+$/, "") : url.pathname;
 
-    if (path !== INTEREST_PATH || request.method !== "POST") {
-      return environment.ASSETS.fetch(request);
+    if (path === INTEREST_PATH && request.method === "POST") {
+      return saveInterestSignup(request, environment, context);
     }
 
-    return saveInterestSignup(request, environment, context);
+    if (url.pathname.endsWith(".wasm")) {
+      return wasmAsset(request, environment);
+    }
+
+    return environment.ASSETS.fetch(request);
   },
 };
 

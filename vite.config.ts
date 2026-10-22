@@ -1,33 +1,33 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import fs from "fs";
 import path from "path";
 /**
  * Cloudflare Workers assets default `html_handling` is `auto-trailing-slash`:
  * - `dist/ava.html` is 200-served at `/ava`; `/ava/` 307s to `/ava`
  * - `dist/ava/index.html` is 200-served at `/ava/`; `/ava` 307s to `/ava/`
  *
- * Copy the SPA shell into `dist/ava/index.html` so `/ava/` is a folder index
- * without changing global `html_handling`.
+ * Copy the SPA shell into `dist/<route>/index.html` so `/ava/` and `/concat/`
+ * are folder indexes without changing global `html_handling`.
  */
-function copySpaShellToAvaFolder(): Plugin {
+const SPA_FOLDER_ROUTES = ["ava", "concat"] as const;
+
+function copySpaShellToFolderRoutes(): Plugin {
   return {
-    name: "copy-spa-shell-to-ava-folder",
+    name: "copy-spa-shell-to-folder-routes",
     apply: "build",
-    closeBundle() {
-      const distDirectory = path.resolve(__dirname, "dist");
-      const spaShellPath = path.join(distDirectory, "index.html");
-      const avaFolderPath = path.join(distDirectory, "ava");
-      const avaIndexPath = path.join(avaFolderPath, "index.html");
-
-      if (!fs.existsSync(spaShellPath)) {
-        this.error(
-          `Expected ${spaShellPath} after the Vite build so it can be copied to ${avaIndexPath}.`,
-        );
+    enforce: "post",
+    generateBundle(_options, bundle) {
+      const shell = bundle["index.html"];
+      if (!shell || shell.type !== "asset") {
+        this.error("Expected index.html in the build bundle so folder routes can be copied.");
       }
-
-      fs.mkdirSync(avaFolderPath, { recursive: true });
-      fs.copyFileSync(spaShellPath, avaIndexPath);
+      for (const route of SPA_FOLDER_ROUTES) {
+        this.emitFile({
+          type: "asset",
+          fileName: `${route}/index.html`,
+          source: shell.source,
+        });
+      }
     },
   };
 }
@@ -44,7 +44,10 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react(), copySpaShellToAvaFolder()],
+  plugins: [react(), copySpaShellToFolderRoutes()],
+  optimizeDeps: {
+    exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "@ffmpeg/core"],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

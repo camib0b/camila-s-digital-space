@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import CV from "./pages/CV";
 import Ava from "./pages/Ava";
 import Capital from "./pages/Capital";
+import Concat from "./pages/Concat";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -25,6 +26,8 @@ const App = () => (
               <Route path="/ava" element={<Ava />} />
               <Route path="/ava/" element={<Ava />} />
               <Route path="/capital" element={<Capital />} />
+              <Route path="/concat" element={<Concat />} />
+              <Route path="/concat/" element={<Concat />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>
