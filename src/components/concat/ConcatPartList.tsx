@@ -68,6 +68,10 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
 
   const totalBytes = sumKnownBytes(parts);
   const totalDuration = sumKnownDuration(parts);
+  const totalSizeLabel = totalBytes === null ? "" : formatByteCount(totalBytes, language);
+  const totalLengthLabel = totalDuration === null ? "" : formatDuration(totalDuration);
+  const visibleTotalSize = totalSizeLabel || "—";
+  const visibleTotalLength = totalLengthLabel || "—";
   const countLabel = fillTemplate(parts.length === 1 ? t("concat.parts.one") : t("concat.parts.other"), {
     count: new Intl.NumberFormat(language).format(parts.length),
   });
@@ -132,14 +136,12 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
           <p className="font-mono text-xs tabular-nums text-muted-foreground">{countLabel}</p>
         </div>
       </div>
-      <p className="mb-3 font-mono text-xs tabular-nums text-muted-foreground">
-        <span className="uppercase tracking-[0.14em]">{t("concat.total")}</span>{" "}
-        <span title={totalBytes === null ? t("concat.part.sizeUnknown") : formatByteCount(totalBytes, language)}>
-          {totalBytes === null ? "—" : formatByteCount(totalBytes, language)}
-        </span>
-        <span aria-hidden="true"> · </span>
-        <span title={totalDuration === null ? t("concat.part.durationUnknown") : formatDuration(totalDuration)}>
-          {totalDuration === null ? "—" : formatDuration(totalDuration)}
+      <p className="mb-3 text-xs tabular-nums leading-5 text-muted-foreground">
+        <span title={totalSizeLabel ? undefined : t("concat.part.sizeUnknown")}>
+          {fillTemplate(t("concat.summary.size"), { size: visibleTotalSize })}
+        </span>{" "}
+        <span title={totalLengthLabel ? undefined : t("concat.part.durationUnknown")}>
+          {fillTemplate(t("concat.summary.length"), { length: visibleTotalLength })}
         </span>
       </p>
       <p className="sr-only" aria-live="polite">
@@ -154,8 +156,10 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
         >
           {parts.map((part, index) => {
             const fileName = splitFileName(part.name);
-            const sizeLabel = part.sizeBytes === null ? "—" : formatByteCount(part.sizeBytes, language);
-            const durationLabel = part.durationSeconds === null ? "—" : formatDuration(part.durationSeconds);
+            const formattedSize = part.sizeBytes === null ? "" : formatByteCount(part.sizeBytes, language);
+            const formattedDuration = part.durationSeconds === null ? "" : formatDuration(part.durationSeconds);
+            const sizeLabel = formattedSize || "—";
+            const durationLabel = formattedDuration || "—";
             const shownIndex = visualIndex.get(part.id) ?? index;
             const positionLabel = fillTemplate(t("concat.part.position"), {
               name: part.name.trim() || t("concat.part.untitled"),
@@ -257,13 +261,13 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
                     <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs leading-5 tabular-nums text-muted-foreground">
                       <span
                         className="shrink-0 whitespace-nowrap"
-                        title={part.sizeBytes === null ? t("concat.part.sizeUnknown") : sizeLabel}
+                        title={formattedSize ? sizeLabel : t("concat.part.sizeUnknown")}
                       >
                         {sizeLabel}
                       </span>
                       <span
                         className="shrink-0 whitespace-nowrap"
-                        title={part.durationSeconds === null ? t("concat.part.durationUnknown") : durationLabel}
+                        title={formattedDuration ? durationLabel : t("concat.part.durationUnknown")}
                       >
                         {durationLabel}
                       </span>
