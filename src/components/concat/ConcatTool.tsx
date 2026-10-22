@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from "react";
+import { createPortal } from "react-dom";
 import { useSearchParams } from "react-router-dom";
 import { moveItem } from "@/components/ava/concatReorder";
 import ConcatPartList from "@/components/concat/ConcatPartList";
@@ -10,9 +11,11 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import { detectConcatCapacity, pickJoinedFile } from "@/lib/concat/capacity";
 import { compareParts, convertTargetFor } from "@/lib/concat/compatibility";
-import { fillTemplate, formatByteCount } from "@/lib/concat/format";
+import { fillTemplate, formatByteCount, formatJoinDuration } from "@/lib/concat/format";
+import { concatErrorCode, detectBrowserFamily, reportConcatEvent, type ConcatJoinOutcome } from "@/lib/concat/telemetry";
 import { isConcatCancelled, type ConcatPartView, type PartDifference, type ProbedPart } from "@/lib/concat/types";
 import type { TranslationKey } from "@/i18n/types";
+import "./concat.css";
 
 type ListedPart = {
   id: string;
@@ -33,6 +36,27 @@ const primaryButtonClassName =
 
 const secondaryButtonClassName =
   "border border-border px-4 py-2 text-xs uppercase tracking-[0.14em] text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
+
+const SUCCESS_TOAST_DISMISS_MS = 6000;
+
+type SuccessToast = {
+  id: number;
+  destination: "downloaded" | "saved";
+  durationMilliseconds: number;
+};
+
+function dragHasFiles(dataTransfer: DataTransfer): boolean {
+  const types = dataTransfer.types;
+  if (!types) {
+    return false;
+  }
+  for (const type of types) {
+    if (type === "Files") {
+      return true;
+    }
+  }
+  return false;
+}
 
 const DATA_MODE_LABELS: Record<ConcatListDataMode, string> = {
   live: "Live",
@@ -127,9 +151,11 @@ const ConcatTool = () => {
   const [parts, setParts] = useState<ListedPart[]>([]);
   const [phase, setPhase] = useState<JoinPhase>({ kind: "idle" });
   const [draggingFiles, setDraggingFiles] = useState(false);
+  const [successToast, setSuccessToast] = useState<SuccessToast | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const downloadUrlRef = useRef<string | null>(null);
   const progressStamp = useRef(0);
+  const successToastId = useRef(0);
   const requestedMode = searchParams.get("data");
   const listDataMode: ConcatListDataMode =
     import.meta.env.DEV && isConcatListDataMode(requestedMode) ? requestedMode : "live";
@@ -155,6 +181,18 @@ const ConcatTool = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!successToast) {
+      return;
+    }
+    const timeoutId = window.setTimeout(() => {
+      setSuccessToast((current) => (current?.id === successToast.id ? null : current));
+    }, SUCCESS_TOAST_DISMISS_MS);
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [successToast]);
 
   const setListDataMode = (mode: ConcatListDataMode) => {
     if (!import.meta.env.DEV) {
@@ -275,22 +313,48 @@ const ConcatTool = () => {
     setParts((current) => current.filter((part) => part.id !== id));
   };
 
+  const clearDisplayed = () => {
+    if (running) {
+      return;
+    }
+    if (viewingFixture) {
+      setFixtureParts([]);
+      return;
+    }
+    forgetResult();
+    setParts([]);
+  };
+
   const runJoin = async (mode: "copy" | "convert") => {
     if (running || viewingFixture) {
       return;
     }
+    const attemptStartedAt = performance.now();
+    let measuredFrom = attemptStartedAt;
+    const inputBytes = parts.reduce((sum, part) => sum + part.file.size, 0);
+    const partCount = parts.length;
+    const partsMatched = differences.length === 0;
+    const converted = mode === "convert";
+    const joinPath = capacity.mode === "streaming" ? "stream" : "memory";
+    const outputBytes = { bytes: 0 };
+    let outcome: ConcatJoinOutcome = "error";
+    let errorCode = "failed";
+    let successDestination: "downloaded" | "saved" | null = null;
     const controller = new AbortController();
     abortRef.current = controller;
     progressStamp.current = 0;
+    setSuccessToast(null);
     let writable: FileSystemWritableFileStream | null = null;
     try {
       if (capacity.mode === "streaming") {
         writable = await pickJoinedFile();
         if (!writable) {
+          errorCode = "missing-save";
           setPhase({ kind: "failed" });
           return;
         }
       }
+      measuredFrom = performance.now();
       releaseDownload();
       setPhase({ kind: "running", progress: 0 });
       const { joinParts } = await import("@/lib/concat/joinParts");
@@ -310,8 +374,11 @@ const ConcatTool = () => {
           progressStamp.current = now;
           setPhase({ kind: "running", progress: ratio });
         },
+        outputBytes,
       });
       if (controller.signal.aborted) {
+        outcome = "cancelled";
+        errorCode = "";
         setPhase({ kind: "idle" });
         return;
       }
@@ -323,15 +390,25 @@ const ConcatTool = () => {
         anchor.href = url;
         anchor.download = "joined.mp4";
         anchor.click();
+        outcome = "success";
+        errorCode = "";
+        successDestination = "downloaded";
       } else {
         setPhase({ kind: "saved" });
+        outcome = "success";
+        errorCode = "";
+        successDestination = "saved";
       }
     } catch (error) {
       if (isConcatCancelled(error)) {
+        outcome = "cancelled";
+        errorCode = "";
         setPhase((current) => (current.kind === "running" ? { kind: "idle" } : current));
         return;
       }
       console.error(error);
+      outcome = "error";
+      errorCode = concatErrorCode(error);
       setPhase({ kind: "failed" });
       if (writable) {
         try {
@@ -340,16 +417,42 @@ const ConcatTool = () => {
           // The writer may already have closed the file.
         }
       }
+    } finally {
+      const durationMilliseconds = Math.max(0, Math.round(performance.now() - measuredFrom));
+      reportConcatEvent({
+        browser: detectBrowserFamily(),
+        path: joinPath,
+        matched: partsMatched,
+        converted,
+        partCount,
+        inputBytes,
+        outputBytes: outputBytes.bytes,
+        durationMs: durationMilliseconds,
+        outcome,
+        errorCode,
+      });
+      if (outcome === "success" && successDestination) {
+        successToastId.current += 1;
+        setSuccessToast({
+          id: successToastId.current,
+          destination: successDestination,
+          durationMilliseconds,
+        });
+      }
     }
   };
 
   const onDrop = (event: DragEvent<HTMLLabelElement>) => {
+    if (!dragHasFiles(event.dataTransfer)) {
+      return;
+    }
     event.preventDefault();
     setDraggingFiles(false);
     addFiles(event.dataTransfer.files);
   };
 
-  const percent = phase.kind === "running" ? Math.round(phase.progress * 100) : 0;
+  const joinSucceeded = phase.kind === "saved" || phase.kind === "download";
+  const percent = phase.kind === "running" ? Math.round(phase.progress * 100) : joinSucceeded ? 100 : 0;
 
   return (
     <div className="space-y-8">
@@ -363,6 +466,9 @@ const ConcatTool = () => {
       <label
         htmlFor={inputId}
         onDragOver={(event) => {
+          if (!dragHasFiles(event.dataTransfer)) {
+            return;
+          }
           event.preventDefault();
           if (!running && !viewingFixture) {
             setDraggingFiles(true);
@@ -370,7 +476,7 @@ const ConcatTool = () => {
         }}
         onDragLeave={() => setDraggingFiles(false)}
         onDrop={onDrop}
-        className={`block border px-4 py-8 text-center ${draggingFiles ? "border-foreground" : "border-border"}`}
+        className={`concat-drop block border px-4 py-8 text-center ${draggingFiles ? "border-foreground" : "border-border"}`}
       >
         <input
           id={inputId}
@@ -387,11 +493,17 @@ const ConcatTool = () => {
           }}
         />
         <span className="block text-sm text-foreground">{t("concat.drop")}</span>
-        <span className={`${secondaryButtonClassName} mt-4 inline-block`}>{t("concat.choose")}</span>
+        <span className={`${secondaryButtonClassName} concat-choose mt-4 inline-block`}>{t("concat.choose")}</span>
       </label>
       <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{t("concat.formats")}</p>
 
-      <ConcatPartList parts={displayedParts} disabled={running} onMove={moveDisplayed} onRemove={removeDisplayed} />
+      <ConcatPartList
+        parts={displayedParts}
+        disabled={running}
+        onMove={moveDisplayed}
+        onRemove={removeDisplayed}
+        onClear={clearDisplayed}
+      />
 
       {!viewingFixture && parts.length === 1 && !running ? (
         <p className="text-sm text-muted-foreground">{t("concat.needTwo")}</p>
@@ -436,30 +548,39 @@ const ConcatTool = () => {
         </button>
       ) : null}
 
-      {phase.kind === "running" ? (
+      {phase.kind === "running" || joinSucceeded ? (
         <div className="space-y-3">
           <div
             role="progressbar"
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={percent}
-            aria-label={fillTemplate(t("concat.progress.label"), { percent })}
-            className="h-0.5 w-full bg-border"
+            aria-label={
+              joinSucceeded ? t("concat.progress.done") : fillTemplate(t("concat.progress.label"), { percent })
+            }
+            className="h-1 w-full bg-border"
           >
-            <div className="h-0.5 bg-foreground" style={{ width: `${percent}%` }} />
+            <div
+              className={`h-1 ${joinSucceeded ? "concat-progress-done" : "bg-foreground"}`}
+              style={{ width: `${percent}%` }}
+            />
           </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <p className="font-mono text-xs tabular-nums text-muted-foreground">
-              {fillTemplate(t("concat.progress.label"), { percent })}
-            </p>
-            <button
-              type="button"
-              className={secondaryButtonClassName}
-              onClick={() => abortRef.current?.abort()}
-            >
-              {t("concat.cancel")}
-            </button>
-          </div>
+          {phase.kind === "running" ? (
+            <div className="flex flex-wrap items-center gap-4">
+              <p className="font-mono text-xs tabular-nums text-muted-foreground">
+                {fillTemplate(t("concat.progress.label"), { percent })}
+              </p>
+              <button
+                type="button"
+                className={secondaryButtonClassName}
+                onClick={() => abortRef.current?.abort()}
+              >
+                {t("concat.cancel")}
+              </button>
+            </div>
+          ) : (
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground">{t("concat.progress.done")}</p>
+          )}
         </div>
       ) : null}
 
@@ -474,6 +595,27 @@ const ConcatTool = () => {
           {t("concat.error.failed")}
         </p>
       ) : null}
+
+      {successToast
+        ? createPortal(
+            <div className="fixed bottom-4 right-4 z-40 flex w-[min(22rem,calc(100vw-2rem))] items-start gap-4 border border-border bg-background px-4 py-3 text-foreground animate-fade-up">
+              <p className="min-w-0 flex-1 text-sm leading-6" role="status" aria-live="polite" aria-atomic="true">
+                {fillTemplate(
+                  t(successToast.destination === "saved" ? "concat.toast.saved" : "concat.toast.downloaded"),
+                  { duration: formatJoinDuration(successToast.durationMilliseconds, language) },
+                )}
+              </p>
+              <button
+                type="button"
+                className="shrink-0 border border-border px-2 py-1 text-xs uppercase tracking-[0.14em] text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                onClick={() => setSuccessToast(null)}
+              >
+                {t("concat.toast.dismiss")}
+              </button>
+            </div>,
+            document.body,
+          )
+        : null}
 
       {import.meta.env.DEV ? <ConcatListDataToggle mode={listDataMode} onChange={setListDataMode} /> : null}
     </div>

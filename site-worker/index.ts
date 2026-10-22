@@ -1,6 +1,20 @@
 import { EmailMessage } from "cloudflare:email";
 
 const INTEREST_PATH = "/api/ava-interest";
+const CONCAT_EVENT_PATH = "/api/concat-event";
+const XML_EVENT_PATH = "/api/xml-event";
+const MAX_XML_EVENT_BYTES = 2048;
+const MAX_XML_COUNT = 10_000_000;
+const XML_ACTIONS: ReadonlySet<string> = new Set(["parse", "export"]);
+const XML_OUTCOMES: ReadonlySet<string> = new Set(["success", "error"]);
+const MAX_CONCAT_EVENT_BYTES = 2048;
+const MAX_PART_COUNT = 10_000;
+const MAX_BYTE_COUNT = 1024 * 1024 * 1024 * 1024;
+const MAX_DURATION_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
+const BROWSER_FAMILIES: ReadonlySet<string> = new Set(["chrome", "edge", "firefox", "safari", "ios", "other"]);
+const JOIN_PATHS: ReadonlySet<string> = new Set(["stream", "memory"]);
+const JOIN_OUTCOMES: ReadonlySet<string> = new Set(["success", "error", "cancelled"]);
+const ERROR_CODE_PATTERN = /^[a-z0-9-]{1,32}$/;
 const FIELD_CHARACTER_LIMIT = 200;
 const USER_AGENT_CHARACTER_LIMIT = 300;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,11 +38,23 @@ interface SignupAlertEmail {
   send(message: EmailMessage): Promise<unknown>;
 }
 
+interface AnalyticsEngineDataPoint {
+  indexes?: string[];
+  blobs?: string[];
+  doubles?: number[];
+}
+
+interface AnalyticsEngineDataset {
+  writeDataPoint(event: AnalyticsEngineDataPoint): void;
+}
+
 interface SiteEnvironment {
   AVA_INTEREST: InterestDatabase;
   ASSETS: AssetsBinding;
   AVA_ALERT?: SignupAlertEmail;
   AVA_ALERT_TO?: string;
+  CONCAT_EVENTS?: AnalyticsEngineDataset;
+  XML_EVENTS?: AnalyticsEngineDataset;
 }
 
 interface WorkerContext {
@@ -71,6 +97,188 @@ function isWithinLimit(value: string): boolean {
   return value.length <= FIELD_CHARACTER_LIMIT;
 }
 
+function noContentResponse(): Response {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "cache-control": "no-store",
+    },
+  });
+}
+
+function clampInteger(value: unknown, maximum: number): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return 0;
+  }
+  const rounded = Math.round(value);
+  if (rounded <= 0) {
+    return 0;
+  }
+  if (rounded > maximum) {
+    return maximum;
+  }
+  return rounded;
+}
+
+async function readLimitedText(request: Request, maximumBytes: number): Promise<string | null> {
+  const declaredLength = request.headers.get("content-length");
+  if (declaredLength !== null) {
+    const parsedLength = Number(declaredLength);
+    if (!Number.isFinite(parsedLength) || parsedLength < 0 || parsedLength > maximumBytes) {
+      return null;
+    }
+  }
+  if (!request.body) {
+    return null;
+  }
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        break;
+      }
+      if (!value) {
+        continue;
+      }
+      total += value.byteLength;
+      if (total > maximumBytes) {
+        await reader.cancel();
+        return null;
+      }
+      chunks.push(value);
+    }
+  } catch {
+    return null;
+  }
+  const combined = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    combined.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder().decode(combined);
+}
+
+/**
+ * Anonymous join count. Cookies, the user agent, and the client address are
+ * not read. blobs: browser, path, outcome, error code. doubles: matched,
+ * converted, part count, input bytes, output bytes, duration ms. index: browser.
+ */
+async function recordConcatEvent(request: Request, environment: SiteEnvironment): Promise<Response> {
+  const text = await readLimitedText(request, MAX_CONCAT_EVENT_BYTES);
+  if (text === null) {
+    return noContentResponse();
+  }
+  let payload: unknown;
+  try {
+    payload = JSON.parse(text);
+  } catch {
+    return noContentResponse();
+  }
+  if (payload === null || typeof payload !== "object" || Array.isArray(payload)) {
+    return noContentResponse();
+  }
+  const body = payload as Record<string, unknown>;
+  const path = body.path;
+  const outcome = body.outcome;
+  if (typeof path !== "string" || !JOIN_PATHS.has(path)) {
+    return noContentResponse();
+  }
+  if (typeof outcome !== "string" || !JOIN_OUTCOMES.has(outcome)) {
+    return noContentResponse();
+  }
+  const browser =
+    typeof body.browser === "string" && BROWSER_FAMILIES.has(body.browser) ? body.browser : "other";
+  let errorCode = "";
+  if (outcome === "error") {
+    errorCode =
+      typeof body.errorCode === "string" && ERROR_CODE_PATTERN.test(body.errorCode) ? body.errorCode : "unknown";
+  }
+  const dataset = environment.CONCAT_EVENTS;
+  if (dataset === undefined || typeof dataset.writeDataPoint !== "function") {
+    console.error("concat event skipped: CONCAT_EVENTS binding is missing");
+    return noContentResponse();
+  }
+  try {
+    dataset.writeDataPoint({
+      indexes: [browser],
+      blobs: [browser, path, outcome, errorCode],
+      doubles: [
+        body.matched === true ? 1 : 0,
+        body.converted === true ? 1 : 0,
+        clampInteger(body.partCount, MAX_PART_COUNT),
+        clampInteger(body.inputBytes, MAX_BYTE_COUNT),
+        clampInteger(body.outputBytes, MAX_BYTE_COUNT),
+        clampInteger(body.durationMs, MAX_DURATION_MILLISECONDS),
+      ],
+    });
+  } catch (error) {
+    console.error("concat event write failed", error instanceof Error ? error.name : "unknown");
+  }
+  return noContentResponse();
+}
+
+/**
+ * Anonymous XML-tool count. Cookies, the user agent, and the client address
+ * are not read. blobs: browser, action, outcome, error code. doubles: file
+ * bytes, tag count, instance count, exported count, duration ms. index: browser.
+ */
+async function recordXmlEvent(request: Request, environment: SiteEnvironment): Promise<Response> {
+  const text = await readLimitedText(request, MAX_XML_EVENT_BYTES);
+  if (text === null) {
+    return noContentResponse();
+  }
+  let payload: unknown;
+  try {
+    payload = JSON.parse(text);
+  } catch {
+    return noContentResponse();
+  }
+  if (payload === null || typeof payload !== "object" || Array.isArray(payload)) {
+    return noContentResponse();
+  }
+  const body = payload as Record<string, unknown>;
+  const action = body.action;
+  const outcome = body.outcome;
+  if (typeof action !== "string" || !XML_ACTIONS.has(action)) {
+    return noContentResponse();
+  }
+  if (typeof outcome !== "string" || !XML_OUTCOMES.has(outcome)) {
+    return noContentResponse();
+  }
+  const browser =
+    typeof body.browser === "string" && BROWSER_FAMILIES.has(body.browser) ? body.browser : "other";
+  let errorCode = "";
+  if (outcome === "error") {
+    errorCode =
+      typeof body.errorCode === "string" && ERROR_CODE_PATTERN.test(body.errorCode) ? body.errorCode : "unknown";
+  }
+  const dataset = environment.XML_EVENTS;
+  if (dataset === undefined || typeof dataset.writeDataPoint !== "function") {
+    console.error("xml event skipped: XML_EVENTS binding is missing");
+    return noContentResponse();
+  }
+  try {
+    dataset.writeDataPoint({
+      indexes: [browser],
+      blobs: [browser, action, outcome, errorCode],
+      doubles: [
+        clampInteger(body.fileBytes, MAX_BYTE_COUNT),
+        clampInteger(body.tagCount, MAX_XML_COUNT),
+        clampInteger(body.instanceCount, MAX_XML_COUNT),
+        clampInteger(body.exportedCount, MAX_XML_COUNT),
+        clampInteger(body.durationMs, MAX_DURATION_MILLISECONDS),
+      ],
+    });
+  } catch (error) {
+    console.error("xml event write failed", error instanceof Error ? error.name : "unknown");
+  }
+  return noContentResponse();
+}
+
 export default {
   async fetch(request: Request, environment: SiteEnvironment, context: WorkerContext): Promise<Response> {
     const url = new URL(request.url);
@@ -78,6 +286,14 @@ export default {
 
     if (path === INTEREST_PATH && request.method === "POST") {
       return saveInterestSignup(request, environment, context);
+    }
+
+    if (path === CONCAT_EVENT_PATH && request.method === "POST") {
+      return recordConcatEvent(request, environment);
+    }
+
+    if (path === XML_EVENT_PATH && request.method === "POST") {
+      return recordXmlEvent(request, environment);
     }
 
     if (url.pathname.endsWith(".wasm")) {

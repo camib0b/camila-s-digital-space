@@ -30,6 +30,16 @@
 			"name": "AVA_ALERT"
 		}
 	],
+	"analytics_engine_datasets": [
+		{
+			"binding": "CONCAT_EVENTS",
+			"dataset": "concat_events"
+		},
+		{
+			"binding": "XML_EVENTS",
+			"dataset": "xml_events"
+		}
+	],
 	"vars": {
 		"AVA_ALERT_TO": "camilaescudero@uc.cl"
 	},

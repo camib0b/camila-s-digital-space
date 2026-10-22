@@ -28,8 +28,38 @@ function readSavedLanguage(): Language | null {
   return isLanguage(saved) ? saved : null;
 }
 
+function isConcatPath(pathname: string): boolean {
+  return pathname === "/concat" || pathname.startsWith("/concat/");
+}
+
+/** First device preference whose tag starts with es or en. Anything else is English. */
+function languageFromDevice(): Language {
+  const reportedLanguages = navigator.languages;
+  const preferences =
+    reportedLanguages && reportedLanguages.length > 0 ? reportedLanguages : [navigator.language];
+  for (const preference of preferences) {
+    if (typeof preference !== "string") {
+      continue;
+    }
+    const tag = preference.toLowerCase();
+    if (tag.startsWith("es")) {
+      return "es";
+    }
+    if (tag.startsWith("en")) {
+      return "en";
+    }
+  }
+  return "en";
+}
+
 function defaultLanguageForPath(pathname: string): Language {
-  return pathname.startsWith("/ava") ? "es" : "en";
+  if (pathname.startsWith("/ava")) {
+    return "es";
+  }
+  if (isConcatPath(pathname)) {
+    return languageFromDevice();
+  }
+  return "en";
 }
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {

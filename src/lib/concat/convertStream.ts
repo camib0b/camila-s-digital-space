@@ -114,6 +114,7 @@ export async function convertAndStream(options: {
   target: ConvertTarget;
   signal: AbortSignal;
   onProgress: (ratio: number) => void;
+  outputBytes: { bytes: number };
 }): Promise<void> {
   const temporaryFiles: File[] = [];
   let handedOff = false;
@@ -138,6 +139,7 @@ export async function convertAndStream(options: {
       onProgress: (ratio) => {
         options.onProgress(0.9 + ratio * 0.1);
       },
+      outputBytes: options.outputBytes,
     });
   } catch (error) {
     if (!handedOff) {

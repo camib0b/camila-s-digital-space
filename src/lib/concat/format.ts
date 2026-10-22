@@ -32,6 +32,33 @@ export function formatDuration(seconds: number): string {
   return `${minutes}:${secondText}`;
 }
 
+/**
+ * How long a join took. Under a minute: "12.4 s" (locale decimal).
+ * Then m:ss, and h:mm:ss once it passes an hour.
+ */
+export function formatJoinDuration(durationMilliseconds: number, language: string): string {
+  const safeMilliseconds =
+    Number.isFinite(durationMilliseconds) && durationMilliseconds > 0 ? durationMilliseconds : 0;
+  const roundedTenths = Math.round(safeMilliseconds / 100) / 10;
+  if (roundedTenths < 60) {
+    const secondsLabel = new Intl.NumberFormat(language, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    }).format(roundedTenths);
+    return `${secondsLabel} s`;
+  }
+  const totalSeconds = Math.round(safeMilliseconds / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const secondText = String(seconds).padStart(2, "0");
+  if (hours > 0) {
+    const minuteText = String(minutes).padStart(2, "0");
+    return `${hours}:${minuteText}:${secondText}`;
+  }
+  return `${minutes}:${secondText}`;
+}
+
 export function formatPartIndex(index: number): string {
   return String(index + 1).padStart(2, "0");
 }
