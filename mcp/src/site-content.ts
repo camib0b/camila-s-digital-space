@@ -108,6 +108,14 @@ export const projects = [
       "Analysis XML in; tag counts, label groups, and a match timeline out. The file stays in the browser.",
     url: `${SITE_URL}/xml`,
   },
+  {
+    id: "concat",
+    name: "Join footage",
+    category: "small-tool",
+    description:
+      "Match video split across files, joined in the browser. Nothing is uploaded.",
+    url: `${SITE_URL}/concat`,
+  },
 ] as const;
 
 export const readingList = {

@@ -5,6 +5,7 @@ export type PersonalProjectDestinationKey =
   | "personalProjects.clipLibrary.destination"
   | "personalProjects.capital.destination"
   | "personalProjects.xmlViz.destination"
+  | "personalProjects.concat.destination"
   | "personalProjects.raycast.destination";
 
 type PersonalProjectBase = {
@@ -71,6 +72,14 @@ export const personalProjects: PersonalProject[] = [
     descriptionKey: "personalProjects.xmlViz",
     destinationKey: "personalProjects.xmlViz.destination",
     link: { kind: "internal", path: "/xml/", fullPage: true },
+  },
+  {
+    id: "concat",
+    category: "small-tool",
+    titleKey: "personalProjects.concat.title",
+    descriptionKey: "personalProjects.concat",
+    destinationKey: "personalProjects.concat.destination",
+    link: { kind: "internal", path: "/concat" },
   },
   {
     id: "raycast",
