@@ -180,7 +180,7 @@ const PUBLISHING_PIPELINE_ANIMATION_CSS = `
 }
 
 .publishing-pipeline .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph {
-  animation: publishing-pipeline-chevron-nudge 4s ease-in-out infinite;
+  animation: publishing-pipeline-chevron-nudge 3s ease-in-out infinite;
 }
 
 .publishing-pipeline .pipeline-toggle:hover .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph,
@@ -191,11 +191,20 @@ const PUBLISHING_PIPELINE_ANIMATION_CSS = `
 }
 
 @keyframes publishing-pipeline-chevron-nudge {
-  0%, 78%, 100% {
+  0%, 60%, 100% {
     transform: translate3d(0, 0, 0);
   }
-  86% {
-    transform: translate3d(2px, 0, 0);
+  68% {
+    transform: translate3d(5px, 0, 0);
+  }
+  76% {
+    transform: translate3d(0, 0, 0);
+  }
+  84% {
+    transform: translate3d(4px, 0, 0);
+  }
+  92% {
+    transform: translate3d(0, 0, 0);
   }
 }
 
