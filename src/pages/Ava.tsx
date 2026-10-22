@@ -711,6 +711,7 @@ const Ava = () => {
         <section className="ava-hero">
           <div className="ava-hero-copy">
             <p className="ava-kicker">{t("ava.hero.kicker")}</p>
+            <p className="ava-lede">{t("ava.hero.tagline")}</p>
             <h1>{t("ava.headline")}</h1>
             <p className="ava-lede">{t("ava.lede")}</p>
             <p className="ava-hero-body">{t("ava.hero.body")}</p>
