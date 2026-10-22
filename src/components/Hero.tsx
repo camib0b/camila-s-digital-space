@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SOCIAL_LINKS } from "@/content/social";
@@ -35,7 +36,11 @@ const Hero = () => {
               {t("hero.acfin")}
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              {t("hero.ava")}
+              {t("hero.ava.before")}
+              <Link to="/ava" className="text-inherit no-underline hover:underline">
+                AVA
+              </Link>
+              {t("hero.ava.after")}
             </p>
           </div>
 

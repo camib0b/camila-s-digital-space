@@ -2,7 +2,8 @@ const en = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.acfin": "Analytics products at ACFIN.",
-    "hero.ava": "Building AVA, a field-hockey video app.",
+    "hero.ava.before": "Built ",
+    "hero.ava.after": " - field hockey video app used by coaches",
     "hero.cta.cv": "View CV",
 
     // Dashboard

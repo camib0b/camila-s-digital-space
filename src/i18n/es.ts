@@ -4,7 +4,8 @@ const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.acfin": "Productos de analytics en ACFIN.",
-    "hero.ava": "Construyendo AVA, una app de video para hockey césped.",
+    "hero.ava.before": "Construí ",
+    "hero.ava.after": " - app de video de hockey césped usada por entrenadores",
     "hero.cta.cv": "CV",
 
     // Dashboard
