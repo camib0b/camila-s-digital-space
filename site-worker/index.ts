@@ -2,6 +2,11 @@ import { EmailMessage } from "cloudflare:email";
 
 const INTEREST_PATH = "/api/ava-interest";
 const CONCAT_EVENT_PATH = "/api/concat-event";
+const XML_EVENT_PATH = "/api/xml-event";
+const MAX_XML_EVENT_BYTES = 2048;
+const MAX_XML_COUNT = 10_000_000;
+const XML_ACTIONS: ReadonlySet<string> = new Set(["parse", "export"]);
+const XML_OUTCOMES: ReadonlySet<string> = new Set(["success", "error"]);
 const MAX_CONCAT_EVENT_BYTES = 2048;
 const MAX_PART_COUNT = 10_000;
 const MAX_BYTE_COUNT = 1024 * 1024 * 1024 * 1024;
@@ -49,6 +54,7 @@ interface SiteEnvironment {
   AVA_ALERT?: SignupAlertEmail;
   AVA_ALERT_TO?: string;
   CONCAT_EVENTS?: AnalyticsEngineDataset;
+  XML_EVENTS?: AnalyticsEngineDataset;
 }
 
 interface WorkerContext {
@@ -215,6 +221,64 @@ async function recordConcatEvent(request: Request, environment: SiteEnvironment)
   return noContentResponse();
 }
 
+/**
+ * Anonymous XML-tool count. Cookies, the user agent, and the client address
+ * are not read. blobs: browser, action, outcome, error code. doubles: file
+ * bytes, tag count, instance count, exported count, duration ms. index: browser.
+ */
+async function recordXmlEvent(request: Request, environment: SiteEnvironment): Promise<Response> {
+  const text = await readLimitedText(request, MAX_XML_EVENT_BYTES);
+  if (text === null) {
+    return noContentResponse();
+  }
+  let payload: unknown;
+  try {
+    payload = JSON.parse(text);
+  } catch {
+    return noContentResponse();
+  }
+  if (payload === null || typeof payload !== "object" || Array.isArray(payload)) {
+    return noContentResponse();
+  }
+  const body = payload as Record<string, unknown>;
+  const action = body.action;
+  const outcome = body.outcome;
+  if (typeof action !== "string" || !XML_ACTIONS.has(action)) {
+    return noContentResponse();
+  }
+  if (typeof outcome !== "string" || !XML_OUTCOMES.has(outcome)) {
+    return noContentResponse();
+  }
+  const browser =
+    typeof body.browser === "string" && BROWSER_FAMILIES.has(body.browser) ? body.browser : "other";
+  let errorCode = "";
+  if (outcome === "error") {
+    errorCode =
+      typeof body.errorCode === "string" && ERROR_CODE_PATTERN.test(body.errorCode) ? body.errorCode : "unknown";
+  }
+  const dataset = environment.XML_EVENTS;
+  if (dataset === undefined || typeof dataset.writeDataPoint !== "function") {
+    console.error("xml event skipped: XML_EVENTS binding is missing");
+    return noContentResponse();
+  }
+  try {
+    dataset.writeDataPoint({
+      indexes: [browser],
+      blobs: [browser, action, outcome, errorCode],
+      doubles: [
+        clampInteger(body.fileBytes, MAX_BYTE_COUNT),
+        clampInteger(body.tagCount, MAX_XML_COUNT),
+        clampInteger(body.instanceCount, MAX_XML_COUNT),
+        clampInteger(body.exportedCount, MAX_XML_COUNT),
+        clampInteger(body.durationMs, MAX_DURATION_MILLISECONDS),
+      ],
+    });
+  } catch (error) {
+    console.error("xml event write failed", error instanceof Error ? error.name : "unknown");
+  }
+  return noContentResponse();
+}
+
 export default {
   async fetch(request: Request, environment: SiteEnvironment, context: WorkerContext): Promise<Response> {
     const url = new URL(request.url);
@@ -226,6 +290,10 @@ export default {
 
     if (path === CONCAT_EVENT_PATH && request.method === "POST") {
       return recordConcatEvent(request, environment);
+    }
+
+    if (path === XML_EVENT_PATH && request.method === "POST") {
+      return recordXmlEvent(request, environment);
     }
 
     if (url.pathname.endsWith(".wasm")) {
