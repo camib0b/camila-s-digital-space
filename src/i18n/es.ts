@@ -79,7 +79,7 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.publishingPipeline.connectLabel": "Cómo se conectan",
     "personalProjects.publishingPipeline.connectsTo": "a",
     "personalProjects.publishingPipeline":
-      "El tiempo para publicar un partido bajó de unos 30 minutos a solo 5.",
+      "El tiempo para publicar un partido bajó de unos 40 minutos a solo 5.",
     "personalProjects.publishingPipeline.diagram.toggle": "Cómo lo publico",
     "personalProjects.publishingPipeline.diagram.intro": "Por partido, en orden.",
     "personalProjects.publishingPipeline.diagram.list.1": "Recibir el metraje del partido.",
