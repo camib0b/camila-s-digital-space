@@ -78,6 +78,7 @@ const en = {
     "personalProjects.publishingPipeline.connectsTo": "to",
     "personalProjects.publishingPipeline":
       "Publishing a match went from about 50 minutes of manual work to one trigger, with checks and a fallback, in about 5 minutes of my time. Roughly 17 hours saved so far; the time figures are my own estimates.",
+    "personalProjects.publishingPipeline.diagram.toggle": "How I ship it",
     "personalProjects.publishingPipeline.diagram.intro": "Per game, in order.",
     "personalProjects.publishingPipeline.diagram.list.1": "Receive the game footage.",
     "personalProjects.publishingPipeline.diagram.list.2":
