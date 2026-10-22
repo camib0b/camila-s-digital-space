@@ -1,7 +1,12 @@
+import { useState, type MouseEvent } from "react";
 import CurtainReveal from "@/components/CurtainReveal";
 import DestinationHintLink from "@/components/DestinationHintLink";
+import PdfOverlay from "@/components/PdfOverlay";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { hockeyRoles, type HockeyRole } from "@/content/hockey";
+
+const coachingCvPdfUrl = "/cv/Camila_Escudero_Coaching_CV.pdf";
+const viewportNarrowerThan768Pixels = "(max-width: 767px)";
 
 const HockeyRoleTitle = ({ role }: { role: HockeyRole }) => {
   const { t } = useLanguage();
@@ -22,6 +27,31 @@ const HockeyRoleTitle = ({ role }: { role: HockeyRole }) => {
 
 const Hockey = () => {
   const { t } = useLanguage();
+  const [coachingCvOverlayOpen, setCoachingCvOverlayOpen] = useState(false);
+
+  const openCoachingCvOverlay = (event: MouseEvent<HTMLAnchorElement>) => {
+    const modifiedClick =
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey;
+    if (modifiedClick) {
+      return;
+    }
+
+    const narrowViewport = window.matchMedia(viewportNarrowerThan768Pixels).matches;
+    if (narrowViewport) {
+      return;
+    }
+
+    event.preventDefault();
+    setCoachingCvOverlayOpen(true);
+  };
+
+  const closeCoachingCvOverlay = () => {
+    setCoachingCvOverlayOpen(false);
+  };
 
   return (
     <section id="hockey" className="py-20 md:py-28">
@@ -46,15 +76,26 @@ const Hockey = () => {
           </CurtainReveal>
 
           <a
-            href="/cv/Camila_Escudero_Coaching_CV.pdf"
+            href={coachingCvPdfUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={openCoachingCvOverlay}
             className="link-underline mt-8 inline-block font-medium text-foreground"
           >
             {t("hockey.coachingCv")}
           </a>
         </div>
       </div>
+
+      {coachingCvOverlayOpen ? (
+        <PdfOverlay
+          pdfUrl={coachingCvPdfUrl}
+          title={t("hockey.coachingCv")}
+          closeLabel={t("hockey.coachingCv.close")}
+          downloadLabel={t("hockey.coachingCv.download")}
+          onClose={closeCoachingCvOverlay}
+        />
+      ) : null}
     </section>
   );
 };

@@ -165,6 +165,8 @@ const es: Record<TranslationKey, string> = {
     "hockey.videoAnalyst.period": "2025–actualidad",
     "hockey.videoAnalyst.destination": "carpeta.cl, clips de partidos",
     "hockey.coachingCv": "CV de entrenadora (PDF)",
+    "hockey.coachingCv.close": "Cerrar",
+    "hockey.coachingCv.download": "Descargar",
 
     // Contact
     "contact.label": "Contacto",
