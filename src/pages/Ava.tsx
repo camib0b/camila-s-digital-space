@@ -30,6 +30,50 @@ const CONCAT_STEPS = [
   { index: "03", titleKey: "ava.concat.step3.title", bodyKey: "ava.concat.step3.body" },
 ] as const;
 
+const CONTROLS_MOCKUPS = [
+  {
+    src: "/ava/controls-rightclick-mockup.png",
+    width: 1440,
+    height: 900,
+    captionKey: "ava.controls.rightClick.caption",
+  },
+  {
+    src: "/ava/controls-editor-mockup.png",
+    width: 541,
+    height: 513,
+    captionKey: "ava.controls.editor.caption",
+  },
+] as const;
+
+const CONTROLS_SOON_STYLE = {
+  marginTop: "2.5rem",
+  paddingTop: "2rem",
+  borderTop: "1px solid var(--ava-rule)",
+} as const;
+
+const CONTROLS_SOON_HEADING_STYLE = {
+  margin: 0,
+  maxWidth: "42rem",
+  fontSize: "1.35rem",
+  fontWeight: 400,
+  letterSpacing: "-0.03em",
+  lineHeight: 1.2,
+} as const;
+
+const CONTROLS_MOCKUP_GRID_STYLE = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 17rem), 1fr))",
+  gap: "1.5rem",
+  alignItems: "start",
+  marginTop: "1.5rem",
+} as const;
+
+const CONTROLS_MOCKUP_IMAGE_STYLE = {
+  display: "block",
+  width: "100%",
+  height: "auto",
+} as const;
+
 const TAG_FLASH_DURATION_MS = 150;
 const TAG_SECTION_ROOT_MARGIN = "-8% 0px -8% 0px";
 const PHANTOM_PRESS_DOWN_MS = 120;
@@ -841,6 +885,30 @@ const Ava = () => {
               </li>
             ))}
           </ul>
+          <div className="ava-shell">
+            <div style={CONTROLS_SOON_STYLE}>
+              <h3 style={CONTROLS_SOON_HEADING_STYLE}>{t("ava.controls.heading")}</h3>
+              <p className="ava-section-body">{t("ava.controls.body")}</p>
+              <div style={CONTROLS_MOCKUP_GRID_STYLE}>
+                {CONTROLS_MOCKUPS.map((mockup) => {
+                  const caption = t(mockup.captionKey);
+                  return (
+                    <figure className="ava-shot" key={mockup.src}>
+                      <img
+                        src={mockup.src}
+                        alt={caption}
+                        width={mockup.width}
+                        height={mockup.height}
+                        loading="lazy"
+                        style={CONTROLS_MOCKUP_IMAGE_STYLE}
+                      />
+                      <figcaption className="ava-shot-caption">{caption}</figcaption>
+                    </figure>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </section>
 
         <section className="ava-section">
