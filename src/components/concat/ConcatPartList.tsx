@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type DragEvent } from "react";
+import { flushSync } from "react-dom";
 import { ArrowDown, ArrowUp, GripVertical, Trash2 } from "lucide-react";
 import { moveItem } from "@/components/ava/concatReorder";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -25,9 +26,21 @@ type ConcatPartListProps = {
 const MAX_STAGGERED_LANDINGS = 12;
 const LANDING_STAGGER_MS = 60;
 const LANDING_DURATION_MS = 320;
+const ROW_SWAP_MS = 200;
+const MOVED_HIGHLIGHT_MS = 700;
 
 const clearButtonClassName =
-  "shrink-0 border border-border px-3 py-2 text-xs uppercase tracking-[0.14em] text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
+  "concat-secondary shrink-0 border border-border px-3 py-2 text-xs uppercase tracking-[0.14em] text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
+
+type SwapSnapshot = {
+  id: string;
+  top: number;
+  left: number;
+};
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 function landingIndexForHover(fromIndex: number, hoverIndex: number, placeAfter: boolean, partCount: number): number {
   let target = placeAfter ? hoverIndex + 1 : hoverIndex;
@@ -47,6 +60,18 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
   const [previousIdentity, setPreviousIdentity] = useState(partIdentity);
   const dragFromRef = useRef<number | null>(null);
   const dragToRef = useRef<number | null>(null);
+  const rowNodes = useRef(new Map<string, HTMLLIElement>());
+  const swapGeneration = useRef(0);
+  const [movedPartId, setMovedPartId] = useState<string | null>(null);
+  const movedHighlightTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (movedHighlightTimer.current !== null) {
+        window.clearTimeout(movedHighlightTimer.current);
+      }
+    };
+  }, []);
 
   if (partIdentity !== previousIdentity) {
     const knownIds = new Set(previousIdentity === "" ? [] : previousIdentity.split("\u0000"));
@@ -68,6 +93,10 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
 
   const totalBytes = sumKnownBytes(parts);
   const totalDuration = sumKnownDuration(parts);
+  const totalSizeLabel = totalBytes === null ? "" : formatByteCount(totalBytes, language);
+  const totalLengthLabel = totalDuration === null ? "" : formatDuration(totalDuration);
+  const visibleTotalSize = totalSizeLabel || "—";
+  const visibleTotalLength = totalLengthLabel || "—";
   const countLabel = fillTemplate(parts.length === 1 ? t("concat.parts.one") : t("concat.parts.other"), {
     count: new Intl.NumberFormat(language).format(parts.length),
   });
@@ -86,7 +115,62 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
     rememberDrag(null, null);
   };
 
-  const movePart = (fromIndex: number, toIndex: number) => {
+  const highlightMovedRow = (partId: string) => {
+    if (movedHighlightTimer.current !== null) {
+      window.clearTimeout(movedHighlightTimer.current);
+    }
+    setMovedPartId(partId);
+    movedHighlightTimer.current = window.setTimeout(() => {
+      setMovedPartId((current) => (current === partId ? null : current));
+      movedHighlightTimer.current = null;
+    }, MOVED_HIGHLIGHT_MS);
+  };
+
+  const animateArrowSwap = (snapshots: readonly SwapSnapshot[]) => {
+    const generation = ++swapGeneration.current;
+    const animated: HTMLLIElement[] = [];
+    for (const snapshot of snapshots) {
+      const node = rowNodes.current.get(snapshot.id);
+      if (!node) {
+        continue;
+      }
+      const deltaX = snapshot.left - node.offsetLeft;
+      const deltaY = snapshot.top - node.offsetTop;
+      if (deltaX === 0 && deltaY === 0) {
+        continue;
+      }
+      node.style.transition = "none";
+      node.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      animated.push(node);
+    }
+    if (animated.length === 0) {
+      return;
+    }
+    // Commit the inverted position before the next frame starts the ease-out.
+    animated[0].getBoundingClientRect();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (generation !== swapGeneration.current) {
+          return;
+        }
+        for (const node of animated) {
+          node.style.transition = `transform ${ROW_SWAP_MS}ms var(--ease-out-strong)`;
+          node.style.transform = "translate(0px, 0px)";
+        }
+        window.setTimeout(() => {
+          if (generation !== swapGeneration.current) {
+            return;
+          }
+          for (const node of animated) {
+            node.style.transform = "";
+            node.style.transition = "";
+          }
+        }, ROW_SWAP_MS + 40);
+      });
+    });
+  };
+
+  const movePart = (fromIndex: number, toIndex: number, source: "arrow" | "pointer" = "pointer") => {
     if (disabled || fromIndex === toIndex || toIndex < 0 || toIndex >= parts.length) {
       return;
     }
@@ -96,14 +180,39 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
     }
     const next = moveItem(parts, fromIndex, toIndex);
     const position = next.findIndex((part) => part.id === moving.id) + 1;
-    setAnnouncement(
-      fillTemplate(t("concat.part.moved"), {
-        name: moving.name.trim() || t("concat.part.untitled"),
-        position,
-        total: parts.length,
-      }),
-    );
-    onMove(fromIndex, toIndex);
+    const announce = () => {
+      setAnnouncement(
+        fillTemplate(t("concat.part.moved"), {
+          name: moving.name.trim() || t("concat.part.untitled"),
+          position,
+          total: parts.length,
+        }),
+      );
+    };
+    if (source !== "arrow") {
+      announce();
+      onMove(fromIndex, toIndex);
+      return;
+    }
+    const snapshots: SwapSnapshot[] = [];
+    if (!prefersReducedMotion()) {
+      for (const index of [fromIndex, toIndex]) {
+        const part = parts[index];
+        const node = part ? rowNodes.current.get(part.id) : undefined;
+        if (!part || !node) {
+          continue;
+        }
+        snapshots.push({ id: part.id, top: node.offsetTop, left: node.offsetLeft });
+      }
+    }
+    flushSync(() => {
+      announce();
+      highlightMovedRow(moving.id);
+      onMove(fromIndex, toIndex);
+    });
+    if (snapshots.length > 0) {
+      animateArrowSwap(snapshots);
+    }
   };
 
   const finishDrag = (event: DragEvent<HTMLElement>) => {
@@ -132,14 +241,12 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
           <p className="font-mono text-xs tabular-nums text-muted-foreground">{countLabel}</p>
         </div>
       </div>
-      <p className="mb-3 font-mono text-xs tabular-nums text-muted-foreground">
-        <span className="uppercase tracking-[0.14em]">{t("concat.total")}</span>{" "}
-        <span title={totalBytes === null ? t("concat.part.sizeUnknown") : formatByteCount(totalBytes, language)}>
-          {totalBytes === null ? "—" : formatByteCount(totalBytes, language)}
-        </span>
-        <span aria-hidden="true"> · </span>
-        <span title={totalDuration === null ? t("concat.part.durationUnknown") : formatDuration(totalDuration)}>
-          {totalDuration === null ? "—" : formatDuration(totalDuration)}
+      <p className="mb-3 text-xs tabular-nums leading-5 text-muted-foreground">
+        <span title={totalSizeLabel ? undefined : t("concat.part.sizeUnknown")}>
+          {fillTemplate(t("concat.summary.size"), { size: visibleTotalSize })}
+        </span>{" "}
+        <span title={totalLengthLabel ? undefined : t("concat.part.durationUnknown")}>
+          {fillTemplate(t("concat.summary.length"), { length: visibleTotalLength })}
         </span>
       </p>
       <p className="sr-only" aria-live="polite">
@@ -154,8 +261,10 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
         >
           {parts.map((part, index) => {
             const fileName = splitFileName(part.name);
-            const sizeLabel = part.sizeBytes === null ? "—" : formatByteCount(part.sizeBytes, language);
-            const durationLabel = part.durationSeconds === null ? "—" : formatDuration(part.durationSeconds);
+            const formattedSize = part.sizeBytes === null ? "" : formatByteCount(part.sizeBytes, language);
+            const formattedDuration = part.durationSeconds === null ? "" : formatDuration(part.durationSeconds);
+            const sizeLabel = formattedSize || "—";
+            const durationLabel = formattedDuration || "—";
             const shownIndex = visualIndex.get(part.id) ?? index;
             const positionLabel = fillTemplate(t("concat.part.position"), {
               name: part.name.trim() || t("concat.part.untitled"),
@@ -167,6 +276,7 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
             const rowClassName = [
               "concat-part border border-border px-3 py-3",
               isDragSource ? "is-placeholder" : "",
+              part.id === movedPartId && !isDragSource ? "is-just-moved" : "",
               enteringOrder !== undefined && !isDragSource ? "concat-part-enter" : "",
             ]
               .filter(Boolean)
@@ -174,6 +284,13 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
             return (
               <li
                 key={part.id}
+                ref={(node) => {
+                  if (node) {
+                    rowNodes.current.set(part.id, node);
+                  } else {
+                    rowNodes.current.delete(part.id);
+                  }
+                }}
                 className={rowClassName}
                 style={{
                   order: dragFrom !== null ? visualIndex.get(part.id) : undefined,
@@ -257,13 +374,13 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
                     <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs leading-5 tabular-nums text-muted-foreground">
                       <span
                         className="shrink-0 whitespace-nowrap"
-                        title={part.sizeBytes === null ? t("concat.part.sizeUnknown") : sizeLabel}
+                        title={formattedSize ? sizeLabel : t("concat.part.sizeUnknown")}
                       >
                         {sizeLabel}
                       </span>
                       <span
                         className="shrink-0 whitespace-nowrap"
-                        title={part.durationSeconds === null ? t("concat.part.durationUnknown") : durationLabel}
+                        title={formattedDuration ? durationLabel : t("concat.part.durationUnknown")}
                       >
                         {durationLabel}
                       </span>
@@ -275,7 +392,7 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
                       className="concat-icon-button"
                       aria-label={t("concat.moveUp")}
                       disabled={disabled || dragFrom !== null || index === 0}
-                      onClick={() => movePart(index, index - 1)}
+                      onClick={() => movePart(index, index - 1, "arrow")}
                     >
                       <ArrowUp aria-hidden="true" className="h-4 w-4" />
                     </button>
@@ -284,7 +401,7 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPa
                       className="concat-icon-button"
                       aria-label={t("concat.moveDown")}
                       disabled={disabled || dragFrom !== null || index === parts.length - 1}
-                      onClick={() => movePart(index, index + 1)}
+                      onClick={() => movePart(index, index + 1, "arrow")}
                     >
                       <ArrowDown aria-hidden="true" className="h-4 w-4" />
                     </button>

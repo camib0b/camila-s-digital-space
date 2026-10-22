@@ -7,13 +7,45 @@ export function fillTemplate(template: string, values: Record<string, string | n
   });
 }
 
-/** Exact byte count with grouping. Never rounded, so two files stay comparable. */
+const FILE_SIZE_UNITS = ["KB", "MB", "GB", "TB"] as const;
+
+function formatGroupedNumber(value: number, language: string, fractionDigits: number): string {
+  return new Intl.NumberFormat(language, {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  }).format(value);
+}
+
+/**
+ * File-manager size: binary units (1024), grouped bytes under 1 KB,
+ * and one decimal only when the rounded value is not a whole number.
+ * `es` therefore reads `137,1 MB`. A non-breaking space keeps the unit with the number.
+ */
 export function formatByteCount(bytes: number, language: string): string {
-  if (!Number.isFinite(bytes)) {
+  if (!Number.isFinite(bytes) || bytes < 0) {
     return "";
   }
-  const grouped = new Intl.NumberFormat(language, { maximumFractionDigits: 0 }).format(Math.round(bytes));
-  return `${grouped} B`;
+  const wholeBytes = Math.round(bytes);
+  if (wholeBytes < 1024) {
+    return `${formatGroupedNumber(wholeBytes, language, 0)}\u00A0B`;
+  }
+
+  let unitIndex = 0;
+  let scaled = wholeBytes / 1024;
+  while (scaled >= 1024 && unitIndex < FILE_SIZE_UNITS.length - 1) {
+    scaled /= 1024;
+    unitIndex += 1;
+  }
+
+  let tenths = Math.round(scaled * 10);
+  if (tenths >= 10240 && unitIndex < FILE_SIZE_UNITS.length - 1) {
+    tenths = Math.round(tenths / 1024);
+    unitIndex += 1;
+  }
+
+  const fractionDigits = tenths % 10 === 0 ? 0 : 1;
+  const formatted = formatGroupedNumber(tenths / 10, language, fractionDigits);
+  return `${formatted}\u00A0${FILE_SIZE_UNITS[unitIndex]}`;
 }
 
 export function formatDuration(seconds: number): string {
@@ -45,7 +77,7 @@ export function formatJoinDuration(durationMilliseconds: number, language: strin
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     }).format(roundedTenths);
-    return `${secondsLabel} s`;
+    return `${secondsLabel}\u00A0s`;
   }
   const totalSeconds = Math.round(safeMilliseconds / 1000);
   const hours = Math.floor(totalSeconds / 3600);
@@ -102,6 +134,17 @@ export function roundFrameRate(frameRate: number): number {
     return 0;
   }
   return Math.round(frameRate * 1000) / 1000;
+}
+
+/** Collapse pasted line breaks so a file name stays one line inside a sentence. */
+export function singleLineFileName(name: string, fallback: string): string {
+  const collapse = (value: string) => value.replace(/\s+/g, " ").trim();
+  const singleLine = collapse(name);
+  if (singleLine.length > 0) {
+    return singleLine;
+  }
+  const fallbackLine = collapse(fallback);
+  return fallbackLine.length > 0 ? fallbackLine : "—";
 }
 
 /** A visible file name that keeps the extension, which is where parts differ. */

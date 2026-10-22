@@ -49,7 +49,12 @@ export function detectConcatCapacity(): ConcatCapacity {
   return { mode: "memory", limitBytes: OTHER_MEMORY_LIMIT_BYTES, browserName: "other" };
 }
 
-export async function pickJoinedFile(): Promise<FileSystemWritableFileStream | null> {
+export type PickedJoinedFile = {
+  writable: FileSystemWritableFileStream;
+  name: string;
+};
+
+export async function pickJoinedFile(): Promise<PickedJoinedFile | null> {
   const savePickerWindow = window as SavePickerWindow;
   if (typeof savePickerWindow.showSaveFilePicker !== "function") {
     return null;
@@ -58,5 +63,8 @@ export async function pickJoinedFile(): Promise<FileSystemWritableFileStream | n
     suggestedName: "joined.mp4",
     types: [{ description: "MP4", accept: { "video/mp4": [".mp4"] } }],
   });
-  return handle.createWritable();
+  return {
+    writable: await handle.createWritable(),
+    name: handle.name,
+  };
 }
