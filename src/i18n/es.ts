@@ -164,6 +164,7 @@ const es: Record<TranslationKey, string> = {
     "hockey.videoAnalyst.role": "Analista de video",
     "hockey.videoAnalyst.period": "2025–actualidad",
     "hockey.videoAnalyst.destination": "carpeta.cl, clips de partidos",
+    "hockey.coachingCv": "CV de entrenadora (PDF)",
 
     // Contact
     "contact.label": "Contacto",
