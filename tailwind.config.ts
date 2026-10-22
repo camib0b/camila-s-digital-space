@@ -1,8 +1,10 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 import typography from "@tailwindcss/typography";
+import uiPreset from "@camib0b/ui/preset";
 
 export default {
+  presets: [uiPreset],
   darkMode: ["class"],
   content: ["./src/**/*.{ts,tsx}"],
   prefix: "",
