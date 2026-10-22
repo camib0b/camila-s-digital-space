@@ -162,6 +162,7 @@ const en = {
     "hockey.videoAnalyst.role": "Video analyst",
     "hockey.videoAnalyst.period": "2025–present",
     "hockey.videoAnalyst.destination": "carpeta.cl, match clips",
+    "hockey.coachingCv": "Coaching CV (PDF)",
 
     // Contact
     "contact.label": "Contact",

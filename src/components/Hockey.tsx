@@ -44,6 +44,15 @@ const Hockey = () => {
               </div>
             ))}
           </CurtainReveal>
+
+          <a
+            href="/cv/Camila_Escudero_Coaching_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-underline mt-8 inline-block font-medium text-foreground"
+          >
+            {t("hockey.coachingCv")}
+          </a>
         </div>
       </div>
     </section>
