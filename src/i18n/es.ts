@@ -80,6 +80,7 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.publishingPipeline.connectsTo": "a",
     "personalProjects.publishingPipeline":
       "Publicar un partido pasó de unos 50 minutos de trabajo manual a una sola activación, con verificaciones y un respaldo, en unos 5 minutos de mi tiempo. Unas 17 horas ahorradas hasta ahora; las cifras de tiempo son estimaciones mías.",
+    "personalProjects.publishingPipeline.diagram.toggle": "Cómo lo publico",
     "personalProjects.publishingPipeline.diagram.intro": "Por partido, en orden.",
     "personalProjects.publishingPipeline.diagram.list.1": "Recibir el metraje del partido.",
     "personalProjects.publishingPipeline.diagram.list.2":
