@@ -77,7 +77,7 @@ const en = {
     "personalProjects.publishingPipeline.connectLabel": "How they connect",
     "personalProjects.publishingPipeline.connectsTo": "to",
     "personalProjects.publishingPipeline":
-      "The time to publish a match went down from about 40 minutes to just 5.",
+      "The time to publish a match went down from about 30 minutes to just 5.",
     "personalProjects.publishingPipeline.diagram.toggle": "How I ship it",
     "personalProjects.publishingPipeline.diagram.intro": "Per game, in order.",
     "personalProjects.publishingPipeline.diagram.list.1": "Receive the game footage.",
