@@ -1,4 +1,5 @@
-import { useId, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { startAttentionPulse } from "@camib0b/ui/attention-pulse";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { TranslationKey } from "@/i18n/types";
 import { cn } from "@/lib/utils";
@@ -490,7 +491,7 @@ const PublishingPipelineStages = () => {
             data-flow="down"
             style={pipelineOrder(PIPELINE_FLOW_ORDER.deploy)}
           >
-            <span className="h-1.5 w-1.5 shrink-0 bg-[hsl(var(--contrib-q4))]" />
+            <span className="h-1.5 w-1.5 shrink-0 bg-accent-teal" />
             <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
               {t("personalProjects.publishingPipeline.diagram.deploys")}
             </span>
@@ -507,8 +508,31 @@ const PublishingPipelineStages = () => {
 const PublishingPipelineDiagram = () => {
   const { t } = useLanguage();
   const diagramId = useId();
+  const toggleLabelRef = useRef<HTMLSpanElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [replayKey, setReplayKey] = useState(0);
+
+  useEffect(() => {
+    const toggleLabel = toggleLabelRef.current;
+    if (toggleLabel === null) {
+      return;
+    }
+
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      const isLabelInView = entries.some((entry) => entry.isIntersecting);
+      if (!isLabelInView) {
+        return;
+      }
+
+      startAttentionPulse(toggleLabel);
+      intersectionObserver.disconnect();
+    });
+
+    intersectionObserver.observe(toggleLabel);
+    return () => {
+      intersectionObserver.disconnect();
+    };
+  }, []);
 
   const toggleDiagram = () => {
     setIsOpen((open) => {
@@ -529,7 +553,7 @@ const PublishingPipelineDiagram = () => {
         aria-controls={diagramId}
         onClick={toggleDiagram}
       >
-        {t("personalProjects.publishingPipeline.diagram.toggle")}
+        <span ref={toggleLabelRef}>{t("personalProjects.publishingPipeline.diagram.toggle")}</span>
         <DisclosureChevron expanded={isOpen} />
       </button>
       <figure id={diagramId} hidden={!isOpen} className="mt-4">
