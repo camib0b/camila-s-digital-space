@@ -14,6 +14,7 @@ export async function joinParts(options: {
   target: ConvertTarget | null;
   signal: AbortSignal;
   onProgress: (ratio: number) => void;
+  outputBytes: { bytes: number };
 }): Promise<Blob | null> {
   throwIfCancelled(options.signal);
   if (options.mode === "copy" && options.streaming) {
@@ -26,16 +27,19 @@ export async function joinParts(options: {
       writable: options.writable,
       signal: options.signal,
       onProgress: options.onProgress,
+      outputBytes: options.outputBytes,
     });
     return null;
   }
   if (options.mode === "copy") {
     const { memoryCopyConcat } = await import("@/lib/concat/memoryConcat");
-    return memoryCopyConcat({
+    const joined = await memoryCopyConcat({
       files: options.files,
       signal: options.signal,
       onProgress: options.onProgress,
     });
+    options.outputBytes.bytes = joined.size;
+    return joined;
   }
   if (!options.target) {
     throw new Error("concat-missing-target");
@@ -51,15 +55,18 @@ export async function joinParts(options: {
       target: options.target,
       signal: options.signal,
       onProgress: options.onProgress,
+      outputBytes: options.outputBytes,
     });
     return null;
   }
   const { memoryConvertConcat } = await import("@/lib/concat/memoryConcat");
-  return memoryConvertConcat({
+  const joined = await memoryConvertConcat({
     files: options.files,
     hasAudio: options.hasAudio,
     target: options.target,
     signal: options.signal,
     onProgress: options.onProgress,
   });
+  options.outputBytes.bytes = joined.size;
+  return joined;
 }

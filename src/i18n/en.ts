@@ -447,7 +447,7 @@ const en = {
     "concat.eyebrow": "Small tool",
     "concat.title": "Join match footage",
     "concat.description": "Put the parts of a match in order and join them into one file.",
-    "concat.privacy": "Nothing is uploaded. The files stay in this browser.",
+    "concat.privacy": "The files stay in this browser and are not uploaded. After each join, an anonymous performance count is sent, with no file names or video.",
     "concat.capacity.streaming": "This browser writes the result in pieces, so a full match of several GB can be joined.",
     "concat.capacity.memory": "This browser joins in memory. Keep the parts under {limit} in total.",
     "concat.drop": "Drop video files here, or choose files.",
@@ -489,6 +489,9 @@ const en = {
     "concat.saved": "Saved to the file you chose.",
     "concat.download": "Download joined file",
     "concat.error.failed": "The parts could not be joined in this browser.",
+    "concat.toast.downloaded": "Joined in {duration}. The file has downloaded.",
+    "concat.toast.saved": "Joined in {duration}. The file has been saved.",
+    "concat.toast.dismiss": "Close",
   } as const;
 
 export default en;

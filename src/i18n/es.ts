@@ -449,7 +449,7 @@ const es: Record<TranslationKey, string> = {
     "concat.eyebrow": "Herramienta pequeña",
     "concat.title": "Unir el video del partido",
     "concat.description": "Ordena las partes de un partido y únelas en un solo archivo.",
-    "concat.privacy": "No se sube nada. Los archivos se quedan en este navegador.",
+    "concat.privacy": "Los archivos se quedan en este navegador y no se suben. Después de cada unión se envía un conteo anónimo de rendimiento, sin nombres de archivo ni video.",
     "concat.capacity.streaming": "Este navegador escribe el resultado por partes, así que se puede unir un partido de varios GB.",
     "concat.capacity.memory": "Este navegador une en memoria. El total de las partes tiene que quedar bajo {limit}.",
     "concat.drop": "Suelta los videos aquí, o elige archivos.",
@@ -491,6 +491,9 @@ const es: Record<TranslationKey, string> = {
     "concat.saved": "Guardado en el archivo que elegiste.",
     "concat.download": "Descargar el archivo unido",
     "concat.error.failed": "No se pudieron unir las partes en este navegador.",
+    "concat.toast.downloaded": "Unido en {duration}. El archivo se descargó.",
+    "concat.toast.saved": "Unido en {duration}. El archivo se guardó.",
+    "concat.toast.dismiss": "Cerrar",
   };
 
 export default es;

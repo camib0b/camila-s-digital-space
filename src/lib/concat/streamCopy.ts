@@ -54,11 +54,42 @@ export async function streamCopyFiles(options: {
   writable: FileSystemWritableFileStream;
   signal: AbortSignal;
   onProgress: (ratio: number) => void;
+  /** Final file size, including a partial write when the join fails. */
+  outputBytes: { bytes: number };
 }): Promise<void> {
   throwIfCancelled(options.signal);
+  let writtenBytes = 0;
+  let fileWriter: WritableStreamDefaultWriter<FileSystemWriteChunkType> | null = null;
+  const countingStream = new WritableStream<StreamTargetChunk>({
+    start() {
+      fileWriter = options.writable.getWriter();
+    },
+    async write(chunk) {
+      const writer = fileWriter;
+      if (!writer) {
+        throw new Error("concat-missing-save");
+      }
+      const position = Number.isFinite(chunk.position) ? chunk.position : 0;
+      const chunkEnd = position + chunk.data.byteLength;
+      await writer.write(chunk);
+      if (chunkEnd > writtenBytes) {
+        writtenBytes = chunkEnd;
+      }
+    },
+    async close() {
+      await fileWriter?.close();
+    },
+    async abort(reason) {
+      if (fileWriter) {
+        await fileWriter.abort(reason);
+        return;
+      }
+      await options.writable.abort(reason);
+    },
+  });
   const output = new Output({
     format: new Mp4OutputFormat({ fastStart: false }),
-    target: new StreamTarget(options.writable as unknown as WritableStream<StreamTargetChunk>, {
+    target: new StreamTarget(countingStream, {
       chunked: true,
       chunkSize: OUTPUT_CHUNK_BYTES,
     }),
@@ -180,6 +211,7 @@ export async function streamCopyFiles(options: {
     }
     throw error;
   } finally {
+    options.outputBytes.bytes = writtenBytes;
     for (const input of inputs) {
       input.dispose();
     }
