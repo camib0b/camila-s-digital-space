@@ -1,0 +1,115 @@
+.concat-drop {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.dark .concat-drop {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.concat-choose {
+  cursor: pointer;
+  transition:
+    transform 140ms var(--ease-out-strong),
+    box-shadow 140ms var(--ease-out-strong);
+}
+
+@media (hover: hover) {
+  .concat-choose:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elev-2);
+  }
+}
+
+.concat-choose:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: none;
+  transition-duration: 80ms;
+}
+
+.concat-part {
+  cursor: grab;
+  background: rgba(244, 245, 246, 0.92);
+}
+
+.dark .concat-part {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.concat-part:active {
+  cursor: grabbing;
+}
+
+.concat-part[draggable="false"] {
+  cursor: default;
+}
+
+.concat-part.is-placeholder {
+  background: transparent;
+  border-style: dashed;
+}
+
+.concat-part.is-placeholder .concat-part-body {
+  visibility: hidden;
+}
+
+.concat-part-enter {
+  animation: concat-part-land 320ms var(--ease-out-strong) both;
+}
+
+@keyframes concat-part-land {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.concat-icon-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid hsl(var(--border));
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+}
+
+.concat-icon-button:hover:not(:disabled) {
+  color: hsl(var(--foreground));
+}
+
+.concat-icon-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px hsl(var(--ring));
+}
+
+.concat-icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.concat-progress-done {
+  background: hsl(var(--number-positive));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .concat-choose,
+  .concat-choose:hover,
+  .concat-choose:active,
+  .concat-part-enter {
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+
+  .concat-choose:hover {
+    box-shadow: var(--shadow-elev-2);
+  }
+}

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type DragEvent } from "react";
+import { ArrowDown, ArrowUp, GripVertical, Trash2 } from "lucide-react";
 import { moveItem } from "@/components/ava/concatReorder";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
@@ -11,26 +12,79 @@ import {
   sumKnownDuration,
 } from "@/lib/concat/format";
 import type { ConcatPartView } from "@/lib/concat/types";
+import "./concat.css";
 
 type ConcatPartListProps = {
   parts: readonly ConcatPartView[];
   disabled: boolean;
   onMove: (fromIndex: number, toIndex: number) => void;
   onRemove: (id: string) => void;
+  onClear: () => void;
 };
 
-const rowButtonClassName =
-  "shrink-0 border border-border px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
+const MAX_STAGGERED_LANDINGS = 12;
+const LANDING_STAGGER_MS = 60;
+const LANDING_DURATION_MS = 320;
 
-const ConcatPartList = ({ parts, disabled, onMove, onRemove }: ConcatPartListProps) => {
+const clearButtonClassName =
+  "shrink-0 border border-border px-3 py-2 text-xs uppercase tracking-[0.14em] text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
+
+function landingIndexForHover(fromIndex: number, hoverIndex: number, placeAfter: boolean, partCount: number): number {
+  let target = placeAfter ? hoverIndex + 1 : hoverIndex;
+  if (fromIndex < target) {
+    target -= 1;
+  }
+  return Math.max(0, Math.min(target, Math.max(0, partCount - 1)));
+}
+
+const ConcatPartList = ({ parts, disabled, onMove, onRemove, onClear }: ConcatPartListProps) => {
   const { language, t } = useLanguage();
   const [announcement, setAnnouncement] = useState("");
-  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+  const [dragFrom, setDragFrom] = useState<number | null>(null);
+  const [dragTo, setDragTo] = useState<number | null>(null);
+  const [landingIds, setLandingIds] = useState<readonly string[]>([]);
+  const partIdentity = parts.map((part) => part.id).join("\u0000");
+  const [previousIdentity, setPreviousIdentity] = useState(partIdentity);
+  const dragFromRef = useRef<number | null>(null);
+  const dragToRef = useRef<number | null>(null);
+
+  if (partIdentity !== previousIdentity) {
+    const knownIds = new Set(previousIdentity === "" ? [] : previousIdentity.split("\u0000"));
+    const fresh = parts.filter((part) => !knownIds.has(part.id)).map((part) => part.id);
+    setPreviousIdentity(partIdentity);
+    if (fresh.length > 0 && fresh.length <= MAX_STAGGERED_LANDINGS) {
+      setLandingIds(fresh);
+    }
+  }
+
+  useEffect(() => {
+    if (landingIds.length === 0) {
+      return;
+    }
+    const clearAfter = LANDING_DURATION_MS + Math.max(0, landingIds.length - 1) * LANDING_STAGGER_MS + 40;
+    const timeoutId = window.setTimeout(() => setLandingIds([]), clearAfter);
+    return () => window.clearTimeout(timeoutId);
+  }, [landingIds]);
+
   const totalBytes = sumKnownBytes(parts);
   const totalDuration = sumKnownDuration(parts);
   const countLabel = fillTemplate(parts.length === 1 ? t("concat.parts.one") : t("concat.parts.other"), {
     count: new Intl.NumberFormat(language).format(parts.length),
   });
+  const preview = dragFrom !== null && dragTo !== null ? moveItem(parts, dragFrom, dragTo) : parts;
+  const visualIndex = new Map(preview.map((part, index) => [part.id, index]));
+  const landingOrder = new Map(landingIds.map((id, order) => [id, order]));
+
+  const rememberDrag = (fromIndex: number | null, toIndex: number | null) => {
+    dragFromRef.current = fromIndex;
+    dragToRef.current = toIndex;
+    setDragFrom(fromIndex);
+    setDragTo(toIndex);
+  };
+
+  const endDrag = () => {
+    rememberDrag(null, null);
+  };
 
   const movePart = (fromIndex: number, toIndex: number) => {
     if (disabled || fromIndex === toIndex || toIndex < 0 || toIndex >= parts.length) {
@@ -52,13 +106,31 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove }: ConcatPartListPro
     onMove(fromIndex, toIndex);
   };
 
+  const finishDrag = (event: DragEvent<HTMLElement>) => {
+    event.preventDefault();
+    const fromIndex = dragFromRef.current;
+    const toIndex = dragToRef.current;
+    endDrag();
+    if (fromIndex === null || toIndex === null) {
+      return;
+    }
+    movePart(fromIndex, toIndex);
+  };
+
   return (
-    <section aria-labelledby="concat-parts-heading">
-      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+    <section aria-labelledby="concat-parts-heading" className="min-w-0">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
         <h2 id="concat-parts-heading" className="text-sm font-medium uppercase tracking-wider text-foreground">
           {t("concat.parts.label")}
         </h2>
-        <p className="font-mono text-xs tabular-nums text-muted-foreground">{countLabel}</p>
+        <div className="flex flex-wrap items-center gap-3">
+          {parts.length > 0 ? (
+            <button type="button" className={clearButtonClassName} disabled={disabled} onClick={onClear}>
+              {t("concat.clear")}
+            </button>
+          ) : null}
+          <p className="font-mono text-xs tabular-nums text-muted-foreground">{countLabel}</p>
+        </div>
       </div>
       <p className="mb-3 font-mono text-xs tabular-nums text-muted-foreground">
         <span className="uppercase tracking-[0.14em]">{t("concat.total")}</span>{" "}
@@ -74,45 +146,101 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove }: ConcatPartListPro
         {announcement}
       </p>
       {parts.length === 0 ? (
-        <p className="border-y border-border py-6 text-sm text-muted-foreground">{t("concat.parts.empty")}</p>
+        <p className="border border-border py-6 text-center text-sm text-muted-foreground">{t("concat.parts.empty")}</p>
       ) : (
-        <ul className="max-h-[min(32rem,70vh)] overflow-auto border-y border-border" aria-label={t("concat.parts.label")}>
+        <ul
+          className="flex max-h-[min(32rem,70vh)] min-w-0 flex-col gap-2 overflow-auto"
+          aria-label={t("concat.parts.label")}
+        >
           {parts.map((part, index) => {
             const fileName = splitFileName(part.name);
             const sizeLabel = part.sizeBytes === null ? "—" : formatByteCount(part.sizeBytes, language);
             const durationLabel = part.durationSeconds === null ? "—" : formatDuration(part.durationSeconds);
+            const shownIndex = visualIndex.get(part.id) ?? index;
             const positionLabel = fillTemplate(t("concat.part.position"), {
               name: part.name.trim() || t("concat.part.untitled"),
-              position: index + 1,
+              position: shownIndex + 1,
               total: parts.length,
             });
+            const isDragSource = dragFrom === index;
+            const enteringOrder = landingOrder.get(part.id);
+            const rowClassName = [
+              "concat-part border border-border px-3 py-3",
+              isDragSource ? "is-placeholder" : "",
+              enteringOrder !== undefined && !isDragSource ? "concat-part-enter" : "",
+            ]
+              .filter(Boolean)
+              .join(" ");
             return (
               <li
                 key={part.id}
-                className="border-b border-border py-3 last:border-b-0"
+                className={rowClassName}
+                style={{
+                  order: dragFrom !== null ? visualIndex.get(part.id) : undefined,
+                  animationDelay:
+                    enteringOrder !== undefined && !isDragSource
+                      ? `${enteringOrder * LANDING_STAGGER_MS}ms`
+                      : undefined,
+                }}
                 aria-label={positionLabel}
+                draggable={!disabled}
+                onDragStart={(event) => {
+                  if (disabled) {
+                    event.preventDefault();
+                    return;
+                  }
+                  const target = event.target;
+                  if (target instanceof Element && target.closest("button")) {
+                    event.preventDefault();
+                    return;
+                  }
+                  const row = event.currentTarget;
+                  const rect = row.getBoundingClientRect();
+                  const previewNode = row.cloneNode(true) as HTMLElement;
+                  previewNode.style.position = "fixed";
+                  previewNode.style.top = "-1000px";
+                  previewNode.style.left = "0";
+                  previewNode.style.width = `${rect.width}px`;
+                  previewNode.style.margin = "0";
+                  previewNode.style.opacity = "0.65";
+                  previewNode.style.pointerEvents = "none";
+                  document.body.appendChild(previewNode);
+                  previewNode.getBoundingClientRect();
+                  event.dataTransfer.setDragImage(
+                    previewNode,
+                    event.clientX - rect.left,
+                    event.clientY - rect.top,
+                  );
+                  event.dataTransfer.effectAllowed = "move";
+                  event.dataTransfer.setData("text/plain", String(index));
+                  window.setTimeout(() => previewNode.remove(), 0);
+                  rememberDrag(index, index);
+                }}
+                onDragEnd={endDrag}
                 onDragOver={(event) => {
-                  if (disabled || draggingIndex === null) {
+                  if (disabled || dragFromRef.current === null) {
                     return;
                   }
                   event.preventDefault();
                   event.dataTransfer.dropEffect = "move";
-                }}
-                onDrop={(event) => {
-                  event.preventDefault();
-                  const fromIndex = Number(event.dataTransfer.getData("text/plain"));
-                  if (Number.isInteger(fromIndex)) {
-                    movePart(fromIndex, index);
+                  const rect = event.currentTarget.getBoundingClientRect();
+                  const placeAfter = event.clientY > rect.top + rect.height / 2;
+                  const next = landingIndexForHover(dragFromRef.current, index, placeAfter, parts.length);
+                  if (dragToRef.current === next) {
+                    return;
                   }
-                  setDraggingIndex(null);
+                  dragToRef.current = next;
+                  setDragTo(next);
                 }}
+                onDrop={finishDrag}
               >
-                <div className="flex items-start gap-3">
-                  <span className="w-10 shrink-0 pt-0.5 font-mono text-xs tabular-nums text-muted-foreground">
-                    {formatPartIndex(index)}
+                <div className="concat-part-body flex items-start gap-3">
+                  <span className="flex shrink-0 items-center gap-1 whitespace-nowrap pt-0.5 font-mono text-xs tabular-nums text-muted-foreground">
+                    <GripVertical aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                    {formatPartIndex(shownIndex)}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="flex min-w-0 items-baseline leading-5" dir="auto" title={fileName.title}>
+                    <span className="flex min-w-0 items-baseline leading-6" dir="auto" title={fileName.title}>
                       <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-foreground">
                         {fileName.stem}
                       </span>
@@ -140,45 +268,35 @@ const ConcatPartList = ({ parts, disabled, onMove, onRemove }: ConcatPartListPro
                         {durationLabel}
                       </span>
                     </p>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      <span
-                        draggable={!disabled}
-                        aria-hidden="true"
-                        className="flex shrink-0 cursor-grab items-center px-1 font-mono text-xs text-muted-foreground"
-                        onDragStart={(event) => {
-                          event.dataTransfer.effectAllowed = "move";
-                          event.dataTransfer.setData("text/plain", String(index));
-                          setDraggingIndex(index);
-                        }}
-                        onDragEnd={() => setDraggingIndex(null)}
-                      >
-                        ::
-                      </span>
-                      <button
-                        type="button"
-                        className={rowButtonClassName}
-                        disabled={disabled || index === 0}
-                        onClick={() => movePart(index, index - 1)}
-                      >
-                        {t("concat.moveUp")}
-                      </button>
-                      <button
-                        type="button"
-                        className={rowButtonClassName}
-                        disabled={disabled || index === parts.length - 1}
-                        onClick={() => movePart(index, index + 1)}
-                      >
-                        {t("concat.moveDown")}
-                      </button>
-                      <button
-                        type="button"
-                        className={rowButtonClassName}
-                        disabled={disabled}
-                        onClick={() => onRemove(part.id)}
-                      >
-                        {t("concat.remove")}
-                      </button>
-                    </div>
+                  </div>
+                  <div className="flex shrink-0 gap-1">
+                    <button
+                      type="button"
+                      className="concat-icon-button"
+                      aria-label={t("concat.moveUp")}
+                      disabled={disabled || dragFrom !== null || index === 0}
+                      onClick={() => movePart(index, index - 1)}
+                    >
+                      <ArrowUp aria-hidden="true" className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      className="concat-icon-button"
+                      aria-label={t("concat.moveDown")}
+                      disabled={disabled || dragFrom !== null || index === parts.length - 1}
+                      onClick={() => movePart(index, index + 1)}
+                    >
+                      <ArrowDown aria-hidden="true" className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      className="concat-icon-button"
+                      aria-label={t("concat.remove")}
+                      disabled={disabled || dragFrom !== null}
+                      onClick={() => onRemove(part.id)}
+                    >
+                      <Trash2 aria-hidden="true" className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
               </li>

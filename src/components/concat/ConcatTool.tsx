@@ -15,6 +15,7 @@ import { fillTemplate, formatByteCount, formatJoinDuration } from "@/lib/concat/
 import { concatErrorCode, detectBrowserFamily, reportConcatEvent, type ConcatJoinOutcome } from "@/lib/concat/telemetry";
 import { isConcatCancelled, type ConcatPartView, type PartDifference, type ProbedPart } from "@/lib/concat/types";
 import type { TranslationKey } from "@/i18n/types";
+import "./concat.css";
 
 type ListedPart = {
   id: string;
@@ -43,6 +44,19 @@ type SuccessToast = {
   destination: "downloaded" | "saved";
   durationMilliseconds: number;
 };
+
+function dragHasFiles(dataTransfer: DataTransfer): boolean {
+  const types = dataTransfer.types;
+  if (!types) {
+    return false;
+  }
+  for (const type of types) {
+    if (type === "Files") {
+      return true;
+    }
+  }
+  return false;
+}
 
 const DATA_MODE_LABELS: Record<ConcatListDataMode, string> = {
   live: "Live",
@@ -299,6 +313,18 @@ const ConcatTool = () => {
     setParts((current) => current.filter((part) => part.id !== id));
   };
 
+  const clearDisplayed = () => {
+    if (running) {
+      return;
+    }
+    if (viewingFixture) {
+      setFixtureParts([]);
+      return;
+    }
+    forgetResult();
+    setParts([]);
+  };
+
   const runJoin = async (mode: "copy" | "convert") => {
     if (running || viewingFixture) {
       return;
@@ -417,12 +443,16 @@ const ConcatTool = () => {
   };
 
   const onDrop = (event: DragEvent<HTMLLabelElement>) => {
+    if (!dragHasFiles(event.dataTransfer)) {
+      return;
+    }
     event.preventDefault();
     setDraggingFiles(false);
     addFiles(event.dataTransfer.files);
   };
 
-  const percent = phase.kind === "running" ? Math.round(phase.progress * 100) : 0;
+  const joinSucceeded = phase.kind === "saved" || phase.kind === "download";
+  const percent = phase.kind === "running" ? Math.round(phase.progress * 100) : joinSucceeded ? 100 : 0;
 
   return (
     <div className="space-y-8">
@@ -436,6 +466,9 @@ const ConcatTool = () => {
       <label
         htmlFor={inputId}
         onDragOver={(event) => {
+          if (!dragHasFiles(event.dataTransfer)) {
+            return;
+          }
           event.preventDefault();
           if (!running && !viewingFixture) {
             setDraggingFiles(true);
@@ -443,7 +476,7 @@ const ConcatTool = () => {
         }}
         onDragLeave={() => setDraggingFiles(false)}
         onDrop={onDrop}
-        className={`block border px-4 py-8 text-center ${draggingFiles ? "border-foreground" : "border-border"}`}
+        className={`concat-drop block border px-4 py-8 text-center ${draggingFiles ? "border-foreground" : "border-border"}`}
       >
         <input
           id={inputId}
@@ -460,11 +493,17 @@ const ConcatTool = () => {
           }}
         />
         <span className="block text-sm text-foreground">{t("concat.drop")}</span>
-        <span className={`${secondaryButtonClassName} mt-4 inline-block`}>{t("concat.choose")}</span>
+        <span className={`${secondaryButtonClassName} concat-choose mt-4 inline-block`}>{t("concat.choose")}</span>
       </label>
       <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{t("concat.formats")}</p>
 
-      <ConcatPartList parts={displayedParts} disabled={running} onMove={moveDisplayed} onRemove={removeDisplayed} />
+      <ConcatPartList
+        parts={displayedParts}
+        disabled={running}
+        onMove={moveDisplayed}
+        onRemove={removeDisplayed}
+        onClear={clearDisplayed}
+      />
 
       {!viewingFixture && parts.length === 1 && !running ? (
         <p className="text-sm text-muted-foreground">{t("concat.needTwo")}</p>
@@ -509,30 +548,39 @@ const ConcatTool = () => {
         </button>
       ) : null}
 
-      {phase.kind === "running" ? (
+      {phase.kind === "running" || joinSucceeded ? (
         <div className="space-y-3">
           <div
             role="progressbar"
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={percent}
-            aria-label={fillTemplate(t("concat.progress.label"), { percent })}
-            className="h-0.5 w-full bg-border"
+            aria-label={
+              joinSucceeded ? t("concat.progress.done") : fillTemplate(t("concat.progress.label"), { percent })
+            }
+            className="h-1 w-full bg-border"
           >
-            <div className="h-0.5 bg-foreground" style={{ width: `${percent}%` }} />
+            <div
+              className={`h-1 ${joinSucceeded ? "concat-progress-done" : "bg-foreground"}`}
+              style={{ width: `${percent}%` }}
+            />
           </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <p className="font-mono text-xs tabular-nums text-muted-foreground">
-              {fillTemplate(t("concat.progress.label"), { percent })}
-            </p>
-            <button
-              type="button"
-              className={secondaryButtonClassName}
-              onClick={() => abortRef.current?.abort()}
-            >
-              {t("concat.cancel")}
-            </button>
-          </div>
+          {phase.kind === "running" ? (
+            <div className="flex flex-wrap items-center gap-4">
+              <p className="font-mono text-xs tabular-nums text-muted-foreground">
+                {fillTemplate(t("concat.progress.label"), { percent })}
+              </p>
+              <button
+                type="button"
+                className={secondaryButtonClassName}
+                onClick={() => abortRef.current?.abort()}
+              >
+                {t("concat.cancel")}
+              </button>
+            </div>
+          ) : (
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground">{t("concat.progress.done")}</p>
+          )}
         </div>
       ) : null}
 
