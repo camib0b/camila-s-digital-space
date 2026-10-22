@@ -36,7 +36,38 @@ const JOINED_DOWNLOAD_NAME = "joined.mp4";
 const resultMessageClassName = "min-w-0 text-sm leading-6 text-foreground [overflow-wrap:anywhere]";
 
 const primaryButtonClassName =
-  "border border-foreground bg-foreground px-4 py-2 text-xs uppercase tracking-[0.14em] text-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
+  "concat-primary border border-foreground bg-foreground px-4 py-2 text-xs uppercase tracking-[0.14em] text-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
+
+const PARTS_HEADING_GAP_PX = 16;
+
+function scrollPartsHeadingBelowHeader(): void {
+  const heading = document.getElementById("concat-parts-heading");
+  if (!(heading instanceof HTMLElement)) {
+    return;
+  }
+  const header = document.querySelector("header");
+  let offset = PARTS_HEADING_GAP_PX;
+  if (header instanceof HTMLElement) {
+    const position = window.getComputedStyle(header).position;
+    if (position === "sticky" || position === "fixed") {
+      offset += header.getBoundingClientRect().height;
+    }
+  }
+  heading.style.scrollMarginTop = `${offset}px`;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const root = document.documentElement;
+  const previousRootScrollBehavior = root.style.scrollBehavior;
+  const previousBodyScrollBehavior = document.body.style.scrollBehavior;
+  if (reduceMotion) {
+    root.style.scrollBehavior = "auto";
+    document.body.style.scrollBehavior = "auto";
+  }
+  heading.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+  if (reduceMotion) {
+    root.style.scrollBehavior = previousRootScrollBehavior;
+    document.body.style.scrollBehavior = previousBodyScrollBehavior;
+  }
+}
 
 const secondaryButtonClassName =
   "border border-border px-4 py-2 text-xs uppercase tracking-[0.14em] text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";
@@ -160,6 +191,7 @@ const ConcatTool = () => {
   const downloadUrlRef = useRef<string | null>(null);
   const progressStamp = useRef(0);
   const successToastId = useRef(0);
+  const scrollPartsAfterImport = useRef(false);
   const requestedMode = searchParams.get("data");
   const listDataMode: ConcatListDataMode =
     import.meta.env.DEV && isConcatListDataMode(requestedMode) ? requestedMode : "live";
@@ -185,6 +217,14 @@ const ConcatTool = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!scrollPartsAfterImport.current) {
+      return;
+    }
+    scrollPartsAfterImport.current = false;
+    scrollPartsHeadingBelowHeader();
+  }, [parts]);
 
   useEffect(() => {
     if (!successToast) {
@@ -275,6 +315,7 @@ const ConcatTool = () => {
       return;
     }
     forgetResult();
+    scrollPartsAfterImport.current = true;
     setParts((current) => [...current, ...additions]);
     void (async () => {
       const { probeVideoFile } = await import("@/lib/concat/probe");
@@ -523,7 +564,9 @@ const ConcatTool = () => {
           }}
         />
         <span className="block text-sm text-foreground">{t("concat.drop")}</span>
-        <span className={`${secondaryButtonClassName} concat-choose mt-4 inline-block`}>
+        <span
+          className={`${secondaryButtonClassName} concat-primary mt-4 inline-block${running || viewingFixture ? " is-disabled" : ""}`}
+        >
           {displayedParts.length > 0 ? t("concat.choose.more") : t("concat.choose")}
         </span>
       </label>
