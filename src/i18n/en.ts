@@ -346,7 +346,7 @@ const en = {
     "ava.clip.lag": "Lag",
     "ava.telestration.kicker": "Telestration",
     "ava.telestration.headline": "Draw on the video.",
-    "ava.telestration.tools": "Arrows, dotted arrows, circles, and a freehand pen. White, black, blue, or red.",
+    "ava.telestration.tools": "Arrows, dotted arrows, circles, and a freehand pen. White, black, blue, or red. Drawings are saved with each match.",
     "ava.telestration.behavior": "In Presentation the video pauses on each drawing, then continues. On export, choose whether the drawings burn into the clips, like the other overlays. Burn-in is off by default. In the file they play over the moving video.",
     "ava.origin.kicker": "Origin",
     "ava.origin.headline": "Made in Chile. Built from the pitch.",
