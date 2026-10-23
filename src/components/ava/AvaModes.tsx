@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   AVA_MODES,
   resolveAvaModeMedia,
@@ -70,9 +70,11 @@ function sourceSet(sources: AvaModeShotSources): string {
 export function AvaModeShot({
   media,
   role,
+  overlay,
 }: {
   media: ResolvedAvaModeMedia;
   role: "primary" | "secondary" | "full";
+  overlay?: ReactNode;
 }) {
   const { t } = useLanguage();
   const frameRef = useRef<HTMLDivElement>(null);
@@ -161,6 +163,7 @@ export function AvaModeShot({
             }}
           />
         </picture>
+        {overlay}
       </div>
       {media.captionKey ? <figcaption className="ava-shot-caption">{t(media.captionKey)}</figcaption> : null}
     </figure>

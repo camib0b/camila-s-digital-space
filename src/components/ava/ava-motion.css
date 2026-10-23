@@ -80,3 +80,30 @@
     clip-path: none;
   }
 }
+
+/* Marker red stays on the telestration shot. --accent is neutral gray,
+   --accent-teal is teal, and --destructive is a danger red that darkens
+   in dark mode, so none of them is the ink. */
+.ava-telestration-shot {
+  --ava-telestration-marker: #e23a32;
+}
+
+.ava-telestration-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ava-telestration-stroke,
+.ava-telestration-reveal {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ava-telestration-stroke {
+  stroke: var(--ava-telestration-marker);
+}
