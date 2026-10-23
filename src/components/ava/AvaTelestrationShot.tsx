@@ -1,6 +1,4 @@
-import { useId, useLayoutEffect, useRef, type RefObject } from "react";
-import { AvaModeShot } from "@/components/ava/AvaModes";
-import { AVA_MODES, resolveAvaModeMedia, type ResolvedAvaModeMedia } from "@/content/avaModes";
+import { useId, useLayoutEffect, type RefObject } from "react";
 
 /** macOS window crop shared with the other section screenshots. */
 const TELESTRATION_VIEWBOX_WIDTH = 2972;
@@ -104,27 +102,18 @@ function markerCirclePath(center: MarkerPoint, radius: number): string {
   return smoothOpenPath(points);
 }
 
-const SOLID_ARROW_PATH = markerArrowPath(pointOnShot(0.17, 0.43), pointOnShot(0.445, 0.355), 46);
-const DOTTED_ARROW_PATH = markerArrowPath(pointOnShot(0.36, 0.58), pointOnShot(0.48, 0.45), -38);
-const CIRCLE_PATH = markerCirclePath(pointOnShot(0.52, 0.355), TELESTRATION_VIEWBOX_WIDTH * 0.058);
+// Fitted to the Presentation screenshot: the picture is the left-hand video,
+// and the players sit on the blue in the lower half of that frame.
+const SOLID_ARROW_PATH = markerArrowPath(pointOnShot(0.18, 0.63), pointOnShot(0.35, 0.655), 32);
+const DOTTED_ARROW_PATH = markerArrowPath(pointOnShot(0.28, 0.78), pointOnShot(0.39, 0.72), -26);
+const CIRCLE_PATH = markerCirclePath(pointOnShot(0.43, 0.665), TELESTRATION_VIEWBOX_WIDTH * 0.052);
 const SQUIGGLE_PATH = smoothOpenPath([
-  pointOnShot(0.585, 0.47),
-  pointOnShot(0.615, 0.435),
-  pointOnShot(0.65, 0.485),
-  pointOnShot(0.685, 0.44),
-  pointOnShot(0.72, 0.465),
+  pointOnShot(0.53, 0.7),
+  pointOnShot(0.56, 0.665),
+  pointOnShot(0.595, 0.715),
+  pointOnShot(0.63, 0.675),
+  pointOnShot(0.665, 0.705),
 ]);
-
-function taggingScreenshot(): ResolvedAvaModeMedia {
-  const taggingMode = AVA_MODES.find((mode) => mode.id === "tagging");
-  const media = taggingMode?.media[0];
-  if (!media) {
-    throw new Error("The tagging screenshot is required for the telestration section.");
-  }
-  return resolveAvaModeMedia(media);
-}
-
-const TELESTRATION_SCREENSHOT = taggingScreenshot();
 
 function clampUnit(value: number): number {
   return Math.min(1, Math.max(0, value));
@@ -153,7 +142,7 @@ function strokeDrawOffset(progress: number, strokeIndex: number, strokeCount: nu
   return 1 - drawnFraction;
 }
 
-function useTelestrationStrokeDraw(
+export function useTelestrationStrokeDraw(
   shotRef: RefObject<HTMLElement | null>,
   overlayRef: RefObject<SVGSVGElement | null>,
 ) {
@@ -231,7 +220,7 @@ function useTelestrationStrokeDraw(
   }, [overlayRef, shotRef]);
 }
 
-function TelestrationMarks({ overlayRef }: { overlayRef: RefObject<SVGSVGElement | null> }) {
+export function TelestrationMarks({ overlayRef }: { overlayRef: RefObject<SVGSVGElement | null> }) {
   const dottedRevealMaskId = `ava-telestration-dotted-${useId().replace(/:/g, "")}`;
   const hiddenOffset = 1;
 
@@ -295,18 +284,3 @@ function TelestrationMarks({ overlayRef }: { overlayRef: RefObject<SVGSVGElement
     </svg>
   );
 }
-
-const AvaTelestrationShot = () => {
-  const shotRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<SVGSVGElement>(null);
-  useTelestrationStrokeDraw(shotRef, overlayRef);
-
-  return (
-    <div className="ava-telestration-shot" ref={shotRef}>
-      {/* TODO(camila): telestration screenshot */}
-      <AvaModeShot media={TELESTRATION_SCREENSHOT} role="full" overlay={<TelestrationMarks overlayRef={overlayRef} />} />
-    </div>
-  );
-};
-
-export default AvaTelestrationShot;
