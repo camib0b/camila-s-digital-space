@@ -74,6 +74,24 @@ const CONTROLS_MOCKUP_IMAGE_STYLE = {
   height: "auto",
 } as const;
 
+/** Same frame as the other section screenshots: the macOS window crop. */
+const TELESTRATION_SHOT_WIDTH = 2972;
+const TELESTRATION_SHOT_HEIGHT = 1878;
+
+const TELESTRATION_SHOT_FRAME_STYLE = {
+  aspectRatio: `${TELESTRATION_SHOT_WIDTH} / ${TELESTRATION_SHOT_HEIGHT}`,
+  display: "grid",
+  placeItems: "center",
+} as const;
+
+const TELESTRATION_PLACEHOLDER_STYLE = {
+  margin: 0,
+  maxWidth: "18rem",
+  padding: "1.5rem",
+  textAlign: "center",
+  lineHeight: 1.45,
+} as const;
+
 const TAG_FLASH_DURATION_MS = 150;
 const TAG_SECTION_ROOT_MARGIN = "-8% 0px -8% 0px";
 const PHANTOM_PRESS_DOWN_MS = 120;
@@ -835,6 +853,25 @@ const Ava = () => {
               <p className="ava-section-body">{t("ava.export.result.body")}</p>
               <AvaModeShot media={resolveAvaModeMedia(AVA_EXPORTED_CLIP)} role="full" />
             </div>
+          </div>
+        </section>
+
+        <section className="ava-section">
+          <div className="ava-shell">
+            <div className="ava-section-head">
+              <p className="ava-kicker">{t("ava.telestration.kicker")}</p>
+              <h2>{t("ava.telestration.headline")}</h2>
+              <p className="ava-section-body">{t("ava.telestration.tools")}</p>
+              <p className="ava-section-body">{t("ava.telestration.behavior")}</p>
+            </div>
+            <figure className="ava-shot">
+              {/* TODO(camila): telestration screenshot */}
+              <div className="ava-shot-frame" style={TELESTRATION_SHOT_FRAME_STYLE}>
+                <p className="ava-section-body" style={TELESTRATION_PLACEHOLDER_STYLE}>
+                  {t("ava.telestration.placeholder")}
+                </p>
+              </div>
+            </figure>
           </div>
         </section>
 
