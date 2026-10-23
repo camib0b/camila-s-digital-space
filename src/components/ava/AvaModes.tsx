@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { TelestrationMarks, useTelestrationStrokeDraw } from "@/components/ava/AvaTelestrationShot";
 import {
   AVA_MODES,
   resolveAvaModeMedia,
@@ -210,6 +211,18 @@ function AnalyzingSamplePanel({ noteId }: { noteId: string }) {
   );
 }
 
+function PresentationModeShot({ media }: { media: ResolvedAvaModeMedia }) {
+  const shotRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<SVGSVGElement>(null);
+  useTelestrationStrokeDraw(shotRef, overlayRef);
+
+  return (
+    <div className="ava-telestration-shot" ref={shotRef}>
+      <AvaModeShot media={media} role="primary" overlay={<TelestrationMarks overlayRef={overlayRef} />} />
+    </div>
+  );
+}
+
 function ModeMedia({ mode }: { mode: AvaMode }) {
   if (mode.media.length === 0) {
     return (
@@ -224,7 +237,11 @@ function ModeMedia({ mode }: { mode: AvaMode }) {
 
   return (
     <div className={secondaryMedia.length > 0 ? "ava-mode-media ava-mode-gallery" : "ava-mode-media"}>
-      <AvaModeShot media={primaryShot} role="primary" />
+      {mode.id === "presentation" ? (
+        <PresentationModeShot media={primaryShot} />
+      ) : (
+        <AvaModeShot media={primaryShot} role="primary" />
+      )}
       {secondaryMedia.length > 0 ? (
         <div className="ava-mode-gallery-items" data-count={secondaryMedia.length}>
           {secondaryMedia.map((item) => (

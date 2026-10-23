@@ -81,7 +81,7 @@
   }
 }
 
-/* Marker red stays on the telestration shot. --accent is neutral gray,
+/* Marker red for the presentation-shot overlay. --accent is neutral gray,
    --accent-teal is teal, and --destructive is a danger red that darkens
    in dark mode, so none of them is the ink. */
 .ava-telestration-shot {

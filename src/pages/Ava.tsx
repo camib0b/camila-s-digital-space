@@ -16,7 +16,6 @@ import AvaConcatGraphic from "@/components/ava/AvaConcat";
 import AvaExportJobs from "@/components/ava/AvaExportJobs";
 import AvaInterestForm from "@/components/ava/AvaInterestForm";
 import AvaModes, { AvaModeShot } from "@/components/ava/AvaModes";
-import AvaTelestrationShot from "@/components/ava/AvaTelestrationShot";
 import AvaSession from "@/components/ava/AvaSession";
 import AvaStage, { AvaTimeline } from "@/components/ava/AvaStage";
 import "@/components/ava/ava.css";
@@ -841,13 +840,10 @@ const Ava = () => {
 
         <section className="ava-section">
           <div className="ava-shell">
-            <div className="ava-section-head">
-              <p className="ava-kicker">{t("ava.telestration.kicker")}</p>
-              <h2>{t("ava.telestration.headline")}</h2>
-              <p className="ava-section-body">{t("ava.telestration.tools")}</p>
-              <p className="ava-section-body">{t("ava.telestration.behavior")}</p>
-            </div>
-            <AvaTelestrationShot />
+            <p className="ava-kicker">{t("ava.telestration.kicker")}</p>
+            <h2>{t("ava.telestration.headline")}</h2>
+            <p className="ava-section-body">{t("ava.telestration.tools")}</p>
+            <p className="ava-section-body">{t("ava.telestration.behavior")}</p>
           </div>
         </section>
 
