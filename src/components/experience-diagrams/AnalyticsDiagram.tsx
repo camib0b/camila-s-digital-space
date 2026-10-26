@@ -1,8 +1,17 @@
 import { useEffect, useRef, type CSSProperties, type RefObject } from "react";
 
 const ANALYTICS_PLAYING_CLASS = "experience-analytics-playing";
+const ANALYTICS_REDRAW_CLASS = "experience-analytics-redraw";
 const CURTAIN_ANIMATION_NAME = "curtain-fall";
 const MAXIMUM_CURTAIN_WAIT_MILLISECONDS = 800;
+const ANALYTICS_RUNNING_WATCH_MILLISECONDS = 3200;
+const ANALYTICS_ANIMATION_NAMES = new Set([
+  "experience-analytics-sql",
+  "experience-analytics-tile",
+  "experience-analytics-draw",
+  "experience-analytics-number",
+  "experience-analytics-redraw-draw",
+]);
 
 function prefersReducedMotion(): boolean {
   if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
@@ -48,10 +57,37 @@ function curtainRemainingMilliseconds(roleRow: HTMLElement): number {
   return Math.min(MAXIMUM_CURTAIN_WAIT_MILLISECONDS, Math.max(0, remainingMilliseconds));
 }
 
-function playAnalyticsDiagram(diagram: SVGSVGElement) {
+function diagramHasRunningAnimation(diagram: SVGSVGElement): boolean {
+  return diagram.getAnimations({ subtree: true }).some((animation) => {
+    const animationName = "animationName" in animation ? String(animation.animationName) : "";
+    if (!ANALYTICS_ANIMATION_NAMES.has(animationName) || animation.playState !== "running") {
+      return false;
+    }
+
+    const computedTiming = animation.effect?.getComputedTiming();
+    const endTime = Number(computedTiming?.endTime ?? Number.NaN);
+    const localTime = Number(computedTiming?.localTime ?? animation.currentTime ?? Number.NaN);
+    if (Number.isFinite(endTime) && Number.isFinite(localTime) && localTime >= endTime) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
+function playAnalyticsIntro(diagram: SVGSVGElement) {
+  diagram.dataset.analyticsRunning = "true";
+  diagram.classList.remove(ANALYTICS_REDRAW_CLASS);
   diagram.classList.remove(ANALYTICS_PLAYING_CLASS);
   void diagram.getBoundingClientRect();
   diagram.classList.add(ANALYTICS_PLAYING_CLASS);
+}
+
+function replayAnalyticsMarks(diagram: SVGSVGElement) {
+  diagram.dataset.analyticsRunning = "true";
+  diagram.classList.remove(ANALYTICS_REDRAW_CLASS);
+  void diagram.getBoundingClientRect();
+  diagram.classList.add(ANALYTICS_REDRAW_CLASS);
 }
 
 function usePlayOnceInView(diagramRef: RefObject<SVGSVGElement>) {
@@ -69,7 +105,29 @@ function usePlayOnceInView(diagramRef: RefObject<SVGSVGElement>) {
     }
 
     let playTimer = 0;
+    let runningWatchTimer = 0;
     let viewPlayIsPending = false;
+
+    const watchAnalyticsRunning = () => {
+      window.clearTimeout(runningWatchTimer);
+      runningWatchTimer = window.setTimeout(() => {
+        if (!diagramHasRunningAnimation(diagram)) {
+          diagram.dataset.analyticsRunning = "false";
+        }
+      }, ANALYTICS_RUNNING_WATCH_MILLISECONDS);
+    };
+
+    const playFromPointer = () => {
+      if (viewPlayIsPending || diagram.dataset.analyticsRunning === "true") {
+        return;
+      }
+      if (diagram.classList.contains(ANALYTICS_PLAYING_CLASS)) {
+        replayAnalyticsMarks(diagram);
+      } else {
+        playAnalyticsIntro(diagram);
+      }
+      watchAnalyticsRunning();
+    };
 
     const playOnceFromView = () => {
       if (hasPlayedOnViewRef.current) {
@@ -80,22 +138,38 @@ function usePlayOnceInView(diagramRef: RefObject<SVGSVGElement>) {
       window.clearTimeout(playTimer);
       playTimer = window.setTimeout(() => {
         viewPlayIsPending = false;
-        playAnalyticsDiagram(diagram);
+        if (diagram.dataset.analyticsRunning === "true" || diagram.classList.contains(ANALYTICS_PLAYING_CLASS)) {
+          return;
+        }
+        playAnalyticsIntro(diagram);
+        watchAnalyticsRunning();
       }, curtainRemainingMilliseconds(roleRow));
     };
 
     const playOnPointerEnter = (event: PointerEvent) => {
-      if (event.pointerType === "touch" || viewPlayIsPending) {
+      if (event.pointerType === "touch") {
         return;
       }
-      playAnalyticsDiagram(diagram);
+      playFromPointer();
     };
 
     const playOnTouchEnd = (event: PointerEvent) => {
-      if (event.pointerType !== "touch" || viewPlayIsPending) {
+      if (event.pointerType !== "touch") {
         return;
       }
-      playAnalyticsDiagram(diagram);
+      playFromPointer();
+    };
+
+    const handleAnimationEnd = (event: AnimationEvent) => {
+      if (!ANALYTICS_ANIMATION_NAMES.has(event.animationName)) {
+        return;
+      }
+      window.requestAnimationFrame(() => {
+        if (!diagramHasRunningAnimation(diagram)) {
+          diagram.dataset.analyticsRunning = "false";
+          window.clearTimeout(runningWatchTimer);
+        }
+      });
     };
 
     const observer = new IntersectionObserver(
@@ -113,12 +187,15 @@ function usePlayOnceInView(diagramRef: RefObject<SVGSVGElement>) {
     observer.observe(roleRow);
     roleRow.addEventListener("pointerenter", playOnPointerEnter);
     roleRow.addEventListener("pointerup", playOnTouchEnd);
+    diagram.addEventListener("animationend", handleAnimationEnd);
 
     return () => {
       window.clearTimeout(playTimer);
+      window.clearTimeout(runningWatchTimer);
       observer.disconnect();
       roleRow.removeEventListener("pointerenter", playOnPointerEnter);
       roleRow.removeEventListener("pointerup", playOnTouchEnd);
+      diagram.removeEventListener("animationend", handleAnimationEnd);
     };
   }, [diagramRef]);
 }
