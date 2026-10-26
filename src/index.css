@@ -549,7 +549,8 @@ button.theme-toggle:active {
 .experience-analytics-tile,
 .experience-commerce-package,
 .experience-commerce-scan,
-.experience-hotel-lens,
+.experience-hotel-mark,
+.experience-hotel-kpi,
 .experience-interface-source,
 .experience-interface-card {
   transform-box: view-box;
@@ -578,8 +579,18 @@ button.theme-toggle:active {
 .experience-analytics-playing .experience-analytics-line,
 .experience-analytics-playing .experience-analytics-number {
   animation-duration: 2.4s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: forwards;
+}
+
+.experience-analytics-playing .experience-analytics-sql,
+.experience-analytics-playing .experience-analytics-tile,
+.experience-analytics-playing .experience-analytics-mark,
+.experience-analytics-playing .experience-analytics-line {
+  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.experience-analytics-playing .experience-analytics-number {
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .experience-analytics-playing .experience-analytics-sql {
@@ -587,11 +598,11 @@ button.theme-toggle:active {
 }
 
 .experience-analytics-playing .experience-analytics-sql-metric {
-  animation-delay: 0.14s;
+  animation-delay: 0.07s;
 }
 
 .experience-analytics-playing .experience-analytics-sql-group {
-  animation-delay: 0.28s;
+  animation-delay: 0.14s;
 }
 
 .experience-analytics-playing .experience-analytics-tile {
@@ -613,6 +624,23 @@ button.theme-toggle:active {
 
 .experience-analytics-playing .experience-analytics-number {
   animation-name: experience-analytics-number;
+}
+
+.experience-analytics-redraw .experience-analytics-mark,
+.experience-analytics-redraw .experience-analytics-line {
+  animation-name: experience-analytics-redraw-draw;
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  animation-fill-mode: forwards;
+  animation-delay: 0s;
+}
+
+.experience-analytics-redraw .experience-analytics-mark-middle {
+  animation-delay: 0.07s;
+}
+
+.experience-analytics-redraw .experience-analytics-mark-late {
+  animation-delay: 0.14s;
 }
 
 @keyframes experience-analytics-sql {
@@ -673,6 +701,15 @@ button.theme-toggle:active {
   }
 }
 
+@keyframes experience-analytics-redraw-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .experience-commerce-package {
   transform: translate(16px, 23px);
 }
@@ -681,17 +718,9 @@ button.theme-toggle:active {
   opacity: 0;
 }
 
-.experience-hotel-lens {
-  transform: translate(82px, 20px);
-}
-
-.experience-hotel-metric {
+.experience-hotel-mark,
+.experience-hotel-kpi {
   opacity: 0;
-}
-
-.experience-hotel-ring {
-  stroke: hsl(var(--foreground));
-  transition: stroke 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .experience-interface-code {
@@ -705,46 +734,42 @@ button.theme-toggle:active {
 }
 
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-package {
-  animation: experience-commerce-package 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: experience-commerce-package 2.4s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 }
 
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-scan {
   animation: experience-commerce-scan 2.4s linear forwards;
 }
 
-[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-lens,
-[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric {
-  animation-duration: 2.8s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-mark,
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-kpi {
+  animation-duration: 1.7s;
+  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
   animation-fill-mode: forwards;
 }
 
-[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-lens {
-  animation-name: experience-hotel-lens;
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-mark {
+  animation-name: experience-hotel-mark;
 }
 
-[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-occupancy {
-  animation-name: experience-hotel-occupancy;
-}
-
-[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-rate {
-  animation-name: experience-hotel-rate;
-}
-
-[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-yield {
-  animation-name: experience-hotel-yield;
-}
-
-[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-ring {
-  stroke: hsl(var(--accent-teal));
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-kpi {
+  animation-name: experience-hotel-kpi;
 }
 
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-code,
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-source,
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-card {
   animation-duration: 2.1s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: forwards;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-code,
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-source {
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-card {
+  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-code {
@@ -763,30 +788,26 @@ button.theme-toggle:active {
   [data-experience-role]:hover:not([data-experience-touch="on"]) :is(
       .experience-commerce-package,
       .experience-commerce-scan,
-      .experience-hotel-lens,
-      .experience-hotel-metric,
+      .experience-hotel-mark,
+      .experience-hotel-kpi,
       .experience-interface-code,
       .experience-interface-source,
       .experience-interface-card
     ) {
     animation: none;
   }
-
-  [data-experience-role]:hover:not([data-experience-touch="on"]) .experience-hotel-ring {
-    stroke: hsl(var(--foreground));
-  }
 }
 
 @keyframes experience-commerce-package {
   0%,
-  26% {
+  8% {
     transform: translate(16px, 23px);
   }
-  37%,
-  63% {
+  19%,
+  45% {
     transform: translate(92px, 16px);
   }
-  74%,
+  56%,
   100% {
     transform: translate(148px, 26px);
   }
@@ -794,82 +815,55 @@ button.theme-toggle:active {
 
 @keyframes experience-commerce-scan {
   0%,
-  36% {
+  18% {
     opacity: 0;
     transform: translateY(-3px);
   }
-  42% {
+  24% {
     opacity: 1;
     transform: translateY(-3px);
   }
-  58% {
-    opacity: 1;
-    transform: translateY(3px);
-  }
-  66%,
-  100% {
-    opacity: 0;
-    transform: translateY(3px);
-  }
-}
-
-@keyframes experience-hotel-lens {
-  0%,
-  6% {
-    transform: translate(82px, 20px);
-  }
-  16%,
-  38% {
-    transform: translate(30px, 24px);
-  }
-  48%,
-  68% {
-    transform: translate(30px, 36px);
-  }
-  78%,
-  100% {
-    transform: translate(30px, 44px);
-  }
-}
-
-@keyframes experience-hotel-occupancy {
-  0%,
-  14% {
-    opacity: 0;
-  }
-  20%,
   40% {
     opacity: 1;
+    transform: translateY(3px);
   }
-  46%,
+  47%,
   100% {
     opacity: 0;
+    transform: translateY(3px);
   }
 }
 
-@keyframes experience-hotel-rate {
-  0%,
+@keyframes experience-hotel-mark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 3px);
+  }
+  14% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
   46% {
-    opacity: 0;
-  }
-  52%,
-  70% {
     opacity: 1;
+    transform: translate(var(--mark-travel-x), var(--mark-travel-y));
   }
-  76%,
+  68%,
   100% {
     opacity: 0;
+    transform: translate(var(--mark-travel-x), var(--mark-travel-y));
   }
 }
 
-@keyframes experience-hotel-yield {
+@keyframes experience-hotel-kpi {
   0%,
-  74% {
+  40% {
     opacity: 0;
+    transform: translateY(3px);
   }
-  84%,
+  62%,
   100% {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -935,6 +929,8 @@ button.theme-toggle:active {
 
   .experience-analytics-playing .experience-analytics-mark,
   .experience-analytics-playing .experience-analytics-line,
+  .experience-analytics-redraw .experience-analytics-mark,
+  .experience-analytics-redraw .experience-analytics-line,
   .experience-analytics-mark,
   .experience-analytics-line {
     animation: none;
@@ -954,27 +950,18 @@ button.theme-toggle:active {
     transform: none;
   }
 
-  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-lens,
-  .experience-hotel-lens {
-    animation: none;
-    transform: translate(30px, 44px);
-  }
-
-  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric,
-  .experience-hotel-metric {
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-mark,
+  .experience-hotel-mark {
     animation: none;
     opacity: 0;
+    transform: none;
   }
 
-  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-yield,
-  .experience-hotel-metric-yield {
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-kpi,
+  .experience-hotel-kpi {
+    animation: none;
     opacity: 1;
-  }
-
-  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-ring,
-  .experience-hotel-ring {
-    transition: none;
-    stroke: hsl(var(--accent-teal));
+    transform: none;
   }
 
   [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-code,
