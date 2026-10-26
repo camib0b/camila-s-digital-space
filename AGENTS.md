@@ -42,3 +42,12 @@ are already installed when an agent starts.
 - `portfolio-api` local setup: copy `portfolio-api/.dev.vars.example` to `portfolio-api/.dev.vars`, then seed the local D1 DB from the repo-root schema: `cd portfolio-api && npx wrangler d1 execute portfolio-holdings --local --file=../schema.sql`. `GET /api/portfolio` then works even without a Finnhub key (quote prices fall back to `0`, see `src/quotes.ts`); the `/api/portfolio/ai-insight` endpoint additionally needs the `AI`/`XAI_API_KEY` path.
 - After editing `portfolio-api/data/camila-stock-portfolio.csv`, follow the **portfolio-ledger-sync** skill (`.cursor/skills/portfolio-ledger-sync/SKILL.md`) so `ledger.json`, `ledger-seed.sql`, `schema.sql`, and remote D1 stay aligned.
 - `.dev.vars` is git-ignored; never commit real secret values.
+
+## UI rule: state contrast (applies to every UI change)
+
+Before opening a PR that adds or changes any text, icon or control:
+
+- Check it against every background it can appear on: default, selected/active, hover, focus, disabled, and light/dark if both exist.
+- In each state, use the same color token as the sibling text in that state (for example, the selected row's foreground token), never a fixed muted color that only works on the default background.
+- Meet WCAG contrast: at least 4.5:1 for text and 3:1 for icons and other UI parts.
+- State in the PR description which states were checked.
