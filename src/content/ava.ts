@@ -38,7 +38,7 @@ export const MATCH_MINUTES = 60;
 export const AVA_FOLLOW_UPS = [
   { id: "result", es: "Resultado", en: "Result", bodyKey: "ava.follow.result" },
   { id: "zone", es: "Zona", en: "Zone", bodyKey: "ava.follow.zone" },
-  { id: "action", es: "Tipo de acción", en: "Action type", bodyKey: "ava.follow.action" },
+  { id: "action", es: "Acción", en: "Action type", bodyKey: "ava.follow.action" },
   { id: "notes", es: "Notas", en: "Notes", bodyKey: "ava.follow.notes" },
 ] as const;
 
