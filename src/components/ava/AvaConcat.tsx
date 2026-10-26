@@ -418,7 +418,6 @@ const AvaConcatGraphic = () => {
         </div>
       </div>
 
-      <figcaption className="ava-concat-caption">{t("ava.concat.cta")}</figcaption>
     </figure>
   );
 };

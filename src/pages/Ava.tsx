@@ -767,7 +767,6 @@ const Ava = () => {
                 {t("ava.cta.access")}
               </a>
             </div>
-            <p className="ava-meta">{t("ava.hero.meta")}</p>
           </div>
           <AvaStage caption={t("ava.stage.caption")} />
         </section>
@@ -786,7 +785,6 @@ const Ava = () => {
             <div className="ava-concat">
               <div className="ava-concat-copy">
                 <p className="ava-section-body">{t("ava.concat.body")}</p>
-                <p className="ava-concat-diff">{t("ava.concat.differentiator")}</p>
               </div>
               <AvaConcatGraphic />
             </div>
