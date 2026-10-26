@@ -541,3 +541,454 @@ button.theme-toggle:active {
     clip-path: none;
   }
 }
+
+/* Experience diagrams. Fixed 60px frames beside the role header.
+   ACFIN runs from .experience-analytics-playing. The other three run while
+   the role row is hovered or tapped. Reduced motion holds the finished frame. */
+.experience-analytics-sql,
+.experience-analytics-tile,
+.experience-commerce-package,
+.experience-commerce-scan,
+.experience-hotel-lens,
+.experience-interface-source,
+.experience-interface-card {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.experience-analytics-sql,
+.experience-analytics-tile,
+.experience-analytics-number {
+  opacity: 0;
+}
+
+.experience-analytics-tile {
+  transform: translateX(var(--tile-shift, 0px));
+}
+
+.experience-analytics-mark,
+.experience-analytics-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.experience-analytics-playing .experience-analytics-sql,
+.experience-analytics-playing .experience-analytics-tile,
+.experience-analytics-playing .experience-analytics-mark,
+.experience-analytics-playing .experience-analytics-line,
+.experience-analytics-playing .experience-analytics-number {
+  animation-duration: 2.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+}
+
+.experience-analytics-playing .experience-analytics-sql {
+  animation-name: experience-analytics-sql;
+}
+
+.experience-analytics-playing .experience-analytics-sql-metric {
+  animation-delay: 0.14s;
+}
+
+.experience-analytics-playing .experience-analytics-sql-group {
+  animation-delay: 0.28s;
+}
+
+.experience-analytics-playing .experience-analytics-tile {
+  animation-name: experience-analytics-tile;
+}
+
+.experience-analytics-playing .experience-analytics-mark,
+.experience-analytics-playing .experience-analytics-line {
+  animation-name: experience-analytics-draw;
+}
+
+.experience-analytics-playing .experience-analytics-mark-middle {
+  animation-delay: 0.08s;
+}
+
+.experience-analytics-playing .experience-analytics-mark-late {
+  animation-delay: 0.16s;
+}
+
+.experience-analytics-playing .experience-analytics-number {
+  animation-name: experience-analytics-number;
+}
+
+@keyframes experience-analytics-sql {
+  0% {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  24% {
+    opacity: 1;
+    transform: translateX(18px);
+  }
+  40% {
+    opacity: 0;
+    transform: translateX(44px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(44px);
+  }
+}
+
+@keyframes experience-analytics-tile {
+  0%,
+  42% {
+    opacity: 0;
+    transform: translateX(var(--tile-shift, 0px));
+  }
+  64%,
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes experience-analytics-draw {
+  0%,
+  52% {
+    stroke-dashoffset: 1;
+  }
+  78%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes experience-analytics-number {
+  0%,
+  58% {
+    opacity: 0;
+  }
+  76%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.experience-commerce-package {
+  transform: translate(16px, 23px);
+}
+
+.experience-commerce-scan {
+  opacity: 0;
+}
+
+.experience-hotel-lens {
+  transform: translate(82px, 20px);
+}
+
+.experience-hotel-metric {
+  opacity: 0;
+}
+
+.experience-hotel-ring {
+  stroke: hsl(var(--foreground));
+  transition: stroke 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.experience-interface-code {
+  opacity: 1;
+}
+
+.experience-interface-source,
+.experience-interface-card {
+  opacity: 0;
+  transform: translate(50px, 24px);
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-package {
+  animation: experience-commerce-package 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-scan {
+  animation: experience-commerce-scan 2.4s linear forwards;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-lens,
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric {
+  animation-duration: 2.8s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-lens {
+  animation-name: experience-hotel-lens;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-occupancy {
+  animation-name: experience-hotel-occupancy;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-rate {
+  animation-name: experience-hotel-rate;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-yield {
+  animation-name: experience-hotel-yield;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-ring {
+  stroke: hsl(var(--accent-teal));
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-code,
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-source,
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-card {
+  animation-duration: 2.1s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-code {
+  animation-name: experience-interface-code;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-source {
+  animation-name: experience-interface-source;
+}
+
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-card {
+  animation-name: experience-interface-card;
+}
+
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  [data-experience-role]:hover:not([data-experience-touch="on"]) :is(
+      .experience-commerce-package,
+      .experience-commerce-scan,
+      .experience-hotel-lens,
+      .experience-hotel-metric,
+      .experience-interface-code,
+      .experience-interface-source,
+      .experience-interface-card
+    ) {
+    animation: none;
+  }
+
+  [data-experience-role]:hover:not([data-experience-touch="on"]) .experience-hotel-ring {
+    stroke: hsl(var(--foreground));
+  }
+}
+
+@keyframes experience-commerce-package {
+  0%,
+  26% {
+    transform: translate(16px, 23px);
+  }
+  37%,
+  63% {
+    transform: translate(92px, 16px);
+  }
+  74%,
+  100% {
+    transform: translate(148px, 26px);
+  }
+}
+
+@keyframes experience-commerce-scan {
+  0%,
+  36% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  42% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+  58% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+  66%,
+  100% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+@keyframes experience-hotel-lens {
+  0%,
+  6% {
+    transform: translate(82px, 20px);
+  }
+  16%,
+  38% {
+    transform: translate(30px, 24px);
+  }
+  48%,
+  68% {
+    transform: translate(30px, 36px);
+  }
+  78%,
+  100% {
+    transform: translate(30px, 44px);
+  }
+}
+
+@keyframes experience-hotel-occupancy {
+  0%,
+  14% {
+    opacity: 0;
+  }
+  20%,
+  40% {
+    opacity: 1;
+  }
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes experience-hotel-rate {
+  0%,
+  46% {
+    opacity: 0;
+  }
+  52%,
+  70% {
+    opacity: 1;
+  }
+  76%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes experience-hotel-yield {
+  0%,
+  74% {
+    opacity: 0;
+  }
+  84%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes experience-interface-code {
+  0%,
+  20% {
+    opacity: 1;
+  }
+  34%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes experience-interface-source {
+  0%,
+  26% {
+    opacity: 0;
+  }
+  36%,
+  50% {
+    opacity: 1;
+  }
+  64%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes experience-interface-card {
+  0%,
+  46% {
+    opacity: 0;
+    transform: translate(50px, 24px);
+  }
+  56% {
+    opacity: 1;
+    transform: translate(50px, 24px);
+  }
+  78%,
+  100% {
+    opacity: 1;
+    transform: translate(var(--card-end-x), var(--card-end-y));
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .experience-analytics-playing .experience-analytics-sql,
+  .experience-analytics-sql {
+    animation: none;
+    opacity: 0;
+    transform: none;
+  }
+
+  .experience-analytics-playing .experience-analytics-tile,
+  .experience-analytics-tile,
+  .experience-analytics-playing .experience-analytics-number,
+  .experience-analytics-number {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .experience-analytics-playing .experience-analytics-mark,
+  .experience-analytics-playing .experience-analytics-line,
+  .experience-analytics-mark,
+  .experience-analytics-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-package,
+  .experience-commerce-package {
+    animation: none;
+    transform: translate(148px, 26px);
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-scan,
+  .experience-commerce-scan {
+    animation: none;
+    opacity: 0;
+    transform: none;
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-lens,
+  .experience-hotel-lens {
+    animation: none;
+    transform: translate(30px, 44px);
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric,
+  .experience-hotel-metric {
+    animation: none;
+    opacity: 0;
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-metric-yield,
+  .experience-hotel-metric-yield {
+    opacity: 1;
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-ring,
+  .experience-hotel-ring {
+    transition: none;
+    stroke: hsl(var(--accent-teal));
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-code,
+  .experience-interface-code,
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-source,
+  .experience-interface-source {
+    animation: none;
+    opacity: 0;
+  }
+
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-interface-card,
+  .experience-interface-card {
+    animation: none;
+    opacity: 1;
+    transform: translate(var(--card-end-x), var(--card-end-y));
+  }
+}
