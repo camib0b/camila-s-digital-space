@@ -29,14 +29,18 @@ function curtainRemainingMilliseconds(roleRow: HTMLElement): number {
   }
 
   const curtainAnimation = roleRow.getAnimations().find(isCurtainAnimation);
+  if (curtainAnimation?.playState === "finished") {
+    return 0;
+  }
+
   const computedTiming = curtainAnimation?.effect?.getComputedTiming();
   if (!computedTiming) {
     return Math.min(MAXIMUM_CURTAIN_WAIT_MILLISECONDS, declaredCurtainMilliseconds(roleRow));
   }
 
   const endTime = Number(computedTiming.endTime ?? 0);
-  const currentTime = Number(computedTiming.currentTime ?? 0);
-  const remainingMilliseconds = endTime - currentTime;
+  const localTime = Number(computedTiming.localTime ?? curtainAnimation?.currentTime ?? 0);
+  const remainingMilliseconds = endTime - localTime;
   if (!Number.isFinite(remainingMilliseconds)) {
     return 0;
   }
