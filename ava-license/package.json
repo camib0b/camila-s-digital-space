@@ -1,0 +1,20 @@
+{
+  "name": "ava-license",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev",
+    "test": "node --experimental-strip-types --test src/*.test.ts",
+    "eval:tools": "node --experimental-strip-types eval/eval-tools.ts",
+    "cf-typegen": "wrangler types",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.81.1"
+  }
+}
