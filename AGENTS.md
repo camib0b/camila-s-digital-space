@@ -13,7 +13,7 @@ For any UI change, run the break-ui skill (`.cursor/skills/break-ui/SKILL.md`) a
 
 ## Cursor Cloud specific instructions
 
-This repository is the personal website for camilaescudero.cl. It contains four
+This repository is the personal website for camilaescudero.cl. It contains five
 independently-installed Node/npm projects, each with its own `package.json` and
 lockfile:
 
@@ -22,10 +22,10 @@ lockfile:
 | Frontend | repo root | Vite + React + TS + shadcn-ui site (the main product) | `npm run dev` (port 8080), `npm run lint`, `npm run build` — see `package.json` |
 | `portfolio-api` | `portfolio-api/` | Cloudflare Worker (D1 + Workers AI + Finnhub/xAI/GitHub) | `npx wrangler dev`, `npx wrangler deploy` — see `portfolio-api/README.md` |
 | `ava-checkout` | `ava-checkout/` | Cloudflare Worker (MercadoPago checkout + license email) | `npx wrangler dev`, `npx wrangler deploy` — see `ava-checkout/README.md` |
+| `ava-license` | `ava-license/` | Cloudflare Worker (AVA license tokens + game-metadata suggestions) | `npm test`, `npm run typecheck`, `npx wrangler deploy --dry-run` — see `ava-license/README.md` |
 | `mcp` | `mcp/` | Cloudflare Worker MCP server with OAuth | `npm run dev`, `npx wrangler deploy` — see `mcp/README.md` |
 
-The startup update script runs `npm ci` in all four directories, so dependencies
-are already installed when an agent starts.
+The startup update script runs `npm ci` in the original four directories. `ava-license` is newer: run `npm ci` there too if `node_modules` is missing.
 
 ### Frontend (main product)
 
@@ -34,9 +34,9 @@ are already installed when an agent starts.
 - AVA checkout (`/ava`) posts to `VITE_AVA_CHECKOUT_URL` or `/api/ava` (see `src/lib/avaCheckoutApi.ts`). Payment, license-admin, and mail secrets live only in `ava-checkout`. The trial `.dmg` URL is public `VITE_AVA_DMG_URL`.
 - Lint reports only warnings (0 errors); it also lints the workers' generated `worker-configuration.d.ts`, which is expected.
 
-### Cloudflare Workers (`portfolio-api`, `ava-checkout`, and `mcp`)
+### Cloudflare Workers (`portfolio-api`, `ava-checkout`, `ava-license`, and `mcp`)
 
-- All three bundle/typecheck without credentials via `npx wrangler deploy --dry-run` (good for CI-style verification).
+- All four bundle/typecheck without credentials via `npx wrangler deploy --dry-run` (good for CI-style verification). `ava-license` has no remote bindings, so the dry run does not open a Cloudflare login.
 - Running `npx wrangler dev` locally requires a real Cloudflare account. `portfolio-api` has a remote `AI` binding and `mcp` has a remote `OAUTH_KV` binding; with no credentials, `wrangler dev` launches an interactive OAuth browser flow at startup and then fails (`A request to the Cloudflare API (/memberships) failed`). Set `CLOUDFLARE_API_TOKEN` (Worker/D1/KV/AI scopes) to run them locally.
 - `ava-checkout` local setup: copy `ava-checkout/.dev.vars.example` to `ava-checkout/.dev.vars`. Create the `PAYMENTS` KV namespace and set `AVA_PRICE_CLP` before taking real payments. Email Sending must be enabled for `camilaescudero.cl` (`npx wrangler email sending enable camilaescudero.cl`).
 - `portfolio-api` local setup: copy `portfolio-api/.dev.vars.example` to `portfolio-api/.dev.vars`, then seed the local D1 DB from the repo-root schema: `cd portfolio-api && npx wrangler d1 execute portfolio-holdings --local --file=../schema.sql`. `GET /api/portfolio` then works even without a Finnhub key (quote prices fall back to `0`, see `src/quotes.ts`); the `/api/portfolio/ai-insight` endpoint additionally needs the `AI`/`XAI_API_KEY` path.
