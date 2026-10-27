@@ -3,8 +3,10 @@ import type { CSSProperties } from "react";
 const hotelBaseline = 54;
 const hotelWidth = 12;
 const hotelRoofHeight = 5;
-const portfolioKpiX = 84;
-const portfolioKpiY = 16;
+const metricCenterX = 140;
+const metricCenterY = 34;
+const metricFontSize = 17;
+const metricLineGap = 16;
 
 const hotels = [
   { originX: 4, bodyHeight: 16, markDelay: "0s" },
@@ -41,8 +43,8 @@ function HotelMetricMark({
   const markX = originX + hotelWidth / 2;
   const markY = roofPeakY - 3;
   const markStyle = {
-    "--mark-travel-x": `${portfolioKpiX + 6 - markX}px`,
-    "--mark-travel-y": `${portfolioKpiY - markY}px`,
+    "--mark-travel-x": `${metricCenterX - markX}px`,
+    "--mark-travel-y": `${metricCenterY - markY}px`,
     animationDelay: markDelay,
   } as CSSProperties;
 
@@ -78,13 +80,19 @@ const HotelDiagram = () => {
         />
       ))}
       <text
-        x={portfolioKpiX}
-        y={portfolioKpiY}
-        fontSize="7"
-        dominantBaseline="middle"
-        className="experience-hotel-kpi fill-accent-teal stroke-none font-medium"
+        x={metricCenterX}
+        y={metricCenterY - metricLineGap}
+        textAnchor="middle"
+        fontSize={metricFontSize}
+        className="experience-hotel-kpi fill-foreground stroke-none font-medium"
       >
-        Occ 82% · ADR $118 · RevPAR $97
+        <tspan x={metricCenterX}>Occ 82%</tspan>
+        <tspan x={metricCenterX} dy={metricLineGap}>
+          ADR $118
+        </tspan>
+        <tspan x={metricCenterX} dy={metricLineGap}>
+          RevPAR $97
+        </tspan>
       </text>
     </svg>
   );

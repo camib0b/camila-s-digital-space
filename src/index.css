@@ -547,6 +547,7 @@ button.theme-toggle:active {
    the role row is hovered or tapped. Reduced motion holds the finished frame. */
 .experience-analytics-sql,
 .experience-analytics-tile,
+.experience-commerce-payment,
 .experience-commerce-package,
 .experience-commerce-scan,
 .experience-hotel-mark,
@@ -579,18 +580,8 @@ button.theme-toggle:active {
 .experience-analytics-playing .experience-analytics-line,
 .experience-analytics-playing .experience-analytics-number {
   animation-duration: 2.4s;
+  animation-timing-function: var(--ease-out-strong);
   animation-fill-mode: forwards;
-}
-
-.experience-analytics-playing .experience-analytics-sql,
-.experience-analytics-playing .experience-analytics-tile,
-.experience-analytics-playing .experience-analytics-mark,
-.experience-analytics-playing .experience-analytics-line {
-  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-.experience-analytics-playing .experience-analytics-number {
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .experience-analytics-playing .experience-analytics-sql {
@@ -630,7 +621,7 @@ button.theme-toggle:active {
 .experience-analytics-redraw .experience-analytics-line {
   animation-name: experience-analytics-redraw-draw;
   animation-duration: 0.8s;
-  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  animation-timing-function: var(--ease-out-strong);
   animation-fill-mode: forwards;
   animation-delay: 0s;
 }
@@ -646,33 +637,33 @@ button.theme-toggle:active {
 @keyframes experience-analytics-sql {
   0% {
     opacity: 0;
-    transform: translateX(-4px);
+    transform: translateX(-56px);
   }
-  10% {
+  16% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(-16px);
   }
-  24% {
+  34% {
     opacity: 1;
-    transform: translateX(18px);
+    transform: translateX(28px);
   }
-  40% {
+  48% {
     opacity: 0;
-    transform: translateX(44px);
+    transform: translateX(72px);
   }
   100% {
     opacity: 0;
-    transform: translateX(44px);
+    transform: translateX(72px);
   }
 }
 
 @keyframes experience-analytics-tile {
   0%,
-  42% {
+  50% {
     opacity: 0;
     transform: translateX(var(--tile-shift, 0px));
   }
-  64%,
+  72%,
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -681,10 +672,10 @@ button.theme-toggle:active {
 
 @keyframes experience-analytics-draw {
   0%,
-  52% {
+  60% {
     stroke-dashoffset: 1;
   }
-  78%,
+  86%,
   100% {
     stroke-dashoffset: 0;
   }
@@ -692,10 +683,10 @@ button.theme-toggle:active {
 
 @keyframes experience-analytics-number {
   0%,
-  58% {
+  66% {
     opacity: 0;
   }
-  76%,
+  84%,
   100% {
     opacity: 1;
   }
@@ -710,7 +701,12 @@ button.theme-toggle:active {
   }
 }
 
+.experience-commerce-payment {
+  transform: translate(16px, 0px);
+}
+
 .experience-commerce-package {
+  opacity: 0;
   transform: translate(16px, 23px);
 }
 
@@ -733,12 +729,16 @@ button.theme-toggle:active {
   transform: translate(50px, 24px);
 }
 
+[data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-payment {
+  animation: experience-commerce-payment 3s var(--ease-out-strong) forwards;
+}
+
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-package {
-  animation: experience-commerce-package 2.4s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  animation: experience-commerce-package 3s var(--ease-out-strong) forwards;
 }
 
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-scan {
-  animation: experience-commerce-scan 2.4s linear forwards;
+  animation: experience-commerce-scan 3s linear forwards;
 }
 
 [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-hotel-mark,
@@ -786,6 +786,7 @@ button.theme-toggle:active {
 
 @media (hover: none) and (prefers-reduced-motion: no-preference) {
   [data-experience-role]:hover:not([data-experience-touch="on"]) :is(
+      .experience-commerce-payment,
       .experience-commerce-package,
       .experience-commerce-scan,
       .experience-hotel-mark,
@@ -798,36 +799,61 @@ button.theme-toggle:active {
   }
 }
 
-@keyframes experience-commerce-package {
-  0%,
-  8% {
+@keyframes experience-commerce-payment {
+  0% {
+    opacity: 1;
+    transform: translate(16px, 0px);
+  }
+  14%,
+  16% {
+    opacity: 1;
     transform: translate(16px, 23px);
   }
-  19%,
-  45% {
+  23%,
+  100% {
+    opacity: 0;
+    transform: translate(16px, 23px);
+  }
+}
+
+@keyframes experience-commerce-package {
+  0%,
+  16% {
+    opacity: 0;
+    transform: translate(16px, 23px);
+  }
+  23%,
+  29% {
+    opacity: 1;
+    transform: translate(16px, 23px);
+  }
+  38%,
+  58% {
+    opacity: 1;
     transform: translate(92px, 16px);
   }
-  56%,
+  66%,
   100% {
+    opacity: 1;
     transform: translate(148px, 26px);
   }
 }
 
 @keyframes experience-commerce-scan {
   0%,
-  18% {
+  37% {
     opacity: 0;
     transform: translateY(-3px);
   }
-  24% {
+  42% {
     opacity: 1;
     transform: translateY(-3px);
   }
-  40% {
+  54% {
     opacity: 1;
     transform: translateY(3px);
   }
-  47%,
+  59%,
   100% {
     opacity: 0;
     transform: translateY(3px);
@@ -937,9 +963,17 @@ button.theme-toggle:active {
     stroke-dashoffset: 0;
   }
 
+  [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-payment,
+  .experience-commerce-payment {
+    animation: none;
+    opacity: 0;
+    transform: none;
+  }
+
   [data-experience-role]:is(:hover, [data-experience-touch="on"]) .experience-commerce-package,
   .experience-commerce-package {
     animation: none;
+    opacity: 1;
     transform: translate(148px, 26px);
   }
 
