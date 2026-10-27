@@ -1,4 +1,4 @@
-import type { GithubContributionWeek } from "@/types/githubContributions";
+import type { GithubContributionMonth, GithubContributionWeek } from "@/types/githubContributions";
 
 export const HERO_CONTRIBUTION_GAP_TO_CELL_RATIO = 1 / 5;
 const HERO_CELL_SIZE_PX = { base: 4, md: 6 } as const;
@@ -29,18 +29,76 @@ export function heroContributionLayout(titleWidthPx: number, viewportIsMd: boole
   return { cellSizePx, gapPx, targetWeekCount };
 }
 
-/** Real weeks are trailing (newest on the right); `null` pads older columns on the left. */
+export function heroContributionGridWidthPx(
+  columnCount: number,
+  cellSizePx: number,
+  gapPx: number
+): number {
+  if (columnCount <= 0) {
+    return 0;
+  }
+
+  return columnCount * cellSizePx + Math.max(0, columnCount - 1) * gapPx;
+}
+
+function monthForWeekFirstDay(
+  weekFirstDay: string,
+  months: GithubContributionMonth[]
+): GithubContributionMonth | undefined {
+  if (months.length === 0) {
+    return undefined;
+  }
+
+  const sortedMonths = [...months].sort((left, right) => left.firstDay.localeCompare(right.firstDay));
+  let matched = sortedMonths[0];
+
+  for (const month of sortedMonths) {
+    if (weekFirstDay >= month.firstDay) {
+      matched = month;
+    }
+  }
+
+  return matched;
+}
+
+/** Weeks in the leftmost month of a trailing window (dropped so recent days stay visible). */
+export function leadingWeekCountInOldestDisplayedMonth(
+  trailingWeeks: GithubContributionWeek[],
+  months: GithubContributionMonth[]
+): number {
+  if (trailingWeeks.length === 0 || months.length === 0) {
+    return 0;
+  }
+
+  const oldestMonthKey = monthForWeekFirstDay(trailingWeeks[0].firstDay, months)?.firstDay;
+  if (!oldestMonthKey) {
+    return 0;
+  }
+
+  let count = 0;
+  for (const week of trailingWeeks) {
+    const monthKey = monthForWeekFirstDay(week.firstDay, months)?.firstDay;
+    if (monthKey !== oldestMonthKey) {
+      break;
+    }
+    count += 1;
+  }
+
+  return count;
+}
+
+/** Trailing weeks (newest on the right), minus the leftmost month in that window. */
 export function buildHeroContributionColumns(
   weeks: GithubContributionWeek[],
-  targetWeekCount: number
-): Array<GithubContributionWeek | null> {
-  if (targetWeekCount < 1) {
+  targetWeekCount: number,
+  months: GithubContributionMonth[] = []
+): GithubContributionWeek[] {
+  if (targetWeekCount < 1 || weeks.length === 0) {
     return [];
   }
 
-  const trailingWeeks = weeks.slice(-targetWeekCount);
-  const paddingWeekCount = Math.max(0, targetWeekCount - trailingWeeks.length);
-  const paddingColumns = Array.from({ length: paddingWeekCount }, () => null);
+  const tentativeTrailing = weeks.slice(-targetWeekCount);
+  const dropOldestMonthWeeks = leadingWeekCountInOldestDisplayedMonth(tentativeTrailing, months);
 
-  return [...paddingColumns, ...trailingWeeks];
+  return tentativeTrailing.slice(dropOldestMonthWeeks);
 }
