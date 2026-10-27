@@ -117,7 +117,11 @@ const GitHubContributions = () => {
 
   const displayColumns =
     contributions && frameMetrics
-      ? buildHeroContributionColumns(contributions.weeks, frameMetrics.targetWeekCount)
+      ? buildHeroContributionColumns(
+          contributions.weeks,
+          frameMetrics.targetWeekCount,
+          contributions.months
+        )
       : [];
   const cellSizePx = frameMetrics?.cellSizePx ?? 4;
   const gapPx = frameMetrics?.gapPx ?? 0.8;
