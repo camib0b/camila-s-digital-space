@@ -29,6 +29,18 @@ export function heroContributionLayout(titleWidthPx: number, viewportIsMd: boole
   return { cellSizePx, gapPx, targetWeekCount };
 }
 
+export function heroContributionGridWidthPx(
+  columnCount: number,
+  cellSizePx: number,
+  gapPx: number
+): number {
+  if (columnCount <= 0) {
+    return 0;
+  }
+
+  return columnCount * cellSizePx + Math.max(0, columnCount - 1) * gapPx;
+}
+
 function monthForWeekFirstDay(
   weekFirstDay: string,
   months: GithubContributionMonth[]
@@ -75,21 +87,18 @@ export function leadingWeekCountInOldestDisplayedMonth(
   return count;
 }
 
-/** Real weeks are trailing (newest on the right); `null` pads older columns on the left. */
+/** Trailing weeks (newest on the right), minus the leftmost month in that window. */
 export function buildHeroContributionColumns(
   weeks: GithubContributionWeek[],
   targetWeekCount: number,
   months: GithubContributionMonth[] = []
-): Array<GithubContributionWeek | null> {
-  if (targetWeekCount < 1) {
+): GithubContributionWeek[] {
+  if (targetWeekCount < 1 || weeks.length === 0) {
     return [];
   }
 
   const tentativeTrailing = weeks.slice(-targetWeekCount);
   const dropOldestMonthWeeks = leadingWeekCountInOldestDisplayedMonth(tentativeTrailing, months);
-  const trailingWeeks = tentativeTrailing.slice(dropOldestMonthWeeks);
-  const paddingWeekCount = Math.max(0, targetWeekCount - trailingWeeks.length);
-  const paddingColumns = Array.from({ length: paddingWeekCount }, () => null);
 
-  return [...paddingColumns, ...trailingWeeks];
+  return tentativeTrailing.slice(dropOldestMonthWeeks);
 }

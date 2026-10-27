@@ -95,8 +95,18 @@ const GitHubContributions = () => {
       return;
     }
 
+    const columnCount = buildHeroContributionColumns(
+      contributions.weeks,
+      frameMetrics.targetWeekCount,
+      contributions.months
+    ).length;
+
+    if (columnCount < 1) {
+      return;
+    }
+
     introStartedRef.current = true;
-    playingColumnCountRef.current = frameMetrics.targetWeekCount;
+    playingColumnCountRef.current = columnCount;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setIntroPhase(prefersReducedMotion ? "settled" : "playing");
   }, [contributions, frameMetrics]);
@@ -139,11 +149,11 @@ const GitHubContributions = () => {
       className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       {displayColumns.length > 0 ? (
-        <div className="absolute inset-y-0 left-1/2 flex -translate-x-1/2 items-center opacity-90">
+        <div className="absolute inset-y-0 right-0 flex items-center opacity-90">
           <div className="flex flex-nowrap" style={patternStyle}>
             {displayColumns.map((week, columnIndex) => (
               <ContributionWeekColumn
-                key={week?.firstDay ?? `padding-${columnIndex}`}
+                key={week.firstDay}
                 week={week}
                 columnIndex={columnIndex}
                 cellSizePx={cellSizePx}
@@ -159,7 +169,7 @@ const GitHubContributions = () => {
 };
 
 interface ContributionWeekColumnProps {
-  week: GithubContributionWeek | null;
+  week: GithubContributionWeek;
   columnIndex: number;
   cellSizePx: number;
   gapPx: number;
@@ -179,7 +189,7 @@ const ContributionWeekColumn = ({
     gap: gapPx,
   };
 
-  const rows = week ? weekRows(week) : Array.from({ length: CONTRIBUTION_ROW_COUNT }, () => null);
+  const rows = weekRows(week);
 
   return (
     <div
