@@ -83,13 +83,6 @@ function playAnalyticsIntro(diagram: SVGSVGElement) {
   diagram.classList.add(ANALYTICS_PLAYING_CLASS);
 }
 
-function replayAnalyticsMarks(diagram: SVGSVGElement) {
-  diagram.dataset.analyticsRunning = "true";
-  diagram.classList.remove(ANALYTICS_REDRAW_CLASS);
-  void diagram.getBoundingClientRect();
-  diagram.classList.add(ANALYTICS_REDRAW_CLASS);
-}
-
 function usePlayOnceInView(diagramRef: RefObject<SVGSVGElement>) {
   const hasPlayedOnViewRef = useRef(false);
 
@@ -121,11 +114,7 @@ function usePlayOnceInView(diagramRef: RefObject<SVGSVGElement>) {
       if (viewPlayIsPending || diagram.dataset.analyticsRunning === "true") {
         return;
       }
-      if (diagram.classList.contains(ANALYTICS_PLAYING_CLASS)) {
-        replayAnalyticsMarks(diagram);
-      } else {
-        playAnalyticsIntro(diagram);
-      }
+      playAnalyticsIntro(diagram);
       watchAnalyticsRunning();
     };
 

@@ -4,12 +4,89 @@ const interfaceCardWidth = 68;
 const interfaceCardHeight = 14;
 const interfaceCardStartX = 50;
 const interfaceCardStartY = 24;
+const interfaceCodeStartX = 8;
+const interfaceCodeStartY = 22;
+const interfaceCodeLineGap = 6.4;
 
 const interfaceCards = [
   { endPositionX: 10, endPositionY: 20, delay: "0s" },
   { endPositionX: 90, endPositionY: 20, delay: "0.05s" },
   { endPositionX: 10, endPositionY: 40, delay: "0.1s" },
   { endPositionX: 90, endPositionY: 40, delay: "0.15s" },
+];
+
+type InterfaceCodeTone = "keyword" | "identifier" | "string" | "punctuation";
+
+const interfaceCodeToneClassName: Record<InterfaceCodeTone, string> = {
+  keyword: "fill-primary",
+  identifier: "fill-foreground",
+  string: "fill-number-positive",
+  punctuation: "fill-muted-foreground",
+};
+
+const interfaceCodeLines: Array<Array<{ text: string; tone: InterfaceCodeTone }>> = [
+  [
+    { text: "function", tone: "keyword" },
+    { text: " ", tone: "punctuation" },
+    { text: "Card", tone: "identifier" },
+    { text: "({ ", tone: "punctuation" },
+    { text: "src", tone: "identifier" },
+    { text: ", ", tone: "punctuation" },
+    { text: "tag", tone: "identifier" },
+    { text: ", ", tone: "punctuation" },
+    { text: "on", tone: "identifier" },
+    { text: " }: ", tone: "punctuation" },
+    { text: "Props", tone: "identifier" },
+    { text: ") {", tone: "punctuation" },
+  ],
+  [
+    { text: "  ", tone: "punctuation" },
+    { text: "const", tone: "keyword" },
+    { text: " ", tone: "punctuation" },
+    { text: "hot", tone: "identifier" },
+    { text: " = ", tone: "punctuation" },
+    { text: "on", tone: "identifier" },
+    { text: " ? ", tone: "punctuation" },
+    { text: '"press"', tone: "string" },
+    { text: " : ", tone: "punctuation" },
+    { text: '"hover"', tone: "string" },
+  ],
+  [
+    { text: "  ", tone: "punctuation" },
+    { text: "return", tone: "keyword" },
+    { text: " <", tone: "punctuation" },
+    { text: "Card", tone: "identifier" },
+    { text: " ", tone: "punctuation" },
+    { text: "variant", tone: "identifier" },
+    { text: "=", tone: "punctuation" },
+    { text: '"lift"', tone: "string" },
+    { text: " ", tone: "punctuation" },
+    { text: "state", tone: "identifier" },
+    { text: "={", tone: "punctuation" },
+    { text: "hot", tone: "identifier" },
+    { text: "}>", tone: "punctuation" },
+  ],
+  [
+    { text: "    <", tone: "punctuation" },
+    { text: "img", tone: "identifier" },
+    { text: " ", tone: "punctuation" },
+    { text: "src", tone: "identifier" },
+    { text: "={", tone: "punctuation" },
+    { text: "src", tone: "identifier" },
+    { text: "} /><", tone: "punctuation" },
+    { text: "Badge", tone: "identifier" },
+    { text: ">{", tone: "punctuation" },
+    { text: "tag", tone: "identifier" },
+    { text: "}</", tone: "punctuation" },
+    { text: "Badge", tone: "identifier" },
+    { text: ">", tone: "punctuation" },
+  ],
+  [
+    { text: "  </", tone: "punctuation" },
+    { text: "Card", tone: "identifier" },
+    { text: ">", tone: "punctuation" },
+  ],
+  [{ text: "}", tone: "punctuation" }],
 ];
 
 function InterfaceBlock() {
@@ -36,14 +113,23 @@ const InterfaceDiagram = () => {
       <rect x="2" y="2" width="164" height="56" rx="2" className="fill-background" />
       <line x1="2" y1="16" x2="166" y2="16" />
       <text
-        x="84"
-        y="38"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fontSize="13"
-        className="experience-interface-code fill-muted-foreground stroke-none font-mono"
+        y={interfaceCodeStartY}
+        fontSize="6"
+        className="experience-interface-code stroke-none font-mono"
       >
-        {"<Card />"}
+        {interfaceCodeLines.map((line, lineIndex) => (
+          <tspan
+            key={line.map((token) => token.text).join("")}
+            x={interfaceCodeStartX}
+            dy={lineIndex === 0 ? 0 : interfaceCodeLineGap}
+          >
+            {line.map((token, tokenIndex) => (
+              <tspan key={tokenIndex} className={interfaceCodeToneClassName[token.tone]}>
+                {token.text}
+              </tspan>
+            ))}
+          </tspan>
+        ))}
       </text>
 
       <g className="experience-interface-source">
