@@ -13,6 +13,7 @@ import {
   sumKnownDuration,
 } from "@/lib/concat/format";
 import type { ConcatPartView } from "@/lib/concat/types";
+import { duration, keptDuration } from "@/lib/motion";
 import "./concat.css";
 
 type ConcatPartListProps = {
@@ -24,10 +25,10 @@ type ConcatPartListProps = {
 };
 
 const MAX_STAGGERED_LANDINGS = 12;
-const LANDING_STAGGER_MS = 60;
-const LANDING_DURATION_MS = 320;
-const ROW_SWAP_MS = 200;
-const MOVED_HIGHLIGHT_MS = 700;
+const LANDING_STAGGER_MS = keptDuration.landingStagger;
+const LANDING_DURATION_MS = duration.enter;
+const ROW_SWAP_MS = duration.base;
+const MOVED_HIGHLIGHT_MS = keptDuration.movedHighlight;
 
 const clearButtonClassName =
   "concat-secondary shrink-0 border border-border px-3 py-2 text-xs uppercase tracking-[0.14em] text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-40";

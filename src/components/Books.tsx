@@ -28,7 +28,7 @@ const Books = () => {
             href={GOODREADS_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline inline-block mb-10"
+            className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-hover ease-hover link-underline inline-block mb-10"
           >
             {t("books.goodreads")}
           </a>
@@ -65,7 +65,7 @@ const Books = () => {
             onClick={() => setIsExpanded((currentValue) => !currentValue)}
             aria-expanded={isExpanded}
             aria-controls={BOOK_INDEX_ID}
-            className="mt-6 inline-flex items-center rounded-md border border-border px-3 py-1.5 text-xs text-foreground hover:bg-muted/60 transition-colors duration-200"
+            className="mt-6 inline-flex items-center rounded-md border border-border px-3 py-1.5 text-xs text-foreground hover:bg-muted/60 transition-colors duration-hover ease-hover"
           >
             {t(isExpanded ? "books.showFewer" : "books.showAll")}
           </button>

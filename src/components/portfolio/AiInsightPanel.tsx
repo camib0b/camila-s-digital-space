@@ -37,7 +37,7 @@ const AiInsightPanel = ({
   provider,
 }: AiInsightPanelProps) => {
   return (
-    <section className="analytics-rise mb-16 border border-border bg-card px-4 py-5 md:px-5" aria-busy={loading}>
+    <section className="mb-16 border border-border bg-card px-4 py-5 md:px-5" aria-busy={loading}>
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <h2 className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">{label}</h2>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">

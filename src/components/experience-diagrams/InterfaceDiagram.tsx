@@ -9,10 +9,10 @@ const interfaceCodeStartY = 22;
 const interfaceCodeLineGap = 6.4;
 
 const interfaceCards = [
-  { endPositionX: 10, endPositionY: 20, delay: "0s" },
-  { endPositionX: 90, endPositionY: 20, delay: "0.05s" },
-  { endPositionX: 10, endPositionY: 40, delay: "0.1s" },
-  { endPositionX: 90, endPositionY: 40, delay: "0.15s" },
+  { endPositionX: 10, endPositionY: 20, delay: "var(--duration-instant)" },
+  { endPositionX: 90, endPositionY: 20, delay: "var(--duration-diagram-delay-50)" },
+  { endPositionX: 10, endPositionY: 40, delay: "var(--duration-press)" },
+  { endPositionX: 90, endPositionY: 40, delay: "var(--duration-hover)" },
 ];
 
 type InterfaceCodeTone = "keyword" | "identifier" | "string" | "punctuation";

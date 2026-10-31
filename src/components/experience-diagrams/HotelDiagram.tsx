@@ -9,11 +9,11 @@ const metricFontSize = 17;
 const metricLineGap = 16;
 
 const hotels = [
-  { originX: 4, bodyHeight: 16, markDelay: "0s" },
-  { originX: 19, bodyHeight: 24, markDelay: "0.07s" },
-  { originX: 34, bodyHeight: 15, markDelay: "0.14s" },
-  { originX: 49, bodyHeight: 22, markDelay: "0.21s" },
-  { originX: 64, bodyHeight: 18, markDelay: "0.28s" },
+  { originX: 4, bodyHeight: 16, markDelay: "var(--duration-instant)" },
+  { originX: 19, bodyHeight: 24, markDelay: "var(--duration-diagram-delay-70)" },
+  { originX: 34, bodyHeight: 15, markDelay: "var(--duration-settle)" },
+  { originX: 49, bodyHeight: 22, markDelay: "var(--duration-diagram-delay-210)" },
+  { originX: 64, bodyHeight: 18, markDelay: "var(--duration-diagram-delay-280)" },
 ];
 
 function HotelOutline({ originX, bodyHeight }: { originX: number; bodyHeight: number }) {

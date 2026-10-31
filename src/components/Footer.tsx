@@ -29,7 +29,7 @@ const Footer = () => {
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
             <Link
               to="/cv"
-              className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-200 link-underline flex items-center gap-1.5"
+              className="text-sm text-foreground hover:text-muted-foreground transition-colors duration-hover ease-hover link-underline flex items-center gap-1.5"
             >
               <FileText className="w-3.5 h-3.5" />
               {t("hero.cta.cv")}

@@ -27,7 +27,7 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
   const { t } = useLanguage();
 
   return (
-    <section className="analytics-rise mb-16 border border-border bg-card px-4 py-5 md:px-5">
+    <section className="mb-16 border border-border bg-card px-4 py-5 md:px-5">
       <h2 className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
         {t("portfolio.holdings.title")}
       </h2>

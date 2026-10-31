@@ -88,7 +88,7 @@ export function SeriesLegend({
 
 export function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="analytics-rise border border-border bg-card px-4 py-5 md:px-5">
+    <section className="border border-border bg-card px-4 py-5 md:px-5">
       <h2 className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">{title}</h2>
       {children}
     </section>

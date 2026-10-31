@@ -9,8 +9,8 @@
 .concat-primary {
   cursor: pointer;
   transition:
-    transform 140ms var(--ease-out-strong),
-    box-shadow 140ms var(--ease-out-strong);
+    transform var(--duration-settle) var(--ease-out-strong),
+    background-color var(--duration-hover) var(--ease-hover);
 }
 
 .concat-primary:disabled,
@@ -18,32 +18,30 @@
   cursor: not-allowed;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .concat-primary:hover:not(:disabled):not(.is-disabled) {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-elev-2);
+    background-color: hsl(var(--foreground) / 0.85);
   }
 }
 
 .concat-primary:active:not(:disabled):not(.is-disabled) {
-  transform: translateY(1px) scale(0.97);
-  box-shadow: none;
-  transition-duration: 80ms;
+  transform: scale(0.97);
+  transition-duration: var(--duration-snap);
 }
 
 .concat-secondary {
   cursor: pointer;
   transition:
-    background-color 140ms var(--ease-out-strong),
-    border-color 140ms var(--ease-out-strong),
-    transform 140ms var(--ease-out-strong);
+    background-color var(--duration-settle) var(--ease-out-strong),
+    border-color var(--duration-settle) var(--ease-out-strong),
+    transform var(--duration-settle) var(--ease-out-strong);
 }
 
 .concat-secondary:disabled {
   cursor: not-allowed;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .concat-secondary:hover:not(:disabled) {
     background: hsl(var(--accent));
     border-color: hsl(var(--ring));
@@ -59,8 +57,8 @@
   cursor: grab;
   background: rgba(244, 245, 246, 0.92);
   transition:
-    background-color 180ms var(--ease-out-strong),
-    border-color 180ms var(--ease-out-strong);
+    background-color var(--duration-open) var(--ease-out-strong),
+    border-color var(--duration-open) var(--ease-out-strong);
 }
 
 .dark .concat-part {
@@ -95,7 +93,7 @@
 }
 
 .concat-part-enter {
-  animation: concat-part-land 320ms var(--ease-out-strong) both;
+  animation: concat-part-land var(--duration-enter) var(--ease-out-strong) both;
 }
 
 @keyframes concat-part-land {
@@ -122,8 +120,8 @@
   color: hsl(var(--muted-foreground));
   cursor: pointer;
   transition:
-    color 140ms var(--ease-out-strong),
-    transform 80ms var(--ease-out-strong);
+    color var(--duration-settle) var(--ease-out-strong),
+    transform var(--duration-snap) var(--ease-out-strong);
 }
 
 .concat-icon-button:hover:not(:disabled) {
@@ -166,9 +164,5 @@
     transform: none;
     animation: none;
     transition: none;
-  }
-
-  .concat-primary:hover:not(:disabled):not(.is-disabled) {
-    box-shadow: var(--shadow-elev-2);
   }
 }

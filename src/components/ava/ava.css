@@ -339,7 +339,7 @@ button.ava-cta:disabled {
     transparent 52%
   );
   mix-blend-mode: soft-light;
-  animation: ava-scan 18s linear infinite;
+  animation: ava-scan var(--duration-ava-scan) linear infinite;
 }
 
 .ava-stage-caption {
@@ -375,6 +375,7 @@ button.ava-cta:disabled {
 .ava-timeline-rail {
   position: relative;
   height: 4.5rem;
+  container-type: inline-size;
 }
 
 .ava-timeline-line {
@@ -390,9 +391,10 @@ button.ava-cta:disabled {
   position: absolute;
   top: 0;
   bottom: 0.4rem;
+  left: 0;
   width: 1px;
   background: var(--ava-fg);
-  animation: ava-playhead 22s linear infinite;
+  animation: ava-playhead var(--duration-ava-playhead) linear infinite;
 }
 
 .ava-playhead::before {
@@ -572,7 +574,7 @@ button.ava-cta:disabled {
 .ava-concat-file-slot {
   position: relative;
   min-width: 0;
-  transition: transform 200ms var(--ease-out);
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 .ava-concat-files[data-suppress-transition="true"] .ava-concat-file-slot {
@@ -782,6 +784,7 @@ body.ava-concat-is-dragging * {
   align-items: flex-start;
   height: 2.85rem;
   border-top: 1px solid var(--ava-fg);
+  container-type: inline-size;
 }
 
 .ava-concat-match-rail .ava-playhead {
@@ -986,10 +989,10 @@ body.ava-concat-is-dragging * {
   touch-action: manipulation;
   container-type: inline-size;
   transition:
-    background-color 120ms var(--ease-out),
-    border-color 120ms var(--ease-out),
-    color 120ms var(--ease-out),
-    transform 120ms var(--ease-out);
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .ava-event--control {
@@ -1074,13 +1077,13 @@ body.ava-concat-is-dragging * {
   .ava-event:hover {
     background-color: rgba(236, 234, 228, 0.07);
     border-color: var(--ava-rule-strong);
-    transition-duration: 150ms;
+    transition-duration: var(--duration-hover);
   }
 
   .ava-event:hover .ava-event-key {
     color: var(--ava-muted);
     border-color: color-mix(in srgb, var(--ava-fg) 40%, transparent);
-    transition-duration: 150ms;
+    transition-duration: var(--duration-hover);
   }
 
   .ava-event--control:hover {
@@ -1093,7 +1096,7 @@ body.ava-concat-is-dragging * {
   background-color: rgba(236, 234, 228, 0.16);
   border-color: var(--ava-rule-strong);
   transform: translateY(2px) scale(0.97);
-  transition-duration: 120ms;
+  transition-duration: var(--duration-fast);
 }
 
 .ava-event:focus-visible {
@@ -1383,7 +1386,7 @@ body.ava-concat-is-dragging * {
 }
 
 .ava-export {
-  --ava-export-cycle: 6s;
+  --ava-export-cycle: var(--duration-ava-export);
   margin: 0;
 }
 
@@ -1493,9 +1496,9 @@ body.ava-concat-is-dragging * {
 }
 
 .ava-clip-window {
-  --clip-nudge-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --clip-nudge-duration: 560ms;
-  --clip-nudge-stagger: 150ms;
+  --clip-nudge-ease: var(--ease-hero);
+  --clip-nudge-duration: var(--duration-clip-nudge);
+  --clip-nudge-stagger: var(--duration-hover);
   --clip-nudge-distance: 8px;
   --clip-track-offset: 0.85rem;
   --clip-track-size: 2rem;
@@ -1597,7 +1600,7 @@ body.ava-concat-is-dragging * {
   box-shadow:
     -3px 0 0 var(--ava-fg),
     3px 0 0 var(--ava-fg);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scaleY(1);
 }
 
 .ava-clip-readout {
@@ -1649,14 +1652,15 @@ body.ava-concat-is-dragging * {
 
 @media (hover: hover) and (pointer: fine) {
   .ava-clip-handle::before {
-    transition: height 100ms var(--ease-out);
+    transition: transform var(--duration-press) var(--ease-out);
   }
 
   .ava-clip-handle:hover::before,
   .ava-clip-handle:focus-visible::before,
   .ava-clip-handle[data-active="true"]::before {
-    height: 15px;
-    transition-duration: 150ms;
+    /* 9px -> 15px, composite-only. */
+    transform: translate(-50%, -50%) scaleY(1.6667);
+    transition-duration: var(--duration-hover);
   }
 
   .ava-clip-window[data-dragging] .ava-clip-handle::before {
@@ -1878,10 +1882,10 @@ body.ava-concat-is-dragging * {
 
 @keyframes ava-playhead {
   from {
-    left: 0%;
+    transform: translateX(0);
   }
   to {
-    left: 100%;
+    transform: translateX(100cqi);
   }
 }
 
@@ -1972,7 +1976,8 @@ body.ava-concat-is-dragging * {
   }
 
   .ava-playhead {
-    left: 42%;
+    left: 0;
+    transform: translateX(42cqi);
   }
 
   .ava-event:active,

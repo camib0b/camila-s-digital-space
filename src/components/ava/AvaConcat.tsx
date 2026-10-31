@@ -10,11 +10,12 @@ import {
   slotShift,
   type SlotGeometry,
 } from "@/components/ava/concatReorder";
+import { duration, ease } from "@/lib/motion";
 
 const DRAG_START_THRESHOLD_PX = 4;
 const DRAG_LIFT_PX = 4;
-const SETTLED_SHIFT_DURATION_MS = 200;
-const SETTLED_SHIFT_EASING = "cubic-bezier(0.23, 1, 0.32, 1)";
+const SETTLED_SHIFT_DURATION_MS = duration.base;
+const SETTLED_SHIFT_EASING = ease.out;
 const BODY_DRAGGING_CLASS = "ava-concat-is-dragging";
 
 type ConcatFileId = (typeof AVA_CONCAT_FILES)[number]["id"];
