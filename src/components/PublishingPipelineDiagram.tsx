@@ -91,8 +91,8 @@ const CLOUD_UPLOADS = [
 const PUBLISHING_PIPELINE_ANIMATION_CSS = `
 .publishing-pipeline .pipeline-step {
   opacity: 0;
-  animation: publishing-pipeline-step-main 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--pipeline-order) * 65ms);
+  animation: publishing-pipeline-step-main var(--duration-enter) var(--ease-out-strong) both;
+  animation-delay: calc(var(--pipeline-order) * var(--duration-pipeline-stagger));
 }
 
 .publishing-pipeline .pipeline-step[data-flow="down"] {
@@ -101,22 +101,22 @@ const PUBLISHING_PIPELINE_ANIMATION_CSS = `
 
 .publishing-pipeline .pipeline-frame {
   opacity: 0;
-  animation: publishing-pipeline-fade 0.4s ease both;
-  animation-delay: calc(var(--pipeline-order) * 65ms);
+  animation: publishing-pipeline-fade var(--duration-enter) var(--ease-out-strong) both;
+  animation-delay: calc(var(--pipeline-order) * var(--duration-pipeline-stagger));
 }
 
 .publishing-pipeline .pipeline-draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: publishing-pipeline-draw 0.34s ease forwards;
-  animation-delay: calc(var(--pipeline-order) * 65ms);
+  animation: publishing-pipeline-draw var(--duration-enter) var(--ease-out-strong) forwards;
+  animation-delay: calc(var(--pipeline-order) * var(--duration-pipeline-stagger));
 }
 
 .publishing-pipeline .pipeline-draw-y {
   transform: scaleY(0);
   transform-origin: top center;
-  animation: publishing-pipeline-draw-y 0.34s ease forwards;
-  animation-delay: calc(var(--pipeline-order) * 65ms);
+  animation: publishing-pipeline-draw-y var(--duration-enter) var(--ease-out-strong) forwards;
+  animation-delay: calc(var(--pipeline-order) * var(--duration-pipeline-stagger));
 }
 
 @keyframes publishing-pipeline-step-main {
@@ -169,7 +169,7 @@ const PUBLISHING_PIPELINE_ANIMATION_CSS = `
   display: inline-flex;
   flex: none;
   transform-origin: center;
-  transition: transform 0.2s ease;
+  transition: transform var(--duration-base) var(--ease-out-strong);
 }
 
 .publishing-pipeline .pipeline-toggle-chevron.is-open {
@@ -180,33 +180,10 @@ const PUBLISHING_PIPELINE_ANIMATION_CSS = `
   display: block;
 }
 
-.publishing-pipeline .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph {
-  animation: publishing-pipeline-chevron-nudge 3s ease-in-out infinite;
-}
-
 .publishing-pipeline .pipeline-toggle:hover .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph,
 .publishing-pipeline .pipeline-toggle:focus-visible .pipeline-toggle-chevron:not(.is-open) .pipeline-toggle-chevron-glyph {
-  animation: none;
   transform: translate3d(2px, 0, 0);
-  transition: transform 0.18s ease;
-}
-
-@keyframes publishing-pipeline-chevron-nudge {
-  0%, 60%, 100% {
-    transform: translate3d(0, 0, 0);
-  }
-  68% {
-    transform: translate3d(5px, 0, 0);
-  }
-  76% {
-    transform: translate3d(0, 0, 0);
-  }
-  84% {
-    transform: translate3d(4px, 0, 0);
-  }
-  92% {
-    transform: translate3d(0, 0, 0);
-  }
+  transition: transform var(--duration-open) var(--ease-hover);
 }
 
 @media (max-width: 767px) {

@@ -20,7 +20,7 @@
 .ava-session-flow-frame {
   --session-trace-ink: 0.78;
   --session-trace-residue: 0.22;
-  --session-trace-residue-duration: 320ms;
+  --session-trace-residue-duration: var(--duration-residue);
   --session-trace-outer: 1.15rem;
   --session-trace-inner: 1.1rem;
   position: relative;
@@ -166,17 +166,25 @@
   width: 5px;
   height: 5px;
   background: var(--ava-fg);
-  box-shadow: 0 0 0 0 transparent;
-  transition: box-shadow 200ms var(--ease-out);
+}
+
+/* Landed ring: a pre-painted outline faded with opacity, not an animated box-shadow. */
+.ava-session-marker::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 0 1.5px var(--ava-fg);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .ava-session-label {
   background-color: transparent;
-  transition: background-color 200ms var(--ease-out);
+  transition: background-color var(--duration-base) var(--ease-out);
 }
 
-.ava-session-flow li[data-trace-landed="true"] .ava-session-marker {
-  box-shadow: 0 0 0 1.5px var(--ava-fg);
+.ava-session-flow li[data-trace-landed="true"] .ava-session-marker::after {
+  opacity: 1;
 }
 
 .ava-session-flow li[data-trace-landed="true"] .ava-session-label {
@@ -261,7 +269,7 @@
     opacity: var(--session-trace-residue);
   }
 
-  .ava-session-marker,
+  .ava-session-marker::after,
   .ava-session-label {
     transition: none;
   }

@@ -52,7 +52,7 @@ const SocialLinkControl = ({
       <button
         type="button"
         onClick={onToggle}
-        className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+        className="text-muted-foreground hover:text-foreground transition-colors duration-hover ease-hover"
         aria-label={isExpanded ? label : t("social.showLink")}
         aria-expanded={isExpanded}
       >
@@ -69,7 +69,7 @@ const SocialLinkControl = ({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-press text-xs text-muted-foreground hover:text-accent-teal transition-colors duration-200 select-all whitespace-nowrap"
+            className="text-press text-xs text-muted-foreground hover:text-accent-teal transition-colors duration-hover ease-hover select-all whitespace-nowrap"
             tabIndex={isExpanded ? undefined : -1}
           >
             {displayUrl}
@@ -78,7 +78,7 @@ const SocialLinkControl = ({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-accent-teal transition-colors duration-200"
+            className="text-muted-foreground hover:text-accent-teal transition-colors duration-hover ease-hover"
             aria-label={t("social.openInNewTab")}
             tabIndex={isExpanded ? undefined : -1}
           >

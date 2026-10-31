@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { useGithubContributions } from "@/hooks/useGithubContributions";
 import { buildHeroContributionColumns, heroContributionLayout } from "@/lib/heroContributionGrid";
+import { keptDuration } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type {
   ContributionLevel,
@@ -13,9 +14,9 @@ const WAVE_AMPLITUDE_PX = 3;
 const WAVE_PHASE_STEP_RADIANS = 0.62;
 
 /** Matches the hero title delay so the pattern enters with the name. */
-const CONTRIBUTION_INTRO_OFFSET_MS = 80;
+const CONTRIBUTION_INTRO_OFFSET_MS = keptDuration.snap;
 /** Short travel (3px): faster than the 12px hero fade, close to the curtain. */
-const COLUMN_ENTER_DURATION_MS = 400;
+const COLUMN_ENTER_DURATION_MS = keptDuration.contribution;
 /** Offset + column duration + stagger. Kept inside 1.2–1.8s. */
 const INTRO_TOTAL_DURATION_MS = 1400;
 

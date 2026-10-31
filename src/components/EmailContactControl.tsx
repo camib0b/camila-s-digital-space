@@ -64,7 +64,7 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
       <button
         type="button"
         onClick={onToggle}
-        className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+        className="text-muted-foreground hover:text-foreground transition-colors duration-hover ease-hover"
         aria-label={isExpanded ? t("contact.email") : t("contact.showEmail")}
         aria-expanded={isExpanded}
       >
@@ -83,7 +83,7 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
           <button
             type="button"
             onClick={handleCopy}
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="text-muted-foreground hover:text-foreground transition-colors duration-hover ease-hover"
             aria-label={hasCopied ? t("contact.copied") : t("contact.copyEmail")}
             tabIndex={isExpanded ? undefined : -1}
           >

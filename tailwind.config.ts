@@ -107,6 +107,23 @@ export default {
         "elev-2": "var(--shadow-elev-2)",
         "elev-3": "var(--shadow-elev-3)",
       },
+
+      transitionDuration: {
+        press: "var(--duration-press)",
+        fast: "var(--duration-fast)",
+        hover: "var(--duration-hover)",
+        base: "var(--duration-base)",
+        enter: "var(--duration-enter)",
+        hero: "var(--duration-hero)",
+      },
+
+      transitionTimingFunction: {
+        "out-strong": "var(--ease-out-strong)",
+        "in-out-strong": "var(--ease-in-out-strong)",
+        hero: "var(--ease-hero)",
+        hover: "var(--ease-hover)",
+        standard: "var(--ease-standard)",
+      },
     },
   },
   plugins: [tailwindcssAnimate, typography],

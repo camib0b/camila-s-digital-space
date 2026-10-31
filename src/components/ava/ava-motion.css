@@ -2,20 +2,20 @@
    Reduced motion keeps a short opacity change and drops movement. */
 
 .ava-root {
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-out: var(--ease-out-strong);
+  --ease-in-out: var(--ease-in-out-strong);
 }
 
 .ava-cta,
 .ava-text-link {
   /* Release snaps. The press duration is set on :active. */
-  transition: transform 100ms var(--ease-out);
+  transition: transform var(--duration-press) var(--ease-out);
 }
 
 .ava-cta:active,
 .ava-text-link:active {
   transform: scale(0.97);
-  transition-duration: 160ms;
+  transition-duration: var(--duration-press-hold);
 }
 
 .ava-cta:disabled,
@@ -27,8 +27,8 @@
   opacity: 1;
   transform: none;
   transition:
-    opacity 200ms var(--ease-out),
-    transform 200ms var(--ease-out);
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
 
   @starting-style {
     opacity: 0;
@@ -40,7 +40,7 @@
    inside the 1px .ava-shot hairline. No shimmer. The bitmap wipes once. */
 .ava-shot-image {
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 600ms var(--ease-in-out);
+  transition: clip-path var(--duration-hero) var(--ease-in-out);
 }
 
 .ava-shot-frame[data-visible="true"] .ava-shot-image {
@@ -60,7 +60,7 @@
 
   .ava-interest-status {
     transform: none;
-    transition: opacity 200ms var(--ease-out);
+    transition: opacity var(--duration-base) var(--ease-out);
 
     @starting-style {
       opacity: 0;
@@ -71,8 +71,8 @@
   .ava-shot-image {
     clip-path: none;
     opacity: 0;
-    transition: opacity 200ms var(--ease-out);
-    transition-delay: 0ms;
+    transition: opacity var(--duration-base) var(--ease-out);
+    transition-delay: var(--duration-instant);
   }
 
   .ava-shot-frame[data-visible="true"] .ava-shot-image {

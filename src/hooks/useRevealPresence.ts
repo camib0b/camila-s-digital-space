@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { duration } from "@/lib/motion";
 
-/** Keep in sync with the close duration of `.contact-reveal` in `src/index.css`. */
-export const REVEAL_CLOSE_DURATION_MS = 120;
+/** Close duration of `.contact-reveal`. Both read `duration.fast`. */
+export const REVEAL_CLOSE_DURATION_MS = duration.fast;
 
 /**
  * Keeps a collapsed panel mounted until its close transition finishes.

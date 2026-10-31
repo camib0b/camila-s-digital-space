@@ -1,3 +1,5 @@
+import { keptDuration } from "@/lib/motion";
+
 /**
  * Decorative trace for the AVA session flow.
  * One real session does not walk the five steps in a line: import happens
@@ -39,11 +41,11 @@ export const SESSION_TRACE_HOPS: readonly SessionTraceHop[] = [
   { from: 3, to: 4 },
 ];
 
-export const SESSION_TRACE_ADJACENT_DURATION_MS = 420;
-export const SESSION_TRACE_SKIP_DURATION_MS = 500;
-export const SESSION_TRACE_GAP_MS = 75;
-export const SESSION_TRACE_HIGHLIGHT_MS = 240;
-export const SESSION_TRACE_RESIDUE_MS = 320;
+export const SESSION_TRACE_ADJACENT_DURATION_MS = keptDuration.sessionAdjacent;
+export const SESSION_TRACE_SKIP_DURATION_MS = keptDuration.sessionSkip;
+export const SESSION_TRACE_GAP_MS = keptDuration.sessionGap;
+export const SESSION_TRACE_HIGHLIGHT_MS = keptDuration.sessionHighlight;
+export const SESSION_TRACE_RESIDUE_MS = keptDuration.residue;
 export const SESSION_TRACE_VISIBILITY_RATIO = 0.6;
 
 export type SessionTraceArc = {

@@ -18,10 +18,10 @@ const destinationHintLinkClassName =
   "hockey-role-link group inline-flex min-w-0 max-w-full flex-wrap items-baseline font-medium text-foreground";
 
 const destinationHintTitleClassName =
-  "link-underline transition-colors duration-200 group-hover:text-muted-foreground group-focus-visible:text-muted-foreground";
+  "link-underline transition-colors duration-hover ease-hover group-hover:text-muted-foreground group-focus-visible:text-muted-foreground";
 
 const externalLinkIconClassName =
-  "ml-1.5 h-3.5 w-3.5 shrink-0 self-center text-muted-foreground transition-colors duration-200 group-hover:text-teal-500 group-focus-visible:text-teal-500 dark:group-hover:text-teal-300 dark:group-focus-visible:text-teal-300";
+  "ml-1.5 h-3.5 w-3.5 shrink-0 self-center text-muted-foreground transition-colors duration-hover ease-hover group-hover:text-teal-500 group-focus-visible:text-teal-500 dark:group-hover:text-teal-300 dark:group-focus-visible:text-teal-300";
 
 /**
  * The home-list link used by field hockey roles. The label is the link.

@@ -676,7 +676,7 @@ const ConcatTool = () => {
 
       {successToast
         ? createPortal(
-            <div className="fixed bottom-4 right-4 z-40 flex w-[min(22rem,calc(100vw-2rem))] items-start gap-4 border border-border bg-background px-4 py-3 text-foreground animate-fade-up">
+            <div className="fixed bottom-4 right-4 z-40 flex w-[min(22rem,calc(100vw-2rem))] items-start gap-4 border border-border bg-background px-4 py-3 text-foreground animate-enter">
               <p
                 className="min-w-0 flex-1 text-sm leading-6 [overflow-wrap:anywhere]"
                 role="status"
