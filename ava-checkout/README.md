@@ -25,7 +25,7 @@ npx wrangler secret put AVA_LICENSE_ADMIN_SECRET
 npx wrangler secret put MAIL_FROM
 ```
 
-`AVA_LICENSE_API_URL` is the origin of the sibling AVA license Worker (no trailing path), for example `https://ava-license.example.workers.dev`. This Worker calls `POST {url}/v1/admin/issue`.
+`AVA_LICENSE_API_URL` is the origin of the AVA license Worker (no trailing path). That Worker lives in this repo at `ava-license/` and exposes `POST /v1/admin/issue`. `AVA_LICENSE_ADMIN_SECRET` must equal that Worker's `ADMIN_SECRET`.
 
 `MAIL_FROM` must be an address on a domain onboarded for Cloudflare Email Sending:
 

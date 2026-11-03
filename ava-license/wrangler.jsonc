@@ -1,0 +1,49 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ava-license",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "traces": {
+      "enabled": true
+    }
+  },
+  // No production route yet. The owner attaches a workers.dev or custom domain
+  // after creating the KV namespace and secrets. Do not point this at
+  // camilaescudero.cl/api/ava/* — that route belongs to ava-checkout.
+  "kv_namespaces": [
+    {
+      "binding": "LICENSES",
+      // Create with: npx wrangler kv namespace create LICENSES
+      // then paste the id here. This placeholder is not a real namespace.
+      "id": "00000000000000000000000000000000"
+    }
+  ],
+  // Counts are per Cloudflare location and approximate. namespace_id must be
+  // unique in the account; change these if 841001 or 841002 are already used.
+  "ratelimits": [
+    {
+      "name": "GAME_METADATA_LICENSE_LIMIT",
+      "namespace_id": "841001",
+      "simple": {
+        "limit": 20,
+        "period": 60
+      }
+    },
+    {
+      "name": "GAME_METADATA_GLOBAL_LIMIT",
+      "namespace_id": "841002",
+      "simple": {
+        "limit": 100,
+        "period": 60
+      }
+    }
+  ],
+  "vars": {
+    "XAI_CHAT_MODEL": "grok-4.20-0309-non-reasoning",
+    "AI_GATEWAY_BASE_URL": ""
+  }
+}

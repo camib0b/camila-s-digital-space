@@ -1,0 +1,18 @@
+# Copy to .dev.vars for local `wrangler dev`. Do not commit real values.
+# Production:
+#   npx wrangler secret put LICENSE_SIGNING_SECRET
+#   npx wrangler secret put ADMIN_SECRET
+#   npx wrangler secret put XAI_API_KEY
+#   npx wrangler secret put AI_GATEWAY_TOKEN
+#
+# LICENSE_SIGNING_SECRET below is the published test vector only.
+# Generate a different value before any real license is issued.
+
+LICENSE_SIGNING_SECRET=ava-dev-signing-secret-not-for-production
+ADMIN_SECRET=change-me-admin-secret
+XAI_API_KEY=
+AI_GATEWAY_TOKEN=
+# Empty sends name calls direct to api.x.ai. Image calls are skipped until this is set.
+# AI_GATEWAY_BASE_URL=https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/compat/chat/completions
+AI_GATEWAY_BASE_URL=
+XAI_CHAT_MODEL=grok-4.20-0309-non-reasoning
