@@ -197,7 +197,11 @@ const es: Record<TranslationKey, string> = {
     "notFound.projects": "Proyectos",
     "notFound.ava": "AVA",
     "notFound.cv": "CV",
-    "notFound.report": "Si seguiste un enlace hasta aquí, me gustaría saberlo: ",
+    "notFound.report": "Si seguiste un enlace hasta aquí, me gustaría saberlo.",
+    "notFound.feedbackPlaceholder": "El enlace que seguiste, o lo que esperabas ver",
+    "notFound.feedbackSend": "Enviar",
+    "notFound.feedbackThanks": "Gracias, lo revisaré.",
+    "notFound.feedbackError": "No se pudo enviar. Revisa la nota e inténtalo de nuevo.",
 
     // CV Page
     "cv.back": "Volver",

@@ -28,6 +28,12 @@
 	"send_email": [
 		{
 			"name": "AVA_ALERT"
+		},
+		{
+			// 404 feedback. Must be a verified Email Routing destination, and must
+			// match CONTACT_EMAIL in src/content/contact.ts.
+			"name": "FEEDBACK_404",
+			"destination_address": "camilaescuderob@gmail.com"
 		}
 	],
 	"analytics_engine_datasets": [

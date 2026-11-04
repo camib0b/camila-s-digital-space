@@ -1,8 +1,15 @@
 import { EmailMessage } from "cloudflare:email";
 
 const INTEREST_PATH = "/api/ava-interest";
+const FEEDBACK_PATH = "/api/feedback-404";
 const CONCAT_EVENT_PATH = "/api/concat-event";
 const XML_EVENT_PATH = "/api/xml-event";
+const FEEDBACK_MESSAGE_LIMIT = 1000;
+const FEEDBACK_CONTEXT_LIMIT = 500;
+const FEEDBACK_BODY_BYTE_LIMIT = 8000;
+const FEEDBACK_FROM = "feedback@camilaescudero.cl";
+/** Same address as CONTACT_EMAIL in src/content/contact.ts and FEEDBACK_404 destination_address. */
+const FEEDBACK_TO = "camilaescuderob@gmail.com";
 const MAX_XML_EVENT_BYTES = 2048;
 const MAX_XML_COUNT = 10_000_000;
 const XML_ACTIONS: ReadonlySet<string> = new Set(["parse", "sample", "export"]);
@@ -53,6 +60,7 @@ interface SiteEnvironment {
   ASSETS: AssetsBinding;
   AVA_ALERT?: SignupAlertEmail;
   AVA_ALERT_TO?: string;
+  FEEDBACK_404?: SignupAlertEmail;
   CONCAT_EVENTS?: AnalyticsEngineDataset;
   XML_EVENTS?: AnalyticsEngineDataset;
 }
@@ -288,6 +296,10 @@ export default {
       return saveInterestSignup(request, environment, context);
     }
 
+    if (path === FEEDBACK_PATH && request.method === "POST") {
+      return sendNotFoundFeedback(request, environment);
+    }
+
     if (path === CONCAT_EVENT_PATH && request.method === "POST") {
       return recordConcatEvent(request, environment);
     }
@@ -434,5 +446,126 @@ function buildAlertMime(
     `Club / institution / country: ${signup.organization}`,
     `Language: ${signup.language ?? ""}`,
     `Timestamp: ${signup.timestamp}`,
+  ].join("\r\n");
+}
+
+function isFilledHoneypot(value: unknown): boolean {
+  if (value === undefined || value === null) {
+    return false;
+  }
+  if (typeof value !== "string") {
+    return true;
+  }
+  return value.trim() !== "";
+}
+
+/** Empty is allowed. A non-string or an over-long value is rejected. */
+function readFeedbackContext(value: unknown): string | null {
+  if (value === undefined || value === null) {
+    return "";
+  }
+  if (typeof value !== "string") {
+    return null;
+  }
+  const trimmed = value.trim();
+  if (trimmed.length > FEEDBACK_CONTEXT_LIMIT) {
+    return null;
+  }
+  return trimmed.replace(/[\r\n]+/g, " ");
+}
+
+function normalizeMimeNewlines(value: string): string {
+  return value.replace(/\r\n/g, "\n").replace(/\r/g, "\n").replace(/\n/g, "\r\n");
+}
+
+async function sendNotFoundFeedback(request: Request, environment: SiteEnvironment): Promise<Response> {
+  const text = await readLimitedText(request, FEEDBACK_BODY_BYTE_LIMIT);
+  if (text === null) {
+    return jsonResponse({ ok: false, error: "invalid_body" }, 400);
+  }
+
+  let payload: unknown;
+  try {
+    payload = JSON.parse(text);
+  } catch {
+    return jsonResponse({ ok: false, error: "invalid_body" }, 400);
+  }
+
+  if (payload === null || typeof payload !== "object" || Array.isArray(payload)) {
+    return jsonResponse({ ok: false, error: "invalid_body" }, 400);
+  }
+
+  const body = payload as Record<string, unknown>;
+  if (isFilledHoneypot(body.company_website)) {
+    return jsonResponse({ ok: true }, 200);
+  }
+
+  const message = readTrimmedString(body.message);
+  if (message === null || message.length === 0 || message.length > FEEDBACK_MESSAGE_LIMIT) {
+    return jsonResponse({ ok: false, error: "invalid_message" }, 400);
+  }
+
+  const missingPath = readFeedbackContext(body.path);
+  const referrer = readFeedbackContext(body.referrer);
+  if (missingPath === null || referrer === null) {
+    return jsonResponse({ ok: false, error: "invalid_body" }, 400);
+  }
+
+  const delivered = await deliverNotFoundFeedback(environment, {
+    message,
+    missingPath,
+    referrer,
+    timestamp: new Date().toISOString(),
+  });
+  if (!delivered) {
+    return jsonResponse({ ok: false, error: "unavailable" }, 500);
+  }
+  return jsonResponse({ ok: true }, 200);
+}
+
+async function deliverNotFoundFeedback(
+  environment: SiteEnvironment,
+  feedback: {
+    message: string;
+    missingPath: string;
+    referrer: string;
+    timestamp: string;
+  },
+): Promise<boolean> {
+  try {
+    if (environment.FEEDBACK_404 === undefined || typeof environment.FEEDBACK_404.send !== "function") {
+      console.error("404 feedback skipped: FEEDBACK_404 binding is missing");
+      return false;
+    }
+
+    const message = new EmailMessage(FEEDBACK_FROM, FEEDBACK_TO, buildFeedbackMime(feedback));
+    await environment.FEEDBACK_404.send(message);
+    return true;
+  } catch (error) {
+    console.error("404 feedback failed", error);
+    return false;
+  }
+}
+
+function buildFeedbackMime(feedback: {
+  message: string;
+  missingPath: string;
+  referrer: string;
+  timestamp: string;
+}): string {
+  return [
+    `From: Site <${FEEDBACK_FROM}>`,
+    `To: ${FEEDBACK_TO}`,
+    "Subject: 404 page feedback",
+    "MIME-Version: 1.0",
+    "Content-Type: text/plain; charset=utf-8",
+    "Content-Transfer-Encoding: 8bit",
+    "",
+    "Message:",
+    normalizeMimeNewlines(feedback.message),
+    "",
+    `Missing path: ${feedback.missingPath}`,
+    `Referrer: ${feedback.referrer}`,
+    `Timestamp: ${feedback.timestamp}`,
   ].join("\r\n");
 }
