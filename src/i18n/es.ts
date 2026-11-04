@@ -4,8 +4,7 @@ const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.acfin": "Productos de analytics en ACFIN.",
-    "hero.ava.before": "Construí ",
-    "hero.ava.after": " - app de video de hockey césped usada por entrenadores",
+    "hero.ava.after": " - app de análisis de video de hockey",
     "hero.cta.cv": "CV",
 
     // Dashboard
@@ -80,7 +79,7 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.publishingPipeline.connectLabel": "Cómo se conectan",
     "personalProjects.publishingPipeline.connectsTo": "a",
     "personalProjects.publishingPipeline":
-      "El tiempo para publicar un partido bajó de unos 30 minutos a solo 5.",
+      "El tiempo para publicar un partido bajó de unos 30 minutos a 5.",
     "personalProjects.publishingPipeline.diagram.toggle": "Cómo lo publico",
     "personalProjects.publishingPipeline.diagram.intro": "Por partido, en orden.",
     "personalProjects.publishingPipeline.diagram.list.1": "Recibir el metraje del partido.",
@@ -188,13 +187,12 @@ const es: Record<TranslationKey, string> = {
     "social.openInNewTab": "Abrir en una pestaña nueva",
 
     // Footer
-    "footer.builtWith": "Hecho con cariño.",
     "footer.cv": "CV",
 
     // CV Page
     "cv.back": "Volver",
     "cv.role": "Productos de analítica · software de análisis de video",
-    "cv.summary": "En ACFIN construyo los productos de analítica que ponen métricas de crédito estructurado frente a los clientes. AVA es una app macOS en desarrollo para importar, marcar, analizar, presentar y exportar en un solo programa—concatena al importar, marcar y presentar en la misma app—con base en entrenamiento y video en torneos. UC Chile, Ingeniería Civil Industrial + diploma TI (2027).",
+    "cv.summary": "En ACFIN construyo los productos de analítica que ponen métricas de crédito estructurado frente a los clientes. AVA es una app macOS para importar, marcar, analizar, presentar y exportar en un solo programa—concatena al importar, marcar y presentar en la misma app—con base en entrenamiento y video en torneos. UC Chile, Ingeniería Civil Industrial + diploma TI (2027).",
     "cv.selectedProjects": "Proyectos Seleccionados",
     "cv.workExperience": "Experiencia Laboral",
     "cv.education": "Educación",
@@ -214,7 +212,7 @@ const es: Record<TranslationKey, string> = {
     "cv.publishingPipeline.title": "Pipeline de publicación agéntico",
     "cv.publishingPipeline.type": "Caso de estudio",
     "cv.publishingPipeline.description":
-      "Construí un pipeline de publicación independiente para carpeta.cl: un agente de IA recodifica video, aloja clips, escribe la base de datos, sube XML de scouting y verifica cada paso. 23 partidos y 175 clips publicados; trabajo manual por partido de ~50 a ~5 min (estimado).",
+      "Construí un pipeline de publicación independiente para carpeta.cl: un agente de IA recodifica video, aloja clips, escribe la base de datos, sube XML de scouting y verifica cada paso. 23 partidos y 175 clips publicados; trabajo manual por partido de unos 30 minutos a 5 (estimado).",
     "cv.fleetOptimizer.title": "Optimizador de Asignación de Motores de Flota de Aeronaves",
     "cv.fleetOptimizer.type": "Proyecto de Curso — Métodos de Optimización",
     "cv.fleetOptimizer.description": "Desarrollé una herramienta de optimización para asignar motores a través de una flota de aeronaves minimizando costos de mantenimiento mientras cumple restricciones de horarios de vuelo.",
@@ -263,7 +261,7 @@ const es: Record<TranslationKey, string> = {
     "ava.hero.tagline": "Del video del partido a la charla con el equipo.",
     "ava.headline": "Una sesión. Un programa.",
     "ava.lede": "Análisis de video de hockey sin cambiar de programa.",
-    "ava.hero.body": "Análisis de video para hockey sobre césped, para entrenadoras y entrenadores sin analista. App nativa para macOS en español e inglés, en desarrollo.",
+    "ava.hero.body": "Análisis de video para hockey sobre césped, para entrenadoras y entrenadores sin analista. App nativa para macOS en español e inglés.",
     "ava.cta.access": "Avísame",
     "ava.cta.how": "Cómo funciona",
     "ava.session.kicker": "Flujo de trabajo",
@@ -304,10 +302,6 @@ const es: Record<TranslationKey, string> = {
     "ava.follow.zone": "Dónde en la cancha.",
     "ava.follow.action": "Flick, Push y el resto.",
     "ava.follow.notes": "Nota del clip. Notas del partido.",
-    "ava.controls.heading": "Próximamente: controles a tu medida.",
-    "ava.controls.body": "Haz clic derecho en cualquier botón para renombrarlo (por ejemplo, Tiro → Jugadora 7), cambiar su tecla o mostrar y ocultar sus acciones de seguimiento. Un editor a pantalla completa replica tu distribución de etiquetado y guarda configuraciones como plantillas. Los eventos renombrados mantienen sus estadísticas, exportaciones e historial.",
-    "ava.controls.rightClick.caption": "Maqueta: clic derecho en un botón",
-    "ava.controls.editor.caption": "Maqueta: editor de controles a pantalla completa",
     "ava.modes.kicker": "Modos",
     "ava.modes.headline": "Etiquetar. Analizar. Presentar.",
     "ava.modes.tagging.title": "Etiquetar",
@@ -351,7 +345,7 @@ const es: Record<TranslationKey, string> = {
     "ava.origin.headline": "Hecho en Chile. Construido desde la cancha.",
     "ava.origin.body": "Camila Escudero juega, entrena y analiza. Fue videoanalista en el staff de Chile en el Mundial Junior Femenino FIH, Santiago 2025. Construyó AVA porque el software disponible pedía un analista técnico que la mayoría de los cuerpos técnicos no tiene. Con AVA analiza los partidos que publica en carpeta.cl.",
     "ava.access.kicker": "Acceso",
-    "ava.access.body": "Un programa para toda la sesión. AVA está en desarrollo para macOS. Déjame tus datos y te aviso cuando esté lista, o escríbeme a camilaescudero@uc.cl.",
+    "ava.access.body": "Un programa para toda la sesión. Déjame tus datos y te aviso cuando esté lista, o escríbeme a camilaescudero@uc.cl.",
     "ava.interest.name": "Nombre",
     "ava.interest.email": "Correo",
     "ava.interest.org": "Club / institución / país",

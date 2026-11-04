@@ -2,8 +2,7 @@ const en = {
     // Hero
     "hero.location": "Santiago, Chile",
     "hero.acfin": "Analytics products at ACFIN.",
-    "hero.ava.before": "Built ",
-    "hero.ava.after": " - field hockey video app used by coaches",
+    "hero.ava.after": " - field hockey video analysis app",
     "hero.cta.cv": "View CV",
 
     // Dashboard
@@ -78,7 +77,7 @@ const en = {
     "personalProjects.publishingPipeline.connectLabel": "How they connect",
     "personalProjects.publishingPipeline.connectsTo": "to",
     "personalProjects.publishingPipeline":
-      "The time to publish a match went down from about 30 minutes to just 5.",
+      "The time to publish a match went down from about 30 minutes to 5.",
     "personalProjects.publishingPipeline.diagram.toggle": "How I ship it",
     "personalProjects.publishingPipeline.diagram.intro": "Per game, in order.",
     "personalProjects.publishingPipeline.diagram.list.1": "Receive the game footage.",
@@ -186,13 +185,12 @@ const en = {
     "social.openInNewTab": "Open in new tab",
 
     // Footer
-    "footer.builtWith": "Built with care.",
     "footer.cv": "CV",
 
     // CV Page
     "cv.back": "Back",
     "cv.role": "Analytics products · video analysis software",
-    "cv.summary": "At ACFIN I build the analytics products that put structured-credit metrics in front of clients. AVA is a macOS app in development to import, tag, analyze, present, and export in one program—concatenate on import, tag and present in the same app—rooted in coaching and tournament video work. UC Chile, Ingeniería Civil Industrial + IT diploma (2027).",
+    "cv.summary": "At ACFIN I build the analytics products that put structured-credit metrics in front of clients. AVA is a macOS app to import, tag, analyze, present, and export in one program—concatenate on import, tag and present in the same app—rooted in coaching and tournament video work. UC Chile, Ingeniería Civil Industrial + IT diploma (2027).",
     "cv.selectedProjects": "Selected Projects",
     "cv.workExperience": "Work Experience",
     "cv.education": "Education",
@@ -212,7 +210,7 @@ const en = {
     "cv.publishingPipeline.title": "Agentic publishing pipeline",
     "cv.publishingPipeline.type": "Case study",
     "cv.publishingPipeline.description":
-      "Built an independent publishing pipeline for carpeta.cl: an AI agent re-encodes video, hosts clips, writes the database, uploads scouting XML, and verifies each step. 23 matches and 175 clips published; manual work per match from ~50 to ~5 min (estimated).",
+      "Built an independent publishing pipeline for carpeta.cl: an AI agent re-encodes video, hosts clips, writes the database, uploads scouting XML, and verifies each step. 23 matches and 175 clips published; manual work per match from about 30 minutes to 5 (estimated).",
     "cv.fleetOptimizer.title": "Aircraft Fleet Engine Allocation Optimizer",
     "cv.fleetOptimizer.type": "Course Project — Optimization Methods",
     "cv.fleetOptimizer.description": "Developed an optimization tool to allocate engines across an aircraft fleet minimizing maintenance costs while meeting flight schedule constraints.",
@@ -261,7 +259,7 @@ const en = {
     "ava.hero.tagline": "From match footage to team talk.",
     "ava.headline": "One session. One program.",
     "ava.lede": "Video analysis for field hockey, without switching programs.",
-    "ava.hero.body": "Field hockey video analysis for coaches without an analyst. A native macOS app in Spanish and English, in development.",
+    "ava.hero.body": "Field hockey video analysis for coaches without an analyst. A native macOS app in Spanish and English.",
     "ava.cta.access": "Notify me",
     "ava.cta.how": "How it works",
     "ava.session.kicker": "Workflow",
@@ -302,10 +300,6 @@ const en = {
     "ava.follow.zone": "Where on the pitch.",
     "ava.follow.action": "Flick, Push, and the rest.",
     "ava.follow.notes": "Written on the tag. Shown on the overlay.",
-    "ava.controls.heading": "Coming soon: controls that fit your team.",
-    "ava.controls.body": "Right-click any button to rename it (say, Shot → Jugadora 7), change its key, or show and hide its follow-ups. A full-screen editor mirrors your tagging layout and saves setups as templates. Renamed events keep their stats, exports and history.",
-    "ava.controls.rightClick.caption": "Mockup: right-click a button",
-    "ava.controls.editor.caption": "Mockup: full-screen controls editor",
     "ava.modes.kicker": "Modes",
     "ava.modes.headline": "Tagging. Analyzing. Presentation.",
     "ava.modes.tagging.title": "Tagging",
@@ -349,7 +343,7 @@ const en = {
     "ava.origin.headline": "Made in Chile. Built from the pitch.",
     "ava.origin.body": "Camila Escudero plays, coaches, and analyzes. She was a video analyst with Team Chile's staff at the FIH Women's Junior World Cup, Santiago 2025. She built AVA because the available software needed a technical analyst most coaching staffs don't have. She uses it for the matches published on carpeta.cl.",
     "ava.access.kicker": "Access",
-    "ava.access.body": "One program for the whole session. AVA is in development for macOS. Leave your details and I'll let you know when it's ready, or write to camilaescudero@uc.cl.",
+    "ava.access.body": "One program for the whole session. Leave your details and I'll let you know when it's ready, or write to camilaescudero@uc.cl.",
     "ava.interest.name": "Name",
     "ava.interest.email": "Email",
     "ava.interest.org": "Club / institution / country",

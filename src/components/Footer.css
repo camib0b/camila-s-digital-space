@@ -51,23 +51,24 @@
 }
 
 .site-footer-wordmark {
-  margin: 0;
+  margin: 0 auto;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding-inline: 0.75rem;
+  /* At least 8vw of side inset, and more once the size cap binds. */
+  padding-inline: max(1.5rem, 8vw);
   padding-bottom: 0.08em;
   color: hsl(var(--foreground));
   font-family: var(--font-wordmark);
-  font-weight: 540;
+  font-weight: 400;
   font-style: normal;
   font-synthesis: none;
   font-optical-sizing: none;
-  font-variation-settings: "opsz" 144, "wght" 540, "SOFT" 100, "WONK" 1;
-  /* Measured advance is 5.891em at these axes and -0.04em tracking.
-     The divisor leaves a little slack so the line never overflows. */
-  font-size: calc((100vw - 2.25rem) / 6.05);
-  font-size: clamp(1rem, calc((100cqi - 1.5rem) / 6.05), min(36rem, 32svh));
+  font-variation-settings: "opsz" 144, "wght" 400, "SOFT" 100, "WONK" 1;
+  /* The old flush fit used advance 5.891em at wght 540. Weight 400 is narrower,
+     and the divisor stays above that advance so the line cannot reach the inset. */
+  font-size: calc((100vw - 16vw) / 7.2);
+  font-size: clamp(1.75rem, calc((100cqi - max(3rem, 16vw)) / 7.2), min(12rem, 18svh));
   line-height: 1;
   letter-spacing: -0.04em;
   text-align: center;
@@ -95,24 +96,27 @@
   left: 0;
   z-index: 2;
   margin: 0;
-  padding: 5.75rem 1rem 0.75rem;
+  padding: 4.5rem 1rem 0.875rem;
   color: rgb(255 255 255);
   text-align: center;
-  font-size: 0.75rem;
-  line-height: 1.45;
+  /* text-sm is 0.875rem on a 1.35rem line, so the glyphs occupy the bottom
+     0.875rem + 1.35rem = 2.225rem. The flat 0.78 stop runs through 3.5rem,
+     above that line box, then fades. The plate is painted on this element,
+     so the ratio does not change as the curtain moves. */
   background: linear-gradient(
     to top,
-    rgb(0 0 0 / 0.72) 0,
-    rgb(0 0 0 / 0.72) 3.5rem,
-    rgb(0 0 0 / 0) 7.75rem
+    rgb(0 0 0 / 0.78) 0,
+    rgb(0 0 0 / 0.78) 3.5rem,
+    rgb(0 0 0 / 0) 6.5rem
   );
 }
 
 @supports (animation-timeline: view()) and (view-timeline-name: --site-footer-reveal) {
   @media (prefers-reduced-motion: no-preference) {
     .site-footer-stage {
-      height: 200vh;
-      height: 200svh;
+      /* Scrub = stage − sticky frame = 0.75 viewport, under one viewport on phones too. */
+      height: 175vh;
+      height: 175svh;
       view-timeline-name: --site-footer-reveal;
       view-timeline-axis: block;
     }
@@ -149,8 +153,8 @@
 }
 
 .site-footer-stage[data-curtain-driver="script"] {
-  height: 200vh;
-  height: 200svh;
+  height: 175vh;
+  height: 175svh;
 }
 
 .site-footer-stage[data-curtain-driver="script"] .site-footer-frame {
@@ -165,7 +169,6 @@
   position: absolute;
   inset: 0;
   animation: none;
-  transform: translate3d(0, calc(var(--footer-curtain-progress, 1) * var(--footer-curtain-travel)), 0);
 }
 
 .site-footer-stage[data-curtain-driver="script"] .site-footer-curtain picture,

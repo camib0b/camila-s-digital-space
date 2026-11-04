@@ -7,6 +7,9 @@ import { copyTextToClipboard } from "@/lib/utils";
 
 const COPY_FEEDBACK_MS = 1500;
 
+const iconControlClassName =
+  "inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center text-muted-foreground transition-colors duration-hover ease-hover hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
+
 type EmailContactControlProps = {
   isExpanded: boolean;
   onClose: () => void;
@@ -64,11 +67,11 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
       <button
         type="button"
         onClick={onToggle}
-        className="text-muted-foreground hover:text-foreground transition-colors duration-hover ease-hover"
+        className={iconControlClassName}
         aria-label={isExpanded ? t("contact.email") : t("contact.showEmail")}
         aria-expanded={isExpanded}
       >
-        <Mail className="w-4 h-4" />
+        <Mail className="h-4 w-4" />
       </button>
 
       {isRevealMounted ? (
@@ -77,13 +80,13 @@ const EmailContactControl = ({ isExpanded, onClose, onToggle }: EmailContactCont
           data-state={isExpanded ? "open" : "closed"}
           aria-hidden={isExpanded ? undefined : true}
         >
-          <span className="text-xs text-muted-foreground select-all whitespace-nowrap">
+          <span className="inline-flex min-h-11 items-center text-xs text-muted-foreground select-all whitespace-nowrap">
             {CONTACT_EMAIL}
           </span>
           <button
             type="button"
             onClick={handleCopy}
-            className="text-muted-foreground hover:text-foreground transition-colors duration-hover ease-hover"
+            className={iconControlClassName}
             aria-label={hasCopied ? t("contact.copied") : t("contact.copyEmail")}
             tabIndex={isExpanded ? undefined : -1}
           >

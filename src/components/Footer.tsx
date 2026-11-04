@@ -10,7 +10,7 @@ import EmailContactControl from "./EmailContactControl";
 import SocialLinkControl from "./SocialLinkControl";
 import "./Footer.css";
 
-const CURTAIN_PROGRESS_VARIABLE = "--footer-curtain-progress";
+const CURTAIN_TRAVEL_PERCENT = 100;
 
 function supportsFooterViewTimeline(): boolean {
   if (typeof CSS === "undefined" || typeof CSS.supports !== "function") {
@@ -37,16 +37,22 @@ function useFooterCurtainFallback(
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame = 0;
     let isNearStage = true;
+    let frameHeight = 0;
     let observer: IntersectionObserver | null = null;
+
+    const measureFrame = () => {
+      const frame = stage.querySelector<HTMLElement>(".site-footer-frame");
+      frameHeight = frame === null ? window.innerHeight : frame.getBoundingClientRect().height;
+    };
 
     const writeProgress = () => {
       animationFrame = 0;
       const stageBounds = stage.getBoundingClientRect();
-      const frame = stage.querySelector<HTMLElement>(".site-footer-frame");
-      const frameHeight = frame === null ? window.innerHeight : frame.getBoundingClientRect().height;
       const scrollSpan = stageBounds.height - frameHeight;
       const progress = scrollSpan <= 0 ? 1 : Math.min(1, Math.max(0, -stageBounds.top / scrollSpan));
-      curtain.style.setProperty(CURTAIN_PROGRESS_VARIABLE, progress.toFixed(4));
+      // Same 100% travel as --footer-curtain-travel. Set on this element so the
+      // scroll path does not invalidate descendant styles through an inherited variable.
+      curtain.style.transform = `translate3d(0, ${(progress * CURTAIN_TRAVEL_PERCENT).toFixed(2)}%, 0)`;
     };
 
     const requestProgress = () => {
@@ -56,16 +62,21 @@ function useFooterCurtainFallback(
       animationFrame = window.requestAnimationFrame(writeProgress);
     };
 
+    const onResize = () => {
+      measureFrame();
+      requestProgress();
+    };
+
     const stopScriptedMotion = () => {
       observer?.disconnect();
       observer = null;
       window.removeEventListener("scroll", requestProgress);
-      window.removeEventListener("resize", requestProgress);
+      window.removeEventListener("resize", onResize);
       if (animationFrame !== 0) {
         window.cancelAnimationFrame(animationFrame);
         animationFrame = 0;
       }
-      curtain.style.removeProperty(CURTAIN_PROGRESS_VARIABLE);
+      curtain.style.removeProperty("transform");
       if (stage.dataset.curtainDriver === "script") {
         delete stage.dataset.curtainDriver;
       }
@@ -79,6 +90,7 @@ function useFooterCurtainFallback(
 
       stage.dataset.curtainDriver = "script";
       isNearStage = true;
+      measureFrame();
       observer = new IntersectionObserver(
         (entries) => {
           isNearStage = entries.some((entry) => entry.isIntersecting);
@@ -90,7 +102,7 @@ function useFooterCurtainFallback(
       );
       observer.observe(stage);
       window.addEventListener("scroll", requestProgress, { passive: true });
-      window.addEventListener("resize", requestProgress);
+      window.addEventListener("resize", onResize);
       writeProgress();
     };
 
@@ -121,67 +133,66 @@ const Footer = () => {
     <footer className="site-footer relative z-10 bg-background text-foreground">
       <div className="border-t border-border">
         <div className="container px-6 py-10 md:px-8">
-          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.6fr)]">
-            <div className="min-w-0">
+          <div className="mx-auto max-w-2xl">
+            <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.6fr)] lg:gap-8">
               <p id="site-footer-name" className="text-sm font-medium text-foreground">
                 Camila Escudero
               </p>
-              <p className="mt-1 text-sm text-muted-foreground">{t("footer.builtWith")}</p>
+
+              <nav aria-labelledby="site-footer-name" className="grid min-w-0 grid-cols-1 items-center gap-2 sm:grid-cols-2 sm:gap-6">
+                <ul className="flex flex-col">
+                  <li>
+                    <Link
+                      to="/cv"
+                      className="inline-flex min-h-11 min-w-11 cursor-pointer items-center gap-1.5 px-1 text-sm text-foreground link-underline transition-colors duration-hover ease-hover hover:text-muted-foreground"
+                    >
+                      <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                      {t("footer.cv")}
+                    </Link>
+                  </li>
+                </ul>
+
+                <ul className="flex min-w-0 flex-wrap items-center gap-x-1 gap-y-1">
+                  <li>
+                    <SocialLinkControl
+                      href={SOCIAL_LINKS.github}
+                      label="GitHub"
+                      Icon={Github}
+                      isExpanded={activeContactItem === "github"}
+                      onClose={() => setActiveContactItem(null)}
+                      onToggle={() => toggleContactItem("github")}
+                    />
+                  </li>
+                  <li>
+                    <SocialLinkControl
+                      href={SOCIAL_LINKS.linkedin}
+                      label="LinkedIn"
+                      Icon={Linkedin}
+                      isExpanded={activeContactItem === "linkedin"}
+                      onClose={() => setActiveContactItem(null)}
+                      onToggle={() => toggleContactItem("linkedin")}
+                    />
+                  </li>
+                  <li>
+                    <SocialLinkControl
+                      href={SOCIAL_LINKS.x}
+                      label="Twitter/X"
+                      Icon={Twitter}
+                      isExpanded={activeContactItem === "x"}
+                      onClose={() => setActiveContactItem(null)}
+                      onToggle={() => toggleContactItem("x")}
+                    />
+                  </li>
+                  <li>
+                    <EmailContactControl
+                      isExpanded={activeContactItem === "email"}
+                      onClose={() => setActiveContactItem(null)}
+                      onToggle={() => toggleContactItem("email")}
+                    />
+                  </li>
+                </ul>
+              </nav>
             </div>
-
-            <nav aria-labelledby="site-footer-name" className="grid min-w-0 grid-cols-1 gap-6 sm:grid-cols-2">
-              <ul className="flex flex-col gap-2">
-                <li>
-                  <Link
-                    to="/cv"
-                    className="inline-flex cursor-pointer items-center gap-1.5 text-sm text-foreground link-underline transition-colors duration-hover ease-hover hover:text-muted-foreground"
-                  >
-                    <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-                    {t("footer.cv")}
-                  </Link>
-                </li>
-              </ul>
-
-              <ul className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-3">
-                <li>
-                  <SocialLinkControl
-                    href={SOCIAL_LINKS.github}
-                    label="GitHub"
-                    Icon={Github}
-                    isExpanded={activeContactItem === "github"}
-                    onClose={() => setActiveContactItem(null)}
-                    onToggle={() => toggleContactItem("github")}
-                  />
-                </li>
-                <li>
-                  <SocialLinkControl
-                    href={SOCIAL_LINKS.linkedin}
-                    label="LinkedIn"
-                    Icon={Linkedin}
-                    isExpanded={activeContactItem === "linkedin"}
-                    onClose={() => setActiveContactItem(null)}
-                    onToggle={() => toggleContactItem("linkedin")}
-                  />
-                </li>
-                <li>
-                  <SocialLinkControl
-                    href={SOCIAL_LINKS.x}
-                    label="Twitter/X"
-                    Icon={Twitter}
-                    isExpanded={activeContactItem === "x"}
-                    onClose={() => setActiveContactItem(null)}
-                    onToggle={() => toggleContactItem("x")}
-                  />
-                </li>
-                <li>
-                  <EmailContactControl
-                    isExpanded={activeContactItem === "email"}
-                    onClose={() => setActiveContactItem(null)}
-                    onToggle={() => toggleContactItem("email")}
-                  />
-                </li>
-              </ul>
-            </nav>
           </div>
         </div>
       </div>
@@ -208,7 +219,7 @@ const Footer = () => {
               />
             </picture>
           </div>
-          <p className="site-footer-legal">
+          <p className="site-footer-legal text-sm">
             © {currentYear} Camila Escudero · {t("hero.location")}
           </p>
         </div>
