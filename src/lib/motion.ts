@@ -10,6 +10,8 @@ export const ease = {
   hero: "cubic-bezier(0.16, 1, 0.3, 1)",
   hover: "ease",
   standard: "cubic-bezier(0.4, 0, 0.2, 1)",
+  /** Scroll-scrubbed motion stays locked to the scroll position. */
+  linear: "linear",
 } as const;
 
 /** Shared UI durations in milliseconds. */
@@ -63,6 +65,12 @@ function milliseconds(value: number): string {
   return `${value}ms`;
 }
 
+/**
+ * Scroll-driven animations take their pace from the timeline.
+ * `auto` is the duration keyword those timelines expect.
+ */
+export const scrollDrivenDuration = "auto";
+
 /** Specified values of the motion custom properties in src/index.css. */
 export const cssMotionVariables = {
   "--ease-out-strong": ease.out,
@@ -70,6 +78,7 @@ export const cssMotionVariables = {
   "--ease-hero": ease.hero,
   "--ease-hover": ease.hover,
   "--ease-standard": ease.standard,
+  "--ease-linear": ease.linear,
   "--duration-press": milliseconds(duration.press),
   "--duration-fast": milliseconds(duration.fast),
   "--duration-hover": milliseconds(duration.hover),
@@ -102,4 +111,5 @@ export const cssMotionVariables = {
   /* Read back as a raw time by the analytics diagram. Do not alias these through var(). */
   "--curtain-duration": milliseconds(keptDuration.curtain),
   "--curtain-stagger": milliseconds(keptDuration.snap),
+  "--duration-scroll-driven": scrollDrivenDuration,
 } as const;
