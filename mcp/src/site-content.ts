@@ -83,7 +83,7 @@ export const projects = [
     name: "Agentic publishing pipeline",
     category: "personal-project",
     description:
-      "Publishing a match used to take about 50 minutes of manual work: exporting clips one by one, uploading to YouTube, wiring up the library. Now AVA batch-exports the clips and a separate agent re-encodes them, hosts them natively on carpeta.cl, writes the database, uploads the scouting XML, keeps a YouTube backup, and verifies each step. About 5 minutes of my time per match. 23 matches, 175 clips, 3 team libraries so far, roughly 17 hours saved. Time figures are my own estimates.",
+      "Publishing a match went from about 30 minutes to 5 of my time. It used to mean exporting clips one by one, uploading to YouTube, and wiring up the library. Now AVA batch-exports the clips and a separate agent re-encodes them, hosts them natively on carpeta.cl, writes the database, uploads the scouting XML, keeps a YouTube backup, and verifies each step. 23 matches, 175 clips, 3 team libraries so far, roughly 10 hours saved. Time figures are my own estimates.",
   },
   {
     id: "raycast",

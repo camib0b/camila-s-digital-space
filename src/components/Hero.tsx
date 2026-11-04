@@ -36,15 +36,17 @@ const Hero = () => {
               {t("hero.acfin")}
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              {t("hero.ava.before")}
-              <Link to="/ava" className="text-inherit no-underline hover:underline">
+              <Link
+                to="/ava"
+                className="cursor-pointer text-inherit no-underline hover:underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              >
                 AVA
               </Link>
               {t("hero.ava.after")}
             </p>
           </div>
 
-          <div className="flex items-center gap-4 animate-fade-up-delay-2">
+          <div className="flex items-center gap-1 animate-fade-up-delay-2">
             <SocialLinkControl
               href={SOCIAL_LINKS.github}
               label="GitHub"
