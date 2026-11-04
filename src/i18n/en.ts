@@ -195,7 +195,11 @@ const en = {
     "notFound.projects": "Projects",
     "notFound.ava": "AVA",
     "notFound.cv": "CV",
-    "notFound.report": "If you followed a link here, I'd like to know: ",
+    "notFound.report": "If you followed a link here, I'd like to know.",
+    "notFound.feedbackPlaceholder": "The link you followed, or what you expected to find",
+    "notFound.feedbackSend": "Send",
+    "notFound.feedbackThanks": "Thanks, I'll take a look.",
+    "notFound.feedbackError": "Couldn't send. Check the note and try again.",
 
     // CV Page
     "cv.back": "Back",
