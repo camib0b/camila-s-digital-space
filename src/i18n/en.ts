@@ -187,6 +187,16 @@ const en = {
     // Footer
     "footer.cv": "CV",
 
+    // Not found
+    "notFound.label": "404",
+    "notFound.message": "This page doesn't exist, or it moved.",
+    "notFound.nav": "Pages",
+    "notFound.home": "Home",
+    "notFound.projects": "Projects",
+    "notFound.ava": "AVA",
+    "notFound.cv": "CV",
+    "notFound.report": "If you followed a link here, I'd like to know: ",
+
     // CV Page
     "cv.back": "Back",
     "cv.role": "Analytics products · video analysis software",

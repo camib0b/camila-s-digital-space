@@ -189,6 +189,16 @@ const es: Record<TranslationKey, string> = {
     // Footer
     "footer.cv": "CV",
 
+    // Not found
+    "notFound.label": "404",
+    "notFound.message": "Esta página no existe, o cambió de lugar.",
+    "notFound.nav": "Páginas",
+    "notFound.home": "Inicio",
+    "notFound.projects": "Proyectos",
+    "notFound.ava": "AVA",
+    "notFound.cv": "CV",
+    "notFound.report": "Si seguiste un enlace hasta aquí, me gustaría saberlo: ",
+
     // CV Page
     "cv.back": "Volver",
     "cv.role": "Productos de analítica · software de análisis de video",
