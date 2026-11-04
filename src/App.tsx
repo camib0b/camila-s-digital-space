@@ -10,6 +10,7 @@ import Capital from "./pages/Capital";
 import Concat from "./pages/Concat";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop";
+import Footer from "@/components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
               <Route path="/concat/" element={<Concat />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <Footer />
           </TooltipProvider>
         </LanguageProvider>
       </BrowserRouter>

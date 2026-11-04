@@ -1,0 +1,220 @@
+.site-footer :is(a[href], button):not(:disabled):not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+.site-footer :is(button:disabled, [aria-disabled="true"]) {
+  cursor: default;
+}
+
+.site-footer a:focus-visible,
+.site-footer button:focus-visible {
+  outline: 1px solid hsl(var(--ring));
+  outline-offset: 4px;
+}
+
+/* Expanded profile URLs sit on the page background. accent-teal is 3.56:1
+   on the light background, under the 4.5:1 text minimum, so hover and focus
+   use the same foreground token as the other footer links. */
+.site-footer .contact-reveal a:hover,
+.site-footer .contact-reveal a:focus-visible {
+  color: hsl(var(--foreground));
+}
+
+.site-footer .contact-reveal {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.site-footer .contact-reveal a,
+.site-footer .contact-reveal span {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.site-footer-stage {
+  position: relative;
+}
+
+.site-footer-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: hsl(var(--background));
+}
+
+.site-footer-wordmark-slot {
+  position: relative;
+  z-index: 0;
+  container-type: inline-size;
+  width: 100%;
+}
+
+.site-footer-wordmark {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-inline: 0.75rem;
+  padding-bottom: 0.08em;
+  color: hsl(var(--foreground));
+  font-family: var(--font-wordmark);
+  font-weight: 540;
+  font-style: normal;
+  font-synthesis: none;
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 144, "wght" 540, "SOFT" 100, "WONK" 1;
+  /* Measured advance is 5.891em at these axes and -0.04em tracking.
+     The divisor leaves a little slack so the line never overflows. */
+  font-size: calc((100vw - 2.25rem) / 6.05);
+  font-size: clamp(1rem, calc((100cqi - 1.5rem) / 6.05), min(36rem, 32svh));
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-align: center;
+  text-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.site-footer-curtain {
+  --footer-curtain-travel: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer-curtain picture,
+.site-footer-curtain img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.site-footer-legal {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 5.75rem 1rem 0.75rem;
+  color: rgb(255 255 255);
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  background: linear-gradient(
+    to top,
+    rgb(0 0 0 / 0.72) 0,
+    rgb(0 0 0 / 0.72) 3.5rem,
+    rgb(0 0 0 / 0) 7.75rem
+  );
+}
+
+@supports (animation-timeline: view()) and (view-timeline-name: --site-footer-reveal) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-footer-stage {
+      height: 200vh;
+      height: 200svh;
+      view-timeline-name: --site-footer-reveal;
+      view-timeline-axis: block;
+    }
+
+    .site-footer-frame {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+    }
+
+    .site-footer-curtain {
+      position: absolute;
+      inset: 0;
+      animation-name: site-footer-curtain-drop;
+      animation-duration: var(--duration-scroll-driven);
+      animation-timing-function: var(--ease-linear);
+      animation-fill-mode: both;
+      animation-timeline: --site-footer-reveal;
+      animation-range: contain 0% contain 100%;
+    }
+
+    .site-footer-curtain picture,
+    .site-footer-curtain img {
+      height: 100%;
+    }
+
+    .site-footer-curtain img {
+      object-fit: cover;
+      object-position: center bottom;
+    }
+  }
+}
+
+.site-footer-stage[data-curtain-driver="script"] {
+  height: 200vh;
+  height: 200svh;
+}
+
+.site-footer-stage[data-curtain-driver="script"] .site-footer-frame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain {
+  position: absolute;
+  inset: 0;
+  animation: none;
+  transform: translate3d(0, calc(var(--footer-curtain-progress, 1) * var(--footer-curtain-travel)), 0);
+}
+
+.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain picture,
+.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain img {
+  height: 100%;
+}
+
+.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain img {
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+@keyframes site-footer-curtain-drop {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, var(--footer-curtain-travel), 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer-stage,
+  .site-footer-stage[data-curtain-driver="script"] {
+    height: auto;
+    view-timeline-name: none;
+  }
+
+  .site-footer-frame,
+  .site-footer-stage[data-curtain-driver="script"] .site-footer-frame {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+
+  .site-footer-curtain,
+  .site-footer-stage[data-curtain-driver="script"] .site-footer-curtain {
+    position: relative;
+    inset: auto;
+    animation: none;
+    transform: none;
+  }
+
+  .site-footer-curtain picture,
+  .site-footer-curtain img,
+  .site-footer-stage[data-curtain-driver="script"] .site-footer-curtain picture,
+  .site-footer-stage[data-curtain-driver="script"] .site-footer-curtain img {
+    height: auto;
+    object-fit: contain;
+  }
+}

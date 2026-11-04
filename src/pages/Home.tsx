@@ -1,7 +1,6 @@
 import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import PersonalProjects, { SmallTools } from "@/components/PersonalProjects";
-import Footer from "@/components/Footer";
 import Hockey from "@/components/Hockey";
 import PatternedBackground from "@/components/PatternedBackground";
 
@@ -16,7 +15,6 @@ const Home = () => {
           <SmallTools />
           <Experience />
           <Hockey />
-          <Footer />
         </div>
       </div>
     </main>

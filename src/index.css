@@ -1,6 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
 @import "@camib0b/ui/ui.css";
 
+/* Fraunces variable axes SOFT, WONK, opsz, and wght, subset to the footer wordmark.
+   SIL Open Font License 1.1 — src/assets/fonts/Fraunces-OFL.txt */
+@font-face {
+  font-family: "Fraunces";
+  src: url("./assets/fonts/fraunces-wordmark.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+0061, U+0063-0065, U+0069, U+006C-006D, U+006F, U+0072-0073, U+0075;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +20,7 @@
   :root {
     --radius: 0.5rem;
     --font-body: "Roboto", sans-serif;
+    --font-wordmark: "Fraunces", "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
 
     /* Light mode: clean white + near-black */
     --background: 0 0% 100%;
@@ -59,6 +71,7 @@
     --ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-hover: ease;
     --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-linear: linear;
     --duration-press: 100ms;
     --duration-fast: 120ms;
     --duration-hover: 150ms;
@@ -91,6 +104,7 @@
     /* Raw times: the analytics diagram reads these back with getPropertyValue. */
     --curtain-duration: 480ms;
     --curtain-stagger: 80ms;
+    --duration-scroll-driven: auto;
     /* motion-tokens:end */
     /* Same 12px travel and one stagger step as the hero intro. */
     --curtain-offset: -12px;
