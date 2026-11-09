@@ -421,5 +421,14 @@
     "quantity": 0.044101,
     "transactionType": "BUY",
     "totalAmount": 16.360147970000003
+  },
+  {
+    "transactionId": 48,
+    "ticker": "VOO",
+    "tradeDate": "2026-11-09",
+    "price": 690.32,
+    "quantity": 0.118988295,
+    "transactionType": "BUY",
+    "totalAmount": 82.1399998044
   }
 ]

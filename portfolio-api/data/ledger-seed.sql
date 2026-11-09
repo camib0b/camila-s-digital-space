@@ -56,3 +56,4 @@ INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, t
 INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES (40, 'ROBO', '2026-09-25', 80.9, 0.605439, 'BUY', 48.9800151);
 INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES (41, 'ROBO', '2026-09-25', 80.57, 0.434394, 'BUY', 34.99912458);
 INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES (42, 'TSLA', '2026-09-25', 370.97, 0.044101, 'BUY', 16.360147970000003);
+INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES (48, 'VOO', '2026-11-09', 690.32, 0.118988295, 'BUY', 82.1399998044);
