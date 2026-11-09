@@ -4,8 +4,10 @@ const CommerceDiagram = () => {
   return (
     <svg
       viewBox="0 0 200 60"
+      width={200}
+      height={60}
       aria-hidden="true"
-      className="experience-commerce pointer-events-none h-[60px] w-[200px] shrink-0 overflow-hidden fill-none stroke-muted-foreground"
+      className="experience-commerce pointer-events-none h-[60px] w-[200px] max-w-full shrink-0 overflow-hidden fill-none stroke-muted-foreground"
     >
       <g>
         <rect x="8" y="10" width="46" height="30" rx="1.5" className="fill-background" />
@@ -26,16 +28,6 @@ const CommerceDiagram = () => {
         <circle cx="184" cy="46.5" r="3.5" className="fill-background" />
       </g>
 
-      <g className="experience-commerce-payment">
-        <path
-          d="M4 6.2C4 9.4 5.3 11.2 8 11.2C10.7 11.2 12 9.4 12 6.2C10.5 7 9.1 5.2 8 3.4C6.9 5.2 5.5 7 4 6.2Z"
-          className="fill-background stroke-foreground"
-        />
-        <path d="M6.3 5.6L8 2.4L9.7 5.6" className="stroke-foreground" />
-        <line x1="6" y1="6.2" x2="10" y2="6.2" className="stroke-foreground" />
-        <circle cx="8" cy="8.6" r="1.3" className="stroke-foreground" />
-      </g>
-
       <g className="experience-commerce-package">
         <rect width="16" height="12" rx="1" className="fill-background stroke-foreground" />
         {packageBarcodeOffsets.map((offset) => (
@@ -50,15 +42,6 @@ const CommerceDiagram = () => {
           />
         ))}
       </g>
-
-      <line
-        x1="95"
-        y1="22"
-        x2="107"
-        y2="22"
-        strokeLinecap="round"
-        className="experience-commerce-scan stroke-accent-teal"
-      />
     </svg>
   );
 };

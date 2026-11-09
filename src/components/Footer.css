@@ -12,9 +12,14 @@
   outline-offset: 4px;
 }
 
-/* Expanded profile URLs sit on the page background. accent-teal is 3.56:1
-   on the light background, under the 4.5:1 text minimum, so hover and focus
-   use the same foreground token as the other footer links. */
+/* Expanded profile URLs sit on the page background. Keep the same foreground
+   token as the CV link so hover and focus do not drop under 4.5:1. */
+.site-footer .contact-reveal a {
+  transition:
+    color var(--duration-hover) var(--ease-hover),
+    transform var(--duration-press) var(--ease-out-strong);
+}
+
 .site-footer .contact-reveal a:hover,
 .site-footer .contact-reveal a:focus-visible {
   color: hsl(var(--foreground));
@@ -31,193 +36,39 @@
   overflow-wrap: anywhere;
 }
 
-.site-footer-stage {
-  position: relative;
-}
-
-.site-footer-frame {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: hsl(var(--background));
-}
-
-.site-footer-wordmark-slot {
-  position: relative;
-  z-index: 0;
+.site-footer-inner {
   container-type: inline-size;
-  width: 100%;
 }
 
 .site-footer-wordmark {
-  margin: 0 auto;
-  width: 100%;
+  margin: 0;
   max-width: 100%;
-  box-sizing: border-box;
-  /* At least 8vw of side inset, and more once the size cap binds. */
-  padding-inline: max(1.5rem, 8vw);
-  padding-bottom: 0.08em;
   color: hsl(var(--foreground));
   font-family: var(--font-wordmark);
   font-weight: 400;
   font-style: normal;
   font-synthesis: none;
   font-optical-sizing: none;
-  font-variation-settings: "opsz" 144, "wght" 400, "SOFT" 100, "WONK" 1;
-  /* The old flush fit used advance 5.891em at wght 540. Weight 400 is narrower,
-     and the divisor stays above that advance so the line cannot reach the inset. */
-  font-size: calc((100vw - 16vw) / 7.2);
-  font-size: clamp(1.75rem, calc((100cqi - max(3rem, 16vw)) / 7.2), min(12rem, 18svh));
-  line-height: 1;
+  font-variation-settings: "opsz" 144, "wght" 400, "SOFT" 40, "WONK" 0;
+  font-size: clamp(2rem, 8cqi, 3.5rem);
+  line-height: 1.05;
   letter-spacing: -0.04em;
-  text-align: center;
-  text-wrap: nowrap;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
-.site-footer-curtain {
-  --footer-curtain-travel: 100%;
-  position: relative;
-  z-index: 1;
+.site-footer-cv {
+  border-bottom: 1px solid hsl(var(--muted-foreground));
+  transition: border-bottom-color var(--duration-hover) var(--ease-hover);
 }
 
-.site-footer-curtain picture,
-.site-footer-curtain img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.site-footer-legal {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  margin: 0;
-  padding: 4.5rem 1rem 0.875rem;
-  color: rgb(255 255 255);
-  text-align: center;
-  /* text-sm is 0.875rem on a 1.35rem line, so the glyphs occupy the bottom
-     0.875rem + 1.35rem = 2.225rem. The flat 0.78 stop runs through 3.5rem,
-     above that line box, then fades. The plate is painted on this element,
-     so the ratio does not change as the curtain moves. */
-  background: linear-gradient(
-    to top,
-    rgb(0 0 0 / 0.78) 0,
-    rgb(0 0 0 / 0.78) 3.5rem,
-    rgb(0 0 0 / 0) 6.5rem
-  );
-}
-
-@supports (animation-timeline: view()) and (view-timeline-name: --site-footer-reveal) {
-  @media (prefers-reduced-motion: no-preference) {
-    .site-footer-stage {
-      /* Scrub = stage − sticky frame = 0.75 viewport, under one viewport on phones too. */
-      height: 175vh;
-      height: 175svh;
-      view-timeline-name: --site-footer-reveal;
-      view-timeline-axis: block;
-    }
-
-    .site-footer-frame {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      height: 100svh;
-      overflow: hidden;
-    }
-
-    .site-footer-curtain {
-      position: absolute;
-      inset: 0;
-      animation-name: site-footer-curtain-drop;
-      animation-duration: var(--duration-scroll-driven);
-      animation-timing-function: var(--ease-linear);
-      animation-fill-mode: both;
-      animation-timeline: --site-footer-reveal;
-      animation-range: contain 0% contain 100%;
-    }
-
-    .site-footer-curtain picture,
-    .site-footer-curtain img {
-      height: 100%;
-    }
-
-    .site-footer-curtain img {
-      object-fit: cover;
-      object-position: center bottom;
-    }
-  }
-}
-
-.site-footer-stage[data-curtain-driver="script"] {
-  height: 175vh;
-  height: 175svh;
-}
-
-.site-footer-stage[data-curtain-driver="script"] .site-footer-frame {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  overflow: hidden;
-}
-
-.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain {
-  position: absolute;
-  inset: 0;
-  animation: none;
-}
-
-.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain picture,
-.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain img {
-  height: 100%;
-}
-
-.site-footer-stage[data-curtain-driver="script"] .site-footer-curtain img {
-  object-fit: cover;
-  object-position: center bottom;
-}
-
-@keyframes site-footer-curtain-drop {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(0, var(--footer-curtain-travel), 0);
-  }
+.site-footer a:hover .site-footer-cv,
+.site-footer a:focus-visible .site-footer-cv {
+  border-bottom-color: hsl(var(--foreground));
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-footer-stage,
-  .site-footer-stage[data-curtain-driver="script"] {
-    height: auto;
-    view-timeline-name: none;
-  }
-
-  .site-footer-frame,
-  .site-footer-stage[data-curtain-driver="script"] .site-footer-frame {
-    position: relative;
-    height: auto;
-    overflow: visible;
-  }
-
-  .site-footer-curtain,
-  .site-footer-stage[data-curtain-driver="script"] .site-footer-curtain {
-    position: relative;
-    inset: auto;
-    animation: none;
-    transform: none;
-  }
-
-  .site-footer-curtain picture,
-  .site-footer-curtain img,
-  .site-footer-stage[data-curtain-driver="script"] .site-footer-curtain picture,
-  .site-footer-stage[data-curtain-driver="script"] .site-footer-curtain img {
-    height: auto;
-    object-fit: contain;
+  .site-footer .contact-reveal a,
+  .site-footer-cv {
+    transition: none;
   }
 }
