@@ -24,11 +24,11 @@ const Footer = () => {
             camila escudero
           </p>
 
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <nav aria-labelledby="site-footer-name" className="flex min-w-0 flex-col gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-6">
+            <nav aria-labelledby="site-footer-name" className="flex max-w-full flex-wrap items-center gap-2">
               <Link
                 to="/cv"
-                className="inline-flex min-h-11 min-w-11 items-center self-start px-1 text-sm text-foreground"
+                className="inline-flex min-h-11 min-w-11 shrink-0 items-center px-1 text-sm text-foreground"
               >
                 <span className="site-footer-cv inline-flex items-center gap-1.5">
                   <FileText className="h-3.5 w-3.5" aria-hidden="true" />
@@ -36,7 +36,7 @@ const Footer = () => {
                 </span>
               </Link>
 
-              <ul className="flex min-w-0 flex-wrap items-center">
+              <ul className="site-footer-contacts">
                 <li>
                   <SocialLinkControl
                     href={SOCIAL_LINKS.github}

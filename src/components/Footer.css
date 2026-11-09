@@ -40,6 +40,44 @@
   container-type: inline-size;
 }
 
+/* Spacing scale step 2 (the same value as `gap-2`). The four controls stay on
+   one line until the footer column is narrower than four 44px targets plus
+   three gaps. Below that they wrap as two pairs, never one leftover icon. */
+.site-footer-contacts {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer-contacts > li {
+  display: flex;
+  flex: none;
+  max-width: 100%;
+}
+
+.site-footer-contacts > li > div {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.site-footer-contacts > li:has(.contact-reveal) {
+  flex: 0 1 auto;
+  min-width: 2.75rem;
+}
+
+@container (max-width: calc(12.5rem - 0.0625rem)) {
+  .site-footer .site-footer-contacts {
+    flex-wrap: wrap;
+    width: calc(2.75rem + 0.5rem + 2.75rem);
+  }
+}
+
 .site-footer-wordmark {
   margin: 0;
   max-width: 100%;
