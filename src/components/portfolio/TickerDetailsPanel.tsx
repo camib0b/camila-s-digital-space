@@ -102,7 +102,7 @@ const TickerDetailsPanel = () => {
     <div className="fixed inset-0 z-50">
       <button
         type="button"
-        className="absolute inset-0 bg-background/40"
+        className="absolute inset-0 cursor-pointer bg-background/40"
         aria-label={t("portfolio.ticker.close")}
         onClick={details.closeDetails}
       />
@@ -124,7 +124,7 @@ const TickerDetailsPanel = () => {
             ref={closeRef}
             type="button"
             onClick={details.closeDetails}
-            className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="cursor-pointer text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-hover ease-hover hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             {t("portfolio.ticker.close")}
           </button>

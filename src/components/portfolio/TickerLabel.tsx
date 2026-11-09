@@ -154,7 +154,7 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
         ref={triggerRef}
         type="button"
         className={cn(
-          "border-0 bg-transparent p-0 text-left text-xs text-inherit no-underline shadow-none transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+          "inline max-w-full cursor-pointer break-words border-0 bg-transparent p-0 text-left text-xs text-inherit no-underline shadow-none transition-colors duration-hover ease-hover hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
           className,
         )}
         aria-label={line2.length > 0 ? `${label}, ${line1}, ${line2}` : `${label}, ${line1}`}
@@ -216,7 +216,7 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
                 <button
                   id={detailsButtonId}
                   type="button"
-                  className="mt-1.5 border-0 bg-transparent p-0 text-[10px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  className="mt-1.5 cursor-pointer border-0 bg-transparent p-0 text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-hover ease-hover hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                   onClick={openDetails}
                   onKeyDown={(event) => {
                     if (event.key === "Tab" && event.shiftKey) {

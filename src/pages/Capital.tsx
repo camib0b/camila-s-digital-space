@@ -126,7 +126,7 @@ const Capital = () => {
           <button
             type="button"
             onClick={refreshLiveData}
-            className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="cursor-pointer text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-hover ease-hover hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             {t("portfolio.refresh")}
           </button>

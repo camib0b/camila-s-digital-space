@@ -31,47 +31,49 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
       <h2 className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
         {t("portfolio.holdings.title")}
       </h2>
-      <table className="w-full table-fixed border-collapse">
-        <thead>
-          <tr className="border-b border-border text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-            <th className="w-[34%] pb-2 pr-2 text-left font-medium">{t("portfolio.holdings.ticker")}</th>
-            <th className="w-[33%] px-2 pb-2 text-right font-medium">{t("portfolio.holdings.weight")}</th>
-            <th className="w-[33%] pb-2 pl-2 text-right font-medium">{t("portfolio.holdings.return")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {holdings.map((holding) => {
-            const gainPercent = parseFloat(holding.gainPercent);
-            const showLastTradePrice = holding.stale === true && Number.isFinite(holding.currentPrice);
-            return (
-              <tr
-                key={holding.ticker}
-                className="border-b border-border transition-colors last:border-b-0 hover:bg-muted/40 active:bg-muted/40"
-              >
-                <td className="py-2.5 pr-2 align-top">
-                  <TickerLabel ticker={holding.ticker} className="font-mono text-xs" />
-                  {showLastTradePrice ? (
-                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                      {t("portfolio.holdings.lastTradePrice")}{" "}
-                      <span className="normal-case tracking-normal tabular-nums">
-                        {formatHoldingPrice(holding.currentPrice)}
-                      </span>
-                    </p>
-                  ) : null}
-                </td>
-                <td className="whitespace-nowrap px-2 py-2.5 text-right align-top font-mono text-xs tabular-nums">
-                  {formatPercentCell(holding.allocation, false)}
-                </td>
-                <td
-                  className={`whitespace-nowrap py-2.5 pl-2 text-right align-top font-mono text-xs tabular-nums ${Number.isFinite(gainPercent) ? numberTone(gainPercent) : ""}`}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[16rem] border-collapse">
+          <thead>
+            <tr className="border-b border-border text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+              <th className="pb-2 pr-2 text-left font-medium">{t("portfolio.holdings.ticker")}</th>
+              <th className="px-2 pb-2 text-right font-medium">{t("portfolio.holdings.weight")}</th>
+              <th className="pb-2 pl-2 text-right font-medium">{t("portfolio.holdings.return")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {holdings.map((holding) => {
+              const gainPercent = parseFloat(holding.gainPercent);
+              const showLastTradePrice = holding.stale === true && Number.isFinite(holding.currentPrice);
+              return (
+                <tr
+                  key={holding.ticker}
+                  className="group border-b border-border transition-colors duration-hover ease-hover last:border-b-0 hover:bg-muted/40 active:bg-muted/40"
                 >
-                  {formatPercentCell(holding.gainPercent, true)}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  <td className="min-w-0 py-2 pr-2 align-top">
+                    <TickerLabel ticker={holding.ticker} className="font-mono text-xs" />
+                    {showLastTradePrice ? (
+                      <p className="mt-1 max-w-full break-words font-mono text-[10px] uppercase leading-4 tracking-[0.12em] text-muted-foreground transition-colors duration-hover ease-hover group-hover:text-foreground group-active:text-foreground">
+                        {t("portfolio.holdings.lastTradePrice")}{" "}
+                        <span className="whitespace-nowrap normal-case tracking-normal tabular-nums">
+                          {formatHoldingPrice(holding.currentPrice)}
+                        </span>
+                      </p>
+                    ) : null}
+                  </td>
+                  <td className="whitespace-nowrap px-2 py-2 text-right align-top font-mono text-xs tabular-nums">
+                    {formatPercentCell(holding.allocation, false)}
+                  </td>
+                  <td
+                    className={`whitespace-nowrap py-2 pl-2 text-right align-top font-mono text-xs tabular-nums ${Number.isFinite(gainPercent) ? numberTone(gainPercent) : ""}`}
+                  >
+                    {formatPercentCell(holding.gainPercent, true)}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 };
