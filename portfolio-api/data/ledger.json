@@ -423,6 +423,42 @@
     "totalAmount": 16.360147970000003
   },
   {
+    "transactionId": 48,
+    "ticker": "ROBO",
+    "tradeDate": "2026-10-07",
+    "price": 81.92,
+    "quantity": 0.488257409,
+    "transactionType": "BUY",
+    "totalAmount": 39.99804694528
+  },
+  {
+    "transactionId": 49,
+    "ticker": "VOO",
+    "tradeDate": "2026-10-07",
+    "price": 714.65,
+    "quantity": 0.069964122,
+    "transactionType": "BUY",
+    "totalAmount": 49.9998597873
+  },
+  {
+    "transactionId": 50,
+    "ticker": "VXUS",
+    "tradeDate": "2026-10-07",
+    "price": 84.87,
+    "quantity": 0.329924117,
+    "transactionType": "BUY",
+    "totalAmount": 28.00065980979
+  },
+  {
+    "transactionId": 51,
+    "ticker": "NET",
+    "tradeDate": "2026-10-07",
+    "price": 345.89,
+    "quantity": 0.041574151,
+    "transactionType": "BUY",
+    "totalAmount": 14.38008308939
+  },
+  {
     "transactionId": 52,
     "ticker": "VOO",
     "tradeDate": "2026-11-09",
