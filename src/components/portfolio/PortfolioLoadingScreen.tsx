@@ -1,17 +1,19 @@
 import PageHeader from "@/components/PageHeader";
 import PatternedBackground from "@/components/PatternedBackground";
+import { loadingPortfolioKpis, PortfolioKpiGrid } from "@/components/portfolio/analytics/analyticsUi";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const capitalHeaderClassName =
   "container px-6 md:px-8 max-w-5xl mx-auto flex items-center justify-between h-12";
 
 function SkeletonBlock({ className }: { className?: string }) {
-  return <div className={`portfolio-skeleton-block bg-muted/40 ${className ?? ""}`} aria-hidden="true" />;
+  return <div className={`portfolio-skeleton-block bg-foreground/10 ${className ?? ""}`} aria-hidden="true" />;
 }
 
 /** Full-page load state for `/capital` — quiet ops-console skeleton, not a spinner. */
 const PortfolioLoadingScreen = () => {
   const { t } = useLanguage();
+  const kpis = loadingPortfolioKpis(t);
 
   return (
     <main className="relative min-h-screen bg-background" aria-busy="true" aria-live="polite">
@@ -24,17 +26,13 @@ const PortfolioLoadingScreen = () => {
             {t("portfolio.eyebrow")}
           </p>
           <h1 className="mb-2 text-2xl font-medium tracking-tight">{t("portfolio.title")}</h1>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              {t("portfolio.loading.status")}
-            </span>
-            <span className="hidden h-3 w-px bg-border sm:block" aria-hidden="true" />
-            <span className="font-mono text-[10px] tracking-wide text-muted-foreground/80">
-              {t("portfolio.loading")}
-            </span>
-          </div>
+          <p className="text-xs text-muted-foreground">
+            {t("portfolio.loading.status")}
+            {" · "}
+            {t("portfolio.loading")}
+          </p>
           <div
-            className="portfolio-sync-track mt-5 h-px w-full max-w-md overflow-hidden bg-border"
+            className="portfolio-sync-track mt-2 h-px w-full max-w-md overflow-hidden bg-border"
             role="progressbar"
             aria-valuetext={t("portfolio.loading")}
           >
@@ -42,27 +40,9 @@ const PortfolioLoadingScreen = () => {
           </div>
         </div>
 
-        <div className="mb-6 grid grid-cols-1 gap-px sm:grid-cols-3">
-          {Array.from({ length: 3 }, (_, index) => (
-            <div key={index} className="border border-border bg-card px-3 py-3">
-              <SkeletonBlock className="mb-3 h-2 w-16" />
-              <SkeletonBlock className="ml-auto h-5 w-14" />
-              <SkeletonBlock className="ml-auto mt-2 h-2 w-20" />
-            </div>
-          ))}
-        </div>
+        <PortfolioKpiGrid primary={kpis.primary} technical={kpis.technical} />
 
-        <div className="mb-6 grid grid-cols-2 gap-px md:grid-cols-4">
-          {Array.from({ length: 4 }, (_, index) => (
-            <div key={index} className="border border-border bg-card px-3 py-3">
-              <SkeletonBlock className="mb-3 h-2 w-16" />
-              <SkeletonBlock className="ml-auto h-5 w-14" />
-              <SkeletonBlock className="ml-auto mt-2 h-2 w-20" />
-            </div>
-          ))}
-        </div>
-
-        <div className="space-y-6">
+        <div className="mt-6 space-y-6">
           <section className="border border-border bg-card px-4 py-5 md:px-5">
             <SkeletonBlock className="mb-5 h-2.5 w-36" />
             <SkeletonBlock className="mb-3 h-40 w-full" />

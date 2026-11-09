@@ -18,7 +18,7 @@ import {
   sourceTag,
 } from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport, type PerformanceBlock } from "@/types/portfolioAnalytics";
-import { MethodNote, Panel, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
+import { MethodNote, Panel, SourceFooter, UnavailableNote } from "./analyticsUi";
 
 function EndLabel({
   cx,
@@ -53,7 +53,6 @@ function EndLabel({
 }
 
 function PerformanceChart({ performance }: { performance: PerformanceBlock }) {
-  const reducedMotion = usePrefersReducedMotion();
   const { t } = useLanguage();
   const data = performance.series.map((point) => ({
     date: point.date,
@@ -114,8 +113,7 @@ function PerformanceChart({ performance }: { performance: PerformanceBlock }) {
                 color="hsl(var(--series-portfolio))"
               />
             )}
-            isAnimationActive={!reducedMotion}
-            animationDuration={250}
+            isAnimationActive={false}
           />
           <Line
             type="monotone"
@@ -133,8 +131,7 @@ function PerformanceChart({ performance }: { performance: PerformanceBlock }) {
                 color="hsl(var(--series-benchmark))"
               />
             )}
-            isAnimationActive={!reducedMotion}
-            animationDuration={250}
+            isAnimationActive={false}
             connectNulls={false}
           />
           {drawdownPoint !== undefined && drawdown !== null && (

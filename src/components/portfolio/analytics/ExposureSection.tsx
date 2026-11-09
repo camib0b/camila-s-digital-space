@@ -5,7 +5,29 @@ import { chartAxisTick, chartTooltipClassName, formatPercent, sourceTag } from "
 import { isUnavailable, type AnalyticsReport, type LookThroughRow } from "@/types/portfolioAnalytics";
 import TickerLabel, { TickerAxisTick } from "@/components/portfolio/TickerLabel";
 import { canonicalCompanyLabel } from "@/lib/tickerCatalog";
-import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
+import { cn } from "@/lib/utils";
+import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote } from "./analyticsUi";
+
+const OVERLAP_SCALE = [
+  { id: "none", max: 0, mix: "0%", label: "0%" },
+  { id: "band-5", max: 0.05, mix: "25%", label: "≤5%" },
+  { id: "band-15", max: 0.15, mix: "50%", label: "≤15%" },
+  { id: "band-30", max: 0.3, mix: "75%", label: "≤30%" },
+  { id: "band-rest", max: Number.POSITIVE_INFINITY, mix: "100%", label: ">30%" },
+] as const;
+
+function overlapStepIndex(value: number): number {
+  const index = OVERLAP_SCALE.findIndex((step) => value <= step.max);
+  return index === -1 ? OVERLAP_SCALE.length - 1 : index;
+}
+
+function overlapFill(mix: string): string {
+  return `color-mix(in oklab, hsl(var(--contrib-q4)) ${mix}, hsl(var(--contrib-empty)))`;
+}
+
+function overlapTextClass(stepIndex: number): string {
+  return stepIndex >= 3 ? "text-foreground dark:text-background" : "text-foreground";
+}
 
 const FUND_COLORS: Record<string, string> = {
   direct: "hsl(var(--foreground))",
@@ -35,7 +57,6 @@ function stackedRow(row: LookThroughRow) {
 
 export function ExposureSection({ report }: { report: AnalyticsReport }) {
   const { t } = useLanguage();
-  const reducedMotion = usePrefersReducedMotion();
   const exposure = report.exposure;
   if (isUnavailable(exposure)) {
     return (
@@ -146,8 +167,7 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
                 stackId="exposure"
                 fill={FUND_COLORS[key]}
                 barSize={8}
-                isAnimationActive={!reducedMotion}
-                animationDuration={250}
+                isAnimationActive={false}
               />
             ))}
           </BarChart>
@@ -200,29 +220,34 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
         <div className="grid min-w-[16rem] grid-cols-4 gap-px border border-border bg-border text-center font-mono text-[11px]">
         <div className="bg-card" />
         {funds.map((fund) => (
-          <div key={fund} className="bg-card px-2 py-1 text-muted-foreground">
+          <div key={fund} className="min-w-0 bg-card px-2 py-1 text-muted-foreground">
             <TickerLabel ticker={fund} className="font-mono text-[11px]" />
           </div>
         ))}
         {funds.map((rowFund) => (
           <div key={rowFund} className="contents">
-            <div className="bg-card px-2 py-2 text-muted-foreground">
+            <div className="min-w-0 bg-card px-2 py-2 text-muted-foreground">
               <TickerLabel ticker={rowFund} className="font-mono text-[11px]" />
             </div>
             {funds.map((columnFund) => {
               const overlap = overlapValue(rowFund, columnFund);
-              const intensity = overlap === null ? 0 : Math.min(1, overlap / 0.5);
+              if (overlap === null) {
+                return (
+                  <div key={`${rowFund}-${columnFund}`} className="bg-card px-2 py-2 tabular-nums text-foreground">
+                    —
+                  </div>
+                );
+              }
+              const stepIndex = overlapStepIndex(Math.max(0, overlap));
+              const step = OVERLAP_SCALE[stepIndex];
               return (
                 <div
                   key={`${rowFund}-${columnFund}`}
-                  className="bg-card px-2 py-2 tabular-nums text-foreground"
-                  style={
-                    overlap === null
-                      ? undefined
-                      : { backgroundColor: `hsl(var(--foreground) / ${0.04 + intensity * 0.45})` }
-                  }
+                  data-overlap-step={step.id}
+                  className={cn("min-w-0 whitespace-nowrap px-2 py-2 tabular-nums", overlapTextClass(stepIndex))}
+                  style={{ backgroundColor: overlapFill(step.mix) }}
                 >
-                  {overlap === null ? "—" : formatPercent(overlap, 1)}
+                  {formatPercent(overlap, 1)}
                 </div>
               );
             })}
@@ -230,6 +255,23 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
         ))}
         </div>
       </div>
+      <ul
+        data-overlap-legend
+        aria-label={t("portfolio.analytics.overlap")}
+        className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1"
+      >
+        {OVERLAP_SCALE.map((step) => (
+          <li key={step.id} className="inline-flex items-center gap-1.5">
+            <span
+              data-overlap-swatch={step.id}
+              aria-hidden="true"
+              className="inline-block h-3 w-3 border border-muted-foreground"
+              style={{ backgroundColor: overlapFill(step.mix) }}
+            />
+            <span className="font-mono text-[10px] tabular-nums text-foreground">{step.label}</span>
+          </li>
+        ))}
+      </ul>
       {roboListing !== undefined && (
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{roboListing.identificationNote}</p>
       )}

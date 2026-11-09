@@ -10,11 +10,10 @@ import {
 } from "@/lib/analyticsFormat";
 import { isUnavailable, type AnalyticsReport } from "@/types/portfolioAnalytics";
 import TickerLabel, { TickerAxisTick } from "@/components/portfolio/TickerLabel";
-import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote, usePrefersReducedMotion } from "./analyticsUi";
+import { MethodNote, Panel, SeriesLegend, SourceFooter, UnavailableNote } from "./analyticsUi";
 
 export function RiskSection({ report }: { report: AnalyticsReport }) {
   const { t } = useLanguage();
-  const reducedMotion = usePrefersReducedMotion();
   const risk = report.risk;
   const holdingsSharpe = report.sharpe.holdings;
   const realizedSharpe = report.sharpe.realized;
@@ -80,15 +79,14 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                     );
                   }}
                 />
-                <Bar dataKey="capital" fill="hsl(var(--foreground))" barSize={7} isAnimationActive={!reducedMotion} animationDuration={250} />
+                <Bar dataKey="capital" fill="hsl(var(--foreground))" barSize={7} isAnimationActive={false} />
                 <Bar
                   dataKey="risk"
                   fill="hsl(var(--foreground) / 0.08)"
                   stroke="hsl(var(--foreground))"
                   strokeWidth={1.25}
                   barSize={7}
-                  isAnimationActive={!reducedMotion}
-                  animationDuration={250}
+                  isAnimationActive={false}
                 />
               </BarChart>
             </ResponsiveContainer>
