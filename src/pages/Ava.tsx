@@ -9,6 +9,7 @@ import {
   type RefObject,
 } from "react";
 import { Link } from "react-router-dom";
+import AvaFooter from "@/components/ava/AvaFooter";
 import { renderWithCarpetaLinks } from "@/components/ava/avaCarpetaLink";
 import LanguageToggle from "@/components/LanguageToggle";
 import AvaClipBar from "@/components/ava/AvaClipBar";
@@ -873,10 +874,7 @@ const Ava = () => {
         </section>
       </main>
 
-      <footer className="ava-footer">
-        <span>{t("ava.footer.line")}</span>
-        <Link to="/">{t("ava.nav.home")}</Link>
-      </footer>
+      <AvaFooter />
     </div>
   );
 };

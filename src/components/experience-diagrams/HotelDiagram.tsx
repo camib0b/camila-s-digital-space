@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 const hotelBaseline = 54;
 const hotelWidth = 12;
 const hotelRoofHeight = 5;
@@ -9,11 +7,11 @@ const metricFontSize = 17;
 const metricLineGap = 16;
 
 const hotels = [
-  { originX: 4, bodyHeight: 16, markDelay: "var(--duration-instant)" },
-  { originX: 19, bodyHeight: 24, markDelay: "var(--duration-diagram-delay-70)" },
-  { originX: 34, bodyHeight: 15, markDelay: "var(--duration-settle)" },
-  { originX: 49, bodyHeight: 22, markDelay: "var(--duration-diagram-delay-210)" },
-  { originX: 64, bodyHeight: 18, markDelay: "var(--duration-diagram-delay-280)" },
+  { originX: 4, bodyHeight: 16 },
+  { originX: 19, bodyHeight: 24 },
+  { originX: 34, bodyHeight: 15 },
+  { originX: 49, bodyHeight: 22 },
+  { originX: 64, bodyHeight: 18 },
 ];
 
 function HotelOutline({ originX, bodyHeight }: { originX: number; bodyHeight: number }) {
@@ -30,54 +28,18 @@ function HotelOutline({ originX, bodyHeight }: { originX: number; bodyHeight: nu
   );
 }
 
-function HotelMetricMark({
-  originX,
-  bodyHeight,
-  markDelay,
-}: {
-  originX: number;
-  bodyHeight: number;
-  markDelay: string;
-}) {
-  const roofPeakY = hotelBaseline - bodyHeight - hotelRoofHeight;
-  const markX = originX + hotelWidth / 2;
-  const markY = roofPeakY - 3;
-  const markStyle = {
-    "--mark-travel-x": `${metricCenterX - markX}px`,
-    "--mark-travel-y": `${metricCenterY - markY}px`,
-    animationDelay: markDelay,
-  } as CSSProperties;
-
-  return (
-    <line
-      x1={originX + 2}
-      y1={markY}
-      x2={originX + hotelWidth - 2}
-      y2={markY}
-      className="experience-hotel-mark stroke-foreground"
-      style={markStyle}
-    />
-  );
-}
-
 const HotelDiagram = () => {
   return (
     <svg
       viewBox="0 0 200 60"
+      width={200}
+      height={60}
       aria-hidden="true"
-      className="experience-hotel pointer-events-none h-[60px] w-[200px] shrink-0 overflow-hidden fill-none stroke-muted-foreground"
+      className="experience-hotel pointer-events-none h-[60px] w-[200px] max-w-full shrink-0 overflow-hidden fill-none stroke-muted-foreground"
     >
       <line x1="2" y1={hotelBaseline} x2="78" y2={hotelBaseline} />
       {hotels.map((hotel) => (
         <HotelOutline key={hotel.originX} originX={hotel.originX} bodyHeight={hotel.bodyHeight} />
-      ))}
-      {hotels.map((hotel) => (
-        <HotelMetricMark
-          key={`mark-${hotel.originX}`}
-          originX={hotel.originX}
-          bodyHeight={hotel.bodyHeight}
-          markDelay={hotel.markDelay}
-        />
       ))}
       <text
         x={metricCenterX}

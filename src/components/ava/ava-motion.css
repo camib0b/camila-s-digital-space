@@ -47,7 +47,24 @@
   clip-path: inset(0 0 0 0);
 }
 
+.ava-footer a {
+  transition:
+    color var(--duration-hover) var(--ease-hover),
+    border-bottom-color var(--duration-hover) var(--ease-hover),
+    transform var(--duration-press) var(--ease-out-strong);
+}
+
+.ava-footer a:active {
+  transform: scale(0.97);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .ava-footer a,
+  .ava-footer a:active {
+    transition: none;
+    transform: none;
+  }
+
   .ava-cta,
   .ava-text-link {
     transition: none;
