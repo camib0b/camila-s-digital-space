@@ -3,35 +3,21 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import ExperienceDiagramControl from "@/components/experience-diagrams/ExperienceDiagramControl";
 
 const interfaceCard = { x: 56, y: 4, width: 88, height: 52 };
-const interfaceInput = { x: 64, y: 16, width: 64, height: 12 };
-const interfaceButton = { x: 64, y: 36, width: 30, height: 12 };
-const interfaceReuse = { x: 102, y: 36, width: 30, height: 12 };
-const interfaceButtonLabelWidth = 16;
+const interfaceInput = { x: 64, y: 14, width: 64, height: 12 };
+const interfaceButton = { x: 64, y: 34, width: 28, height: 14 };
+const interfaceReuse = { x: 102, y: 34, width: 28, height: 14 };
 const interfaceReuseShift = interfaceButton.x - interfaceReuse.x;
 
 const interfacePieceStyle = (delay: string): CSSProperties => ({ animationDelay: delay });
 
-function InterfaceButton({ x, y }: { x: number; y: number }) {
-  const labelInset = (interfaceButton.width - interfaceButtonLabelWidth) / 2;
+function InterfaceMark({ x, y }: { x: number; y: number }) {
+  const centerX = x + interfaceButton.width / 2;
+  const centerY = y + interfaceButton.height / 2;
 
   return (
     <g>
-      <rect
-        x={x}
-        y={y}
-        width={interfaceButton.width}
-        height={interfaceButton.height}
-        rx="6"
-        className="fill-background stroke-foreground"
-      />
-      <line
-        x1={x + labelInset}
-        y1={y + interfaceButton.height / 2}
-        x2={x + labelInset + interfaceButtonLabelWidth}
-        y2={y + interfaceButton.height / 2}
-        strokeLinecap="butt"
-        className="stroke-foreground"
-      />
+      <circle cx={centerX} cy={centerY} r="6.5" className="stroke-foreground" />
+      <circle cx={centerX} cy={centerY} r="1.35" stroke="none" className="fill-foreground" />
     </g>
   );
 }
@@ -58,8 +44,7 @@ const InterfaceDiagram = () => {
             y={interfaceCard.y}
             width={interfaceCard.width}
             height={interfaceCard.height}
-            rx="1"
-            className="fill-background"
+            className="stroke-foreground"
           />
         </g>
         <g className="experience-interface-input" style={interfacePieceStyle("var(--duration-diagram-delay-70)")}>
@@ -68,8 +53,7 @@ const InterfaceDiagram = () => {
             y={interfaceInput.y}
             width={interfaceInput.width}
             height={interfaceInput.height}
-            rx="1"
-            className="fill-background"
+            className="stroke-foreground"
           />
           <line
             x1={interfaceInput.x + 6}
@@ -81,10 +65,10 @@ const InterfaceDiagram = () => {
           />
         </g>
         <g className="experience-interface-button" style={interfacePieceStyle("var(--duration-diagram-delay-210)")}>
-          <InterfaceButton x={interfaceButton.x} y={interfaceButton.y} />
+          <InterfaceMark x={interfaceButton.x} y={interfaceButton.y} />
         </g>
         <g className="experience-interface-reuse">
-          <InterfaceButton x={interfaceReuse.x} y={interfaceReuse.y} />
+          <InterfaceMark x={interfaceReuse.x} y={interfaceReuse.y} />
         </g>
       </svg>
     </ExperienceDiagramControl>

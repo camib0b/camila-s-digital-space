@@ -4,41 +4,52 @@ import ExperienceDiagramControl from "@/components/experience-diagrams/Experienc
 
 const analyticsLid = { x: 26, y: 2, width: 60, height: 10 };
 const analyticsLidLineY = analyticsLid.y + analyticsLid.height / 2;
-const analyticsBaseline = 48;
-const analyticsBaselineStart = 44;
-const analyticsBaselineEnd = 68;
 
-const analyticsBars = [
-  {
-    x: 42,
-    top: 40,
-    delay: "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280))",
-  },
-  {
-    x: 48,
-    top: 34,
-    delay:
-      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70))",
-  },
-  {
-    x: 54,
-    top: 38,
-    delay:
-      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70) + var(--duration-diagram-delay-70))",
-  },
-  {
-    x: 60,
-    top: 30,
-    delay:
-      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-210))",
-  },
-  {
-    x: 66,
-    top: 36,
-    delay:
-      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-280))",
-  },
+/** Seven readings the loose field settles onto. One guide line passes through them. */
+const analyticsScatter = [
+  { x: 38, y: 46 },
+  { x: 48, y: 40 },
+  { x: 57, y: 43 },
+  { x: 66, y: 35 },
+  { x: 76, y: 37 },
+  { x: 86, y: 30 },
+  { x: 96, y: 32 },
 ] as const;
+
+const analyticsDotCount = 42;
+const goldenAngle = 2.399963229728653;
+
+function roundTenth(value: number): number {
+  return Math.round(value * 10) / 10;
+}
+
+function looseDotPosition(index: number): { x: number; y: number } {
+  const angle = index * goldenAngle;
+  const radius = 5 + (index % 8) * 3.15;
+  const x = 68 + Math.cos(angle) * radius;
+  const y = 36 + Math.sin(angle) * radius * 0.46;
+  return {
+    x: roundTenth(Math.min(104, Math.max(20, x))),
+    y: roundTenth(Math.min(54, Math.max(14, y))),
+  };
+}
+
+/**
+ * A loose field that tightens onto the scatter. Positions are fixed so a
+ * replay starts from the same frame. The parent row starts and stops the
+ * motion; nothing here loops.
+ */
+const analyticsDots = Array.from({ length: analyticsDotCount }, (_, index) => {
+  const end = analyticsScatter[index % analyticsScatter.length];
+  const start = looseDotPosition(index);
+  return {
+    index,
+    endX: end.x,
+    endY: end.y,
+    fromX: roundTenth(start.x - end.x),
+    fromY: roundTenth(start.y - end.y),
+  };
+});
 
 const AnalyticsDiagram = () => {
   const { t } = useLanguage();
@@ -55,44 +66,36 @@ const AnalyticsDiagram = () => {
         aria-hidden="true"
         className="experience-analytics pointer-events-none h-full w-full overflow-hidden fill-none stroke-muted-foreground"
       >
-        <rect x="30" y="24" width="52" height="30" className="fill-background" />
         <g className="experience-analytics-plot">
-          <line
-            x1={analyticsBaselineStart}
-            y1={analyticsBaseline}
-            x2={analyticsBaselineEnd}
-            y2={analyticsBaseline}
-            className="stroke-foreground"
-          />
-          {analyticsBars.map((bar) => (
-            <line
-              key={bar.x}
-              x1={bar.x}
-              y1={analyticsBaseline}
-              x2={bar.x}
-              y2={bar.top}
-              pathLength={1}
-              strokeLinecap="butt"
-              className="experience-analytics-bar stroke-foreground"
-              style={{ animationDelay: bar.delay } as CSSProperties}
+          <line x1="32" y1="50" x2="102" y2="50" />
+          <line x1="32" y1="16" x2="32" y2="50" />
+          {analyticsDots.map((dot) => (
+            <circle
+              key={dot.index}
+              cx={dot.endX}
+              cy={dot.endY}
+              r="1.7"
+              stroke="none"
+              className="experience-analytics-dot fill-foreground"
+              style={
+                {
+                  "--dot-from-x": `${dot.fromX}px`,
+                  "--dot-from-y": `${dot.fromY}px`,
+                } as CSSProperties
+              }
             />
           ))}
-          <polyline
-            points="42,40 48,34 54,38 60,30 66,36"
+          <line
+            x1="34"
+            y1="48"
+            x2="100"
+            y2="29"
             pathLength={1}
             strokeLinecap="round"
-            strokeLinejoin="round"
             className="experience-analytics-line stroke-foreground"
           />
         </g>
         <g className="experience-analytics-lid">
-          <rect
-            x={analyticsLid.x}
-            y={analyticsLid.y}
-            width={analyticsLid.width}
-            height={analyticsLid.height}
-            className="fill-background"
-          />
           <line
             x1={analyticsLid.x}
             y1={analyticsLidLineY}

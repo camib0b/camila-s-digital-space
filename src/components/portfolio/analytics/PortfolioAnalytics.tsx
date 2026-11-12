@@ -5,6 +5,7 @@ import { formatPercent, formatPercentagePoints, formatSignedPercent, numberTone,
 import { fetchPortfolioAnalytics } from "@/lib/portfolioApi";
 import { isUnavailable, type AnalyticsReport } from "@/types/portfolioAnalytics";
 import { useRegisterExposure } from "@/components/portfolio/TickerDetailsContext";
+import { EditorialStatRow } from "@/components/portfolio/EditorialStats";
 import { PortfolioKpiGrid, type PortfolioKpiCellModel } from "./analyticsUi";
 
 const AnalyticsReportSections = lazy(() => import("./AnalyticsReportSections"));
@@ -145,37 +146,24 @@ export default function PortfolioAnalytics({
     );
   }
 
-  const primary: PortfolioKpiCellModel[] = [
-    ...(primaryHeadline === undefined
-      ? []
-      : [
-          kpiCell(
-            "return",
-            primaryHeadline.label,
-            primaryHeadline.value,
-            "",
-            primaryHeadline.tone,
-            false,
-            false,
-          ),
-        ]),
-    timeWeightedReturn,
-    ...(secondaryHeadline === undefined
-      ? []
-      : [
-          kpiCell(
-            "holdings",
-            secondaryHeadline.label,
-            secondaryHeadline.value,
-            "",
-            secondaryHeadline.tone,
-            false,
-            false,
-          ),
-        ]),
-  ];
+  const editorialStats = [primaryHeadline, secondaryHeadline].flatMap((stat, index) => {
+    if (stat === undefined) {
+      return [];
+    }
+    return [
+      {
+        key: index === 0 ? "return" : "holdings",
+        label: stat.label,
+        value: stat.value,
+        tone: stat.tone,
+        pending: false,
+      },
+    ];
+  });
   const showTechnical = analytics.isLoading || analyticsReady;
-  const technical = showTechnical ? [benchmark, excess, volatility, sharpe] : [];
+  const technical = showTechnical
+    ? [timeWeightedReturn, benchmark, excess, volatility, sharpe]
+    : [timeWeightedReturn];
   const errorMessage =
     analytics.error instanceof Error ? analytics.error.message : t("portfolio.analytics.error");
 
@@ -183,7 +171,8 @@ export default function PortfolioAnalytics({
 
   return (
     <div className="mb-16" aria-busy={analytics.isLoading}>
-      <PortfolioKpiGrid primary={primary} technical={technical} />
+      <EditorialStatRow stats={editorialStats} />
+      <PortfolioKpiGrid primary={[]} technical={technical} />
       {analytics.isLoading ? (
         <p className="sr-only" role="status">
           {t("portfolio.analytics.loading")}

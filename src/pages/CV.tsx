@@ -1,6 +1,8 @@
 import { Github, Languages, Linkedin, Mail, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import AffiliationRail from "@/components/AffiliationRail";
 import PageHeader from "@/components/PageHeader";
+import SectionEyebrow from "@/components/SectionEyebrow";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CONTACT_EMAIL } from "@/content/contact";
 import { SOCIAL_LINKS } from "@/content/social";
@@ -59,14 +61,20 @@ const CV = () => {
             <Languages className="mt-0.5 h-3 w-3 shrink-0" />
             <span className="font-medium text-foreground">{t("cv.languages.pair")}</span>
           </p>
+          <div className="mt-8">
+            <SectionEyebrow as="h2" className="mb-4">
+              {t("cv.affiliations")}
+            </SectionEyebrow>
+            <AffiliationRail />
+          </div>
         </section>
 
         <div className="border-b border-border mb-10" />
 
         <section className="mb-10">
-          <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
+          <SectionEyebrow as="h2" className="mb-5">
             {t("cv.workExperience")}
-          </h2>
+          </SectionEyebrow>
           <div className="space-y-6">
             {cvJobs.map((job) => (
               <div key={job.id}>
@@ -108,9 +116,9 @@ const CV = () => {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
+          <SectionEyebrow as="h2" className="mb-5">
             {t("cv.selectedProjects")}
-          </h2>
+          </SectionEyebrow>
           <div className="space-y-6">
             {cvProjects.map((project) => (
               <div key={project.id}>
@@ -171,9 +179,9 @@ const CV = () => {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
+          <SectionEyebrow as="h2" className="mb-5">
             {t("cv.education")}
-          </h2>
+          </SectionEyebrow>
           <div>
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
               <div>
@@ -192,9 +200,9 @@ const CV = () => {
         </section>
 
         <section>
-          <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
+          <SectionEyebrow as="h2" className="mb-5">
             {t("cv.leadershipAthletics")}
-          </h2>
+          </SectionEyebrow>
           <div className="space-y-3">
             {cvLeadership.map((item) => (
               <div key={item.id}>

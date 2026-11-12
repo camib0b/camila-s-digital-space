@@ -1,5 +1,7 @@
 import PageHeader from "@/components/PageHeader";
 import PatternedBackground from "@/components/PatternedBackground";
+import SectionEyebrow from "@/components/SectionEyebrow";
+import { EditorialStatRow } from "@/components/portfolio/EditorialStats";
 import { loadingPortfolioKpis, PortfolioKpiGrid } from "@/components/portfolio/analytics/analyticsUi";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -22,9 +24,7 @@ const PortfolioLoadingScreen = () => {
 
       <div className="container relative z-10 mx-auto max-w-5xl px-6 py-16 md:px-8">
         <div className="mb-12">
-          <p className="mb-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            {t("portfolio.eyebrow")}
-          </p>
+          <SectionEyebrow className="mb-2">{t("portfolio.eyebrow")}</SectionEyebrow>
           <h1 className="mb-2 text-2xl font-medium tracking-tight">{t("portfolio.title")}</h1>
           <p className="text-xs text-muted-foreground">
             {t("portfolio.loading.status")}
@@ -40,7 +40,16 @@ const PortfolioLoadingScreen = () => {
           </div>
         </div>
 
-        <PortfolioKpiGrid primary={kpis.primary} technical={kpis.technical} />
+        <EditorialStatRow
+          stats={kpis.editorial.map((stat) => ({
+            key: stat.key,
+            label: stat.label,
+            value: stat.value,
+            tone: stat.tone,
+            pending: true,
+          }))}
+        />
+        <PortfolioKpiGrid primary={[]} technical={kpis.technical} />
 
         <div className="mt-6 space-y-6">
           <section className="border border-border bg-card px-4 py-5 md:px-5">

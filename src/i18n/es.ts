@@ -218,6 +218,7 @@ const es: Record<TranslationKey, string> = {
     "cv.selectedProjects": "Proyectos Seleccionados",
     "cv.workExperience": "Experiencia Laboral",
     "cv.education": "Educación",
+    "cv.affiliations": "Afiliaciones",
     "cv.leadershipAthletics": "Hockey césped",
     "cv.languages.pair": "Inglés nativo · Español nativo",
     "cv.skill.bi": "BI: Looker / LookML (modelado semántico)",

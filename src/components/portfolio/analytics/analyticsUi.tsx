@@ -125,18 +125,18 @@ function portfolioKpiCell(
   return { key, label, value, detail, tone, valuePending, detailPending };
 }
 
-/** Seven KPI slots with labels only. Values and API details stay pending. */
+/** Summary figures plus the detail row. Values and API details stay pending. */
 export function loadingPortfolioKpis(translate: Translate): {
-  primary: PortfolioKpiCellModel[];
+  editorial: PortfolioKpiCellModel[];
   technical: PortfolioKpiCellModel[];
 } {
   return {
-    primary: [
+    editorial: [
       portfolioKpiCell("return", translate("portfolio.stats.return"), "", "", "", true, false),
-      portfolioKpiCell("twr", translate("portfolio.analytics.twr"), "", "", "", true, true),
       portfolioKpiCell("holdings", translate("portfolio.stats.holdings"), "", "", "", true, false),
     ],
     technical: [
+      portfolioKpiCell("twr", translate("portfolio.analytics.twr"), "", "", "", true, true),
       portfolioKpiCell("benchmark", translate("portfolio.analytics.benchmark"), "", "", "", true, true),
       portfolioKpiCell(
         "excess",
@@ -206,13 +206,15 @@ export function PortfolioKpiGrid({
 }) {
   return (
     <div>
-      <div className="grid grid-cols-1 items-start gap-px sm:grid-cols-3">
-        {primary.map((cell) => (
-          <PortfolioKpiCell key={cell.key} cell={cell} />
-        ))}
-      </div>
+      {primary.length > 0 ? (
+        <div className="grid grid-cols-1 items-start gap-px sm:grid-cols-3">
+          {primary.map((cell) => (
+            <PortfolioKpiCell key={cell.key} cell={cell} />
+          ))}
+        </div>
+      ) : null}
       {technical.length > 0 ? (
-        <div className="mt-px grid grid-cols-2 items-start gap-px md:grid-cols-4">
+        <div className={`${primary.length > 0 ? "mt-px " : ""}grid grid-cols-2 items-start gap-px md:grid-cols-3 xl:grid-cols-5`}>
           {technical.map((cell) => (
             <PortfolioKpiCell key={cell.key} cell={cell} />
           ))}

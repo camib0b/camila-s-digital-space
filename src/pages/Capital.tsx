@@ -1,5 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import PatternedBackground from "@/components/PatternedBackground";
+import SectionEyebrow from "@/components/SectionEyebrow";
 import PortfolioAnalytics from "@/components/portfolio/analytics/PortfolioAnalytics";
 import AiInsightPanel from "@/components/portfolio/AiInsightPanel";
 import HoldingsTable from "@/components/portfolio/HoldingsTable";
@@ -42,9 +43,7 @@ const Capital = () => {
         <PatternedBackground />
         <PageHeader backLabel="home" containerClassName={capitalHeaderClassName} />
         <div className="container relative z-10 mx-auto max-w-5xl px-6 py-16 md:px-8">
-          <p className="mb-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            {t("portfolio.eyebrow")}
-          </p>
+          <SectionEyebrow className="mb-2">{t("portfolio.eyebrow")}</SectionEyebrow>
           <h1 className="mb-8 text-2xl font-medium tracking-tight">{t("portfolio.title")}</h1>
           <section className="border border-border bg-card px-4 py-5 md:px-5">
             <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
@@ -84,9 +83,7 @@ const Capital = () => {
       <TickerDetailsProvider weightsByTicker={weightsByTicker}>
       <div className="container px-6 md:px-8 max-w-5xl mx-auto py-16 relative z-10">
         <div className="mb-12">
-          <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">
-            {t("portfolio.eyebrow")}
-          </p>
+          <SectionEyebrow className="mb-2">{t("portfolio.eyebrow")}</SectionEyebrow>
           <h1 className="text-2xl font-medium tracking-tight mb-2">{t("portfolio.title")}</h1>
           <p className="text-xs text-muted-foreground">
             {t("portfolio.lastUpdated")}:{" "}

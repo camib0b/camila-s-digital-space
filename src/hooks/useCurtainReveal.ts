@@ -53,11 +53,22 @@ export function useCurtainReveal(): {
   return { containerRef, phase };
 }
 
+export function supportsViewTimeline(): boolean {
+  return (
+    typeof CSS !== "undefined" &&
+    typeof CSS.supports === "function" &&
+    CSS.supports("animation-timeline", "view()")
+  );
+}
+
 function shouldSkipCurtainMotion(): boolean {
   if (typeof window === "undefined" || typeof IntersectionObserver === "undefined") {
     return true;
   }
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return true;
+  }
+  return supportsViewTimeline();
 }
 
 function isContainerInView(containerElement: HTMLElement): boolean {

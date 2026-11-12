@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import ConcatTool from "@/components/concat/ConcatTool";
 import PageHeader from "@/components/PageHeader";
 import PatternedBackground from "@/components/PatternedBackground";
+import SectionEyebrow from "@/components/SectionEyebrow";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const headerClassName = "container mx-auto flex h-12 max-w-3xl items-center justify-between px-6 md:px-8";
@@ -23,7 +24,7 @@ const Concat = () => {
       <PatternedBackground />
       <PageHeader backLabel={t("concat.back")} containerClassName={headerClassName} />
       <div className="container relative z-10 mx-auto max-w-3xl px-6 py-16 md:px-8">
-        <p className="mb-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">{t("concat.eyebrow")}</p>
+        <SectionEyebrow className="mb-2">{t("concat.eyebrow")}</SectionEyebrow>
         <h1 className="mb-3 text-2xl font-medium tracking-tight">{t("concat.title")}</h1>
         <p className="mb-8 max-w-xl text-sm leading-6 text-muted-foreground">{t("concat.description")}</p>
         <ConcatTool />

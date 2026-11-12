@@ -216,6 +216,7 @@ const en = {
     "cv.selectedProjects": "Selected Projects",
     "cv.workExperience": "Work Experience",
     "cv.education": "Education",
+    "cv.affiliations": "Affiliations",
     "cv.leadershipAthletics": "Field Hockey",
     "cv.languages.pair": "English and Spanish, native",
     "cv.skill.bi": "BI: Looker / LookML (semantic modeling)",
