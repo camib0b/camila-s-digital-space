@@ -36,7 +36,7 @@ export interface PerformanceBlock {
   annualizedTimeWeightedReturn: number | null;
   annualizationLabel: string;
   calendarDayCount: number;
-  simpleReturn: number | null;
+  netInvestedReturn: number | null;
   simpleReturnLabel: string;
   benchmark: BenchmarkBlock | UnavailableBlock;
   excessReturn: number | null;
@@ -53,7 +53,7 @@ export interface RiskContributionRow {
   weight: number;
   marginalContribution: number;
   componentContribution: number;
-  percentContribution: number;
+  varianceShare: number;
 }
 
 export interface RiskBlock {
@@ -66,7 +66,7 @@ export interface RiskBlock {
   requestedWeeks: number;
   portfolioVolatility: number;
   weightsSum: number;
-  cashWeightOfPortfolio: number;
+  cashWeight: number;
   cashTreatment: string;
   label: string;
   contributions: RiskContributionRow[];
@@ -119,8 +119,8 @@ export interface ExposureBlock {
   source: string;
   topExposures: LookThroughRow[];
   overlap: { fundA: string; fundB: string; overlap: number }[];
-  apparentCompany: { ticker: string; name: string; isin: string; weight: number } | null;
-  effectiveCompany: { name: string; isin: string; weight: number } | null;
+  largestDirectStock: { ticker: string; name: string; isin: string; weight: number } | null;
+  largestLookThroughCompany: { name: string; isin: string; weight: number } | null;
   bondWeight: number;
   cashWeight: number;
   unattributedWeight: number;
@@ -140,7 +140,7 @@ export interface AnalyticsReport {
       currency: string;
       distributionPolicy: string;
       isin: string | null;
-      kind: string;
+      instrumentKind: string;
       identificationNote: string;
     }[];
   };

@@ -26,18 +26,20 @@ npx wrangler secret put GITHUB_TOKEN
 
 `/api/analytics` does not add a new secret. Live quotes still use `FINNHUB_API_KEY`. The weekday cron at 22:30 UTC (after the US cash close) stores daily closes in D1. It tries Finnhub candles first and uses the Yahoo Finance chart API when that history does not cover the window. The 3-month T-bill yield is the public FRED `DGS3MO` series. Fund holdings are committed JSON snapshots from issuer N-PORT filings (`data/holdings/`), refreshed with `node scripts/refresh-fund-holdings.mjs`, not scraped on the request path.
 
-Apply the market-data migration before the first sync:
+Apply the market-data migration before the first sync. On a database that already has `transactions.total_amount`, deploy this worker before `migrations apply` so 0002 does not land under the old worker:
 
 ```bash
 npx wrangler d1 migrations apply portfolio-holdings --remote
 ```
 
-Local analytics also needs the ledger. `data/ledger-seed.sql` matches the production `transactions` table at the time it was exported:
+Local analytics also needs the ledger. `data/ledger-seed.sql` creates `transactions.gross_notional`. Apply the market-data migration by file. Do not run `migrations/0002_gross_notional.sql` on that fresh database: 0002 is only for a database that still has `total_amount`.
 
 ```bash
 npx wrangler d1 execute portfolio-holdings --local --file=data/ledger-seed.sql
-npx wrangler d1 migrations apply portfolio-holdings --local
+npx wrangler d1 execute portfolio-holdings --local --file=migrations/0001_market_data.sql
 ```
+
+On the remote database, deploy this worker before applying 0002. The worker reads `gross_notional` and falls back to `total_amount`. `npx wrangler d1 migrations apply portfolio-holdings --remote` applies 0002 once 0001 is already recorded.
 
 `GITHUB_USERNAME` is a plaintext Worker var in [`wrangler.jsonc`](wrangler.jsonc) (`vars.GITHUB_USERNAME`), defaulting to `camib0b`. Override it there, in the dashboard, or locally in `.dev.vars` if you need a different login. It is not a secret.
 

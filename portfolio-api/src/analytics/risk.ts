@@ -104,7 +104,7 @@ export interface RiskContribution {
   weight: number;
   marginalContribution: number;
   componentContribution: number;
-  percentContribution: number;
+  varianceShare: number;
 }
 
 export interface RiskContributionResult {
@@ -112,13 +112,13 @@ export interface RiskContributionResult {
   contributions: RiskContribution[];
   weightsSum: number;
   componentContributionSum: number;
-  percentContributionSum: number;
+  varianceShareSum: number;
 }
 
 /**
  * Ex-ante risk with current weights and the annualized sample covariance.
  * Sigma_ann = 52 * Sigma_weekly. Component contributions sum to volatility.
- * Percent contributions sum to 1 and may be negative.
+ * Variance shares sum to 1. A single share can sit outside [0, 1] and can be negative.
  */
 export function riskContributions(
   tickers: readonly string[],
@@ -139,7 +139,7 @@ export function riskContributions(
   const contributions: RiskContribution[] = [];
   let weightsSum = 0;
   let componentContributionSum = 0;
-  let percentContributionSum = 0;
+  let varianceShareSum = 0;
   for (let index = 0; index < tickers.length; index += 1) {
     const ticker = tickers[index];
     const weight = weights[index];
@@ -149,16 +149,16 @@ export function riskContributions(
     }
     const marginalContribution = covarianceComponent / annualizedVolatility;
     const componentContribution = (weight * covarianceComponent) / annualizedVolatility;
-    const percentContribution = (weight * covarianceComponent) / variance;
+    const varianceShare = (weight * covarianceComponent) / variance;
     weightsSum += weight;
     componentContributionSum += componentContribution;
-    percentContributionSum += percentContribution;
+    varianceShareSum += varianceShare;
     contributions.push({
       ticker,
       weight,
       marginalContribution,
       componentContribution,
-      percentContribution,
+      varianceShare,
     });
   }
   return {
@@ -166,7 +166,7 @@ export function riskContributions(
     contributions,
     weightsSum,
     componentContributionSum,
-    percentContributionSum,
+    varianceShareSum,
   };
 }
 

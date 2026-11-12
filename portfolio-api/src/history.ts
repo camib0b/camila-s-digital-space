@@ -4,12 +4,14 @@ import { fetchDailyCloses, fetchQuote, resolveHoldingQuote } from "./quotes";
 export interface PortfolioHistoryPoint {
   date: string;
   value: number;
-  returnPct: number;
+  /** Marked value versus remaining cost, in percent points. */
+  costBasisGainPercent: number;
 }
 
 export interface MonthlyReturnPoint {
   month: string;
-  returnPct: number;
+  /** Change from the first marked value in the month to the last, in percent points. */
+  valueChangePercent: number;
 }
 
 function buildTradePriceHistory(transactions: Transaction[]): PortfolioHistoryPoint[] {
@@ -20,7 +22,7 @@ function buildTradePriceHistory(transactions: Transaction[]): PortfolioHistoryPo
     return left.trade_date.localeCompare(right.trade_date);
   });
   const lastTradePriceByTicker = new Map<string, number>();
-  const historyByDate = new Map<string, { value: number; returnPct: number }>();
+  const historyByDate = new Map<string, { value: number; costBasisGainPercent: number }>();
 
   for (const transaction of sortedTransactions) {
     lastTradePriceByTicker.set(transaction.ticker, parseFloat(String(transaction.price)));
@@ -40,7 +42,7 @@ function buildTradePriceHistory(transactions: Transaction[]): PortfolioHistoryPo
     if (portfolioValue > 0) {
       historyByDate.set(transaction.trade_date, {
         value: Math.round(portfolioValue * 100) / 100,
-        returnPct: percentReturn(portfolioValue, totalCost),
+        costBasisGainPercent: percentReturn(portfolioValue, totalCost),
       });
     }
   }
@@ -57,9 +59,7 @@ function percentReturn(portfolioValue: number, totalCost: number): number {
   return Math.round(((portfolioValue - totalCost) / totalCost) * 10000) / 100;
 }
 
-function computeMonthlyReturns(
-  portfolioHistory: PortfolioHistoryPoint[]
-): MonthlyReturnPoint[] {
+function computeMonthlyReturns(portfolioHistory: PortfolioHistoryPoint[]): MonthlyReturnPoint[] {
   const valueRangeByMonth = new Map<string, { openingValue: number; closingValue: number }>();
 
   for (const point of portfolioHistory) {
@@ -74,7 +74,7 @@ function computeMonthlyReturns(
   return [...valueRangeByMonth.entries()]
     .map(([month, values]) => ({
       month,
-      returnPct:
+      valueChangePercent:
         values.openingValue > 0
           ? Math.round((((values.closingValue - values.openingValue) / values.openingValue) * 100) * 100) / 100
           : 0,
@@ -84,7 +84,7 @@ function computeMonthlyReturns(
 
 export async function buildPortfolioHistory(
   env: Env,
-  transactions: Transaction[]
+  transactions: Transaction[],
 ): Promise<{
   portfolioHistory: PortfolioHistoryPoint[];
   monthlyReturns: MonthlyReturnPoint[];
@@ -139,7 +139,7 @@ export async function buildPortfolioHistory(
       portfolioHistory.push({
         date,
         value: Math.round(portfolioValue * 100) / 100,
-        returnPct: percentReturn(portfolioValue, totalCost),
+        costBasisGainPercent: percentReturn(portfolioValue, totalCost),
       });
     }
   }
@@ -166,7 +166,7 @@ export async function buildPortfolioHistory(
       portfolioHistory.push({
         date: today,
         value: Math.round(liveValue * 100) / 100,
-        returnPct: percentReturn(liveValue, liveCost),
+        costBasisGainPercent: percentReturn(liveValue, liveCost),
       });
     }
   }

@@ -7,9 +7,23 @@ export interface Transaction {
   transaction_type: string;
 }
 
-export interface HoldingPosition {
+/** Open lot: share count and remaining average-cost basis. No price. */
+export interface CostBasisPosition {
   shares: number;
   totalCost: number;
+}
+
+/** Priced open lot. Built in the portfolio snapshot, not in the insight prompt. */
+export interface QuotedHolding {
+  ticker: string;
+  shares: number;
+  totalCost: number;
+  currentPrice: number;
+  /** Percent points versus the previous close. Null when the quote is stale or missing. */
+  previousCloseChangePercent: number | null;
+  currentValue: number;
+  /** True when `currentPrice` is the latest trade fill, not a live quote. */
+  stale: boolean;
 }
 
 const TRADE_TRANSACTION_TYPES = new Set(["BUY", "SELL"]);
@@ -55,7 +69,7 @@ export function latestTradePriceByTicker(transactions: Transaction[]): Map<strin
 }
 
 export async function fetchTransactions(env: Env): Promise<Transaction[]> {
-  const { results } = await env.DB.prepare(`
+  const { results } = await env.PORTFOLIO_DB.prepare(`
     SELECT transaction_id, ticker, trade_date, price, quantity, transaction_type
     FROM transactions
     ORDER BY trade_date ASC, transaction_id ASC
@@ -66,8 +80,8 @@ export async function fetchTransactions(env: Env): Promise<Transaction[]> {
 export function computeHoldings(
   transactions: Transaction[],
   asOfDate: string | null = null
-): Map<string, HoldingPosition> {
-  const holdings = new Map<string, HoldingPosition>();
+): Map<string, CostBasisPosition> {
+  const holdings = new Map<string, CostBasisPosition>();
 
   for (const transaction of transactions) {
     if (asOfDate && transaction.trade_date > asOfDate) {

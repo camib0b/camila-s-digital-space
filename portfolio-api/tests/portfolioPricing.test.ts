@@ -72,30 +72,35 @@ describe("latestTradePriceByTicker", () => {
 
 describe("resolveHoldingQuote", () => {
   it("keeps a live quote", () => {
-    assert.deepEqual(resolveHoldingQuote({ currentPrice: 220.5, changePercent: -1.25 }, 200), {
+    assert.deepEqual(resolveHoldingQuote({ currentPrice: 220.5, previousCloseChangePercent: -1.25 }, 200), {
       currentPrice: 220.5,
-      changePercent: -1.25,
+      previousCloseChangePercent: -1.25,
+      stale: false,
+    });
+    assert.deepEqual(resolveHoldingQuote({ currentPrice: 220.5, previousCloseChangePercent: 0 }, 200), {
+      currentPrice: 220.5,
+      previousCloseChangePercent: 0,
       stale: false,
     });
   });
 
   it("falls back to the last trade price when the quote is missing", () => {
-    assert.deepEqual(resolveHoldingQuote({ currentPrice: 0, changePercent: 3 }, 109.42), {
+    assert.deepEqual(resolveHoldingQuote({ currentPrice: 0, previousCloseChangePercent: 3 }, 109.42), {
       currentPrice: 109.42,
-      changePercent: 0,
+      previousCloseChangePercent: null,
       stale: true,
     });
   });
 
   it("does not mark a holding stale when there is no trade price to use", () => {
-    assert.deepEqual(resolveHoldingQuote({ currentPrice: 0, changePercent: 3 }, undefined), {
+    assert.deepEqual(resolveHoldingQuote({ currentPrice: 0, previousCloseChangePercent: 3 }, undefined), {
       currentPrice: 0,
-      changePercent: 0,
+      previousCloseChangePercent: null,
       stale: false,
     });
-    assert.deepEqual(resolveHoldingQuote({ currentPrice: 0, changePercent: 3 }, 0), {
+    assert.deepEqual(resolveHoldingQuote({ currentPrice: 0, previousCloseChangePercent: 3 }, 0), {
       currentPrice: 0,
-      changePercent: 0,
+      previousCloseChangePercent: null,
       stale: false,
     });
   });

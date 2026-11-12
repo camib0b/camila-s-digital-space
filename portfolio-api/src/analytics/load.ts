@@ -1,4 +1,11 @@
 import { computeAnalytics, type AnalyticsReport, type PriceBar } from "./compute";
+import {
+  GROSS_NOTIONAL_COLUMN,
+  isMissingGrossNotionalColumn,
+  LEGACY_TOTAL_AMOUNT_COLUMN,
+  readGrossNotional,
+  transactionAmountSelect,
+} from "./grossNotional";
 import type { LedgerTransaction, SplitEvent, TransactionType } from "./ledger";
 import { INSTRUMENT_LISTINGS } from "./listings";
 import type { RiskFreeObservation } from "./risk";
@@ -13,7 +20,8 @@ interface TransactionRow {
   price: number;
   quantity: number;
   transaction_type: string;
-  total_amount: number;
+  gross_notional?: number | null;
+  total_amount?: number | null;
 }
 
 interface PriceRow {
@@ -40,7 +48,7 @@ async function readPages<T>(env: Env, sql: string): Promise<T[]> {
   const rows: T[] = [];
   const pageSize = 2000;
   for (let offset = 0; offset < 100_000; offset += pageSize) {
-    const page = await env.DB.prepare(`${sql} LIMIT ${pageSize} OFFSET ${offset}`).all<T>();
+    const page = await env.PORTFOLIO_DB.prepare(`${sql} LIMIT ${pageSize} OFFSET ${offset}`).all<T>();
     const batch = page.results ?? [];
     rows.push(...batch);
     if (batch.length < pageSize) {
@@ -61,17 +69,29 @@ function ledgerTransaction(row: TransactionRow): LedgerTransaction | null {
     price: Number(row.price),
     quantity: Number(row.quantity),
     transactionType: row.transaction_type as TransactionType,
-    totalAmount: Number(row.total_amount),
+    grossNotional: readGrossNotional(row),
   };
 }
 
+/**
+ * Reads `gross_notional` after migration 0002 and `total_amount` before it.
+ * The legacy query runs only when the new column is absent.
+ */
+async function readLedgerRows(env: Env): Promise<TransactionRow[]> {
+  try {
+    return await readPages<TransactionRow>(env, transactionAmountSelect(GROSS_NOTIONAL_COLUMN));
+  } catch (error) {
+    if (!isMissingGrossNotionalColumn(error)) {
+      throw error;
+    }
+    return await readPages<TransactionRow>(env, transactionAmountSelect(LEGACY_TOTAL_AMOUNT_COLUMN));
+  }
+}
+
 export async function buildAnalyticsReport(env: Env): Promise<AnalyticsReport> {
-  const transactions = (await readPages<TransactionRow>(
-    env,
-    `SELECT transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount
-     FROM transactions
-     ORDER BY trade_date, transaction_id`,
-  )).map(ledgerTransaction).filter((transaction): transaction is LedgerTransaction => transaction !== null);
+  const transactions = (await readLedgerRows(env))
+    .map(ledgerTransaction)
+    .filter((transaction): transaction is LedgerTransaction => transaction !== null);
 
   const priceRows = await readPages<PriceRow>(
     env,

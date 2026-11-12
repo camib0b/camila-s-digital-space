@@ -41,7 +41,7 @@ export interface InstrumentListing {
   currency: string;
   distributionPolicy: "distributing" | "accumulating" | "none";
   isin: string | null;
-  kind: "stock" | "equity-fund" | "bond-fund";
+  instrumentKind: "stock" | "equity-fund" | "bond-fund";
   identificationNote: string;
 }
 
@@ -115,7 +115,7 @@ type PerformanceBlock =
       annualizedTimeWeightedReturn: number | null;
       annualizationLabel: string;
       calendarDayCount: number;
-      simpleReturn: number | null;
+      netInvestedReturn: number | null;
       simpleReturnLabel: "simple, ignores timing";
       netInvested: number;
       portfolioValue: number;
@@ -159,7 +159,7 @@ type RiskBlock =
       portfolioVolatility: number;
       weightsSum: number;
       cashMarketValue: number;
-      cashWeightOfPortfolio: number;
+      cashWeight: number;
       cashTreatment: "excluded from risk weights";
       label: "ex-ante: current weights held fixed, historical covariance, not a forecast";
       contributions: {
@@ -167,7 +167,7 @@ type RiskBlock =
         weight: number;
         marginalContribution: number;
         componentContribution: number;
-        percentContribution: number;
+        varianceShare: number;
       }[];
     };
 
@@ -211,8 +211,8 @@ type ExposureBlock =
       source: string;
       topExposures: LookThroughRow[];
       overlap: { fundA: string; fundB: string; overlap: number }[];
-      apparentCompany: { ticker: string; name: string; isin: string; weight: number } | null;
-      effectiveCompany: { name: string; isin: string; weight: number } | null;
+      largestDirectStock: { ticker: string; name: string; isin: string; weight: number } | null;
+      largestLookThroughCompany: { name: string; isin: string; weight: number } | null;
       bondWeight: number;
       cashWeight: number;
       unattributedWeight: number;
@@ -450,7 +450,7 @@ function buildPerformance(
   }
 
   const netInvested = externalFlowThroughDate(ledger.states, null, last.date);
-  const simpleReturn = netInvested > 0 ? (last.portfolioValue - netInvested) / netInvested : null;
+  const netInvestedReturn = netInvested > 0 ? (last.portfolioValue - netInvested) / netInvested : null;
   const totalReturn = totalReturnMap(market, "VOO");
   const firstFlowDate = ledger.states.find((state) => state.externalFlow !== 0)?.date ?? first.date;
   const benchmarkReturn = benchmarkTotalReturn(totalReturn, firstFlowDate, last.date);
@@ -511,7 +511,7 @@ function buildPerformance(
     annualizedTimeWeightedReturn: linked.annualizedReturn,
     annualizationLabel: linked.annualizationLabel,
     calendarDayCount: linked.calendarDayCount,
-    simpleReturn,
+    netInvestedReturn,
     simpleReturnLabel: "simple, ignores timing",
     netInvested,
     portfolioValue: last.portfolioValue,
@@ -593,11 +593,11 @@ function buildRisk(lastDay: ValuedDay, market: IndexedMarketData, input: Analyti
     portfolioVolatility: contributions.annualizedVolatility,
     weightsSum: contributions.weightsSum,
     cashMarketValue: lastDay.cash,
-    cashWeightOfPortfolio: portfolioValue > 0 ? lastDay.cash / portfolioValue : 0,
+    cashWeight: portfolioValue > 0 ? lastDay.cash / portfolioValue : 0,
     cashTreatment: "excluded from risk weights",
     label: "ex-ante: current weights held fixed, historical covariance, not a forecast",
     contributions: [...contributions.contributions].sort(
-      (left, right) => right.percentContribution - left.percentContribution,
+      (left, right) => right.varianceShare - left.varianceShare,
     ),
   };
 }
@@ -776,7 +776,7 @@ function buildExposure(
       ticker: holding.ticker,
       weight: holding.marketValue / lastDay.portfolioValue,
       isin: listing.isin,
-      assetClass: listing.kind,
+      instrumentKind: listing.instrumentKind,
       name: listing.name,
     });
   }
@@ -792,8 +792,8 @@ function buildExposure(
     source: "issuer holdings snapshots matched by ISIN; weights are current market value over total portfolio value",
     topExposures: lookThrough.rows.slice(0, 15),
     overlap: lookThrough.overlap,
-    apparentCompany: lookThrough.apparentCompany,
-    effectiveCompany: lookThrough.effectiveCompany,
+    largestDirectStock: lookThrough.largestDirectStock,
+    largestLookThroughCompany: lookThrough.largestLookThroughCompany,
     bondWeight: lookThrough.bondWeight,
     cashWeight: lastDay.cash / lastDay.portfolioValue,
     unattributedWeight: lookThrough.unattributedWeight,

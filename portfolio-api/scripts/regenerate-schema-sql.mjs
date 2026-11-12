@@ -15,11 +15,12 @@ const ledger = JSON.parse(readFileSync(ledgerPath, "utf8"));
 const rows = [...ledger].sort((a, b) => a.transactionId - b.transactionId);
 
 const valueLines = rows.map((row) => {
-  const totalLiteral = String(row.totalAmount);
-  return `(${row.transactionId}, '${row.ticker}', '${row.tradeDate}', ${row.price}, ${row.quantity}, '${row.transactionType}', ${totalLiteral})`;
+  const grossNotionalLiteral = String(row.grossNotional ?? row.totalAmount);
+  return `(${row.transactionId}, '${row.ticker}', '${row.tradeDate}', ${row.price}, ${row.quantity}, '${row.transactionType}', ${grossNotionalLiteral})`;
 });
 
-const sql = `-- Synced from portfolio-api/data/camila-stock-portfolio.csv (single source of truth)
+const sql = `-- Synced from portfolio-api/data/portfolio-transactions.csv (single source of truth)
+-- purchases was a frozen pre-ledger snapshot. Drop it. Do not recreate it.
 
 DROP TABLE IF EXISTS purchases;
 DROP TABLE IF EXISTS transactions;
@@ -30,11 +31,11 @@ CREATE TABLE transactions (
   trade_date       TEXT NOT NULL,
   price            REAL NOT NULL,
   quantity         REAL NOT NULL,
-  transaction_type TEXT NOT NULL CHECK (transaction_type IN ('BUY', 'SELL')),
-  total_amount     REAL NOT NULL
+  transaction_type TEXT NOT NULL CHECK (transaction_type IN ('BUY', 'SELL', 'DIVIDEND', 'DEPOSIT', 'WITHDRAWAL', 'FEE')),
+  gross_notional   REAL NOT NULL
 );
 
-INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES
+INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, gross_notional) VALUES
 ${valueLines.join(",\n")};
 
 CREATE TABLE IF NOT EXISTS ai_usage (

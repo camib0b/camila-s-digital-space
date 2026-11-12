@@ -14,7 +14,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "distributing",
     isin: "US9229083632",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     identificationNote: "US-listed Vanguard S&P 500 ETF. Yahoo and Finnhub symbol VOO.",
   },
   {
@@ -24,7 +24,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "distributing",
     isin: "US9219097683",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     identificationNote: "US-listed Vanguard Total International Stock ETF. Yahoo and Finnhub symbol VXUS.",
   },
   {
@@ -34,7 +34,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "distributing",
     isin: "US9219378356",
-    kind: "bond-fund",
+    instrumentKind: "bond-fund",
     identificationNote: "US-listed Vanguard Total Bond Market ETF. Treated as a bond sleeve, not looked through to issuers.",
   },
   {
@@ -44,7 +44,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "none",
     isin: "US18915M1071",
-    kind: "stock",
+    instrumentKind: "stock",
     identificationNote: "NYSE common stock. ISIN US18915M1071.",
   },
   {
@@ -54,7 +54,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "none",
     isin: "US88160R1014",
-    kind: "stock",
+    instrumentKind: "stock",
     identificationNote: "NASDAQ common stock. ISIN US88160R1014.",
   },
   {
@@ -64,7 +64,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "none",
     isin: "CA82509L1076",
-    kind: "stock",
+    instrumentKind: "stock",
     identificationNote:
       "Nasdaq Global Select Market listing of Shopify Class A shares since 31 Mar 2025 (SEC filings through 2026). The Nasdaq and TSX lines share ISIN CA82509L1076, which is how VXUS holdings are matched.",
   },
@@ -75,7 +75,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "distributing",
     isin: "US3015057074",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     identificationNote:
       "NYSE Arca ROBO Global Robotics and Automation Index ETF (ISIN US3015057074, distributing, issuer Exchange Traded Concepts Trust). Ledger buys on 2026-09-25 at 80.57, 80.73, and 80.90 sit inside that day's US range (low 80.43, close 81.06). A fill near 81.92 on 2026-10-07 sits inside that day's US range (81.28–82.24). The L&G UCITS USD line (LSE: ROBO, ISIN IE00BMW3QX54) traded near 30–36 USD from May through 7 Oct 2026, so it is not this position. Finnhub and Yahoo keep symbol ROBO, which is this US listing.",
   },
@@ -86,7 +86,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "distributing",
     isin: "US4642873909",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     identificationNote: "Former holding. US-listed iShares Latin America 40 ETF, needed to value history before it was sold.",
   },
   {
@@ -96,7 +96,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "distributing",
     isin: "USN070592100",
-    kind: "stock",
+    instrumentKind: "stock",
     identificationNote: "NASDAQ ADR. Ledger prices near 1,600–1,900 USD match this listing, not the Amsterdam line in euros.",
   },
   {
@@ -106,7 +106,7 @@ export const INSTRUMENT_LISTINGS: readonly InstrumentListing[] = [
     currency: "USD",
     distributionPolicy: "distributing",
     isin: "US4642875235",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     identificationNote: "Former holding. US-listed iShares Semiconductor ETF, needed to value history before it was sold.",
   },
 ];

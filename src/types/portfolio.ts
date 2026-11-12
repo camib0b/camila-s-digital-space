@@ -1,12 +1,13 @@
-/** A priced portfolio holding. JSON field remains `stocks` (public API). */
-export interface Holding {
+/** Priced portfolio holding returned by `/api/portfolio` as `holdings[]`. */
+export interface PublicHolding {
   ticker: string;
   currentPrice: number;
-  changePercent: number;
+  /** Percent points versus the previous close. Null when that change is unavailable. */
+  previousCloseChangePercent: number | null;
   /** Present when the API priced this holding from the latest trade instead of a live quote. */
   stale?: boolean;
-  /** Weight of this holding in the portfolio, as a percent string. */
-  allocation?: string;
+  /** Weight of this holding in the portfolio, as a percent string ("12.3" means 12.3%). */
+  weightPercent?: string;
   /** Gain versus cost basis, as a percent string. */
   gainPercent?: string;
   /**
@@ -23,18 +24,17 @@ export interface AiModelOption {
 }
 
 export interface PortfolioResponse {
-  totalReturnPct: string;
+  /** Open-lot market value versus remaining cost, in percent points. */
+  openCostBasisGainPercent: string;
   /**
    * Present on the live quote payload. Used only to derive holding weights.
    * Never rendered.
    */
   totalValue?: number;
-  /** Public JSON key; values are priced holdings. Dollar fields are not shown. */
-  stocks: Holding[];
+  holdings: PublicHolding[];
   aiInsight: string | null;
   lastUpdated: string;
-  /** Public JSON key; number of holdings. */
-  count: number;
+  holdingsCount: number;
   aiModels?: AiModelOption[];
 }
 
@@ -49,8 +49,8 @@ export interface AiInsightResponse {
 export interface HoldingWithMetrics {
   ticker: string;
   currentPrice: number;
-  changePercent: number;
+  previousCloseChangePercent: number | null;
   stale?: boolean;
-  allocation: string;
+  weightPercent: string;
   gainPercent: string;
 }

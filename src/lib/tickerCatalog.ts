@@ -15,7 +15,7 @@ export interface DirectInstrument {
   isin: string;
   exchange: string;
   issuer: string;
-  kind: InstrumentKind;
+  instrumentKind: InstrumentKind;
   role: HoldingRole;
   roleApproved: true;
   /** Official index an ETF tracks. Stocks omit this. */
@@ -46,7 +46,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     isin: "US9229083632",
     exchange: "NYSE Arca",
     issuer: "Vanguard",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     role: "core",
     roleApproved: true,
     tracks: "S&P 500 Index",
@@ -57,7 +57,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     isin: "US9219097683",
     exchange: "NASDAQ",
     issuer: "Vanguard",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     role: "diversification",
     roleApproved: true,
     tracks: "FTSE Global All Cap ex US Index",
@@ -68,7 +68,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     isin: "US9219378356",
     exchange: "NASDAQ",
     issuer: "Vanguard",
-    kind: "bond-fund",
+    instrumentKind: "bond-fund",
     role: "diversification",
     roleApproved: true,
     tracks: "Bloomberg U.S. Aggregate Float Adjusted Index",
@@ -79,7 +79,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     isin: "US18915M1071",
     exchange: "NYSE",
     issuer: "Cloudflare, Inc.",
-    kind: "stock",
+    instrumentKind: "stock",
     role: "conviction",
     roleApproved: true,
   },
@@ -89,7 +89,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     isin: "US88160R1014",
     exchange: "NASDAQ",
     issuer: "Tesla, Inc.",
-    kind: "stock",
+    instrumentKind: "stock",
     role: "conviction",
     roleApproved: true,
   },
@@ -99,7 +99,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     isin: "CA82509L1076",
     exchange: "Nasdaq Global Select Market",
     issuer: "Shopify Inc.",
-    kind: "stock",
+    instrumentKind: "stock",
     role: "conviction",
     roleApproved: true,
   },
@@ -109,7 +109,7 @@ export const DIRECT_INSTRUMENTS: readonly DirectInstrument[] = [
     isin: "US3015057074",
     exchange: "NYSE Arca",
     issuer: "Exchange Traded Concepts Trust",
-    kind: "equity-fund",
+    instrumentKind: "equity-fund",
     role: "diversified-conviction",
     roleApproved: true,
     tracks: "ROBO Global Robotics and Automation Index",

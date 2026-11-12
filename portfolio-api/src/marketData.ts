@@ -362,7 +362,7 @@ export async function seriesForListing(
 }
 
 export async function syncMarketData(env: Env): Promise<string> {
-  const { results } = await env.DB.prepare(
+  const { results } = await env.PORTFOLIO_DB.prepare(
     "SELECT ticker, trade_date AS tradeDate, price FROM transactions",
   ).all<LedgerPrint>();
   const trades = results ?? [];
@@ -379,7 +379,7 @@ export async function syncMarketData(env: Env): Promise<string> {
       notes.push(`${ticker}: skipped, no configured listing.`);
       continue;
     }
-    const coverage = await env.DB.prepare(
+    const coverage = await env.PORTFOLIO_DB.prepare(
       "SELECT MIN(price_date) AS first_date, MAX(price_date) AS last_date, COUNT(*) AS row_count FROM daily_closes WHERE ticker = ?",
     ).bind(ticker).first<{ first_date: string | null; last_date: string | null; row_count: number }>();
     const recentEnough = new Date(Date.parse(`${endDate}T00:00:00Z`) - 4 * 86_400_000).toISOString().slice(0, 10);
@@ -397,8 +397,8 @@ export async function syncMarketData(env: Env): Promise<string> {
       notes.push(`${ticker}: ${series.error}`);
       continue;
     }
-    await env.DB.prepare("DELETE FROM daily_closes WHERE ticker = ?").bind(ticker).run();
-    await env.DB.prepare("DELETE FROM share_splits WHERE ticker = ?").bind(ticker).run();
+    await env.PORTFOLIO_DB.prepare("DELETE FROM daily_closes WHERE ticker = ?").bind(ticker).run();
+    await env.PORTFOLIO_DB.prepare("DELETE FROM share_splits WHERE ticker = ?").bind(ticker).run();
     if (series.rejectedReason !== null) {
       notes.push(series.rejectedReason);
       continue;
@@ -422,7 +422,7 @@ export async function syncMarketData(env: Env): Promise<string> {
 
   const detail = notes.join(" ");
   const syncedAt = new Date().toISOString();
-  await env.DB.prepare(
+  await env.PORTFOLIO_DB.prepare(
     `INSERT INTO market_data_sync (dataset, synced_at, detail)
      VALUES ('market', ?, ?)
      ON CONFLICT(dataset) DO UPDATE SET synced_at = excluded.synced_at, detail = excluded.detail`,
@@ -435,9 +435,9 @@ async function insertPrices(env: Env, bars: readonly StoredPriceBar[]): Promise<
   const chunkSize = 40;
   for (let offset = 0; offset < bars.length; offset += chunkSize) {
     const chunk = bars.slice(offset, offset + chunkSize);
-    await env.DB.batch(
+    await env.PORTFOLIO_DB.batch(
       chunk.map((bar) =>
-        env.DB.prepare(
+        env.PORTFOLIO_DB.prepare(
           `INSERT INTO daily_closes (ticker, price_date, raw_close, adjusted_close, currency, source)
            VALUES (?, ?, ?, ?, ?, ?)
            ON CONFLICT(ticker, price_date) DO UPDATE SET
@@ -455,9 +455,9 @@ async function insertSplits(env: Env, splits: readonly StoredSplit[]): Promise<v
   if (splits.length === 0) {
     return;
   }
-  await env.DB.batch(
+  await env.PORTFOLIO_DB.batch(
     splits.map((split) =>
-      env.DB.prepare(
+      env.PORTFOLIO_DB.prepare(
         `INSERT INTO share_splits (ticker, ex_date, share_multiplier, source)
          VALUES (?, ?, ?, ?)
          ON CONFLICT(ticker, ex_date) DO UPDATE SET
@@ -477,9 +477,9 @@ async function insertYields(
   const chunkSize = 40;
   for (let offset = 0; offset < recent.length; offset += chunkSize) {
     const chunk = recent.slice(offset, offset + chunkSize);
-    await env.DB.batch(
+    await env.PORTFOLIO_DB.batch(
       chunk.map((row) =>
-        env.DB.prepare(
+        env.PORTFOLIO_DB.prepare(
           `INSERT INTO risk_free_rates (rate_date, annual_yield, series_id, source)
            VALUES (?, ?, 'DGS3MO', ?)
            ON CONFLICT(rate_date) DO UPDATE SET

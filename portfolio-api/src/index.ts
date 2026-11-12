@@ -1,7 +1,12 @@
-import { AI_MODELS, buildAiPrompt, generateAiInsight, type Holding } from "./aiInsight";
+import { AI_MODELS, buildAiPrompt, generateAiInsight } from "./aiInsight";
 import { CORS_ALLOWED_PATHS, CORS_HEADERS, GITHUB_CONTRIBUTIONS_PATH } from "./cors";
 import { handleGithubContributionsRequest } from "./githubContributions";
-import { computeHoldings, fetchTransactions, latestTradePriceByTicker } from "./holdings";
+import {
+  computeHoldings,
+  fetchTransactions,
+  latestTradePriceByTicker,
+  type QuotedHolding,
+} from "./holdings";
 import { buildPortfolioHistory } from "./history";
 import { buildAnalyticsReport } from "./analytics/load";
 import { syncMarketData } from "./marketData";
@@ -18,7 +23,7 @@ async function getPortfolioSnapshot(env: Env) {
   const holdingsByTicker = computeHoldings(transactions);
   const lastTradePriceByTicker = latestTradePriceByTicker(transactions);
 
-  const holdings: Holding[] = [];
+  const holdings: QuotedHolding[] = [];
   for (const [ticker, position] of holdingsByTicker.entries()) {
     const quote = await fetchQuote(ticker, env.FINNHUB_API_KEY);
     const resolvedQuote = resolveHoldingQuote(quote, lastTradePriceByTicker.get(ticker));
@@ -28,7 +33,7 @@ async function getPortfolioSnapshot(env: Env) {
       shares: position.shares,
       totalCost: position.totalCost,
       currentPrice: resolvedQuote.currentPrice,
-      changePercent: resolvedQuote.changePercent,
+      previousCloseChangePercent: resolvedQuote.previousCloseChangePercent,
       currentValue,
       stale: resolvedQuote.stale,
     });
@@ -45,13 +50,13 @@ async function getPortfolioSnapshot(env: Env) {
   }
 
   const totalGain = totalValue - totalInvested;
-  const totalReturnPct = totalInvested > 0 ? (totalGain / totalInvested) * 100 : 0;
+  const openCostBasisGainPercent = totalInvested > 0 ? (totalGain / totalInvested) * 100 : 0;
 
   return {
     totalValue,
     totalInvested,
     totalGain,
-    totalReturnPct,
+    openCostBasisGainPercent,
     holdings,
     holdingsCount: holdings.length,
     transactions,
@@ -142,7 +147,7 @@ export default {
         }
 
         if (result.usage.total_tokens > 0) {
-          await env.DB.prepare(`
+          await env.PORTFOLIO_DB.prepare(`
           INSERT INTO ai_usage (provider, model, prompt_tokens, completion_tokens, total_tokens, estimated_cost_usd)
           VALUES (?, ?, ?, ?, ?, ?)
         `)
