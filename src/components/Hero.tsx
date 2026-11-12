@@ -31,15 +31,19 @@ const Hero = () => {
             <h1 className="relative z-10 animate-fade-up">camila escudero</h1>
           </div>
 
-          <div className="mb-10 max-w-lg animate-fade-up-delay-1 space-y-3">
-            <p className="text-lg leading-relaxed text-foreground">{t("hero.headline")}</p>
-            <p className="text-lg leading-relaxed text-muted-foreground">{t("hero.subline")}</p>
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="inline-flex min-h-11 max-w-full cursor-pointer items-center text-base text-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
-            >
-              {t("hero.cta.hiring")}
-            </a>
+          <div className="mb-10 max-w-2xl animate-fade-up-delay-1 space-y-3">
+            <p className="max-w-lg text-lg leading-relaxed text-foreground">{t("hero.lead")}</p>
+            <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">{t("hero.carpeta")}</p>
+            <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">{t("hero.ava")}</p>
+            <p className="flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 text-base leading-relaxed text-muted-foreground">
+              <span>{t("hero.cta.lookout")}</span>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="inline-flex min-h-11 cursor-pointer items-center text-muted-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              >
+                {CONTACT_EMAIL}
+              </a>
+            </p>
           </div>
 
           <div className="flex items-center gap-1 animate-fade-up-delay-2">

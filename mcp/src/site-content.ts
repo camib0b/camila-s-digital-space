@@ -10,9 +10,9 @@ export const profile = {
   name: "Camila Escudero",
   location: "Santiago, Chile",
   tagline:
-    "I build systems that turn messy operations into faster decisions. Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for field-hockey teams.",
+    "Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for 2 field-hockey teams. AVA is a field-hockey video analysis app.",
   summary:
-    "I build systems that turn messy operations into faster decisions. Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for field-hockey teams. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
+    "Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for 2 field-hockey teams. AVA is a field-hockey video analysis app. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",

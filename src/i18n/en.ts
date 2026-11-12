@@ -1,10 +1,10 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.headline": "I build systems that turn messy operations into faster decisions.",
-    "hero.subline":
-      "Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for field-hockey teams.",
-    "hero.cta.hiring": "Hiring for growth or ops engineering? Email me",
+    "hero.lead": "Analytics automation at a structured-credit firm.",
+    "hero.carpeta": "carpeta.cl is a paid clip service for 2 field-hockey teams.",
+    "hero.ava": "AVA is a field-hockey video analysis app.",
+    "hero.cta.lookout": "On the lookout for growth and ops engineering roles.",
     "language.group": "Language",
     "language.english": "English",
     "language.spanish": "Spanish",
@@ -295,7 +295,7 @@ const en = {
     "cv.variant.analytics": "Analytics",
     "cv.variant.growth": "Growth",
     "cv.growth.role": "Systems for growth and operations",
-    "cv.growth.summary": "I ship systems that turn messy operations into faster decisions.",
+    "cv.growth.summary": "Analytics automation at a structured-credit firm.",
     "cv.growth.footerNote": "Systems for growth and operations",
     "cv.growth.skillsLabel": "Tools",
     "cv.growth.skills": "SQL, Python, Looker, LookML, BigQuery, Excel, Microsoft Office, TypeScript, C++",

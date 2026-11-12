@@ -3,10 +3,10 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.headline": "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas.",
-    "hero.subline":
-      "Automatización de analítica en una firma de crédito estructurado. carpeta.cl es un servicio pago de clips para equipos de hockey.",
-    "hero.cta.hiring": "¿Estás contratando para growth u ops engineering? Escríbeme",
+    "hero.lead": "Automatización de analítica en una firma de crédito estructurado.",
+    "hero.carpeta": "carpeta.cl es un servicio pago de clips para 2 equipos de hockey.",
+    "hero.ava": "AVA es una app de análisis de video de hockey.",
+    "hero.cta.lookout": "Buscando roles de growth y ops engineering.",
     "language.group": "Idioma",
     "language.english": "Inglés",
     "language.spanish": "Español",
@@ -297,7 +297,7 @@ const es: Record<TranslationKey, string> = {
     "cv.variant.analytics": "Analítica",
     "cv.variant.growth": "Growth",
     "cv.growth.role": "Sistemas para growth y operaciones",
-    "cv.growth.summary": "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas.",
+    "cv.growth.summary": "Automatización de analítica en una firma de crédito estructurado.",
     "cv.growth.footerNote": "Sistemas para growth y operaciones",
     "cv.growth.skillsLabel": "Herramientas",
     "cv.growth.skills": "SQL, Python, Looker, LookML, BigQuery, Excel, Microsoft Office, TypeScript, C++",
