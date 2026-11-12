@@ -3,9 +3,11 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.acfin": "Productos de analytics en ACFIN.",
-    "hero.ava.after": " - app de análisis de video de hockey",
-    "hero.cta.cv": "CV",
+    "hero.headline":
+      "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas y en más ingresos.",
+    "hero.subline":
+      "Automatización de analítica en una firma de crédito estructurado. carpeta.cl es un servicio de clips de pago para equipos de hockey.",
+    "hero.cta.hiring": "¿Estás contratando para growth u ops engineering? Escríbeme",
     "language.group": "Idioma",
     "language.english": "Inglés",
     "language.spanish": "Español",
@@ -53,15 +55,16 @@ const es: Record<TranslationKey, string> = {
     "experience.acfin.title": "Productos de analítica",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Actualidad",
-    "experience.acfin.description": "Analítica de cara a inversionistas para portafolios de crédito estructurado: métricas de crédito conciliadas, libros multimoneda, exportación de datos de autoservicio y despliegue automatizado de nuevos dashboards.",
+    "experience.acfin.description": "Analítica para clientes de crédito estructurado.",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Práctica de verano 2024",
     "experience.finapsys.description": "UI de producción para un producto de health tech, construida con componentes reutilizables.",
-    "experience.a3.title": "Reporting de activos hoteleros",
+    "experience.a3.title": "Portafolio hotelero",
     "experience.a3.company": "A3 Property Investments",
     "experience.a3.period": "Práctica de verano 2023",
-    "experience.a3.description": "Reporting de KPIs de directorio para un portafolio de once hoteles.",
+    "experience.a3.description":
+      "Automaticé los KPI de directorio, el P&L y el pronóstico de un portafolio de 11 hoteles.",
     "experience.visionary.title": "E-commerce y operaciones",
     "experience.visionary.company": "Visionary",
     "experience.visionary.period": "Año sabático 2021 – 2022",
@@ -72,22 +75,30 @@ const es: Record<TranslationKey, string> = {
     "experience.diagram.commerce": "Repetir la ilustración de comercio",
 
     // Personal projects
-    "personalProjects.label": "Proyectos personales",
+    "personalProjects.label": "Trabajo",
     "personalProjects.raycast.title": "Zodme",
     "personalProjects.raycast": "Extensión de Raycast, publicada y de código abierto. Fecha entra; signo zodiacal + arquetipo corto sale.",
     "personalProjects.raycast.destination": "raycast.com, extensión Zodme",
     "personalProjects.videoAnalysis.title": "AVA",
-    "personalProjects.videoAnalysis": "Importación, etiquetado, análisis y presentación de partidos. App de escritorio en C++ compatible con los estándares internacionales de video análisis.",
+    "personalProjects.videoAnalysis.problem": "Pasar de las etiquetas de un partido a los clips era un paso manual lento.",
+    "personalProjects.videoAnalysis.built": "Construí el paso de etiquetado a clips.",
+    "personalProjects.videoAnalysis.result":
+      "El procesamiento bajó de 30 minutos a 5 por partido, en 23 partidos y 175 clips.",
+    "personalProjects.videoAnalysis.waitlistStatus": "Lista de espera abierta.",
+    "personalProjects.videoAnalysis.waitlist": "Únete a la lista de espera de AVA",
     "personalProjects.videoAnalysis.destination": "camilaescudero.cl/ava, app de hockey",
     "personalProjects.scoreboard": "Prototipo de hardware de marcador de goles",
-    "personalProjects.clipLibrary.title": "Carpeta",
-    "personalProjects.clipLibrary": "Biblioteca de clips de partidos, integrada verticalmente con AVA. Abierta a jugadoras, entrenadores y analistas.",
-    "personalProjects.clipLibrary.destination": "carpeta.cl, biblioteca de clips",
-    "personalProjects.publishingPipeline.title": "Pipeline de publicación agéntico",
+    "personalProjects.clipLibrary.title": "carpeta.cl",
+    "personalProjects.clipLibrary.problem":
+      "Los equipos necesitaban clips del partido por concepto, no un montón de archivos.",
+    "personalProjects.clipLibrary.built":
+      "La fundé y la opero. Construí el almacenamiento, la entrega y las carpetas filtradas por concepto.",
+    "personalProjects.clipLibrary.result": "Atiende a 2 equipos, los dos conmigo desde abril de 2026.",
+    "personalProjects.clipLibrary.destination": "biblioteca de clips",
+    "personalProjects.publishingPipeline.title": "Un pipeline",
     "personalProjects.publishingPipeline.connectLabel": "Cómo se conectan",
     "personalProjects.publishingPipeline.connectsTo": "a",
-    "personalProjects.publishingPipeline":
-      "El tiempo para publicar un partido bajó de unos 30 minutos a 5.",
+    "personalProjects.publishingPipeline": "AVA procesa el partido. carpeta.cl entrega los clips.",
     "personalProjects.publishingPipeline.diagram.toggle": "Cómo lo publico",
     "personalProjects.publishingPipeline.diagram.intro": "Por partido, en orden.",
     "personalProjects.publishingPipeline.diagram.list.1": "Recibir el metraje del partido.",
@@ -132,6 +143,11 @@ const es: Record<TranslationKey, string> = {
     "personalProjects.smallTools.label": "Herramientas pequeñas",
     "personalProjects.smallTools.description":
       "Utilidades que publiqué para uso propio. Chicas a propósito.",
+    "personalProjects.acfin.title": "ACFIN",
+    "personalProjects.acfin.problem":
+      "Clientes de factoring necesitaban cifras conciliadas en más de una moneda.",
+    "personalProjects.acfin.built": "Construí y automaticé la capa de analítica, con libros multimoneda.",
+    "personalProjects.acfin.result": "Atiende a 8 clientes de factoring.",
     "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Analítica de portafolio: retornos frente a un benchmark VOO, riesgo y exposición look-through. Datos de mercado en vivo con cierres diarios automatizados. Comentario de IA a pedido.",
@@ -171,8 +187,10 @@ const es: Record<TranslationKey, string> = {
     "hockey.player.role": "Jugadora",
     "hockey.player.period": "Desde 2008",
     "hockey.player.destination": "Perfil de jugadora en FEHOCH",
-    "hockey.coaching.role": "Entrenadora",
-    "hockey.coaching.period": "2023–actualidad",
+    "hockey.clubUc.role": "Entrenadora, Club UC",
+    "hockey.clubUc.period": "2023–2025",
+    "hockey.fehoch.role": "Entrenadora y coordinación, FEHOCH",
+    "hockey.fehoch.period": "Actualidad",
     "hockey.videoAnalyst.role": "Analista de video",
     "hockey.videoAnalyst.period": "2025–actualidad",
     "hockey.videoAnalyst.destination": "carpeta.cl, clips de partidos",
@@ -276,6 +294,33 @@ const es: Record<TranslationKey, string> = {
     "cv.coaching.organization": "2023–actualidad",
     "cv.videoAnalyst.role": "Analista de video",
     "cv.videoAnalyst.organization": "2025–actualidad",
+    "cv.variant.group": "Versión del CV",
+    "cv.variant.analytics": "Analítica",
+    "cv.variant.growth": "Growth",
+    "cv.growth.role": "Sistemas para growth y operaciones",
+    "cv.growth.summary":
+      "Publico sistemas que convierten operaciones desordenadas en decisiones más rápidas. Abajo está el trabajo. Las herramientas van al final.",
+    "cv.growth.footerNote": "Sistemas para growth y operaciones",
+    "cv.growth.skillsLabel": "Herramientas",
+    "cv.growth.skills": "SQL, Python, Looker, LookML, BigQuery, Excel, Microsoft Office, TypeScript, C++",
+    "cv.growth.acfin.bullet1":
+      "Construí y automaticé la capa de analítica para 8 clientes de factoring, con libros multimoneda conciliados y reportes programados.",
+    "cv.growth.acfin.bullet2":
+      "Publiqué productos de analítica que los inversionistas de crédito estructurado usan para seguir portafolios, de punta a punta, del modelo de datos a la entrega.",
+    "cv.growth.pipeline.title": "AVA y carpeta.cl",
+    "cv.growth.pipeline.type": "Un pipeline",
+    "cv.growth.pipeline.description": "AVA procesa el partido. carpeta.cl entrega los clips.",
+    "cv.growth.pipeline.carpeta":
+      "Fundé y opero carpeta.cl, un servicio de clips de pago para equipos de hockey. Construí el stack completo, incluido almacenamiento, entrega y carpetas filtradas por concepto, y atiendo a 2 equipos, los dos conmigo desde abril de 2026.",
+    "cv.growth.pipeline.ava":
+      "Construí AVA, un pipeline de etiquetado a clips que bajó el procesamiento de 30 minutos a 5 por partido, en 23 partidos y 175 clips.",
+    "cv.growth.capital.type": "Proyecto",
+    "cv.growth.capital.description":
+      "Analítica de portafolio en /capital: retornos frente a un benchmark, riesgo y exposición look-through, automatizada.",
+    "cv.growth.a3.title": "Practicante de asset management",
+    "cv.growth.a3.period": "Verano 2023",
+    "cv.growth.a3.bullet":
+      "Automaticé los KPI de directorio, el P&L y el pronóstico de un portafolio de 11 hoteles.",
 
     // AVA
     "ava.document.title": "AVA · hockey sobre césped",

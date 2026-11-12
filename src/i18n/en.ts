@@ -1,9 +1,10 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.acfin": "Analytics products at ACFIN.",
-    "hero.ava.after": " - field hockey video analysis app",
-    "hero.cta.cv": "View CV",
+    "hero.headline": "I build systems that turn messy operations into faster decisions and more revenue.",
+    "hero.subline":
+      "Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for field-hockey teams.",
+    "hero.cta.hiring": "Hiring for growth or ops engineering? Email me",
     "language.group": "Language",
     "language.english": "English",
     "language.spanish": "Spanish",
@@ -51,15 +52,16 @@ const en = {
     "experience.acfin.title": "Analytics products",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Present",
-    "experience.acfin.description": "Investor-facing analytics for structured-credit portfolios: reconciled credit metrics, multi-currency books, self-serve data export, and automated rollout of new dashboards.",
+    "experience.acfin.description": "Client analytics for structured credit.",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Summer Internship 2024",
     "experience.finapsys.description": "Shipped production UI for a health-tech product, built from reusable components.",
-    "experience.a3.title": "Hotel asset reporting",
+    "experience.a3.title": "Hotel portfolio",
     "experience.a3.company": "A3 Property Investments",
     "experience.a3.period": "Summer Internship 2023",
-    "experience.a3.description": "Board KPI reporting for a portfolio of eleven hotels.",
+    "experience.a3.description":
+      "Automated board KPIs, P&L, and the forecast for an 11-hotel portfolio.",
     "experience.visionary.title": "E-commerce & operations",
     "experience.visionary.company": "Visionary",
     "experience.visionary.period": "Gap year 2021 – 2022",
@@ -70,22 +72,30 @@ const en = {
     "experience.diagram.commerce": "Replay commerce illustration",
 
     // Personal projects
-    "personalProjects.label": "Personal projects",
+    "personalProjects.label": "Work",
     "personalProjects.raycast.title": "Zodme",
     "personalProjects.raycast": "Raycast extension, published and open source. Date in, zodiac sign + short archetype out.",
     "personalProjects.raycast.destination": "raycast.com, Zodme extension",
     "personalProjects.videoAnalysis.title": "AVA",
-    "personalProjects.videoAnalysis": "Game footage import, tagging, analysis, and presentation. C++ desktop app compatible with International Video Analysis standards.",
+    "personalProjects.videoAnalysis.problem": "Getting from tags on a match to clips was a slow manual pass.",
+    "personalProjects.videoAnalysis.built": "I built the tagging-to-clips step.",
+    "personalProjects.videoAnalysis.result":
+      "Processing went from 30 minutes to 5 per match, across 23 matches and 175 clips.",
+    "personalProjects.videoAnalysis.waitlistStatus": "Waitlist open.",
+    "personalProjects.videoAnalysis.waitlist": "Join the AVA waitlist",
     "personalProjects.videoAnalysis.destination": "camilaescudero.cl/ava, field hockey app",
     "personalProjects.scoreboard": "Goal scoreboard hardware prototype",
-    "personalProjects.clipLibrary.title": "Carpeta",
-    "personalProjects.clipLibrary": "Game footage library of clips, vertically integrated with AVA. Open to players, coaches, and analysts alike.",
-    "personalProjects.clipLibrary.destination": "carpeta.cl, clip library",
-    "personalProjects.publishingPipeline.title": "Agentic publishing pipeline",
+    "personalProjects.clipLibrary.title": "carpeta.cl",
+    "personalProjects.clipLibrary.problem":
+      "Teams needed match clips they could open by concept, not a pile of files.",
+    "personalProjects.clipLibrary.built":
+      "I founded it and I run it. I built storage, delivery, and folders filtered by concept.",
+    "personalProjects.clipLibrary.result": "Serves 2 teams, both with me since April 2026.",
+    "personalProjects.clipLibrary.destination": "clip library",
+    "personalProjects.publishingPipeline.title": "One pipeline",
     "personalProjects.publishingPipeline.connectLabel": "How they connect",
     "personalProjects.publishingPipeline.connectsTo": "to",
-    "personalProjects.publishingPipeline":
-      "The time to publish a match went down from about 30 minutes to 5.",
+    "personalProjects.publishingPipeline": "AVA processes the match. carpeta.cl delivers the clips.",
     "personalProjects.publishingPipeline.diagram.toggle": "How I ship it",
     "personalProjects.publishingPipeline.diagram.intro": "Per game, in order.",
     "personalProjects.publishingPipeline.diagram.list.1": "Receive the game footage.",
@@ -130,6 +140,11 @@ const en = {
     "personalProjects.smallTools.label": "Small tools",
     "personalProjects.smallTools.description":
       "Utilities I shipped for my own use. Small on purpose.",
+    "personalProjects.acfin.title": "ACFIN",
+    "personalProjects.acfin.problem":
+      "Factoring clients needed reconciled numbers across more than one currency.",
+    "personalProjects.acfin.built": "I built and automated the analytics layer, with multi-currency books.",
+    "personalProjects.acfin.result": "It serves 8 factoring clients.",
     "personalProjects.capital.title": "Capital",
     "personalProjects.capital":
       "Portfolio analytics: returns versus a VOO benchmark, risk, and look-through exposure. Live market data with automated daily closes. AI commentary on request.",
@@ -169,8 +184,10 @@ const en = {
     "hockey.player.role": "Player",
     "hockey.player.period": "Since 2008",
     "hockey.player.destination": "FEHOCH player profile",
-    "hockey.coaching.role": "Coaching",
-    "hockey.coaching.period": "2023–present",
+    "hockey.clubUc.role": "Coach, Club UC",
+    "hockey.clubUc.period": "2023–2025",
+    "hockey.fehoch.role": "Coach and coordination, FEHOCH",
+    "hockey.fehoch.period": "Present",
     "hockey.videoAnalyst.role": "Video analyst",
     "hockey.videoAnalyst.period": "2025–present",
     "hockey.videoAnalyst.destination": "carpeta.cl, match clips",
@@ -274,6 +291,33 @@ const en = {
     "cv.coaching.organization": "2023–present",
     "cv.videoAnalyst.role": "Video analyst",
     "cv.videoAnalyst.organization": "2025–present",
+    "cv.variant.group": "CV version",
+    "cv.variant.analytics": "Analytics",
+    "cv.variant.growth": "Growth",
+    "cv.growth.role": "Systems for growth and operations",
+    "cv.growth.summary":
+      "I ship systems that turn messy operations into faster decisions. The notes below are the work. Tools are at the end.",
+    "cv.growth.footerNote": "Systems for growth and operations",
+    "cv.growth.skillsLabel": "Tools",
+    "cv.growth.skills": "SQL, Python, Looker, LookML, BigQuery, Excel, Microsoft Office, TypeScript, C++",
+    "cv.growth.acfin.bullet1":
+      "Built and automated the analytics layer for 8 factoring clients, with reconciled multi-currency books and scheduled reports.",
+    "cv.growth.acfin.bullet2":
+      "Shipped analytics products that structured-credit investors use to monitor portfolios, owning everything from the data model to delivery.",
+    "cv.growth.pipeline.title": "AVA and carpeta.cl",
+    "cv.growth.pipeline.type": "One pipeline",
+    "cv.growth.pipeline.description": "AVA processes the match. carpeta.cl delivers the clips.",
+    "cv.growth.pipeline.carpeta":
+      "Founded and run carpeta.cl, a paid clip service for field-hockey teams. I built the full stack, including storage, delivery and folders filtered by concept, and serve 2 teams, both with me since April 2026.",
+    "cv.growth.pipeline.ava":
+      "Built AVA, a tagging-to-clips pipeline that cut processing from 30 minutes to 5 per match, across 23 matches and 175 clips.",
+    "cv.growth.capital.type": "Project",
+    "cv.growth.capital.description":
+      "Portfolio analytics on /capital: returns versus a benchmark, risk, and look-through exposure, automated.",
+    "cv.growth.a3.title": "Asset management intern",
+    "cv.growth.a3.period": "Summer 2023",
+    "cv.growth.a3.bullet":
+      "Automated board KPI, P&L and forecast reporting for an 11-hotel portfolio.",
 
     // AVA
     "ava.document.title": "AVA · field hockey",

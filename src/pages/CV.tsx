@@ -1,5 +1,5 @@
 import { Github, Languages, Linkedin, Mail, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AffiliationRail from "@/components/AffiliationRail";
 import PageHeader from "@/components/PageHeader";
 import SectionEyebrow from "@/components/SectionEyebrow";
@@ -7,9 +7,22 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { CONTACT_EMAIL } from "@/content/contact";
 import { SOCIAL_LINKS } from "@/content/social";
 import { cvJobs, cvLeadership, cvProjects, cvTechnologyLabel } from "@/content/cv";
+import { cvGrowthJobs, cvGrowthLeadership, cvGrowthProjects, cvVariantFromPath } from "@/content/cvGrowth";
+import type { TranslationKey } from "@/i18n/types";
+
+const variantLinkClassName =
+  "cursor-pointer text-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
 
 const CV = () => {
   const { t } = useLanguage();
+  const { pathname } = useLocation();
+  const variant = cvVariantFromPath(pathname);
+  const jobs = variant === "growth" ? cvGrowthJobs : cvJobs;
+  const projects = variant === "growth" ? cvGrowthProjects : cvProjects;
+  const leadership = variant === "growth" ? cvGrowthLeadership : cvLeadership;
+  const roleKey: TranslationKey = variant === "growth" ? "cv.growth.role" : "cv.role";
+  const summaryKey: TranslationKey = variant === "growth" ? "cv.growth.summary" : "cv.summary";
+  const footerKey: TranslationKey = variant === "growth" ? "cv.growth.footerNote" : "cv.footerNote";
 
   return (
     <main className="min-h-screen bg-background">
@@ -20,11 +33,27 @@ const CV = () => {
       />
 
       <div className="container px-6 py-12 max-w-3xl mx-auto">
+        <nav aria-label={t("cv.variant.group")} className="mb-8 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <Link
+            to="/cv"
+            aria-current={variant === "analytics" ? "page" : undefined}
+            className={`${variantLinkClassName} ${variant === "analytics" ? "font-medium text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+          >
+            {t("cv.variant.analytics")}
+          </Link>
+          <Link
+            to="/cv/growth"
+            aria-current={variant === "growth" ? "page" : undefined}
+            className={`${variantLinkClassName} ${variant === "growth" ? "font-medium text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+          >
+            {t("cv.variant.growth")}
+          </Link>
+        </nav>
         <section className="mb-12">
           <h1 className="text-2xl font-medium text-foreground mb-1">Camila Escudero</h1>
-          <p className="text-sm text-muted-foreground mb-3">{t("cv.role")}</p>
+          <p className="text-sm text-muted-foreground mb-3">{t(roleKey)}</p>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl">
-            {t("cv.summary")}
+            {t(summaryKey)}
           </p>
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
@@ -76,7 +105,7 @@ const CV = () => {
             {t("cv.workExperience")}
           </SectionEyebrow>
           <div className="space-y-6">
-            {cvJobs.map((job) => (
+            {jobs.map((job) => (
               <div key={job.id}>
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
                   <div>
@@ -120,7 +149,7 @@ const CV = () => {
             {t("cv.selectedProjects")}
           </SectionEyebrow>
           <div className="space-y-6">
-            {cvProjects.map((project) => (
+            {projects.map((project) => (
               <div key={project.id}>
                 <div className="flex items-baseline justify-between gap-2 mb-1">
                   {project.href ? (
@@ -157,6 +186,27 @@ const CV = () => {
                 </p>
                 {project.impactKey ? (
                   <p className="text-sm text-foreground/70 mb-2">↳ {t(project.impactKey)}</p>
+                ) : null}
+                {project.bulletKeys && project.bulletKeys.length > 0 ? (
+                  <ul className="text-sm text-muted-foreground leading-relaxed space-y-0.5 mt-2 mb-2">
+                    {project.bulletKeys.map((bulletKey) => (
+                      <li key={bulletKey} className="flex items-start gap-2">
+                        <span className="text-foreground/40 mt-1">·</span>
+                        {t(bulletKey)}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {project.waitlistKey && project.waitlistHref ? (
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-2">
+                    {t("personalProjects.videoAnalysis.waitlistStatus")}{" "}
+                    <a
+                      href={project.waitlistHref}
+                      className="cursor-pointer font-medium text-foreground link-underline hover:text-muted-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                    >
+                      {t(project.waitlistKey)}
+                    </a>
+                  </p>
                 ) : null}
                 {project.technologies.length > 0 ? (
                   <div className="flex flex-wrap gap-1.5">
@@ -204,7 +254,7 @@ const CV = () => {
             {t("cv.leadershipAthletics")}
           </SectionEyebrow>
           <div className="space-y-3">
-            {cvLeadership.map((item) => (
+            {leadership.map((item) => (
               <div key={item.id}>
                 <p className="text-sm">
                   <span className="font-medium text-foreground">{t(item.roleKey)}</span>
@@ -217,11 +267,20 @@ const CV = () => {
             ))}
           </div>
         </section>
+
+        {variant === "growth" ? (
+          <section className="mt-10">
+            <h2 className="text-xs font-medium text-foreground uppercase tracking-wider mb-5">
+              {t("cv.growth.skillsLabel")}
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{t("cv.growth.skills")}</p>
+          </section>
+        ) : null}
       </div>
 
       <footer className="border-t border-border py-6">
         <div className="container px-6 text-center text-xs text-muted-foreground max-w-3xl mx-auto">
-          Camila Escudero · Santiago, Chile · {t("cv.footerNote")}
+          Camila Escudero · Santiago, Chile · {t(footerKey)}
         </div>
       </footer>
     </main>

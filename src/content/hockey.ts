@@ -1,4 +1,4 @@
-export type HockeyRoleId = "player" | "coaching" | "videoAnalyst";
+export type HockeyRoleId = "player" | "clubUc" | "fehoch" | "videoAnalyst";
 
 export type HockeyDestinationKey = "hockey.player.destination" | "hockey.videoAnalyst.destination";
 
@@ -21,8 +21,8 @@ type TextHockeyRole = HockeyRoleBase & {
 export type HockeyRole = LinkedHockeyRole | TextHockeyRole;
 
 /**
- * Home hockey lines. Coaching replaces the separate UC coach and national-team
- * assistant-coach lines. Both ran from 2023 and are still open, so the span is 2023–present.
+ * Home hockey lines. Club UC coaching ended in 2025. FEHOCH coaching and
+ * coordination is current; no start year is recorded here.
  */
 export const hockeyRoles: HockeyRole[] = [
   {
@@ -33,9 +33,14 @@ export const hockeyRoles: HockeyRole[] = [
     destinationKey: "hockey.player.destination",
   },
   {
-    id: "coaching",
-    roleKey: "hockey.coaching.role",
-    periodKey: "hockey.coaching.period",
+    id: "clubUc",
+    roleKey: "hockey.clubUc.role",
+    periodKey: "hockey.clubUc.period",
+  },
+  {
+    id: "fehoch",
+    roleKey: "hockey.fehoch.role",
+    periodKey: "hockey.fehoch.period",
   },
   {
     id: "videoAnalyst",
