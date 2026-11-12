@@ -1,7 +1,7 @@
 const en = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.headline": "I build systems that turn messy operations into faster decisions and more revenue.",
+    "hero.headline": "I build systems that turn messy operations into faster decisions.",
     "hero.subline":
       "Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for field-hockey teams.",
     "hero.cta.hiring": "Hiring for growth or ops engineering? Email me",
@@ -52,7 +52,7 @@ const en = {
     "experience.acfin.title": "Analytics products",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Present",
-    "experience.acfin.description": "Client analytics for structured credit.",
+    "experience.acfin.description": "",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Summer Internship 2024",
@@ -295,8 +295,7 @@ const en = {
     "cv.variant.analytics": "Analytics",
     "cv.variant.growth": "Growth",
     "cv.growth.role": "Systems for growth and operations",
-    "cv.growth.summary":
-      "I ship systems that turn messy operations into faster decisions. The notes below are the work. Tools are at the end.",
+    "cv.growth.summary": "I ship systems that turn messy operations into faster decisions.",
     "cv.growth.footerNote": "Systems for growth and operations",
     "cv.growth.skillsLabel": "Tools",
     "cv.growth.skills": "SQL, Python, Looker, LookML, BigQuery, Excel, Microsoft Office, TypeScript, C++",
@@ -306,6 +305,7 @@ const en = {
       "Shipped analytics products that structured-credit investors use to monitor portfolios, owning everything from the data model to delivery.",
     "cv.growth.pipeline.title": "AVA and carpeta.cl",
     "cv.growth.pipeline.type": "One pipeline",
+    "cv.growth.pipeline.join": "and",
     "cv.growth.pipeline.description": "AVA processes the match. carpeta.cl delivers the clips.",
     "cv.growth.pipeline.carpeta":
       "Founded and run carpeta.cl, a paid clip service for field-hockey teams. I built the full stack, including storage, delivery and folders filtered by concept, and serve 2 teams, both with me since April 2026.",
@@ -313,7 +313,7 @@ const en = {
       "Built AVA, a tagging-to-clips pipeline that cut processing from 30 minutes to 5 per match, across 23 matches and 175 clips.",
     "cv.growth.capital.type": "Project",
     "cv.growth.capital.description":
-      "Portfolio analytics on /capital: returns versus a benchmark, risk, and look-through exposure, automated.",
+      "Portfolio analytics: returns versus a benchmark, risk, and look-through exposure, automated.",
     "cv.growth.a3.title": "Asset management intern",
     "cv.growth.a3.period": "Summer 2023",
     "cv.growth.a3.bullet":

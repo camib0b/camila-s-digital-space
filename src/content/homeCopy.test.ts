@@ -67,7 +67,15 @@ describe("home copy", () => {
     expect(home.match(/175 clips/g)).toEqual(["175 clips"]);
     expect(home.match(/8 factoring clients/g)).toEqual(["8 factoring clients"]);
     expect(home.match(/11-hotel/g)).toEqual(["11-hotel"]);
+    expect(en["hero.headline"]).toBe("I build systems that turn messy operations into faster decisions.");
+    expect(es["hero.headline"]).toBe(
+      "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas.",
+    );
+    expect(en["hero.headline"]).not.toMatch(/revenue/i);
     expect(en["hero.subline"]).not.toMatch(/2 teams|April 2026/);
+    expect(en["experience.acfin.description"]).toBe("");
+    expect(en["personalProjects.clipLibrary.built"]).toMatch(/founded it and I run it/);
+    expect(joined(en, homeKeys)).not.toMatch(/\bFounder\b/);
     expect(en["personalProjects.publishingPipeline"]).toBe(
       "AVA processes the match. carpeta.cl delivers the clips.",
     );
@@ -94,7 +102,20 @@ describe("home copy", () => {
     expect(en["cv.growth.pipeline.ava"]).toBe(
       "Built AVA, a tagging-to-clips pipeline that cut processing from 30 minutes to 5 per match, across 23 matches and 175 clips.",
     );
+    expect(en["cv.growth.pipeline.carpeta"]).toContain("Founded and run");
     expect(en["cv.growth.pipeline.carpeta"]).toContain("both with me since April 2026");
+    expect(en["cv.growth.summary"]).toBe("I ship systems that turn messy operations into faster decisions.");
+    expect(en["cv.growth.capital.description"]).toBe(
+      "Portfolio analytics: returns versus a benchmark, risk, and look-through exposure, automated.",
+    );
+    expect(es["cv.growth.summary"]).toBe(
+      "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas.",
+    );
+    expect(es["cv.growth.acfin.bullet2"].startsWith("Lancé productos")).toBe(true);
+    expect(es["hero.subline"]).toContain("un servicio pago de clips");
+    expect(cvGrowthJobs.map((job) => job.id)).toEqual(["acfin", "finapsys", "a3", "visionary"]);
+    expect(cvGrowthProjects.map((project) => project.id)).toEqual(["pipeline", "capital", "fleetOptimizer"]);
+    expect(cvGrowthProjects[0]?.externalHref).toBe("https://carpeta.cl/");
 
     const acfinJob = cvGrowthJobs.find((job) => job.id === "acfin");
     expect(acfinJob?.technologies).toEqual([]);

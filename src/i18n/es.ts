@@ -3,10 +3,9 @@ import type { TranslationKey } from "./types";
 const es: Record<TranslationKey, string> = {
     // Hero
     "hero.location": "Santiago, Chile",
-    "hero.headline":
-      "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas y en más ingresos.",
+    "hero.headline": "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas.",
     "hero.subline":
-      "Automatización de analítica en una firma de crédito estructurado. carpeta.cl es un servicio de clips de pago para equipos de hockey.",
+      "Automatización de analítica en una firma de crédito estructurado. carpeta.cl es un servicio pago de clips para equipos de hockey.",
     "hero.cta.hiring": "¿Estás contratando para growth u ops engineering? Escríbeme",
     "language.group": "Idioma",
     "language.english": "Inglés",
@@ -55,7 +54,7 @@ const es: Record<TranslationKey, string> = {
     "experience.acfin.title": "Productos de analítica",
     "experience.acfin.company": "ACFIN",
     "experience.acfin.period": "Feb 2026 – Actualidad",
-    "experience.acfin.description": "Analítica para clientes de crédito estructurado.",
+    "experience.acfin.description": "",
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Práctica de verano 2024",
@@ -298,25 +297,25 @@ const es: Record<TranslationKey, string> = {
     "cv.variant.analytics": "Analítica",
     "cv.variant.growth": "Growth",
     "cv.growth.role": "Sistemas para growth y operaciones",
-    "cv.growth.summary":
-      "Publico sistemas que convierten operaciones desordenadas en decisiones más rápidas. Abajo está el trabajo. Las herramientas van al final.",
+    "cv.growth.summary": "Construyo sistemas que convierten operaciones desordenadas en decisiones más rápidas.",
     "cv.growth.footerNote": "Sistemas para growth y operaciones",
     "cv.growth.skillsLabel": "Herramientas",
     "cv.growth.skills": "SQL, Python, Looker, LookML, BigQuery, Excel, Microsoft Office, TypeScript, C++",
     "cv.growth.acfin.bullet1":
       "Construí y automaticé la capa de analítica para 8 clientes de factoring, con libros multimoneda conciliados y reportes programados.",
     "cv.growth.acfin.bullet2":
-      "Publiqué productos de analítica que los inversionistas de crédito estructurado usan para seguir portafolios, de punta a punta, del modelo de datos a la entrega.",
+      "Lancé productos de analítica que los inversionistas de crédito estructurado usan para seguir portafolios, de punta a punta, del modelo de datos a la entrega.",
     "cv.growth.pipeline.title": "AVA y carpeta.cl",
     "cv.growth.pipeline.type": "Un pipeline",
+    "cv.growth.pipeline.join": "y",
     "cv.growth.pipeline.description": "AVA procesa el partido. carpeta.cl entrega los clips.",
     "cv.growth.pipeline.carpeta":
-      "Fundé y opero carpeta.cl, un servicio de clips de pago para equipos de hockey. Construí el stack completo, incluido almacenamiento, entrega y carpetas filtradas por concepto, y atiendo a 2 equipos, los dos conmigo desde abril de 2026.",
+      "Fundé y opero carpeta.cl, un servicio pago de clips para equipos de hockey. Construí el stack completo, incluido almacenamiento, entrega y carpetas filtradas por concepto, y atiendo a 2 equipos, los dos conmigo desde abril de 2026.",
     "cv.growth.pipeline.ava":
       "Construí AVA, un pipeline de etiquetado a clips que bajó el procesamiento de 30 minutos a 5 por partido, en 23 partidos y 175 clips.",
     "cv.growth.capital.type": "Proyecto",
     "cv.growth.capital.description":
-      "Analítica de portafolio en /capital: retornos frente a un benchmark, riesgo y exposición look-through, automatizada.",
+      "Analítica de portafolio: retornos frente a un benchmark, riesgo y exposición look-through, automatizada.",
     "cv.growth.a3.title": "Practicante de asset management",
     "cv.growth.a3.period": "Verano 2023",
     "cv.growth.a3.bullet":

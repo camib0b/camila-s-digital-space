@@ -50,9 +50,11 @@ function ExperienceRoleRow({ role, isLast }: { role: ExperienceRole; isLast: boo
           {Diagram ? <Diagram /> : null}
         </div>
       </div>
-      <p className={`mt-2 text-base leading-relaxed text-muted-foreground ${wrappingCopyClassName}`}>
-        {t(role.descriptionKey)}
-      </p>
+      {t(role.descriptionKey) ? (
+        <p className={`mt-2 text-base leading-relaxed text-muted-foreground ${wrappingCopyClassName}`}>
+          {t(role.descriptionKey)}
+        </p>
+      ) : null}
       {isLast ? null : <div className="mt-8 border-b border-border/60" />}
     </div>
   );

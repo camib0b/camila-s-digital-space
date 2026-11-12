@@ -36,7 +36,7 @@ const Hero = () => {
             <p className="text-lg leading-relaxed text-muted-foreground">{t("hero.subline")}</p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="inline-block max-w-full cursor-pointer text-base text-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
+              className="inline-flex min-h-11 max-w-full cursor-pointer items-center text-base text-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
               {t("hero.cta.hiring")}
             </a>

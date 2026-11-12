@@ -15,7 +15,7 @@ const notFoundDestinations: ReadonlyArray<{ labelKey: TranslationKey; path: stri
   { labelKey: "notFound.home", path: "/" },
   { labelKey: "notFound.projects", path: "/#personal-projects" },
   { labelKey: "notFound.ava", path: "/ava" },
-  { labelKey: "notFound.cv", path: "/cv" },
+  { labelKey: "notFound.cv", path: "/cv/growth" },
 ];
 
 /** Same text treatment as the site footer nav, with a 44px target and a focus ring. */

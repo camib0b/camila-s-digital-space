@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import avaProjectFrame from "@/assets/ava/tagging-640.webp";
 import capitalProjectFrame from "@/assets/projects/capital-frame.webp";
 import concatProjectFrame from "@/assets/projects/concat-frame.webp";
@@ -149,12 +150,12 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
             {project.waitlist ? (
               <p className={`${narrativeLineClassName} mt-2`}>
                 {t(project.waitlist.statusKey)}{" "}
-                <a
-                  href={project.waitlist.href}
-                  className="cursor-pointer text-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                <Link
+                  to={project.waitlist.href}
+                  className="inline-flex min-h-11 cursor-pointer items-center text-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
                 >
                   {t(project.waitlist.labelKey)}
-                </a>
+                </Link>
               </p>
             ) : null}
           </li>

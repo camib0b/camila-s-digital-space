@@ -6,12 +6,92 @@ import SectionEyebrow from "@/components/SectionEyebrow";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CONTACT_EMAIL } from "@/content/contact";
 import { SOCIAL_LINKS } from "@/content/social";
-import { cvJobs, cvLeadership, cvProjects, cvTechnologyLabel } from "@/content/cv";
+import { cvJobs, cvLeadership, cvProjects, cvTechnologyLabel, type CvProject } from "@/content/cv";
 import { cvGrowthJobs, cvGrowthLeadership, cvGrowthProjects, cvVariantFromPath } from "@/content/cvGrowth";
 import type { TranslationKey } from "@/i18n/types";
 
 const variantLinkClassName =
-  "cursor-pointer text-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
+  "inline-flex min-h-11 min-w-11 cursor-pointer items-center px-1 text-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
+
+const waitlistLinkClassName =
+  "inline-flex min-h-11 cursor-pointer items-center font-medium text-foreground link-underline hover:text-muted-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
+
+const pairedLinkClassName = `${waitlistLinkClassName} min-w-11 px-1 text-sm`;
+
+function CvProjectEntry({ project }: { project: CvProject }) {
+  const { t } = useLanguage();
+  const titleClassName =
+    "font-medium text-foreground text-sm hover:text-muted-foreground transition-colors link-underline";
+
+  return (
+    <div>
+      <div className="mb-1 flex items-baseline justify-between gap-2">
+        {project.href && project.externalHref ? (
+          <p className="flex min-w-0 flex-wrap items-center gap-x-2 text-sm font-medium text-foreground">
+            <Link to={project.href} className={pairedLinkClassName}>
+              AVA
+            </Link>
+            <span className="text-muted-foreground">{t("cv.growth.pipeline.join")}</span>
+            <a href={project.externalHref} target="_blank" rel="noopener noreferrer" className={pairedLinkClassName}>
+              carpeta.cl
+            </a>
+          </p>
+        ) : project.href ? (
+          <Link to={project.href} className={titleClassName}>
+            {t(project.titleKey)}
+          </Link>
+        ) : project.externalHref ? (
+          <a href={project.externalHref} target="_blank" rel="noopener noreferrer" className={titleClassName}>
+            {t(project.titleKey)}
+          </a>
+        ) : (
+          <p className="text-sm font-medium text-foreground">{t(project.titleKey)}</p>
+        )}
+        <span className="shrink-0 font-mono text-xs text-muted-foreground">{t(project.typeKey)}</span>
+      </div>
+      <p
+        className={
+          project.impactKey
+            ? "mb-1 text-sm leading-relaxed text-muted-foreground"
+            : "mb-2 text-sm leading-relaxed text-muted-foreground"
+        }
+      >
+        {t(project.descriptionKey)}
+      </p>
+      {project.impactKey ? <p className="mb-2 text-sm text-foreground/70">↳ {t(project.impactKey)}</p> : null}
+      {project.bulletKeys && project.bulletKeys.length > 0 ? (
+        <ul className="mb-2 mt-2 space-y-0.5 text-sm leading-relaxed text-muted-foreground">
+          {project.bulletKeys.map((bulletKey) => (
+            <li key={bulletKey} className="flex items-start gap-2">
+              <span className="mt-1 text-foreground/40">·</span>
+              {t(bulletKey)}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {project.waitlistKey && project.waitlistHref ? (
+        <p className="mb-2 text-sm leading-relaxed text-muted-foreground">
+          {t("personalProjects.videoAnalysis.waitlistStatus")}{" "}
+          <Link to={project.waitlistHref} className={waitlistLinkClassName}>
+            {t(project.waitlistKey)}
+          </Link>
+        </p>
+      ) : null}
+      {project.technologies.length > 0 ? (
+        <div className="flex flex-wrap gap-1.5">
+          {project.technologies.map((technology) => {
+            const label = cvTechnologyLabel(technology, t);
+            return (
+              <span key={label} className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
+                {label}
+              </span>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 const CV = () => {
   const { t } = useLanguage();
@@ -19,6 +99,11 @@ const CV = () => {
   const variant = cvVariantFromPath(pathname);
   const jobs = variant === "growth" ? cvGrowthJobs : cvJobs;
   const projects = variant === "growth" ? cvGrowthProjects : cvProjects;
+  const closingProject =
+    variant === "growth" ? projects.find((project) => project.id === "fleetOptimizer") : undefined;
+  const listedProjects = closingProject
+    ? projects.filter((project) => project.id !== closingProject.id)
+    : projects;
   const leadership = variant === "growth" ? cvGrowthLeadership : cvLeadership;
   const roleKey: TranslationKey = variant === "growth" ? "cv.growth.role" : "cv.role";
   const summaryKey: TranslationKey = variant === "growth" ? "cv.growth.summary" : "cv.summary";
@@ -33,7 +118,8 @@ const CV = () => {
       />
 
       <div className="container px-6 py-12 max-w-3xl mx-auto">
-        <nav aria-label={t("cv.variant.group")} className="mb-8 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <nav aria-label={t("cv.variant.group")} className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-1">
+          <p className="text-sm text-muted-foreground">{t("cv.variant.group")}</p>
           <Link
             to="/cv"
             aria-current={variant === "analytics" ? "page" : undefined}
@@ -149,81 +235,8 @@ const CV = () => {
             {t("cv.selectedProjects")}
           </SectionEyebrow>
           <div className="space-y-6">
-            {projects.map((project) => (
-              <div key={project.id}>
-                <div className="flex items-baseline justify-between gap-2 mb-1">
-                  {project.href ? (
-                    <Link
-                      to={project.href}
-                      className="font-medium text-foreground text-sm hover:text-muted-foreground transition-colors link-underline"
-                    >
-                      {t(project.titleKey)}
-                    </Link>
-                  ) : project.externalHref ? (
-                    <a
-                      href={project.externalHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-foreground text-sm hover:text-muted-foreground transition-colors link-underline"
-                    >
-                      {t(project.titleKey)}
-                    </a>
-                  ) : (
-                    <p className="font-medium text-foreground text-sm">{t(project.titleKey)}</p>
-                  )}
-                  <span className="text-xs text-muted-foreground font-mono shrink-0">
-                    {t(project.typeKey)}
-                  </span>
-                </div>
-                <p
-                  className={
-                    project.impactKey
-                      ? "text-sm text-muted-foreground leading-relaxed mb-1"
-                      : "text-sm text-muted-foreground leading-relaxed mb-2"
-                  }
-                >
-                  {t(project.descriptionKey)}
-                </p>
-                {project.impactKey ? (
-                  <p className="text-sm text-foreground/70 mb-2">↳ {t(project.impactKey)}</p>
-                ) : null}
-                {project.bulletKeys && project.bulletKeys.length > 0 ? (
-                  <ul className="text-sm text-muted-foreground leading-relaxed space-y-0.5 mt-2 mb-2">
-                    {project.bulletKeys.map((bulletKey) => (
-                      <li key={bulletKey} className="flex items-start gap-2">
-                        <span className="text-foreground/40 mt-1">·</span>
-                        {t(bulletKey)}
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-                {project.waitlistKey && project.waitlistHref ? (
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                    {t("personalProjects.videoAnalysis.waitlistStatus")}{" "}
-                    <a
-                      href={project.waitlistHref}
-                      className="cursor-pointer font-medium text-foreground link-underline hover:text-muted-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
-                    >
-                      {t(project.waitlistKey)}
-                    </a>
-                  </p>
-                ) : null}
-                {project.technologies.length > 0 ? (
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.map((technology) => {
-                      const label = cvTechnologyLabel(technology, t);
-                      return (
-                        <span
-                          key={label}
-                          className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-                        >
-                          {label}
-                        </span>
-                      );
-                    })}
-                  </div>
-                ) : null}
-              </div>
+            {listedProjects.map((project) => (
+              <CvProjectEntry key={project.id} project={project} />
             ))}
           </div>
         </section>
@@ -274,6 +287,11 @@ const CV = () => {
               {t("cv.growth.skillsLabel")}
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{t("cv.growth.skills")}</p>
+          </section>
+        ) : null}
+        {closingProject ? (
+          <section className="mt-10">
+            <CvProjectEntry project={closingProject} />
           </section>
         ) : null}
       </div>
