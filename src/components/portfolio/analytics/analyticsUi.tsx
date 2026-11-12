@@ -1,14 +1,31 @@
-import katex from "katex";
-import { useMemo, type ReactNode } from "react";
-import "katex/dist/katex.min.css";
+import { useEffect, useState, type ReactNode } from "react";
 import type { TranslationKey } from "@/i18n/types";
 import { cn } from "@/lib/utils";
 
 export function Formula({ tex }: { tex: string }) {
-  const html = useMemo(
-    () => katex.renderToString(tex, { throwOnError: false, displayMode: true }),
-    [tex],
-  );
+  const [html, setHtml] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void Promise.all([import("katex"), import("katex/dist/katex.min.css")]).then(([katexModule]) => {
+      if (cancelled) {
+        return;
+      }
+      setHtml(katexModule.default.renderToString(tex, { throwOnError: false, displayMode: true }));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [tex]);
+
+  if (html === null) {
+    return (
+      <div className="overflow-x-auto text-foreground">
+        <code className="font-mono text-xs">{tex}</code>
+      </div>
+    );
+  }
+
   return (
     <div
       className="overflow-x-auto text-foreground [&_.katex]:text-[0.95em] [&_.katex-display]:my-1"

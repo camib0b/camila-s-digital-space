@@ -4,6 +4,10 @@ const en = {
     "hero.acfin": "Analytics products at ACFIN.",
     "hero.ava.after": " - field hockey video analysis app",
     "hero.cta.cv": "View CV",
+    "language.group": "Language",
+    "language.english": "English",
+    "language.spanish": "Spanish",
+    "route.loading": "Loading",
 
     // Dashboard
     "dashboard.label": "Life Dashboard",
@@ -304,7 +308,7 @@ const en = {
     "ava.concat.progress": "Joining…",
     "ava.concat.formats": "mp4 · mov · m4v · mkv · avi · mts",
     "ava.concat.reorder.role": "Sortable video file",
-    "ava.concat.reorder.item": "{name}, position {position} of {total}. Drag or use the arrow keys to reorder.",
+    "ava.concat.reorder.item": "Position {position} of {total}. Drag or use the arrow keys to reorder.",
     "ava.concat.reorder.moved": "{name} moved to position {position} of {total}.",
     "ava.events.kicker": "Tag",
     "ava.events.headline": "The keyboard already speaks hockey.",

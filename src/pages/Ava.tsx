@@ -616,7 +616,6 @@ function KeyboardTagCell({
       className={className}
       role="button"
       tabIndex={0}
-      aria-label={label}
       title={label}
       aria-keyshortcuts={shortcut}
       data-flash={isFlashing ? "" : undefined}
@@ -633,9 +632,7 @@ function KeyboardTagCell({
       {variant === "control" ? (
         <kbd className="ava-event-key ava-event-key--space" aria-hidden="true" />
       ) : (
-        <kbd className="ava-event-key" aria-hidden="true">
-          {shortcut}
-        </kbd>
+        <kbd className="ava-event-key">{shortcut}</kbd>
       )}
     </div>
   );

@@ -347,8 +347,8 @@ const AvaConcatGraphic = () => {
               ? { transform: `translate3d(${shift * activeDrag.slotStride}px, 0, 0)` }
               : undefined;
           const position = positionIndex + 1;
-          const label = fillReorderTemplate(t("ava.concat.reorder.item"), {
-            name: file.name,
+          const visiblePosition = String(position).padStart(2, "0");
+          const reorderHint = fillReorderTemplate(t("ava.concat.reorder.item"), {
             position,
             total: orderedFileIds.length,
           });
@@ -363,7 +363,6 @@ const AvaConcatGraphic = () => {
                 type="button"
                 className="ava-concat-file"
                 aria-roledescription={t("ava.concat.reorder.role")}
-                aria-label={label}
                 aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown Home End"
                 data-dragging={isDragging ? "true" : undefined}
                 onPointerDown={(event) => onFilePointerDown(event, index)}
@@ -374,12 +373,13 @@ const AvaConcatGraphic = () => {
                 onKeyDown={(event) => onFileKeyDown(event, index)}
               >
                 <span className="ava-concat-file-head">
-                  <span>{String(position).padStart(2, "0")}</span>
+                  <span>{visiblePosition}</span>
                   <DragHandle />
                 </span>
                 <span className="ava-concat-file-name">{file.name}</span>
                 <span className="ava-concat-file-rail" />
                 <span className="ava-concat-file-time">{file.duration}</span>
+                <span className="sr-only">. {reorderHint}</span>
               </button>
             </li>
           );

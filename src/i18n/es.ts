@@ -6,6 +6,10 @@ const es: Record<TranslationKey, string> = {
     "hero.acfin": "Productos de analytics en ACFIN.",
     "hero.ava.after": " - app de análisis de video de hockey",
     "hero.cta.cv": "CV",
+    "language.group": "Idioma",
+    "language.english": "Inglés",
+    "language.spanish": "Español",
+    "route.loading": "Cargando",
 
     // Dashboard
     "dashboard.label": "Dashboard de Vida",
@@ -306,7 +310,7 @@ const es: Record<TranslationKey, string> = {
     "ava.concat.progress": "Uniendo…",
     "ava.concat.formats": "mp4 · mov · m4v · mkv · avi · mts",
     "ava.concat.reorder.role": "Archivo de video ordenable",
-    "ava.concat.reorder.item": "{name}, posición {position} de {total}. Arrastra o usa las flechas para reordenar.",
+    "ava.concat.reorder.item": "Posición {position} de {total}. Arrastra o usa las flechas para reordenar.",
     "ava.concat.reorder.moved": "{name} se movió a la posición {position} de {total}.",
     "ava.events.kicker": "Etiquetar",
     "ava.events.headline": "El teclado ya habla hockey.",

@@ -3,6 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var path = location.pathname.replace(/\/+$/, "") || "/";
+        if (path === "/ava") document.documentElement.setAttribute("data-route", "ava");
+        var files = path === "/ava"
+          ? [
+              "/fonts/ibm-plex-sans-latin.woff2",
+              "/fonts/ibm-plex-mono-latin-400.woff2",
+              "/fonts/ibm-plex-mono-latin-500.woff2",
+            ]
+          : ["/fonts/roboto-latin.woff2"];
+        for (var index = 0; index < files.length; index += 1) {
+          var link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "font";
+          link.type = "font/woff2";
+          link.crossOrigin = "anonymous";
+          link.href = files[index];
+          link.setAttribute("fetchpriority", "high");
+          document.head.appendChild(link);
+        }
+      })();
+    </script>
     <title>Camila Escudero · Analytics products & video analysis</title>
     <meta name="description" content="Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA, a native field-hockey video product for import through export in one program. Santiago, Chile.">
     <meta name="author" content="Camila Escudero" />

@@ -1,13 +1,29 @@
+import { lazy, Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { formatPercent, formatPercentagePoints, formatSignedPercent, numberTone, sourceTag } from "@/lib/analyticsFormat";
 import { fetchPortfolioAnalytics } from "@/lib/portfolioApi";
 import { isUnavailable, type AnalyticsReport } from "@/types/portfolioAnalytics";
 import { useRegisterExposure } from "@/components/portfolio/TickerDetailsContext";
-import { ExposureSection } from "./ExposureSection";
-import { PerformanceSection } from "./PerformanceSection";
-import { RiskSection } from "./RiskSection";
 import { PortfolioKpiGrid, type PortfolioKpiCellModel } from "./analyticsUi";
+
+const AnalyticsReportSections = lazy(() => import("./AnalyticsReportSections"));
+
+function AnalyticsSectionsSkeleton() {
+  return (
+    <div className="flex h-full min-h-0 flex-col gap-6" aria-hidden="true">
+      {["performance", "risk", "exposure"].map((sectionId) => (
+        <section
+          key={sectionId}
+          className="flex min-h-[8rem] flex-1 flex-col border border-border bg-card px-4 py-5 md:px-5"
+        >
+          <div className="portfolio-skeleton-block mb-4 h-3 w-36 bg-foreground/10" />
+          <div className="portfolio-skeleton-block min-h-[6rem] w-full flex-1 bg-foreground/10" />
+        </section>
+      ))}
+    </div>
+  );
+}
 
 function benchmarkDetail(performance: AnalyticsReport["performance"]): string {
   if (isUnavailable(performance)) {
@@ -163,21 +179,34 @@ export default function PortfolioAnalytics({
   const errorMessage =
     analytics.error instanceof Error ? analytics.error.message : t("portfolio.analytics.error");
 
+  const reserveAnalyticsSections = analytics.isLoading || (analyticsReady && report !== undefined);
+
   return (
-    <div className={analyticsReady ? "mb-16 space-y-6" : "mb-16"} aria-busy={analytics.isLoading}>
+    <div className="mb-16" aria-busy={analytics.isLoading}>
       <PortfolioKpiGrid primary={primary} technical={technical} />
       {analytics.isLoading ? (
-        <div className="mt-6 border border-border bg-card px-4 py-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-            {t("portfolio.analytics.loading")}
-          </p>
-          <div
-            className="portfolio-sync-track mt-3 h-px w-full max-w-sm overflow-hidden bg-border"
-            role="progressbar"
-            aria-valuetext={t("portfolio.analytics.loading")}
-          >
-            <div className="portfolio-sync-bar h-full w-1/3 bg-foreground/70" />
-          </div>
+        <p className="sr-only" role="status">
+          {t("portfolio.analytics.loading")}
+        </p>
+      ) : null}
+      {reserveAnalyticsSections ? (
+        <div className="capital-analytics-sections relative mt-6">
+          {analytics.isLoading ? (
+            <div className="absolute inset-0">
+              <AnalyticsSectionsSkeleton />
+            </div>
+          ) : null}
+          {analyticsReady && report !== undefined ? (
+            <Suspense
+              fallback={
+                <div className="absolute inset-0">
+                  <AnalyticsSectionsSkeleton />
+                </div>
+              }
+            >
+              <AnalyticsReportSections report={report} />
+            </Suspense>
+          ) : null}
         </div>
       ) : null}
       {!analytics.isLoading && !analyticsReady ? (
@@ -187,14 +216,6 @@ export default function PortfolioAnalytics({
           </p>
           <p className="mt-2 text-sm text-number-negative">{errorMessage}</p>
         </div>
-      ) : null}
-      {analyticsReady && report !== undefined ? (
-        <>
-          <PerformanceSection report={report} />
-          <RiskSection report={report} />
-          <ExposureSection report={report} />
-          <p className="text-[11px] tracking-wide text-muted-foreground">{t("portfolio.analytics.disclaimer")}</p>
-        </>
       ) : null}
     </div>
   );
