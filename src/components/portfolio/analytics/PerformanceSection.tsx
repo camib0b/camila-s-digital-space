@@ -180,12 +180,12 @@ export function PerformanceSection({ report }: { report: AnalyticsReport }) {
         </dt>
         <dd
           className={`mt-1 text-right font-mono text-sm tabular-nums ${
-            performance.simpleReturn === null ? "" : numberTone(performance.simpleReturn)
+            performance.netInvestedReturn === null ? "" : numberTone(performance.netInvestedReturn)
           }`}
         >
-          {performance.simpleReturn === null
+          {performance.netInvestedReturn === null
             ? t("portfolio.analytics.unavailable")
-            : formatSignedPercent(performance.simpleReturn)}
+            : formatSignedPercent(performance.netInvestedReturn)}
         </dd>
       </dl>
       <p className="mt-3 text-xs leading-relaxed text-muted-foreground">

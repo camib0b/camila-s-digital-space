@@ -57,20 +57,20 @@ const Capital = () => {
     );
   }
 
-  const totalReturnPercent = parseFloat(portfolio.totalReturnPct);
-  const totalReturnLabel = `${totalReturnPercent >= 0 ? "+" : ""}${totalReturnPercent}%`;
+  const openCostBasisGainPercent = parseFloat(portfolio.openCostBasisGainPercent);
+  const openCostBasisGainLabel = `${openCostBasisGainPercent >= 0 ? "+" : ""}${openCostBasisGainPercent}%`;
   const weightsByTicker = Object.fromEntries(
-    holdingsWithMetrics.map((holding) => [holding.ticker, holding.allocation]),
+    holdingsWithMetrics.map((holding) => [holding.ticker, holding.weightPercent]),
   );
   const summaryStats = [
     {
       label: t("portfolio.stats.return"),
-      value: totalReturnLabel,
-      className: numberTone(totalReturnPercent),
+      value: openCostBasisGainLabel,
+      className: numberTone(openCostBasisGainPercent),
     },
     {
       label: t("portfolio.stats.holdings"),
-      value: portfolio.count.toString(),
+      value: portfolio.holdingsCount.toString(),
       className: "text-foreground",
     },
   ];

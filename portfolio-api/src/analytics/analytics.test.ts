@@ -8,15 +8,18 @@ import { parseFredDgs3moText } from "../marketData";
 import { holdingsSharpeRatio, riskContributions } from "./risk";
 import { periodicRiskFreeRate } from "./statistics";
 
-function listing(ticker: string, kind: InstrumentListing["kind"] = "stock"): InstrumentListing {
+function listing(
+  ticker: string,
+  instrumentKind: InstrumentListing["instrumentKind"] = "stock",
+): InstrumentListing {
   return {
     ticker,
     name: ticker,
     exchange: "TEST",
     currency: "USD",
-    distributionPolicy: kind === "stock" ? "none" : "distributing",
+    distributionPolicy: instrumentKind === "stock" ? "none" : "distributing",
     isin: null,
-    kind,
+    instrumentKind,
     identificationNote: "Synthetic listing for tests.",
   };
 }
@@ -64,7 +67,7 @@ describe("time-weighted return", () => {
           price: 10,
           quantity: 10,
           transactionType: "BUY",
-          totalAmount: 100,
+          grossNotional: 100,
         }),
       ],
       prices,
@@ -79,7 +82,7 @@ describe("time-weighted return", () => {
           price: 10,
           quantity: 10,
           transactionType: "BUY",
-          totalAmount: 100,
+          grossNotional: 100,
         }),
         trade({
           transactionId: 2,
@@ -88,7 +91,7 @@ describe("time-weighted return", () => {
           price: 11,
           quantity: 5,
           transactionType: "BUY",
-          totalAmount: 55,
+          grossNotional: 55,
         }),
       ],
       prices,
@@ -119,7 +122,7 @@ describe("time-weighted return", () => {
           price: 10,
           quantity: 4,
           transactionType: "BUY",
-          totalAmount: 40,
+          grossNotional: 40,
         }),
       ],
       prices,
@@ -134,7 +137,7 @@ describe("time-weighted return", () => {
           price: 10,
           quantity: 40,
           transactionType: "BUY",
-          totalAmount: 400,
+          grossNotional: 400,
         }),
       ],
       prices,
@@ -159,7 +162,7 @@ describe("time-weighted return", () => {
           price: 10,
           quantity: 10,
           transactionType: "BUY",
-          totalAmount: 100,
+          grossNotional: 100,
         }),
         trade({
           transactionId: 2,
@@ -168,7 +171,7 @@ describe("time-weighted return", () => {
           price: 0,
           quantity: 0,
           transactionType: "FEE",
-          totalAmount: 10,
+          grossNotional: 10,
         }),
       ],
       prices: closes("TEST", [
@@ -196,7 +199,7 @@ describe("time-weighted return", () => {
           price: 100,
           quantity: 1,
           transactionType: "BUY",
-          totalAmount: 100,
+          grossNotional: 100,
         }),
         trade({
           transactionId: 2,
@@ -205,7 +208,7 @@ describe("time-weighted return", () => {
           price: 195,
           quantity: 1,
           transactionType: "SELL",
-          totalAmount: 195,
+          grossNotional: 195,
         }),
         trade({
           transactionId: 3,
@@ -214,7 +217,7 @@ describe("time-weighted return", () => {
           price: 11,
           quantity: 1,
           transactionType: "BUY",
-          totalAmount: 11,
+          grossNotional: 11,
         }),
       ],
       [],
@@ -242,7 +245,7 @@ describe("VOO benchmark and counterfactual", () => {
           price: 100,
           quantity: 1,
           transactionType: "BUY",
-          totalAmount: 100,
+          grossNotional: 100,
         }),
       ],
       prices: closes("VOO", dates),
@@ -268,7 +271,7 @@ describe("VOO benchmark and counterfactual", () => {
           price: 100,
           quantity: 2,
           transactionType: "BUY",
-          totalAmount: 200,
+          grossNotional: 200,
         }),
       ],
       prices: closes("VOO", dates),
@@ -295,7 +298,7 @@ describe("splits", () => {
           price: 100,
           quantity: 10,
           transactionType: "BUY",
-          totalAmount: 1000,
+          grossNotional: 1000,
         }),
       ],
       splits: [{ ticker: "SPLIT", exDate: "2024-01-08", shareMultiplier: 2 }],
@@ -326,7 +329,7 @@ describe("missing data", () => {
           price: 10,
           quantity: 1,
           transactionType: "BUY",
-          totalAmount: 10,
+          grossNotional: 10,
         }),
       ],
       prices: [
@@ -369,14 +372,14 @@ describe("risk contribution and Sharpe", () => {
     const result = riskContributions(["A", "B", "C"], weights, weeklyReturns);
     expect(result.weightsSum).toBeCloseTo(1, 12);
     expect(Math.abs(result.componentContributionSum - result.annualizedVolatility)).toBeLessThan(1e-9);
-    expect(Math.abs(result.percentContributionSum - 1)).toBeLessThan(1e-9);
+    expect(Math.abs(result.varianceShareSum - 1)).toBeLessThan(1e-9);
     expect(result.annualizedVolatility).toBeCloseTo(0.04404089009091, 8);
     expect(result.contributions[0]?.componentContribution).toBeCloseTo(0.04649088598739, 8);
     expect(result.contributions[1]?.componentContribution).toBeCloseTo(-0.01230901552809, 8);
     expect(result.contributions[2]?.componentContribution).toBeCloseTo(0.00985901963161, 8);
-    expect(result.contributions[0]?.percentContribution).toBeCloseTo(1.05563002681, 8);
-    expect(result.contributions[1]?.percentContribution).toBeCloseTo(-0.279490616622, 8);
-    expect(result.contributions[2]?.percentContribution).toBeCloseTo(0.223860589812, 8);
+    expect(result.contributions[0]?.varianceShare).toBeCloseTo(1.05563002681, 8);
+    expect(result.contributions[1]?.varianceShare).toBeCloseTo(-0.279490616622, 8);
+    expect(result.contributions[2]?.varianceShare).toBeCloseTo(0.223860589812, 8);
 
     const weeklyRiskFree = weeklyReturns.map(() => periodicRiskFreeRate(0.04, 52));
     const portfolioReturns = weeklyReturns.map(

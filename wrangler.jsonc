@@ -14,12 +14,6 @@
 	},
 	"d1_databases": [
 		{
-			"binding": "portfolio_holdings",
-			"database_name": "portfolio-holdings",
-			"database_id": "d483ec9f-1675-43db-ade5-f5d0cc05ab02",
-			"remote": true
-		},
-		{
 			"binding": "AVA_INTEREST",
 			"database_name": "ava-interest",
 			"database_id": "f6286d54-7d63-44da-847f-92b3feff7cdf"

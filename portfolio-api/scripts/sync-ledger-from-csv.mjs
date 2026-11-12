@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Sync portfolio-api/data/ledger.json and ledger-seed.sql from camila-stock-portfolio.csv.
+ * Sync portfolio-api/data/ledger.json and ledger-seed.sql from portfolio-transactions.csv.
  * Reuses transaction_id when a row matches ticker, date, price, quantity, and type.
  */
 import { readFileSync, writeFileSync } from "node:fs";
@@ -8,7 +8,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const dataDir = join(dirname(fileURLToPath(import.meta.url)), "..", "data");
-const csvPath = join(dataDir, "camila-stock-portfolio.csv");
+const csvPath = join(dataDir, "portfolio-transactions.csv");
 const ledgerPath = join(dataDir, "ledger.json");
 const seedPath = join(dataDir, "ledger-seed.sql");
 
@@ -27,8 +27,8 @@ function parseCsv() {
     const price = parseFloat(priceRaw);
     const quantity = parseFloat(quantityRaw);
     const tradeDate = parseCsvDate(tradeDateRaw);
-    const totalAmount = price * quantity;
-    return { ticker, tradeDate, price, quantity, transactionType, totalAmount };
+    const grossNotional = price * quantity;
+    return { ticker, tradeDate, price, quantity, transactionType, grossNotional };
   });
 }
 
@@ -70,7 +70,7 @@ const ledger = csvRows.map((row) => {
     price: row.price,
     quantity: row.quantity,
     transactionType: row.transactionType,
-    totalAmount: prior?.totalAmount ?? row.totalAmount,
+    grossNotional: prior?.grossNotional ?? prior?.totalAmount ?? row.grossNotional,
   };
 });
 
@@ -89,13 +89,13 @@ const seedLines = [
   price REAL NOT NULL,
   quantity REAL NOT NULL,
   transaction_type TEXT NOT NULL CHECK (transaction_type IN ('BUY', 'SELL', 'DIVIDEND', 'DEPOSIT', 'WITHDRAWAL', 'FEE')),
-  total_amount REAL NOT NULL
+  gross_notional REAL NOT NULL
 );`,
   "DELETE FROM transactions;",
   "",
   ...ledger.map(
     (row) =>
-      `INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES (${row.transactionId}, '${row.ticker}', '${row.tradeDate}', ${row.price}, ${row.quantity}, '${row.transactionType}', ${row.totalAmount});`,
+      `INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, gross_notional) VALUES (${row.transactionId}, '${row.ticker}', '${row.tradeDate}', ${row.price}, ${row.quantity}, '${row.transactionType}', ${row.grossNotional});`,
   ),
   "",
 ];

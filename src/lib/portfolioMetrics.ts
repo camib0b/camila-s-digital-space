@@ -1,8 +1,11 @@
 import type { HoldingWithMetrics, PortfolioResponse } from "@/types/portfolio";
 
-function allocationPercent(holding: PortfolioResponse["stocks"][number], totalValue: number | undefined): string {
-  if (typeof holding.allocation === "string" && holding.allocation.length > 0) {
-    return holding.allocation;
+function weightPercent(
+  holding: PortfolioResponse["holdings"][number],
+  totalValue: number | undefined,
+): string {
+  if (typeof holding.weightPercent === "string" && holding.weightPercent.length > 0) {
+    return holding.weightPercent;
   }
   if (
     totalValue !== undefined &&
@@ -15,7 +18,7 @@ function allocationPercent(holding: PortfolioResponse["stocks"][number], totalVa
   return "";
 }
 
-function gainPercent(holding: PortfolioResponse["stocks"][number]): string {
+function gainPercent(holding: PortfolioResponse["holdings"][number]): string {
   if (typeof holding.gainPercent === "string" && holding.gainPercent.length > 0) {
     return holding.gainPercent;
   }
@@ -35,12 +38,12 @@ function gainPercent(holding: PortfolioResponse["stocks"][number]): string {
  * Dollar fields on the quote payload are used only to derive percents, then dropped.
  */
 export function buildHoldingsWithMetrics(portfolio: PortfolioResponse): HoldingWithMetrics[] {
-  return portfolio.stocks.map((holding) => ({
+  return portfolio.holdings.map((holding) => ({
     ticker: holding.ticker,
     currentPrice: holding.currentPrice,
-    changePercent: holding.changePercent,
+    previousCloseChangePercent: holding.previousCloseChangePercent,
     stale: holding.stale,
-    allocation: allocationPercent(holding, portfolio.totalValue),
+    weightPercent: weightPercent(holding, portfolio.totalValue),
     gainPercent: gainPercent(holding),
   }));
 }

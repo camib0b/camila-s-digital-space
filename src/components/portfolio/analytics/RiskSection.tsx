@@ -26,7 +26,7 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
         <>
           <p className="mb-3 text-xs text-muted-foreground">{t("portfolio.analytics.exAnte")}</p>
           <p className="mb-3 text-xs text-muted-foreground">
-            {t("portfolio.analytics.cashExcluded")} {formatSignedPercent(risk.cashWeightOfPortfolio)}
+            {t("portfolio.analytics.cashExcluded")} {formatSignedPercent(risk.cashWeight)}
           </p>
           <div className="h-[280px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -34,8 +34,8 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                 layout="vertical"
                 data={risk.contributions.map((row) => ({
                   ticker: row.ticker,
-                  capital: row.weight * 100,
-                  risk: row.percentContribution * 100,
+                  investedWeight: row.weight * 100,
+                  risk: row.varianceShare * 100,
                 }))}
                 margin={{ top: 4, right: 12, left: 8, bottom: 0 }}
               >
@@ -70,7 +70,7 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                         </p>
                         {payload.map((entry) => (
                           <p key={String(entry.dataKey)}>
-                            {entry.dataKey === "capital" ? t("portfolio.analytics.capital") : t("portfolio.analytics.riskShare")}
+                            {entry.dataKey === "investedWeight" ? t("portfolio.analytics.investedWeight") : t("portfolio.analytics.riskShare")}
                             {": "}
                             {Number(entry.value).toFixed(2)}%
                           </p>
@@ -79,7 +79,7 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
                     );
                   }}
                 />
-                <Bar dataKey="capital" fill="hsl(var(--foreground))" barSize={7} isAnimationActive={false} />
+                <Bar dataKey="investedWeight" fill="hsl(var(--foreground))" barSize={7} isAnimationActive={false} />
                 <Bar
                   dataKey="risk"
                   fill="hsl(var(--foreground) / 0.08)"
@@ -94,8 +94,8 @@ export function RiskSection({ report }: { report: AnalyticsReport }) {
           <SeriesLegend
             items={[
               {
-                itemKey: "capital",
-                label: t("portfolio.analytics.capital"),
+                itemKey: "investedWeight",
+                label: t("portfolio.analytics.investedWeight"),
                 swatchClassName: "h-2 w-3 bg-foreground",
                 labelClassName: "text-foreground",
               },

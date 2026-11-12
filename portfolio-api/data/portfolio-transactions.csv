@@ -1,4 +1,4 @@
-Symbol;Trade Date;Purchase Price;Quantity;Transaction Type
+Symbol;Trade Date;Price;Quantity;Transaction Type
 VOO;20260925;709.02;0.042312;BUY
 VOO;20260909;701.2;0.121221;BUY
 VOO;20260909;701.46;0.121177;BUY

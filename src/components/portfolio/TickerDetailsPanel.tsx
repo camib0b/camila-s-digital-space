@@ -83,11 +83,11 @@ const TickerDetailsPanel = () => {
 
   const weight = details.weightsByTicker[ticker] ?? "";
   const rows = details.exposure?.topExposures ?? [];
-  const contributions = instrument.kind === "stock" ? stockContributions(instrument.isin, rows) : [];
-  const constituents = instrument.kind === "stock" ? [] : fundConstituents(ticker, rows);
+  const contributions = instrument.instrumentKind === "stock" ? stockContributions(instrument.isin, rows) : [];
+  const constituents = instrument.instrumentKind === "stock" ? [] : fundConstituents(ticker, rows);
   const fields = [
     { label: t("portfolio.ticker.role"), value: t(ROLE_LABEL_KEY[instrument.role]) },
-    { label: t("portfolio.ticker.type"), value: t(KIND_LABEL_KEY[instrument.kind]) },
+    { label: t("portfolio.ticker.type"), value: t(KIND_LABEL_KEY[instrument.instrumentKind]) },
     { label: t("portfolio.ticker.exchange"), value: instrument.exchange },
     { label: t("portfolio.ticker.issuer"), value: instrument.issuer },
     { label: t("portfolio.ticker.isin"), value: instrument.isin },

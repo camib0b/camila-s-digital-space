@@ -68,7 +68,7 @@ describe("live ledger", () => {
             calendarDayCount: report.performance.calendarDayCount,
             twr: report.performance.timeWeightedReturn,
             annualizationLabel: report.performance.annualizationLabel,
-            simpleReturn: report.performance.simpleReturn,
+            netInvestedReturn: report.performance.netInvestedReturn,
             netInvested: report.performance.netInvested,
             portfolioValue: report.performance.portfolioValue,
             benchmark: report.performance.benchmark,
@@ -87,13 +87,13 @@ describe("live ledger", () => {
             volatility: report.risk.portfolioVolatility,
             weightsSum: report.risk.weightsSum,
             cash: report.risk.cashMarketValue,
-            cashWeight: report.risk.cashWeightOfPortfolio,
+            cashWeight: report.risk.cashWeight,
             componentSum: report.risk.contributions.reduce((total, row) => total + row.componentContribution, 0),
-            percentSum: report.risk.contributions.reduce((total, row) => total + row.percentContribution, 0),
+            varianceShareSum: report.risk.contributions.reduce((total, row) => total + row.varianceShare, 0),
             contributions: report.risk.contributions.map((row) => ({
               ticker: row.ticker,
               weight: row.weight,
-              percentContribution: row.percentContribution,
+              varianceShare: row.varianceShare,
               componentContribution: row.componentContribution,
             })),
           }
@@ -101,8 +101,8 @@ describe("live ledger", () => {
       sharpe: report.sharpe,
       exposure: report.exposure.status === "ok"
         ? {
-            apparent: report.exposure.apparentCompany,
-            effective: report.exposure.effectiveCompany,
+            largestDirectStock: report.exposure.largestDirectStock,
+            largestLookThroughCompany: report.exposure.largestLookThroughCompany,
             bondWeight: report.exposure.bondWeight,
             cashWeight: report.exposure.cashWeight,
             unattributedWeight: report.exposure.unattributedWeight,

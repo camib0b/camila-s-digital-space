@@ -4,20 +4,9 @@ export const AI_MODELS = {
 
 export type AiModelKey = keyof typeof AI_MODELS;
 
-export interface Holding {
-  ticker: string;
-  shares: number;
-  totalCost: number;
-  currentPrice: number;
-  changePercent: number;
-  currentValue: number;
-  /** True when `currentPrice` is the latest trade fill, not a live quote. */
-  stale: boolean;
-}
-
 export interface PublicHoldingForInsight {
   ticker: string;
-  allocation: string;
+  weightPercent: string;
   gainPercent: string;
 }
 
@@ -41,7 +30,7 @@ export function buildAiPrompt(holdings: readonly PublicHoldingForInsight[], lang
   const holdingsSummary = holdings
     .map(
       (holding) =>
-        `${holding.ticker} weight ${holding.allocation}% return ${holding.gainPercent}%`,
+        `${holding.ticker} weight ${holding.weightPercent}% return ${holding.gainPercent}%`,
     )
     .join(" | ");
 

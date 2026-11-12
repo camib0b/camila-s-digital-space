@@ -9,7 +9,7 @@ export interface LedgerTransaction {
   price: number;
   quantity: number;
   transactionType: TransactionType;
-  totalAmount: number;
+  grossNotional: number;
 }
 
 export interface SplitEvent {
@@ -44,7 +44,7 @@ function compareTransactions(left: LedgerTransaction, right: LedgerTransaction):
 function sumAmounts(transactions: readonly LedgerTransaction[]): number {
   let total = 0;
   for (const transaction of transactions) {
-    total += transaction.totalAmount;
+    total += transaction.grossNotional;
   }
   return total;
 }
@@ -104,7 +104,7 @@ export function buildLedger(
     for (const sale of sells) {
       const currentShares = shares.get(sale.ticker) ?? 0;
       shares.set(sale.ticker, currentShares - sale.quantity);
-      cash += sale.totalAmount;
+      cash += sale.grossNotional;
     }
     cash += sumAmounts(dividends);
     cash += sumAmounts(deposits);
@@ -161,7 +161,7 @@ export function buildLedger(
     dividendRecordCount: sorted.filter((transaction) => transaction.transactionType === "DIVIDEND").length,
     feeTotal: sorted
       .filter((transaction) => transaction.transactionType === "FEE")
-      .reduce((total, transaction) => total + transaction.totalAmount, 0),
+      .reduce((total, transaction) => total + transaction.grossNotional, 0),
     warnings,
   };
 }

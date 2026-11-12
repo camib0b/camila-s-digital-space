@@ -85,12 +85,12 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
         <Concentration
           label={t("portfolio.analytics.apparent")}
           value={
-            exposure.apparentCompany === null ? (
+            exposure.largestDirectStock === null ? (
               t("portfolio.analytics.unavailable")
             ) : (
               <span className="inline-flex items-baseline justify-end gap-2">
-                <TickerLabel ticker={exposure.apparentCompany.ticker} className="font-mono text-sm" />
-                <span>{formatPercent(exposure.apparentCompany.weight)}</span>
+                <TickerLabel ticker={exposure.largestDirectStock.ticker} className="font-mono text-sm" />
+                <span>{formatPercent(exposure.largestDirectStock.weight)}</span>
               </span>
             )
           }
@@ -98,16 +98,16 @@ export function ExposureSection({ report }: { report: AnalyticsReport }) {
         <Concentration
           label={t("portfolio.analytics.effective")}
           value={
-            exposure.effectiveCompany === null ? (
+            exposure.largestLookThroughCompany === null ? (
               t("portfolio.analytics.unavailable")
             ) : (
               <span className="inline-flex items-baseline justify-end gap-2">
                 <TickerLabel
-                  isin={exposure.effectiveCompany.isin}
-                  name={exposure.effectiveCompany.name}
+                  isin={exposure.largestLookThroughCompany.isin}
+                  name={exposure.largestLookThroughCompany.name}
                   className="font-mono text-sm"
                 />
-                <span>{formatPercent(exposure.effectiveCompany.weight)}</span>
+                <span>{formatPercent(exposure.largestLookThroughCompany.weight)}</span>
               </span>
             )
           }

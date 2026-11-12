@@ -37,13 +37,14 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
             <tr className="border-b border-border text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
               <th className="pb-2 pr-2 text-left font-medium">{t("portfolio.holdings.ticker")}</th>
               <th className="px-2 pb-2 text-right font-medium">{t("portfolio.holdings.weight")}</th>
-              <th className="pb-2 pl-2 text-right font-medium">{t("portfolio.holdings.return")}</th>
+              <th className="pb-2 pl-2 text-right font-medium">{t("portfolio.holdings.gain")}</th>
             </tr>
           </thead>
           <tbody>
             {holdings.map((holding) => {
               const gainPercent = parseFloat(holding.gainPercent);
               const showLastTradePrice = holding.stale === true && Number.isFinite(holding.currentPrice);
+              const dayChangeUnavailable = holding.previousCloseChangePercent === null;
               return (
                 <tr
                   key={holding.ticker}
@@ -59,9 +60,15 @@ const HoldingsTable = ({ holdings }: HoldingsTableProps) => {
                         </span>
                       </p>
                     ) : null}
+                    {dayChangeUnavailable ? (
+                      <p className="mt-1 max-w-full break-words font-mono text-[10px] uppercase leading-4 tracking-[0.12em] text-muted-foreground transition-colors duration-hover ease-hover group-hover:text-foreground group-active:text-foreground">
+                        {t("portfolio.holdings.dayChange")}{" "}
+                        <span className="normal-case tracking-normal">{t("portfolio.analytics.unavailable")}</span>
+                      </p>
+                    ) : null}
                   </td>
                   <td className="whitespace-nowrap px-2 py-2 text-right align-top font-mono text-xs tabular-nums">
-                    {formatPercentCell(holding.allocation, false)}
+                    {formatPercentCell(holding.weightPercent, false)}
                   </td>
                   <td
                     className={`whitespace-nowrap py-2 pl-2 text-right align-top font-mono text-xs tabular-nums ${Number.isFinite(gainPercent) ? numberTone(gainPercent) : ""}`}

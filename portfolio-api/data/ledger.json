@@ -6,7 +6,7 @@
     "price": 639.73,
     "quantity": 0.070264,
     "transactionType": "BUY",
-    "totalAmount": 44.94998872
+    "grossNotional": 44.94998872
   },
   {
     "transactionId": 44,
@@ -15,7 +15,7 @@
     "price": 625.62,
     "quantity": 0.008727,
     "transactionType": "BUY",
-    "totalAmount": 5.45978574
+    "grossNotional": 5.45978574
   },
   {
     "transactionId": 45,
@@ -24,7 +24,7 @@
     "price": 194.24,
     "quantity": 0.169891,
     "transactionType": "BUY",
-    "totalAmount": 32.99962784
+    "grossNotional": 32.99962784
   },
   {
     "transactionId": 1,
@@ -33,7 +33,7 @@
     "price": 617.26,
     "quantity": 0.072903,
     "transactionType": "BUY",
-    "totalAmount": 45.00000078
+    "grossNotional": 45.00000078
   },
   {
     "transactionId": 46,
@@ -42,7 +42,7 @@
     "price": 212.17,
     "quantity": 0.073102,
     "transactionType": "BUY",
-    "totalAmount": 15.510051339999999
+    "grossNotional": 15.510051339999999
   },
   {
     "transactionId": 47,
@@ -51,7 +51,7 @@
     "price": 207.07,
     "quantity": 0.025064,
     "transactionType": "BUY",
-    "totalAmount": 5.1900024799999995
+    "grossNotional": 5.1900024799999995
   },
   {
     "transactionId": 2,
@@ -60,7 +60,7 @@
     "price": 605.7,
     "quantity": 0.165098,
     "transactionType": "BUY",
-    "totalAmount": 99.9998586
+    "grossNotional": 99.9998586
   },
   {
     "transactionId": 3,
@@ -69,7 +69,7 @@
     "price": 624.32,
     "quantity": 0.088096,
     "transactionType": "BUY",
-    "totalAmount": 54.99999872
+    "grossNotional": 54.99999872
   },
   {
     "transactionId": 4,
@@ -78,7 +78,7 @@
     "price": 37.8,
     "quantity": 0.290227,
     "transactionType": "BUY",
-    "totalAmount": 10.9705806
+    "grossNotional": 10.9705806
   },
   {
     "transactionId": 5,
@@ -87,7 +87,7 @@
     "price": 37.62,
     "quantity": 1.329151,
     "transactionType": "BUY",
-    "totalAmount": 50.00266162
+    "grossNotional": 50.00266162
   },
   {
     "transactionId": 6,
@@ -96,7 +96,7 @@
     "price": 38.08,
     "quantity": 0.889408,
     "transactionType": "BUY",
-    "totalAmount": 33.86865664
+    "grossNotional": 33.86865664
   },
   {
     "transactionId": 7,
@@ -105,7 +105,7 @@
     "price": 651.37,
     "quantity": 0.3,
     "transactionType": "SELL",
-    "totalAmount": 195.411
+    "grossNotional": 195.411
   },
   {
     "transactionId": 8,
@@ -114,7 +114,7 @@
     "price": 201.41,
     "quantity": 0.05536,
     "transactionType": "BUY",
-    "totalAmount": 11.1500576
+    "grossNotional": 11.1500576
   },
   {
     "transactionId": 9,
@@ -123,7 +123,7 @@
     "price": 207.59,
     "quantity": 0.167924,
     "transactionType": "BUY",
-    "totalAmount": 34.85933716
+    "grossNotional": 34.85933716
   },
   {
     "transactionId": 10,
@@ -132,7 +132,7 @@
     "price": 388.99,
     "quantity": 0.077124,
     "transactionType": "BUY",
-    "totalAmount": 30.00035676
+    "grossNotional": 30.00035676
   },
   {
     "transactionId": 11,
@@ -141,7 +141,7 @@
     "price": 36.46,
     "quantity": 0.960009,
     "transactionType": "BUY",
-    "totalAmount": 35.00192814
+    "grossNotional": 35.00192814
   },
   {
     "transactionId": 13,
@@ -150,7 +150,7 @@
     "price": 242.84,
     "quantity": 0.12354,
     "transactionType": "BUY",
-    "totalAmount": 30.0004536
+    "grossNotional": 30.0004536
   },
   {
     "transactionId": 14,
@@ -159,7 +159,7 @@
     "price": 391.42,
     "quantity": 0.081856,
     "transactionType": "BUY",
-    "totalAmount": 32.04007552
+    "grossNotional": 32.04007552
   },
   {
     "transactionId": 12,
@@ -168,7 +168,7 @@
     "price": 36.76,
     "quantity": 0.647222,
     "transactionType": "BUY",
-    "totalAmount": 23.79188072
+    "grossNotional": 23.79188072
   },
   {
     "transactionId": 15,
@@ -177,7 +177,7 @@
     "price": 1664.37,
     "quantity": 0.021029,
     "transactionType": "BUY",
-    "totalAmount": 35.00003673
+    "grossNotional": 35.00003673
   },
   {
     "transactionId": 16,
@@ -186,7 +186,7 @@
     "price": 72.89,
     "quantity": 0.754582,
     "transactionType": "BUY",
-    "totalAmount": 55.00149398
+    "grossNotional": 55.00149398
   },
   {
     "transactionId": 17,
@@ -195,7 +195,7 @@
     "price": 558.21,
     "quantity": 0.049623,
     "transactionType": "BUY",
-    "totalAmount": 27.700054830000003
+    "grossNotional": 27.700054830000003
   },
   {
     "transactionId": 18,
@@ -204,7 +204,7 @@
     "price": 554.5,
     "quantity": 0.036068,
     "transactionType": "BUY",
-    "totalAmount": 19.999706000000003
+    "grossNotional": 19.999706000000003
   },
   {
     "transactionId": 19,
@@ -213,7 +213,7 @@
     "price": 109.42,
     "quantity": 0.365571,
     "transactionType": "BUY",
-    "totalAmount": 40.00077882
+    "grossNotional": 40.00077882
   },
   {
     "transactionId": 20,
@@ -222,7 +222,7 @@
     "price": 251.72,
     "quantity": 0.054387,
     "transactionType": "BUY",
-    "totalAmount": 13.69029564
+    "grossNotional": 13.69029564
   },
   {
     "transactionId": 21,
@@ -231,7 +231,7 @@
     "price": 1806.7,
     "quantity": 0.009409,
     "transactionType": "BUY",
-    "totalAmount": 16.9992103
+    "grossNotional": 16.9992103
   },
   {
     "transactionId": 22,
@@ -240,7 +240,7 @@
     "price": 239.63,
     "quantity": 0.070944,
     "transactionType": "SELL",
-    "totalAmount": 17.00031072
+    "grossNotional": 17.00031072
   },
   {
     "transactionId": 23,
@@ -249,7 +249,7 @@
     "price": 695.22,
     "quantity": 0.100688,
     "transactionType": "BUY",
-    "totalAmount": 70.00019136
+    "grossNotional": 70.00019136
   },
   {
     "transactionId": 24,
@@ -258,7 +258,7 @@
     "price": 411.4,
     "quantity": 0.048614,
     "transactionType": "BUY",
-    "totalAmount": 20.0006996
+    "grossNotional": 20.0006996
   },
   {
     "transactionId": 25,
@@ -267,7 +267,7 @@
     "price": 1908.95,
     "quantity": 0.011404,
     "transactionType": "BUY",
-    "totalAmount": 21.7696658
+    "grossNotional": 21.7696658
   },
   {
     "transactionId": 26,
@@ -276,7 +276,7 @@
     "price": 688.15,
     "quantity": 0.000494,
     "transactionType": "BUY",
-    "totalAmount": 0.3399461
+    "grossNotional": 0.3399461
   },
   {
     "transactionId": 27,
@@ -285,7 +285,7 @@
     "price": 701.46,
     "quantity": 0.121177,
     "transactionType": "BUY",
-    "totalAmount": 85.00081842000002
+    "grossNotional": 85.00081842000002
   },
   {
     "transactionId": 28,
@@ -294,7 +294,7 @@
     "price": 71.75,
     "quantity": 0.696884,
     "transactionType": "BUY",
-    "totalAmount": 50.001427
+    "grossNotional": 50.001427
   },
   {
     "transactionId": 29,
@@ -303,7 +303,7 @@
     "price": 128.94,
     "quantity": 0.232663,
     "transactionType": "BUY",
-    "totalAmount": 29.99956722
+    "grossNotional": 29.99956722
   },
   {
     "transactionId": 30,
@@ -312,7 +312,7 @@
     "price": 368.19,
     "quantity": 0.108641,
     "transactionType": "BUY",
-    "totalAmount": 40.00052979
+    "grossNotional": 40.00052979
   },
   {
     "transactionId": 31,
@@ -321,7 +321,7 @@
     "price": 36.31,
     "quantity": 4.116017,
     "transactionType": "SELL",
-    "totalAmount": 149.45257727
+    "grossNotional": 149.45257727
   },
   {
     "transactionId": 32,
@@ -330,7 +330,7 @@
     "price": 87.55,
     "quantity": 1.450633,
     "transactionType": "BUY",
-    "totalAmount": 127.00291915
+    "grossNotional": 127.00291915
   },
   {
     "transactionId": 33,
@@ -339,7 +339,7 @@
     "price": 701.2,
     "quantity": 0.121221,
     "transactionType": "BUY",
-    "totalAmount": 85.0001652
+    "grossNotional": 85.0001652
   },
   {
     "transactionId": 34,
@@ -348,7 +348,7 @@
     "price": 71.75,
     "quantity": 0.491164,
     "transactionType": "BUY",
-    "totalAmount": 35.241017
+    "grossNotional": 35.241017
   },
   {
     "transactionId": 35,
@@ -357,7 +357,7 @@
     "price": 1745.11,
     "quantity": 0.041842,
     "transactionType": "SELL",
-    "totalAmount": 73.01889261999999
+    "grossNotional": 73.01889261999999
   },
   {
     "transactionId": 36,
@@ -366,7 +366,7 @@
     "price": 348.4,
     "quantity": 0.057406,
     "transactionType": "BUY",
-    "totalAmount": 20.0002504
+    "grossNotional": 20.0002504
   },
   {
     "transactionId": 37,
@@ -375,7 +375,7 @@
     "price": 709.02,
     "quantity": 0.042312,
     "transactionType": "BUY",
-    "totalAmount": 30.00005424
+    "grossNotional": 30.00005424
   },
   {
     "transactionId": 38,
@@ -384,7 +384,7 @@
     "price": 80.73,
     "quantity": 0.284645,
     "transactionType": "BUY",
-    "totalAmount": 22.979390849999998
+    "grossNotional": 22.979390849999998
   },
   {
     "transactionId": 39,
@@ -393,7 +393,7 @@
     "price": 572.63,
     "quantity": 0.085691,
     "transactionType": "SELL",
-    "totalAmount": 49.06923733
+    "grossNotional": 49.06923733
   },
   {
     "transactionId": 40,
@@ -402,7 +402,7 @@
     "price": 80.9,
     "quantity": 0.605439,
     "transactionType": "BUY",
-    "totalAmount": 48.9800151
+    "grossNotional": 48.9800151
   },
   {
     "transactionId": 41,
@@ -411,7 +411,7 @@
     "price": 80.57,
     "quantity": 0.434394,
     "transactionType": "BUY",
-    "totalAmount": 34.99912458
+    "grossNotional": 34.99912458
   },
   {
     "transactionId": 42,
@@ -420,7 +420,7 @@
     "price": 370.97,
     "quantity": 0.044101,
     "transactionType": "BUY",
-    "totalAmount": 16.360147970000003
+    "grossNotional": 16.360147970000003
   },
   {
     "transactionId": 48,
@@ -429,7 +429,7 @@
     "price": 81.92,
     "quantity": 0.488257409,
     "transactionType": "BUY",
-    "totalAmount": 39.99804694528
+    "grossNotional": 39.99804694528
   },
   {
     "transactionId": 49,
@@ -438,7 +438,7 @@
     "price": 714.65,
     "quantity": 0.069964122,
     "transactionType": "BUY",
-    "totalAmount": 49.9998597873
+    "grossNotional": 49.9998597873
   },
   {
     "transactionId": 50,
@@ -447,7 +447,7 @@
     "price": 84.87,
     "quantity": 0.329924117,
     "transactionType": "BUY",
-    "totalAmount": 28.00065980979
+    "grossNotional": 28.00065980979
   },
   {
     "transactionId": 51,
@@ -456,7 +456,7 @@
     "price": 345.89,
     "quantity": 0.041574151,
     "transactionType": "BUY",
-    "totalAmount": 14.38008308939
+    "grossNotional": 14.38008308939
   },
   {
     "transactionId": 52,
@@ -465,6 +465,6 @@
     "price": 690.32,
     "quantity": 0.118988295,
     "transactionType": "BUY",
-    "totalAmount": 82.1399998044
+    "grossNotional": 82.1399998044
   }
 ]

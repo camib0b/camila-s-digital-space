@@ -127,7 +127,7 @@ const TickerLabel = ({ ticker, isin, name, className }: TickerLabelProps) => {
 
   const line1 = instrument?.name ?? name ?? label;
   const line2 = instrument
-    ? [t(KIND_LABEL_KEY[instrument.kind]), instrument.exchange, instrument.issuer].filter((part) => part.length > 0).join(" · ")
+    ? [t(KIND_LABEL_KEY[instrument.instrumentKind]), instrument.exchange, instrument.issuer].filter((part) => part.length > 0).join(" · ")
     : "";
   const heldVia = instrument ? [] : heldViaSources(identityIsin, details?.exposure);
   const line3 = instrument

@@ -1,4 +1,5 @@
--- Synced from portfolio-api/data/camila-stock-portfolio.csv (single source of truth)
+-- Synced from portfolio-api/data/portfolio-transactions.csv (single source of truth)
+-- purchases was a frozen pre-ledger snapshot. Drop it. Do not recreate it.
 
 DROP TABLE IF EXISTS purchases;
 DROP TABLE IF EXISTS transactions;
@@ -9,11 +10,11 @@ CREATE TABLE transactions (
   trade_date       TEXT NOT NULL,
   price            REAL NOT NULL,
   quantity         REAL NOT NULL,
-  transaction_type TEXT NOT NULL CHECK (transaction_type IN ('BUY', 'SELL')),
-  total_amount     REAL NOT NULL
+  transaction_type TEXT NOT NULL CHECK (transaction_type IN ('BUY', 'SELL', 'DIVIDEND', 'DEPOSIT', 'WITHDRAWAL', 'FEE')),
+  gross_notional   REAL NOT NULL
 );
 
-INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, total_amount) VALUES
+INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, transaction_type, gross_notional) VALUES
 (1, 'VOO', '2026-03-12', 617.26, 0.072903, 'BUY', 45.00000078),
 (2, 'VOO', '2026-04-06', 605.7, 0.165098, 'BUY', 99.9998586),
 (3, 'VOO', '2026-04-10', 624.32, 0.088096, 'BUY', 54.99999872),
@@ -60,7 +61,12 @@ INSERT INTO transactions (transaction_id, ticker, trade_date, price, quantity, t
 (44, 'VOO', '2026-02-17', 625.62, 0.008727, 'BUY', 5.45978574),
 (45, 'NET', '2026-03-06', 194.24, 0.169891, 'BUY', 32.99962784),
 (46, 'NET', '2026-03-12', 212.17, 0.073102, 'BUY', 15.510051339999999),
-(47, 'NET', '2026-04-01', 207.07, 0.025064, 'BUY', 5.1900024799999995);
+(47, 'NET', '2026-04-01', 207.07, 0.025064, 'BUY', 5.1900024799999995),
+(48, 'ROBO', '2026-10-07', 81.92, 0.488257409, 'BUY', 39.99804694528),
+(49, 'VOO', '2026-10-07', 714.65, 0.069964122, 'BUY', 49.9998597873),
+(50, 'VXUS', '2026-10-07', 84.87, 0.329924117, 'BUY', 28.00065980979),
+(51, 'NET', '2026-10-07', 345.89, 0.041574151, 'BUY', 14.38008308939),
+(52, 'VOO', '2026-11-09', 690.32, 0.118988295, 'BUY', 82.1399998044);
 
 CREATE TABLE IF NOT EXISTS ai_usage (
   id                  INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -22,7 +22,7 @@ export interface ExposurePosition {
   /** Weight of total portfolio value, including cash in the denominator. */
   weight: number;
   isin: string | null;
-  assetClass: "stock" | "equity-fund" | "bond-fund";
+  instrumentKind: "stock" | "equity-fund" | "bond-fund";
   name: string;
 }
 
@@ -41,8 +41,8 @@ export interface LookThroughRow {
 export interface ExposureComputation {
   rows: LookThroughRow[];
   overlap: { fundA: string; fundB: string; overlap: number }[];
-  apparentCompany: { ticker: string; name: string; isin: string; weight: number } | null;
-  effectiveCompany: { name: string; isin: string; weight: number } | null;
+  largestDirectStock: { ticker: string; name: string; isin: string; weight: number } | null;
+  largestLookThroughCompany: { name: string; isin: string; weight: number } | null;
   bondWeight: number;
   unattributedWeight: number;
   snapshotCoverage: { fundTicker: string; asOf: string; source: string; coverage: number }[];
@@ -116,11 +116,11 @@ export function computeLookThrough(
   };
 
   for (const position of positions) {
-    if (position.assetClass === "bond-fund") {
+    if (position.instrumentKind === "bond-fund") {
       bondWeight += position.weight;
       continue;
     }
-    if (position.assetClass === "stock") {
+    if (position.instrumentKind === "stock") {
       if (position.isin === null) {
         unattributedWeight += position.weight;
         continue;
@@ -171,18 +171,18 @@ export function computeLookThrough(
 
   const rows = [...rowsByIsin.values()].sort((left, right) => right.weight - left.weight);
   const apparent = positions
-    .filter((position) => position.assetClass === "stock" && position.isin !== null)
+    .filter((position) => position.instrumentKind === "stock" && position.isin !== null)
     .sort((left, right) => right.weight - left.weight)[0];
   const effective = rows[0];
 
   return {
     rows,
     overlap,
-    apparentCompany:
+    largestDirectStock:
       apparent === undefined || apparent.isin === null
         ? null
         : { ticker: apparent.ticker, name: apparent.name, isin: apparent.isin, weight: apparent.weight },
-    effectiveCompany:
+    largestLookThroughCompany:
       effective === undefined
         ? null
         : { name: effective.name, isin: effective.isin, weight: effective.weight },
