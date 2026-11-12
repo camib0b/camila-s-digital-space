@@ -57,7 +57,7 @@ const es: Record<TranslationKey, string> = {
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Práctica de verano 2024",
-    "experience.finapsys.description": "UI de producción para un producto de health tech.",
+    "experience.finapsys.description": "UI de producción para un producto de health tech, construida con componentes reutilizables.",
     "experience.a3.title": "Reporting de activos hoteleros",
     "experience.a3.company": "A3 Property Investments",
     "experience.a3.period": "Práctica de verano 2023",

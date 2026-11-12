@@ -7,6 +7,7 @@ const interfaceInput = { x: 64, y: 16, width: 64, height: 12 };
 const interfaceButton = { x: 64, y: 36, width: 30, height: 12 };
 const interfaceReuse = { x: 102, y: 36, width: 30, height: 12 };
 const interfaceButtonLabelWidth = 16;
+const interfaceReuseShift = interfaceButton.x - interfaceReuse.x;
 
 const interfacePieceStyle = (delay: string): CSSProperties => ({ animationDelay: delay });
 
@@ -49,6 +50,7 @@ const InterfaceDiagram = () => {
         viewBox="0 0 200 60"
         aria-hidden="true"
         className="experience-interface pointer-events-none h-full w-full overflow-hidden fill-none stroke-muted-foreground"
+        style={{ "--experience-reuse-shift": `${interfaceReuseShift}px` } as CSSProperties}
       >
         <g className="experience-interface-card">
           <rect
