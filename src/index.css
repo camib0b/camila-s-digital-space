@@ -1,5 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
 @import "@camib0b/ui/ui.css";
+
+/* /ava sets data-route before CSS, so the document does not request Roboto. */
+html[data-route="ava"] body {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+/* Self-hosted Roboto latin variable, weights 100–900.
+   Apache 2.0 — public/fonts/Roboto-Apache-2.0.txt */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/roboto-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* Fraunces variable axes SOFT, WONK, opsz, and wght, subset to the footer wordmark.
    SIL Open Font License 1.1 — src/assets/fonts/Fraunces-OFL.txt */
@@ -196,6 +211,31 @@
   opacity: 1;
   transition: opacity var(--duration-settle) var(--ease-out-strong);
 }
+
+/* Holds the performance, risk, and exposure stack so the holdings table
+   below it does not move when those sections replace the skeleton.
+   Each value is the loaded stack at that viewport, plus 8px, measured
+   with the live analytics report. Narrower viewports wrap more, so the
+   reserved height steps down as the viewport grows. Content that is
+   taller than the reservation still grows the box. */
+.capital-analytics-sections { min-height: 3280px; }
+@media (min-width: 336px) { .capital-analytics-sections { min-height: 3222px; } }
+@media (min-width: 360px) { .capital-analytics-sections { min-height: 3149px; } }
+@media (min-width: 368px) { .capital-analytics-sections { min-height: 3082px; } }
+@media (min-width: 376px) { .capital-analytics-sections { min-height: 3065px; } }
+@media (min-width: 392px) { .capital-analytics-sections { min-height: 3026px; } }
+@media (min-width: 408px) { .capital-analytics-sections { min-height: 2992px; } }
+@media (min-width: 432px) { .capital-analytics-sections { min-height: 2925px; } }
+@media (min-width: 448px) { .capital-analytics-sections { min-height: 2888px; } }
+@media (min-width: 512px) { .capital-analytics-sections { min-height: 2849px; } }
+@media (min-width: 528px) { .capital-analytics-sections { min-height: 2799px; } }
+@media (min-width: 576px) { .capital-analytics-sections { min-height: 2764px; } }
+@media (min-width: 640px) { .capital-analytics-sections { min-height: 2726px; } }
+@media (min-width: 672px) { .capital-analytics-sections { min-height: 2687px; } }
+@media (min-width: 752px) { .capital-analytics-sections { min-height: 2655px; } }
+@media (min-width: 768px) { .capital-analytics-sections { min-height: 2617px; } }
+@media (min-width: 784px) { .capital-analytics-sections { min-height: 2585px; } }
+@media (min-width: 816px) { .capital-analytics-sections { min-height: 2549px; } }
 
 @starting-style {
   .portfolio-kpi-value {

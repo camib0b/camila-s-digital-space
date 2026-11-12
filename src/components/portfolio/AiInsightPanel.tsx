@@ -1,5 +1,7 @@
-import AiInsightContent from "@/components/AiInsightContent";
+import { lazy, Suspense } from "react";
 import type { AiModelOption } from "@/types/portfolio";
+
+const AiInsightContent = lazy(() => import("@/components/AiInsightContent"));
 
 interface AiInsightPanelProps {
   label: string;
@@ -76,7 +78,9 @@ const AiInsightPanel = ({
       {error && <p className="mb-3 text-sm text-number-negative">{error}</p>}
       {aiInsight ? (
         <div className="space-y-3">
-          <AiInsightContent content={aiInsight} />
+          <Suspense fallback={<p className="text-sm leading-relaxed text-muted-foreground">{placeholder}</p>}>
+            <AiInsightContent content={aiInsight} />
+          </Suspense>
           {provider && (
             <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
               {viaLabel} {provider}

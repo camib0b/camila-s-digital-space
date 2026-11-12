@@ -185,7 +185,7 @@ const CV = () => {
               </span>
             </div>
             <p className="text-sm text-muted-foreground mt-1">{t("cv.education.details")}</p>
-            <p className="text-xs text-muted-foreground/70 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               {t("cv.education.courseworkLabel")}: {t("cv.education.coursework")}
             </p>
           </div>
