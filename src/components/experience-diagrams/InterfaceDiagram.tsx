@@ -1,48 +1,91 @@
 import type { CSSProperties } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import ExperienceDiagramControl from "@/components/experience-diagrams/ExperienceDiagramControl";
 
-const interfaceCardWidth = 68;
-const interfaceCardHeight = 14;
+const interfaceCard = { x: 56, y: 4, width: 88, height: 52 };
+const interfaceInput = { x: 64, y: 16, width: 64, height: 12 };
+const interfaceButton = { x: 64, y: 36, width: 30, height: 12 };
+const interfaceReuse = { x: 102, y: 36, width: 30, height: 12 };
+const interfaceButtonLabelWidth = 16;
 
-const interfaceCards = [
-  { x: 10, y: 20, delay: "var(--duration-instant)" },
-  { x: 90, y: 20, delay: "var(--duration-instant)" },
-  { x: 10, y: 40, delay: "var(--duration-diagram-delay-70)" },
-  { x: 90, y: 40, delay: "var(--duration-diagram-delay-70)" },
-];
+const interfacePieceStyle = (delay: string): CSSProperties => ({ animationDelay: delay });
 
-function InterfaceCard({ x, y, delay }: { x: number; y: number; delay: string }) {
-  const cardStyle = { animationDelay: delay } as CSSProperties;
+function InterfaceButton({ x, y }: { x: number; y: number }) {
+  const labelInset = (interfaceButton.width - interfaceButtonLabelWidth) / 2;
 
   return (
-    <g className="experience-interface-card" style={cardStyle}>
+    <g>
       <rect
         x={x}
         y={y}
-        width={interfaceCardWidth}
-        height={interfaceCardHeight}
-        rx="1"
-        className="fill-background stroke-muted-foreground"
+        width={interfaceButton.width}
+        height={interfaceButton.height}
+        rx="6"
+        className="fill-background stroke-foreground"
       />
-      <line x1={x + 5} y1={y + 4} x2={x + 16} y2={y + 4} className="stroke-foreground" />
+      <line
+        x1={x + labelInset}
+        y1={y + interfaceButton.height / 2}
+        x2={x + labelInset + interfaceButtonLabelWidth}
+        y2={y + interfaceButton.height / 2}
+        strokeLinecap="butt"
+        className="stroke-foreground"
+      />
     </g>
   );
 }
 
 const InterfaceDiagram = () => {
+  const { t } = useLanguage();
+
   return (
-    <svg
-      viewBox="0 0 168 60"
-      width={168}
+    <ExperienceDiagramControl
+      label={t("experience.diagram.interface")}
+      width={200}
       height={60}
-      aria-hidden="true"
-      className="experience-interface pointer-events-none h-[60px] w-[168px] max-w-full shrink-0 overflow-hidden fill-none stroke-muted-foreground"
+      diagram="interface"
     >
-      <rect x="2" y="2" width="164" height="56" rx="2" className="fill-background" />
-      <line x1="2" y1="16" x2="166" y2="16" />
-      {interfaceCards.map((card) => (
-        <InterfaceCard key={`${card.x}-${card.y}`} x={card.x} y={card.y} delay={card.delay} />
-      ))}
-    </svg>
+      <svg
+        viewBox="0 0 200 60"
+        aria-hidden="true"
+        className="experience-interface pointer-events-none h-full w-full overflow-hidden fill-none stroke-muted-foreground"
+      >
+        <g className="experience-interface-card">
+          <rect
+            x={interfaceCard.x}
+            y={interfaceCard.y}
+            width={interfaceCard.width}
+            height={interfaceCard.height}
+            rx="1"
+            className="fill-background"
+          />
+        </g>
+        <g className="experience-interface-input" style={interfacePieceStyle("var(--duration-diagram-delay-70)")}>
+          <rect
+            x={interfaceInput.x}
+            y={interfaceInput.y}
+            width={interfaceInput.width}
+            height={interfaceInput.height}
+            rx="1"
+            className="fill-background"
+          />
+          <line
+            x1={interfaceInput.x + 6}
+            y1={interfaceInput.y + 3}
+            x2={interfaceInput.x + 6}
+            y2={interfaceInput.y + interfaceInput.height - 3}
+            strokeLinecap="butt"
+            className="stroke-foreground"
+          />
+        </g>
+        <g className="experience-interface-button" style={interfacePieceStyle("var(--duration-diagram-delay-210)")}>
+          <InterfaceButton x={interfaceButton.x} y={interfaceButton.y} />
+        </g>
+        <g className="experience-interface-reuse">
+          <InterfaceButton x={interfaceReuse.x} y={interfaceReuse.y} />
+        </g>
+      </svg>
+    </ExperienceDiagramControl>
   );
 };
 

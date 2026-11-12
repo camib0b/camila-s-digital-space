@@ -1,48 +1,53 @@
+import { useLanguage } from "@/contexts/LanguageContext";
+import ExperienceDiagramControl from "@/components/experience-diagrams/ExperienceDiagramControl";
+
 const packageBarcodeOffsets = [3, 5, 7, 8, 10, 12];
 
 const CommerceDiagram = () => {
+  const { t } = useLanguage();
+
   return (
-    <svg
-      viewBox="0 0 200 60"
-      width={200}
-      height={60}
-      aria-hidden="true"
-      className="experience-commerce pointer-events-none h-[60px] w-[200px] max-w-full shrink-0 overflow-hidden fill-none stroke-muted-foreground"
-    >
-      <g>
-        <rect x="8" y="10" width="46" height="30" rx="1.5" className="fill-background" />
-        <line x1="14" y1="16" x2="32" y2="16" />
-        <line x1="14" y1="21" x2="26" y2="21" />
-        <line x1="31" y1="40" x2="31" y2="50" />
-        <line x1="22" y1="50" x2="40" y2="50" />
+    <ExperienceDiagramControl label={t("experience.diagram.commerce")} width={200} height={60} diagram="commerce">
+      <svg
+        viewBox="0 0 200 60"
+        aria-hidden="true"
+        className="experience-commerce pointer-events-none h-full w-full overflow-hidden fill-none stroke-muted-foreground"
+      >
+        <g>
+          <rect x="8" y="10" width="46" height="30" rx="1.5" className="fill-background" />
+          <line x1="14" y1="16" x2="32" y2="16" />
+          <line x1="14" y1="21" x2="26" y2="21" />
+          <line x1="31" y1="40" x2="31" y2="50" />
+          <line x1="22" y1="50" x2="40" y2="50" />
 
-        <line x1="78" y1="12" x2="78" y2="50" />
-        <line x1="122" y1="12" x2="122" y2="50" />
-        <line x1="74" y1="28" x2="126" y2="28" />
-        <line x1="74" y1="44" x2="126" y2="44" />
+          <line x1="78" y1="12" x2="78" y2="50" />
+          <line x1="122" y1="12" x2="122" y2="50" />
+          <line x1="74" y1="28" x2="126" y2="28" />
+          <line x1="74" y1="44" x2="126" y2="44" />
 
-        <rect x="140" y="22" width="34" height="18" rx="1" className="fill-background" />
-        <rect x="174" y="26" width="18" height="14" className="fill-background" />
-        <rect x="178" y="29" width="6" height="5" className="fill-background" />
-        <circle cx="152" cy="46.5" r="3.5" className="fill-background" />
-        <circle cx="184" cy="46.5" r="3.5" className="fill-background" />
-      </g>
+          <rect x="140" y="22" width="34" height="18" rx="1" className="fill-background" />
+          <rect x="174" y="26" width="18" height="14" className="fill-background" />
+          <rect x="178" y="29" width="6" height="5" className="fill-background" />
+          <circle cx="152" cy="46.5" r="3.5" className="fill-background" />
+          <circle cx="184" cy="46.5" r="3.5" className="fill-background" />
+        </g>
 
-      <g className="experience-commerce-package">
-        <rect width="16" height="12" rx="1" className="fill-background stroke-foreground" />
-        {packageBarcodeOffsets.map((offset) => (
-          <line
-            key={offset}
-            x1={offset}
-            y1="3"
-            x2={offset}
-            y2="9"
-            strokeLinecap="butt"
-            className="stroke-foreground"
-          />
-        ))}
-      </g>
-    </svg>
+        <g className="experience-commerce-package">
+          <rect width="16" height="12" rx="1" className="fill-background stroke-foreground" />
+          {packageBarcodeOffsets.map((offset) => (
+            <line
+              key={offset}
+              x1={offset}
+              y1="3"
+              x2={offset}
+              y2="9"
+              strokeLinecap="butt"
+              className="stroke-foreground"
+            />
+          ))}
+        </g>
+      </svg>
+    </ExperienceDiagramControl>
   );
 };
 
