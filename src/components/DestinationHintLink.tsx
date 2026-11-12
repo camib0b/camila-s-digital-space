@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -12,6 +13,8 @@ type DestinationHintLinkProps = {
   destination: string;
   target: DestinationHintTarget;
   className?: string;
+  media?: ReactNode;
+  leading?: ReactNode;
 };
 
 const destinationHintLinkClassName =
@@ -29,22 +32,38 @@ const externalLinkIconClassName =
  * Internal routes stay in the same tab, with no icon. The destination hint
  * uses `.hockey-destination-hint` on `.hockey-role-link`.
  */
-const DestinationHintLink = ({ title, destination, target, className }: DestinationHintLinkProps) => {
+const DestinationHintLink = ({
+  title,
+  destination,
+  target,
+  className,
+  media,
+  leading,
+}: DestinationHintLinkProps) => {
   const { t } = useLanguage();
   const accessibleName =
     target.kind === "external"
       ? `${title}. ${destination}. ${t("social.openInNewTab")}`
       : `${title}. ${destination}`;
-  const linkClassName = cn(destinationHintLinkClassName, className);
+  const framed = media !== undefined;
+  const linkClassName = cn(
+    destinationHintLinkClassName,
+    framed && "w-full cursor-pointer flex-col flex-nowrap items-stretch gap-3",
+    className,
+  );
 
   const content = (
     <>
-      <span className={destinationHintTitleClassName}>{title}</span>
-      {target.kind === "external" ? (
-        <ExternalLink className={externalLinkIconClassName} aria-hidden="true" />
-      ) : null}
-      <span className="hockey-destination-hint text-xs font-normal text-muted-foreground" aria-hidden="true">
-        {destination}
+      {media}
+      <span className={cn("inline-flex min-w-0 max-w-full flex-wrap items-baseline", framed && "gap-2.5")}>
+        {leading}
+        <span className={destinationHintTitleClassName}>{title}</span>
+        {target.kind === "external" ? (
+          <ExternalLink className={externalLinkIconClassName} aria-hidden="true" />
+        ) : null}
+        <span className="hockey-destination-hint text-xs font-normal text-muted-foreground" aria-hidden="true">
+          {destination}
+        </span>
       </span>
     </>
   );

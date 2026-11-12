@@ -9,6 +9,7 @@ import {
   replayExperienceOnPointerUp,
   useExperienceDiagramMotion,
 } from "@/components/experience-diagrams/experienceDiagramMotion";
+import SectionEyebrow from "@/components/SectionEyebrow";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { experienceRoles, type ExperienceDiagramId, type ExperienceRole } from "@/content/experience";
 
@@ -64,9 +65,9 @@ const Experience = () => {
     <section id="experience" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="mx-auto max-w-2xl">
-          <h2 className="mb-8 text-sm font-medium uppercase tracking-wider text-foreground">
+          <SectionEyebrow as="h2" className="mb-8" enterOnView>
             {t("experience.label")}
-          </h2>
+          </SectionEyebrow>
           <div className="space-y-8">
             {experienceRoles.map((role, index) => (
               <ExperienceRoleRow

@@ -9,7 +9,9 @@ import {
   type RefObject,
 } from "react";
 import { Link } from "react-router-dom";
+import AvaCapabilityList from "@/components/ava/AvaCapabilityList";
 import AvaFooter from "@/components/ava/AvaFooter";
+import AvaJourney from "@/components/ava/AvaJourney";
 import { renderWithCarpetaLinks } from "@/components/ava/avaCarpetaLink";
 import LanguageToggle from "@/components/LanguageToggle";
 import AvaClipBar from "@/components/ava/AvaClipBar";
@@ -725,9 +727,13 @@ const Ava = () => {
           <AvaStage caption={t("ava.stage.caption")} />
         </section>
 
+        <AvaCapabilityList />
+
         <AvaTimeline language={language} />
 
         <AvaSession />
+
+        <AvaJourney />
 
         <section className="ava-section" id="un-partido">
           <div className="ava-shell">

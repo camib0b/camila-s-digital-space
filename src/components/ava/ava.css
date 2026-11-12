@@ -84,7 +84,7 @@
   font-family: var(--ava-mono);
   font-size: 0.6875rem;
   font-weight: 400;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ava-muted);
 }
@@ -496,6 +496,18 @@ button.ava-cta:disabled {
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.035em;
+}
+
+.ava-section h2.ava-kicker {
+  max-width: none;
+  margin: 0 0 1.5rem;
+  font-family: var(--ava-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ava-muted);
 }
 
 .ava-section-body {
@@ -2078,5 +2090,169 @@ body:has(.ava-root) .site-footer-wordmark {
   .ava-clip-window[data-nudge="play"]:not([data-dragging]) .ava-clip-handle[data-handle="lead"],
   .ava-clip-window[data-nudge="play"]:not([data-dragging]) .ava-clip-handle[data-handle="lag"] {
     animation: none;
+  }
+}
+
+.ava-capability-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ava-capability-list li {
+  margin: 0;
+  font-size: clamp(1.85rem, 4.5vw, 3.15rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--ava-faint);
+  overflow-wrap: anywhere;
+  transition: color var(--duration-enter) var(--ease-hero);
+}
+
+.ava-capability-list li[data-active="true"] {
+  color: var(--ava-fg);
+}
+
+.ava-capability-list[data-reduced="true"] li {
+  color: var(--ava-fg);
+  transition: none;
+}
+
+.ava-journey[data-unwrapped="false"] {
+  height: calc(100svh * 3);
+  padding: 0;
+}
+
+.ava-journey[data-unwrapped="true"] {
+  height: auto;
+}
+
+.ava-journey-sticky {
+  min-width: 0;
+}
+
+.ava-journey-copy,
+.ava-journey-stage,
+.ava-journey-panel {
+  min-width: 0;
+}
+
+.ava-journey-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.9rem 0;
+  border: 0;
+  border-top: 1px solid var(--ava-rule);
+  background: transparent;
+  color: var(--ava-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--duration-enter) var(--ease-hero);
+}
+
+.ava-journey-tab:last-child {
+  border-bottom: 1px solid var(--ava-rule);
+}
+
+.ava-journey-tab[aria-selected="true"] {
+  color: var(--ava-fg);
+}
+
+.ava-journey-tab:focus-visible {
+  outline: 1px solid var(--ava-fg);
+  outline-offset: 4px;
+}
+
+.ava-journey-tab .ava-kicker {
+  color: inherit;
+}
+
+.ava-journey-tab-title {
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+.ava-journey-panel p,
+.ava-journey-stack p {
+  margin: 0.85rem 0 0;
+  max-width: 40rem;
+  color: var(--ava-muted);
+  overflow-wrap: anywhere;
+}
+
+.ava-journey-frame {
+  margin-top: 1.25rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 100%);
+}
+
+.ava-journey-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ava-journey-stack {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+}
+
+.ava-journey-stack h3 {
+  margin: 0.45rem 0 0;
+  max-width: 100%;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .ava-journey[data-unwrapped="false"] .ava-journey-sticky {
+    position: sticky;
+    top: 3.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+    width: min(100%, var(--ava-max));
+    height: calc(100svh - 3.5rem);
+    margin-inline: auto;
+    padding-inline: var(--ava-pad);
+  }
+}
+
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .ava-journey,
+  .ava-journey[data-unwrapped="false"] {
+    height: auto;
+    padding: clamp(3.5rem, 9vh, 6.5rem) 0;
+  }
+
+  .ava-journey-sticky {
+    position: static;
+    display: block;
+    height: auto;
+  }
+
+  .ava-capability-list li,
+  .ava-journey-tab {
+    transition: none;
   }
 }

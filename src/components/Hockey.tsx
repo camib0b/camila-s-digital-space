@@ -2,6 +2,7 @@ import { useState, type MouseEvent } from "react";
 import CurtainReveal from "@/components/CurtainReveal";
 import DestinationHintLink from "@/components/DestinationHintLink";
 import PdfOverlay from "@/components/PdfOverlay";
+import SectionEyebrow from "@/components/SectionEyebrow";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { hockeyRoles, type HockeyRole } from "@/content/hockey";
 
@@ -57,9 +58,9 @@ const Hockey = () => {
     <section id="hockey" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-sm font-medium text-foreground uppercase tracking-wider mb-8">
+          <SectionEyebrow as="h2" className="mb-8" enterOnView>
             {t("hockey.label")}
-          </h2>
+          </SectionEyebrow>
 
           <CurtainReveal className="space-y-6">
             {hockeyRoles.map((role) => (

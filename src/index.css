@@ -645,6 +645,47 @@ button.theme-toggle:active {
   }
 }
 
+/* Scroll-tied enter where the browser can drive it. The class-based
+   IntersectionObserver path stays for every other browser. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .curtain-reveal-item:not([data-curtain]) {
+      animation-name: curtain-fall;
+      animation-duration: var(--duration-scroll-driven);
+      animation-timing-function: var(--ease-hero);
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 22%;
+    }
+
+    .curtain-reveal-item:not([data-curtain]):focus-within {
+      animation: none;
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+    }
+
+    .scroll-fade-up {
+      animation-name: fadeUp;
+      animation-duration: var(--duration-scroll-driven);
+      animation-timing-function: var(--ease-hero);
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+}
+
+@media print {
+  .scroll-fade-up,
+  .curtain-reveal-item:not([data-curtain]) {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
+
 /* Experience diagrams. The finished frame is the default, so no-JS and
    reduced motion show the result at once. `ready` holds the start frame.
    `play` runs from that frame. Replaying removes `play`, commits the start
@@ -671,6 +712,13 @@ button.theme-toggle:active {
 .experience-hotel-mark {
   stroke-dasharray: 1;
   stroke-dashoffset: 0;
+}
+
+.experience-analytics-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translate(0, 0);
+  opacity: 1;
 }
 
 .experience-analytics-lid {
@@ -721,6 +769,12 @@ button.theme-toggle:active {
   stroke-dashoffset: 1;
 }
 
+[data-experience-motion="ready"] .experience-analytics-dot {
+  animation: none;
+  transform: translate(var(--dot-from-x), var(--dot-from-y));
+  opacity: 0.85;
+}
+
 [data-experience-motion="ready"] .experience-interface-card {
   animation: none;
   transform: translate(52px, 0);
@@ -769,6 +823,11 @@ button.theme-toggle:active {
 [data-experience-motion="play"] .experience-analytics-line {
   animation: experience-stroke-draw var(--duration-diagram-redraw) var(--ease-out-strong) both;
   animation-delay: calc(var(--duration-diagram-analytics) - var(--duration-diagram-redraw));
+}
+
+[data-experience-motion="play"] .experience-analytics-dot {
+  animation: experience-dot-tighten var(--duration-diagram-analytics) var(--ease-hero) both;
+  animation-delay: var(--duration-diagram-delay-210);
 }
 
 [data-experience-motion="play"] .experience-interface-card {
@@ -830,6 +889,19 @@ button.theme-toggle:active {
 
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes experience-dot-tighten {
+  0%,
+  22% {
+    opacity: 0.55;
+    transform: translate(var(--dot-from-x), var(--dot-from-y));
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
   }
 }
 
@@ -935,6 +1007,14 @@ button.theme-toggle:active {
     stroke-dashoffset: 0;
   }
 
+  [data-experience-motion="ready"] .experience-analytics-dot,
+  [data-experience-motion="play"] .experience-analytics-dot,
+  .experience-analytics-dot {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+
   [data-experience-motion="ready"] .experience-interface-card,
   [data-experience-motion="play"] .experience-interface-card,
   .experience-interface-card,
@@ -961,5 +1041,148 @@ button.theme-toggle:active {
   .experience-commerce-package {
     animation: none;
     transform: translate(148px, 26px);
+  }
+}
+
+/* Quiet interval between the hero and the first section of body copy.
+   Nothing readable sits on this band. */
+.section-atmosphere {
+  position: relative;
+  height: 6.5rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.section-atmosphere-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, hsl(var(--foreground) / 0.2) 0.55px, transparent 0.75px);
+  background-size: 12px 12px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent);
+}
+
+.section-atmosphere-wash {
+  position: absolute;
+  inset: -30% 8% auto;
+  height: 160%;
+  background: radial-gradient(ellipse at center, hsl(var(--foreground) / 0.06), transparent 68%);
+  animation: section-atmosphere-rise var(--duration-hero) var(--ease-hero) both;
+}
+
+@keyframes section-atmosphere-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-frame {
+  flex: none;
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+}
+
+.project-frame-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(1);
+  transition: transform var(--duration-hero) var(--ease-hero);
+}
+
+.group:hover .project-frame-image,
+.group:focus-visible .project-frame-image {
+  transform: scale(1.025);
+}
+
+.editorial-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+button.editorial-stat {
+  cursor: pointer;
+}
+
+button.editorial-stat:focus-visible {
+  outline: 1px solid hsl(var(--ring));
+  outline-offset: 4px;
+}
+
+.editorial-stat-value {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+.editorial-stat-rule {
+  display: block;
+  width: 6.5rem;
+  height: 2px;
+  background: hsl(var(--foreground));
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+[data-editorial-motion="ready"] .editorial-stat-rule {
+  transform: scaleX(0);
+}
+
+[data-editorial-motion="play"] .editorial-stat-rule {
+  animation: editorial-rule-draw var(--duration-contribution) var(--ease-out-strong) both;
+}
+
+@keyframes editorial-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .section-atmosphere-wash {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .project-frame-image,
+  .group:hover .project-frame-image,
+  .group:focus-visible .project-frame-image {
+    transition: none;
+    transform: none;
+  }
+
+  .editorial-stat-rule,
+  [data-editorial-motion="ready"] .editorial-stat-rule,
+  [data-editorial-motion="play"] .editorial-stat-rule {
+    animation: none;
+    transform: scaleX(1);
   }
 }

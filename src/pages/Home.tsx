@@ -3,6 +3,7 @@ import Experience from "@/components/Experience";
 import PersonalProjects, { SmallTools } from "@/components/PersonalProjects";
 import Hockey from "@/components/Hockey";
 import PatternedBackground from "@/components/PatternedBackground";
+import SectionAtmosphere from "@/components/SectionAtmosphere";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <PatternedBackground />
       <div className="relative z-10">
         <Hero />
+        <SectionAtmosphere />
         <div id="after-hero">
           <PersonalProjects />
           <SmallTools />

@@ -6,7 +6,8 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { useCurtainReveal, type CurtainPhase } from "@/hooks/useCurtainReveal";
+import { prefersReducedMotion } from "@/components/experience-diagrams/experienceDiagramMotion";
+import { supportsViewTimeline, useCurtainReveal, type CurtainPhase } from "@/hooks/useCurtainReveal";
 import { cn } from "@/lib/utils";
 
 type CurtainElementName = "div" | "ul" | "ol";
@@ -30,8 +31,9 @@ interface CurtainChildProps {
  */
 const CurtainReveal = ({ as = "div", className, children }: CurtainRevealProps) => {
   const { containerRef, phase } = useCurtainReveal();
+  const revealOnViewTimeline = phase === "static" && supportsViewTimeline() && !prefersReducedMotion();
   const revealedChildren = Children.map(children, (child, index) => {
-    if (phase === "static" || !isValidElement<CurtainChildProps>(child)) {
+    if ((!revealOnViewTimeline && phase === "static") || !isValidElement<CurtainChildProps>(child)) {
       return child;
     }
 
@@ -42,7 +44,7 @@ const CurtainReveal = ({ as = "div", className, children }: CurtainRevealProps) 
         ...childElement.props.style,
         "--curtain-index": index,
       } as CSSProperties,
-      "data-curtain": phase,
+      ...(phase === "armed" || phase === "playing" ? { "data-curtain": phase } : {}),
     });
   });
 

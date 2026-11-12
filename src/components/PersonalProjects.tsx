@@ -1,6 +1,10 @@
+import avaProjectFrame from "@/assets/ava/tagging-640.webp";
+import capitalProjectFrame from "@/assets/projects/capital-frame.webp";
+import concatProjectFrame from "@/assets/projects/concat-frame.webp";
 import CurtainReveal from "@/components/CurtainReveal";
 import DestinationHintLink from "@/components/DestinationHintLink";
 import PublishingPipelineDiagram from "@/components/PublishingPipelineDiagram";
+import SectionEyebrow from "@/components/SectionEyebrow";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   personalProjects,
@@ -8,6 +12,34 @@ import {
   type LinkedPersonalProject,
   type PersonalProject,
 } from "@/content/personalProjects";
+
+type ProjectFrameSource = {
+  src: string;
+  width: number;
+  height: number;
+};
+
+const projectFrames: Partial<Record<string, ProjectFrameSource>> = {
+  "video-analysis": { src: avaProjectFrame, width: 640, height: 404 },
+  capital: { src: capitalProjectFrame, width: 1008, height: 767 },
+  concat: { src: concatProjectFrame, width: 768, height: 857 },
+};
+
+function ProjectFrame({ source }: { source: ProjectFrameSource }) {
+  return (
+    <div className="project-frame" aria-hidden="true">
+      <img
+        className="project-frame-image"
+        src={source.src}
+        width={source.width}
+        height={source.height}
+        alt=""
+        decoding="async"
+        loading="lazy"
+      />
+    </div>
+  );
+}
 
 interface ProjectListProps {
   projects: LinkedPersonalProject[];
@@ -61,22 +93,41 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
 
   return (
     <CurtainReveal as="ul" className="space-y-8">
-      {projects.map((project, index) => (
-        <li key={project.id}>
-          <div className="mb-1.5 flex min-w-0 items-baseline gap-2.5">
-            <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">
-              {String(startingNumber + index).padStart(2, "0")}
-            </span>
-            <DestinationHintLink
-              title={t(project.titleKey)}
-              destination={t(project.destinationKey)}
-              target={project.link}
-              className="text-base"
-            />
-          </div>
-          <p className="text-base leading-relaxed text-muted-foreground">{t(project.descriptionKey)}</p>
-        </li>
-      ))}
+      {projects.map((project, index) => {
+        const frame = projectFrames[project.id];
+        const number = String(startingNumber + index).padStart(2, "0");
+        const numberLabel = (
+          <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">{number}</span>
+        );
+
+        return (
+          <li key={project.id}>
+            {frame ? (
+              <DestinationHintLink
+                title={t(project.titleKey)}
+                destination={t(project.destinationKey)}
+                target={project.link}
+                className="text-base"
+                media={<ProjectFrame source={frame} />}
+                leading={numberLabel}
+              />
+            ) : (
+              <div className="mb-1.5 flex min-w-0 items-baseline gap-2.5">
+                {numberLabel}
+                <DestinationHintLink
+                  title={t(project.titleKey)}
+                  destination={t(project.destinationKey)}
+                  target={project.link}
+                  className="text-base"
+                />
+              </div>
+            )}
+            <p className={frame ? "mt-3 text-base leading-relaxed text-muted-foreground" : "text-base leading-relaxed text-muted-foreground"}>
+              {t(project.descriptionKey)}
+            </p>
+          </li>
+        );
+      })}
     </CurtainReveal>
   );
 };
@@ -115,9 +166,9 @@ const PersonalProjects = () => {
     <section id="personal-projects" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          <h2 className="mb-8 text-sm font-medium uppercase tracking-wider text-foreground">
+          <SectionEyebrow as="h2" className="mb-8" enterOnView>
             {t("personalProjects.label")}
-          </h2>
+          </SectionEyebrow>
           {projectsBeforeConnector.length > 0 ? (
             <ProjectList projects={projectsBeforeConnector} />
           ) : null}
@@ -146,9 +197,9 @@ export const SmallTools = () => {
     <section id="small-tools" className="py-20 md:py-28">
       <div className="container px-6 md:px-8">
         <div className="max-w-2xl mx-auto">
-          <h2 className="mb-2 text-sm font-medium uppercase tracking-wider text-foreground">
+          <SectionEyebrow as="h2" className="mb-2" enterOnView>
             {t("personalProjects.smallTools.label")}
-          </h2>
+          </SectionEyebrow>
           <p className="mb-8 text-base leading-relaxed text-muted-foreground">
             {t("personalProjects.smallTools.description")}
           </p>
