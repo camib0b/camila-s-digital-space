@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import en from "@/i18n/en";
 import es from "@/i18n/es";
 import type { Language, TranslationKey } from "@/i18n/types";
+import { languageAfterNavigation } from "@/lib/languageRouting";
 
 const LANGUAGE_STORAGE_KEY = "language";
 
@@ -74,10 +75,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (readSavedLanguage()) {
-      return;
-    }
-    setLanguageState(defaultLanguageForPath(location.pathname));
+    setLanguageState((current) =>
+      languageAfterNavigation(readSavedLanguage(), current, location.pathname, languageFromDevice()),
+    );
   }, [location.pathname]);
 
   useEffect(() => {

@@ -25,7 +25,7 @@ function CvProjectEntry({ project }: { project: CvProject }) {
 
   return (
     <div>
-      <div className="mb-1 flex items-baseline justify-between gap-2">
+      <div className="mb-1 flex w-full flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-2">
         {project.href && project.externalHref ? (
           <p className="flex min-w-0 flex-wrap items-center gap-x-2 text-sm font-medium text-foreground">
             <Link to={project.href} className={pairedLinkClassName}>
@@ -45,9 +45,13 @@ function CvProjectEntry({ project }: { project: CvProject }) {
             {t(project.titleKey)}
           </a>
         ) : (
-          <p className="text-sm font-medium text-foreground">{t(project.titleKey)}</p>
+          <p className="w-full text-sm font-medium leading-relaxed text-foreground sm:min-w-0 sm:flex-1">
+            {t(project.titleKey)}
+          </p>
         )}
-        <span className="shrink-0 font-mono text-xs text-muted-foreground">{t(project.typeKey)}</span>
+        <span className="font-mono text-xs text-muted-foreground sm:max-w-[40%] sm:shrink-0 sm:text-right">
+          {t(project.typeKey)}
+        </span>
       </div>
       <p
         className={
