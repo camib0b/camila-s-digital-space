@@ -1,8 +1,15 @@
-import { useEffect, useLayoutEffect, useRef, type ComponentType, type RefObject } from "react";
+import { useRef, type ComponentType } from "react";
 import AnalyticsDiagram from "@/components/experience-diagrams/AnalyticsDiagram";
 import CommerceDiagram from "@/components/experience-diagrams/CommerceDiagram";
 import HotelDiagram from "@/components/experience-diagrams/HotelDiagram";
 import InterfaceDiagram from "@/components/experience-diagrams/InterfaceDiagram";
+import {
+  clearExperiencePointerOrigin,
+  rememberExperiencePointerOrigin,
+  replayExperienceOnPointerEnter,
+  replayExperienceOnPointerUp,
+  useExperienceDiagramMotion,
+} from "@/components/experience-diagrams/experienceDiagramMotion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { experienceRoles, type ExperienceDiagramId, type ExperienceRole } from "@/content/experience";
 
@@ -15,78 +22,6 @@ const experienceDiagrams: Record<ExperienceDiagramId, ComponentType> = {
 
 const wrappingCopyClassName = "min-w-0 [overflow-wrap:anywhere]";
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-    return false;
-  }
-
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function useExperienceDiagramMotion(roleRef: RefObject<HTMLDivElement | null>) {
-  useLayoutEffect(() => {
-    const roleRow = roleRef.current;
-    if (roleRow === null || prefersReducedMotion()) {
-      return;
-    }
-
-    roleRow.dataset.experienceMotion = "ready";
-  }, [roleRef]);
-
-  useEffect(() => {
-    const roleRow = roleRef.current;
-    if (roleRow === null || typeof IntersectionObserver === "undefined") {
-      return undefined;
-    }
-
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let observer: IntersectionObserver | null = null;
-
-    const stopObserving = () => {
-      observer?.disconnect();
-      observer = null;
-    };
-
-    const syncMotion = () => {
-      stopObserving();
-      if (reducedMotionQuery.matches) {
-        delete roleRow.dataset.experienceMotion;
-        return;
-      }
-
-      if (roleRow.dataset.experienceMotion !== "play") {
-        roleRow.dataset.experienceMotion = "ready";
-      }
-
-      if (roleRow.dataset.experienceMotion === "play") {
-        return;
-      }
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          const isInView = entries.some((entry) => entry.isIntersecting);
-          if (!isInView) {
-            return;
-          }
-
-          roleRow.dataset.experienceMotion = "play";
-          stopObserving();
-        },
-        { threshold: 0 },
-      );
-      observer.observe(roleRow);
-    };
-
-    syncMotion();
-    reducedMotionQuery.addEventListener("change", syncMotion);
-
-    return () => {
-      reducedMotionQuery.removeEventListener("change", syncMotion);
-      stopObserving();
-    };
-  }, [roleRef]);
-}
-
 function ExperienceRoleRow({ role, isLast }: { role: ExperienceRole; isLast: boolean }) {
   const { t } = useLanguage();
   const roleRef = useRef<HTMLDivElement>(null);
@@ -94,7 +29,15 @@ function ExperienceRoleRow({ role, isLast }: { role: ExperienceRole; isLast: boo
   const Diagram = role.diagram === null ? null : experienceDiagrams[role.diagram];
 
   return (
-    <div ref={roleRef} className="min-w-0" data-experience-role={role.id}>
+    <div
+      ref={roleRef}
+      className="min-w-0"
+      data-experience-role={role.id}
+      onPointerEnter={replayExperienceOnPointerEnter}
+      onPointerDown={rememberExperiencePointerOrigin}
+      onPointerUp={replayExperienceOnPointerUp}
+      onPointerCancel={clearExperiencePointerOrigin}
+    >
       <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
         <div className={`min-w-0 flex-1 ${wrappingCopyClassName}`}>
           <p className="font-medium text-foreground">{t(role.titleKey)}</p>

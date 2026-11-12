@@ -1,62 +1,63 @@
-const hotelBaseline = 54;
-const hotelWidth = 12;
-const hotelRoofHeight = 5;
-const metricCenterX = 140;
-const metricCenterY = 34;
-const metricFontSize = 17;
-const metricLineGap = 16;
+import type { CSSProperties } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import ExperienceDiagramControl from "@/components/experience-diagrams/ExperienceDiagramControl";
 
-const hotels = [
-  { originX: 4, bodyHeight: 16 },
-  { originX: 19, bodyHeight: 24 },
-  { originX: 34, bodyHeight: 15 },
-  { originX: 49, bodyHeight: 22 },
-  { originX: 64, bodyHeight: 18 },
-];
+const hotelBaseline = 50;
 
-function HotelOutline({ originX, bodyHeight }: { originX: number; bodyHeight: number }) {
-  const bodyTop = hotelBaseline - bodyHeight;
-  const roofPeakY = bodyTop - hotelRoofHeight;
+const hotelMasses = [
+  { x: 6, y: 32, width: 16, height: 18 },
+  { x: 30, y: 14, width: 18, height: 36 },
+  { x: 56, y: 24, width: 14, height: 26 },
+  { x: 78, y: 30, width: 16, height: 20 },
+] as const;
 
-  return (
-    <g>
-      <rect x={originX} y={bodyTop} width={hotelWidth} height={bodyHeight} className="fill-background" />
-      <polyline points={`${originX},${bodyTop} ${originX + hotelWidth / 2},${roofPeakY} ${originX + hotelWidth},${bodyTop}`} />
-      <rect x={originX + 2} y={hotelBaseline - 7} width="3" height="4" />
-      <rect x={originX + 7} y={hotelBaseline - 7} width="3" height="4" />
-    </g>
-  );
+const hotelMarkDelays = [
+  "var(--duration-diagram-delay-70)",
+  "var(--duration-diagram-delay-210)",
+  "var(--duration-diagram-delay-280)",
+  "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70))",
+] as const;
+
+function hotelCenter(mass: { x: number; width: number }): number {
+  return mass.x + mass.width / 2;
 }
 
 const HotelDiagram = () => {
+  const { t } = useLanguage();
+
   return (
-    <svg
-      viewBox="0 0 200 60"
-      width={200}
-      height={60}
-      aria-hidden="true"
-      className="experience-hotel pointer-events-none h-[60px] w-[200px] max-w-full shrink-0 overflow-hidden fill-none stroke-muted-foreground"
-    >
-      <line x1="2" y1={hotelBaseline} x2="78" y2={hotelBaseline} />
-      {hotels.map((hotel) => (
-        <HotelOutline key={hotel.originX} originX={hotel.originX} bodyHeight={hotel.bodyHeight} />
-      ))}
-      <text
-        x={metricCenterX}
-        y={metricCenterY - metricLineGap}
-        textAnchor="middle"
-        fontSize={metricFontSize}
-        className="experience-hotel-kpi fill-foreground stroke-none font-medium"
+    <ExperienceDiagramControl label={t("experience.diagram.hotel")} width={104} height={60} diagram="hotel">
+      <svg
+        viewBox="0 0 104 60"
+        aria-hidden="true"
+        className="experience-hotel pointer-events-none h-full w-full overflow-hidden fill-none stroke-muted-foreground"
       >
-        <tspan x={metricCenterX}>Occ 82%</tspan>
-        <tspan x={metricCenterX} dy={metricLineGap}>
-          ADR $118
-        </tspan>
-        <tspan x={metricCenterX} dy={metricLineGap}>
-          RevPAR $97
-        </tspan>
-      </text>
-    </svg>
+        <line x1="4" y1={hotelBaseline} x2="100" y2={hotelBaseline} />
+        {hotelMasses.map((mass) => (
+          <rect
+            key={mass.x}
+            x={mass.x}
+            y={mass.y}
+            width={mass.width}
+            height={mass.height}
+            className="experience-hotel-mass fill-background stroke-foreground"
+          />
+        ))}
+        {hotelMasses.map((mass, index) => (
+          <line
+            key={mass.x}
+            x1={hotelCenter(mass)}
+            y1={hotelBaseline}
+            x2={hotelCenter(mass)}
+            y2={mass.y}
+            pathLength={1}
+            strokeLinecap="butt"
+            className="experience-hotel-mark stroke-foreground"
+            style={{ animationDelay: hotelMarkDelays[index] } as CSSProperties}
+          />
+        ))}
+      </svg>
+    </ExperienceDiagramControl>
   );
 };
 

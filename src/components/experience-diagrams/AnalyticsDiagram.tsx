@@ -1,70 +1,78 @@
+import type { CSSProperties } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import ExperienceDiagramControl from "@/components/experience-diagrams/ExperienceDiagramControl";
+
+const analyticsBars = [
+  { x: 42, top: 40, delay: "var(--duration-diagram-delay-280)" },
+  {
+    x: 48,
+    top: 34,
+    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70))",
+  },
+  {
+    x: 54,
+    top: 38,
+    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70) + var(--duration-diagram-delay-70))",
+  },
+  {
+    x: 60,
+    top: 30,
+    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-210))",
+  },
+  {
+    x: 66,
+    top: 36,
+    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-280))",
+  },
+] as const;
+
+const analyticsBaseline = 48;
+
 const AnalyticsDiagram = () => {
+  const { t } = useLanguage();
+
   return (
-    <svg
-      viewBox="70 0 118 60"
-      width={118}
+    <ExperienceDiagramControl
+      label={t("experience.diagram.analytics")}
+      width={112}
       height={60}
-      aria-hidden="true"
-      className="experience-analytics pointer-events-none h-[60px] w-[118px] max-w-full shrink-0 overflow-hidden fill-none stroke-muted-foreground"
+      diagram="analytics"
     >
-      <rect x="74" y="6" width="108" height="48" rx="2" className="fill-background" />
-
-      <g>
-        <rect x="80" y="12" width="28" height="36" />
-        <line
-          x1="88"
-          y1="42"
-          x2="88"
-          y2="34"
-          pathLength={1}
-          strokeLinecap="butt"
-          className="experience-analytics-mark stroke-foreground"
-        />
-        <line
-          x1="94"
-          y1="42"
-          x2="94"
-          y2="24"
-          pathLength={1}
-          strokeLinecap="butt"
-          className="experience-analytics-mark stroke-foreground"
-        />
-        <line
-          x1="100"
-          y1="42"
-          x2="100"
-          y2="30"
-          pathLength={1}
-          strokeLinecap="butt"
-          className="experience-analytics-mark stroke-foreground"
-        />
-      </g>
-
-      <g>
-        <rect x="114" y="12" width="28" height="36" />
-        <polyline
-          points="120,40 126,31 132,34 138,23"
-          pathLength={1}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="experience-analytics-line stroke-foreground"
-        />
-      </g>
-
-      <g>
-        <rect x="148" y="12" width="28" height="36" />
-        <text
-          x="162"
-          y="32"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize="13"
-          className="experience-analytics-number fill-foreground stroke-none font-medium"
-        >
-          128
-        </text>
-      </g>
-    </svg>
+      <svg
+        viewBox="0 0 112 60"
+        aria-hidden="true"
+        className="experience-analytics pointer-events-none h-full w-full overflow-hidden fill-none stroke-muted-foreground"
+      >
+        <rect x="30" y="24" width="52" height="30" className="fill-background" />
+        <g className="experience-analytics-plot">
+          <line x1="38" y1={analyticsBaseline} x2="74" y2={analyticsBaseline} />
+          {analyticsBars.map((bar) => (
+            <line
+              key={bar.x}
+              x1={bar.x}
+              y1={analyticsBaseline}
+              x2={bar.x}
+              y2={bar.top}
+              pathLength={1}
+              strokeLinecap="butt"
+              className="experience-analytics-bar stroke-foreground"
+              style={{ animationDelay: bar.delay } as CSSProperties}
+            />
+          ))}
+          <polyline
+            points="42,40 48,34 54,38 60,30 66,36"
+            pathLength={1}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="experience-analytics-line stroke-foreground"
+          />
+        </g>
+        <g className="experience-analytics-lid">
+          <rect x="26" y="8" width="60" height="10" className="fill-background" />
+          <line x1="26" y1="13" x2="86" y2="13" className="stroke-foreground" />
+        </g>
+      </svg>
+    </ExperienceDiagramControl>
   );
 };
 

@@ -60,6 +60,10 @@ const en = {
     "experience.visionary.company": "Visionary",
     "experience.visionary.period": "Gap year 2021 – 2022",
     "experience.visionary.description": "Day-to-day e-commerce and POS: orders, inventory, wholesale, and in-store coverage.",
+    "experience.diagram.analytics": "Replay analytics illustration",
+    "experience.diagram.interface": "Replay interface illustration",
+    "experience.diagram.hotel": "Replay hotel illustration",
+    "experience.diagram.commerce": "Replay commerce illustration",
 
     // Personal projects
     "personalProjects.label": "Personal projects",

@@ -62,6 +62,10 @@ const es: Record<TranslationKey, string> = {
     "experience.visionary.company": "Visionary",
     "experience.visionary.period": "Año sabático 2021 – 2022",
     "experience.visionary.description": "Operación diaria de e-commerce y PDV: pedidos, inventario, mayorista y cobertura en tienda.",
+    "experience.diagram.analytics": "Repetir la ilustración de analítica",
+    "experience.diagram.interface": "Repetir la ilustración de interfaz",
+    "experience.diagram.hotel": "Repetir la ilustración de hoteles",
+    "experience.diagram.commerce": "Repetir la ilustración de comercio",
 
     // Personal projects
     "personalProjects.label": "Proyectos personales",
