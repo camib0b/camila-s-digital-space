@@ -2,31 +2,43 @@ import type { CSSProperties } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import ExperienceDiagramControl from "@/components/experience-diagrams/ExperienceDiagramControl";
 
+const analyticsLid = { x: 26, y: 2, width: 60, height: 10 };
+const analyticsLidLineY = analyticsLid.y + analyticsLid.height / 2;
+const analyticsBaseline = 48;
+const analyticsBaselineStart = 44;
+const analyticsBaselineEnd = 68;
+
 const analyticsBars = [
-  { x: 42, top: 40, delay: "var(--duration-diagram-delay-280)" },
+  {
+    x: 42,
+    top: 40,
+    delay: "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280))",
+  },
   {
     x: 48,
     top: 34,
-    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70))",
+    delay:
+      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70))",
   },
   {
     x: 54,
     top: 38,
-    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70) + var(--duration-diagram-delay-70))",
+    delay:
+      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-70) + var(--duration-diagram-delay-70))",
   },
   {
     x: 60,
     top: 30,
-    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-210))",
+    delay:
+      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-210))",
   },
   {
     x: 66,
     top: 36,
-    delay: "calc(var(--duration-diagram-delay-280) + var(--duration-diagram-delay-280))",
+    delay:
+      "calc(var(--duration-diagram-delay-210) + var(--duration-diagram-delay-280) + var(--duration-diagram-delay-280))",
   },
 ] as const;
-
-const analyticsBaseline = 48;
 
 const AnalyticsDiagram = () => {
   const { t } = useLanguage();
@@ -45,7 +57,13 @@ const AnalyticsDiagram = () => {
       >
         <rect x="30" y="24" width="52" height="30" className="fill-background" />
         <g className="experience-analytics-plot">
-          <line x1="38" y1={analyticsBaseline} x2="74" y2={analyticsBaseline} />
+          <line
+            x1={analyticsBaselineStart}
+            y1={analyticsBaseline}
+            x2={analyticsBaselineEnd}
+            y2={analyticsBaseline}
+            className="stroke-foreground"
+          />
           {analyticsBars.map((bar) => (
             <line
               key={bar.x}
@@ -68,8 +86,20 @@ const AnalyticsDiagram = () => {
           />
         </g>
         <g className="experience-analytics-lid">
-          <rect x="26" y="8" width="60" height="10" className="fill-background" />
-          <line x1="26" y1="13" x2="86" y2="13" className="stroke-foreground" />
+          <rect
+            x={analyticsLid.x}
+            y={analyticsLid.y}
+            width={analyticsLid.width}
+            height={analyticsLid.height}
+            className="fill-background"
+          />
+          <line
+            x1={analyticsLid.x}
+            y1={analyticsLidLineY}
+            x2={analyticsLid.x + analyticsLid.width}
+            y2={analyticsLidLineY}
+            className="stroke-foreground"
+          />
         </g>
       </svg>
     </ExperienceDiagramControl>

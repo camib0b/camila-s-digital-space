@@ -1,12 +1,18 @@
 import { useEffect, useLayoutEffect, useState, type FocusEvent, type PointerEvent, type RefObject } from "react";
+import { flushSync } from "react-dom";
 import { keptDuration } from "@/lib/motion";
 
 const visibleHeightMinimum = 64;
 const tapSlopPixels = 10;
 
+type ExperienceMotionMode = "ready" | "play" | undefined;
+type ExperienceMotionSetter = (mode: ExperienceMotionMode) => void;
+
 const lastRestartAt = new WeakMap<HTMLElement, number>();
 const pointerOrigin = new WeakMap<HTMLElement, { x: number; y: number }>();
 const ignoreMouseUntil = new WeakMap<HTMLElement, number>();
+const experienceMotionMode = new WeakMap<HTMLElement, ExperienceMotionMode>();
+const experienceMotionSetters = new WeakMap<HTMLElement, ExperienceMotionSetter>();
 
 export function prefersReducedMotion(): boolean {
   if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
@@ -33,24 +39,77 @@ export function usePrefersReducedMotion(): boolean {
   return reducedMotion;
 }
 
-/** Drop back to the start frame without playing. Used when a row leaves the viewport. */
-export function armExperienceMotion(roleRow: HTMLElement): void {
-  if (prefersReducedMotion()) {
-    delete roleRow.dataset.experienceMotion;
+function readExperienceMotion(roleRow: HTMLElement): ExperienceMotionMode {
+  if (experienceMotionMode.has(roleRow)) {
+    return experienceMotionMode.get(roleRow);
+  }
+
+  const attribute = roleRow.dataset.experienceMotion;
+  if (attribute === "ready" || attribute === "play") {
+    return attribute;
+  }
+
+  return undefined;
+}
+
+/**
+ * Commit the motion attribute.
+ * Synchronous commits are for replay: `play` does not restart while it is
+ * already set, so the start frame has to be painted before `play` returns.
+ */
+function commitExperienceMotion(roleRow: HTMLElement, mode: ExperienceMotionMode, synchronous: boolean): void {
+  experienceMotionMode.set(roleRow, mode);
+  const setExperienceMotion = experienceMotionSetters.get(roleRow);
+  if (setExperienceMotion === undefined) {
+    if (mode === undefined) {
+      delete roleRow.dataset.experienceMotion;
+    } else {
+      roleRow.dataset.experienceMotion = mode;
+    }
     return;
   }
 
-  roleRow.dataset.experienceMotion = "ready";
+  if (synchronous) {
+    flushSync(() => {
+      setExperienceMotion(mode);
+    });
+    return;
+  }
+
+  setExperienceMotion(mode);
+}
+
+/** Drop back to the start frame without playing. Used when a row leaves the viewport. */
+export function armExperienceMotion(roleRow: HTMLElement): void {
+  if (prefersReducedMotion()) {
+    commitExperienceMotion(roleRow, undefined, false);
+    return;
+  }
+
+  commitExperienceMotion(roleRow, "ready", false);
+}
+
+function playExperienceMotion(roleRow: HTMLElement): void {
+  if (prefersReducedMotion()) {
+    commitExperienceMotion(roleRow, undefined, false);
+    return;
+  }
+
+  if (readExperienceMotion(roleRow) === "play") {
+    return;
+  }
+
+  commitExperienceMotion(roleRow, "play", false);
 }
 
 /**
  * Replay from the start frame.
- * Setting `play` again does nothing while that attribute is already set, so the
- * start frame has to be committed (and measured) before `play` is restored.
+ * Hover, click, focus, and tap all go through `replayExperienceIfSettled` first,
+ * so a sequence that is still running is left alone.
  */
 export function restartExperienceMotion(roleRow: HTMLElement): void {
   if (prefersReducedMotion()) {
-    delete roleRow.dataset.experienceMotion;
+    commitExperienceMotion(roleRow, undefined, false);
     return;
   }
 
@@ -61,25 +120,59 @@ export function restartExperienceMotion(roleRow: HTMLElement): void {
   }
 
   lastRestartAt.set(roleRow, now);
-  roleRow.dataset.experienceMotion = "ready";
+  commitExperienceMotion(roleRow, "ready", true);
   void roleRow.getBoundingClientRect();
-  roleRow.dataset.experienceMotion = "play";
+  commitExperienceMotion(roleRow, "play", true);
+}
+
+function experienceMotionSettled(roleRow: HTMLElement): boolean {
+  if (typeof roleRow.getAnimations !== "function") {
+    return true;
+  }
+
+  const animations = roleRow.getAnimations({ subtree: true });
+  if (animations.length === 0) {
+    return true;
+  }
+
+  return animations.every((animation) => animation.playState === "finished");
+}
+
+function replayExperienceIfSettled(roleRow: HTMLElement): void {
+  if (!experienceMotionSettled(roleRow)) {
+    return;
+  }
+
+  restartExperienceMotion(roleRow);
 }
 
 function visibleEnough(entry: IntersectionObserverEntry): boolean {
   return entry.isIntersecting && (entry.intersectionRatio >= 0.2 || entry.intersectionRect.height >= visibleHeightMinimum);
 }
 
-export function useExperienceDiagramMotion(roleRef: RefObject<HTMLElement | null>): void {
+export function useExperienceDiagramMotion(roleRef: RefObject<HTMLElement | null>): ExperienceMotionMode {
+  // Present on the first commit so the start frame paints. Reduced motion and
+  // no-JS keep the finished frame (no attribute, plus the reduced-motion rule).
+  const [experienceMotion, setExperienceMotion] = useState<ExperienceMotionMode>(() =>
+    prefersReducedMotion() ? undefined : "ready",
+  );
+
   useLayoutEffect(() => {
     const roleRow = roleRef.current;
-    if (roleRow === null || prefersReducedMotion()) {
-      return;
+    if (roleRow === null) {
+      return undefined;
     }
 
-    if (roleRow.dataset.experienceMotion !== "play") {
-      roleRow.dataset.experienceMotion = "ready";
+    experienceMotionSetters.set(roleRow, setExperienceMotion);
+    if (!experienceMotionMode.has(roleRow)) {
+      const attribute = roleRow.dataset.experienceMotion;
+      experienceMotionMode.set(roleRow, attribute === "play" || attribute === "ready" ? attribute : undefined);
     }
+
+    return () => {
+      experienceMotionSetters.delete(roleRow);
+      experienceMotionMode.delete(roleRow);
+    };
   }, [roleRef]);
 
   useEffect(() => {
@@ -99,12 +192,12 @@ export function useExperienceDiagramMotion(roleRef: RefObject<HTMLElement | null
     const syncMotion = () => {
       stopObserving();
       if (reducedMotionQuery.matches) {
-        delete roleRow.dataset.experienceMotion;
+        commitExperienceMotion(roleRow, undefined, false);
         return;
       }
 
-      if (roleRow.dataset.experienceMotion !== "play") {
-        roleRow.dataset.experienceMotion = "ready";
+      if (readExperienceMotion(roleRow) !== "play") {
+        commitExperienceMotion(roleRow, "ready", false);
       }
 
       observer = new IntersectionObserver(
@@ -115,8 +208,8 @@ export function useExperienceDiagramMotion(roleRef: RefObject<HTMLElement | null
             return;
           }
 
-          if (visibleEnough(entry) && roleRow.dataset.experienceMotion !== "play") {
-            restartExperienceMotion(roleRow);
+          if (visibleEnough(entry)) {
+            playExperienceMotion(roleRow);
           }
         },
         { threshold: [0, 0.05, 0.2, 0.5] },
@@ -132,6 +225,8 @@ export function useExperienceDiagramMotion(roleRef: RefObject<HTMLElement | null
       stopObserving();
     };
   }, [roleRef]);
+
+  return experienceMotion;
 }
 
 function roleRowFromEvent(target: EventTarget | null): HTMLElement | null {
@@ -143,17 +238,23 @@ function roleRowFromEvent(target: EventTarget | null): HTMLElement | null {
   return roleRow instanceof HTMLElement ? roleRow : null;
 }
 
+function mouseReplaySuppressed(roleRow: HTMLElement): boolean {
+  const suppressedUntil = ignoreMouseUntil.get(roleRow) ?? 0;
+  return performance.now() < suppressedUntil;
+}
+
+/** Mouse hover replays only from the diagram button, and only once the sequence has settled. */
 export function replayExperienceOnPointerEnter(event: PointerEvent<HTMLElement>): void {
   if (event.pointerType !== "mouse") {
     return;
   }
 
-  const suppressedUntil = ignoreMouseUntil.get(event.currentTarget) ?? 0;
-  if (performance.now() < suppressedUntil) {
+  const roleRow = roleRowFromEvent(event.currentTarget);
+  if (roleRow === null || mouseReplaySuppressed(roleRow)) {
     return;
   }
 
-  restartExperienceMotion(event.currentTarget);
+  replayExperienceIfSettled(roleRow);
 }
 
 export function rememberExperiencePointerOrigin(event: PointerEvent<HTMLElement>): void {
@@ -181,39 +282,16 @@ export function replayExperienceOnPointerUp(event: PointerEvent<HTMLElement>): v
   }
 
   ignoreMouseUntil.set(event.currentTarget, performance.now() + keptDuration.residue);
-  restartExperienceMotion(event.currentTarget);
+  replayExperienceIfSettled(event.currentTarget);
 }
 
-function experienceMotionSettled(roleRow: HTMLElement): boolean {
-  if (typeof roleRow.getAnimations !== "function") {
-    return true;
-  }
-
-  const animations = roleRow.getAnimations({ subtree: true });
-  if (animations.length === 0) {
-    return true;
-  }
-
-  return animations.every((animation) => animation.playState === "finished");
-}
-
-export function replayExperienceOnActivate(event: { detail: number; currentTarget: EventTarget | null }): void {
+export function replayExperienceOnActivate(event: { currentTarget: EventTarget | null }): void {
   const roleRow = roleRowFromEvent(event.currentTarget);
-  if (roleRow === null) {
+  if (roleRow === null || mouseReplaySuppressed(roleRow)) {
     return;
   }
 
-  const suppressedUntil = ignoreMouseUntil.get(roleRow) ?? 0;
-  if (performance.now() < suppressedUntil) {
-    return;
-  }
-
-  const keyboardActivation = event.detail === 0;
-  if (!keyboardActivation && !experienceMotionSettled(roleRow)) {
-    return;
-  }
-
-  restartExperienceMotion(roleRow);
+  replayExperienceIfSettled(roleRow);
 }
 
 export function clearExperiencePointerOrigin(event: PointerEvent<HTMLElement>): void {
@@ -227,6 +305,6 @@ export function replayExperienceOnFocus(event: FocusEvent<HTMLElement>): void {
 
   const roleRow = roleRowFromEvent(event.currentTarget);
   if (roleRow !== null) {
-    restartExperienceMotion(roleRow);
+    replayExperienceIfSettled(roleRow);
   }
 }

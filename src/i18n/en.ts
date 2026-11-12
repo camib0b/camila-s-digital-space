@@ -55,7 +55,7 @@ const en = {
     "experience.finapsys.title": "Frontend",
     "experience.finapsys.company": "Finapsys (health tech B2B SaaS)",
     "experience.finapsys.period": "Summer Internship 2024",
-    "experience.finapsys.description": "Shipped production UI for a health-tech product.",
+    "experience.finapsys.description": "Shipped production UI for a health-tech product, built from reusable components.",
     "experience.a3.title": "Hotel asset reporting",
     "experience.a3.company": "A3 Property Investments",
     "experience.a3.period": "Summer Internship 2023",

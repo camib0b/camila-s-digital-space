@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import {
   replayExperienceOnActivate,
   replayExperienceOnFocus,
+  replayExperienceOnPointerEnter,
   usePrefersReducedMotion,
 } from "@/components/experience-diagrams/experienceDiagramMotion";
 
@@ -38,6 +39,7 @@ const ExperienceDiagramControl = ({ label, width, height, diagram, children }: E
       style={boxStyle}
       data-experience-diagram={diagram}
       aria-label={label}
+      onPointerEnter={replayExperienceOnPointerEnter}
       onFocus={replayExperienceOnFocus}
       onClick={replayExperienceOnActivate}
     >

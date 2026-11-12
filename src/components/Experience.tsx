@@ -6,7 +6,6 @@ import InterfaceDiagram from "@/components/experience-diagrams/InterfaceDiagram"
 import {
   clearExperiencePointerOrigin,
   rememberExperiencePointerOrigin,
-  replayExperienceOnPointerEnter,
   replayExperienceOnPointerUp,
   useExperienceDiagramMotion,
 } from "@/components/experience-diagrams/experienceDiagramMotion";
@@ -25,7 +24,7 @@ const wrappingCopyClassName = "min-w-0 [overflow-wrap:anywhere]";
 function ExperienceRoleRow({ role, isLast }: { role: ExperienceRole; isLast: boolean }) {
   const { t } = useLanguage();
   const roleRef = useRef<HTMLDivElement>(null);
-  useExperienceDiagramMotion(roleRef);
+  const experienceMotion = useExperienceDiagramMotion(roleRef);
   const Diagram = role.diagram === null ? null : experienceDiagrams[role.diagram];
 
   return (
@@ -33,7 +32,7 @@ function ExperienceRoleRow({ role, isLast }: { role: ExperienceRole; isLast: boo
       ref={roleRef}
       className="min-w-0"
       data-experience-role={role.id}
-      onPointerEnter={replayExperienceOnPointerEnter}
+      data-experience-motion={experienceMotion}
       onPointerDown={rememberExperiencePointerOrigin}
       onPointerUp={replayExperienceOnPointerUp}
       onPointerCancel={clearExperiencePointerOrigin}
