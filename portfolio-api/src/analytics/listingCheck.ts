@@ -4,7 +4,30 @@ export interface TradePrint {
 }
 
 /**
- * Compare ledger trade prices with same-day raw closes.
+ * Yahoo and Finnhub raw closes are split-adjusted into current shares.
+ * A ledger print is the price paid that day. Multiply each close by splits
+ * whose ex-date is still after that day so the comparison uses trade terms.
+ * A split on or before the trade is already in both the print and the close.
+ */
+export function closesInTradeTerms(
+  splitAdjustedCloseByDate: ReadonlyMap<string, number>,
+  splits: readonly { exDate: string; shareMultiplier: number }[],
+): Map<string, number> {
+  const comparableCloses = new Map<string, number>();
+  for (const [date, splitAdjustedClose] of splitAdjustedCloseByDate) {
+    let shareMultiplier = 1;
+    for (const split of splits) {
+      if (split.exDate > date && split.shareMultiplier > 0) {
+        shareMultiplier *= split.shareMultiplier;
+      }
+    }
+    comparableCloses.set(date, splitAdjustedClose * shareMultiplier);
+  }
+  return comparableCloses;
+}
+
+/**
+ * Compare ledger trade prices with same-day closes in trade terms.
  * A large median gap means the price series is a different listing.
  */
 export function listingConsistency(

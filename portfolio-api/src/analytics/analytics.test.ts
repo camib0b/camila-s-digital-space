@@ -3,8 +3,9 @@ import { computeAnalytics, type AnalyticsInput, type InstrumentListing, type Pri
 import { cusipToIsin } from "./identifiers";
 import { buildLedger, type LedgerTransaction } from "./ledger";
 import { pairwiseOverlap } from "./exposure";
-import { listingConsistency } from "./listingCheck";
-import { parseFredDgs3moText } from "../marketData";
+import { closesInTradeTerms, listingConsistency } from "./listingCheck";
+import { historyIsComplete, parseFredDgs3moText } from "../marketData";
+import { maximumDrawdown } from "./performance";
 import { holdingsSharpeRatio, riskContributions } from "./risk";
 import { periodicRiskFreeRate } from "./statistics";
 
@@ -400,6 +401,224 @@ describe("look-through overlap", () => {
       ],
     );
     expect(overlap).toBeCloseTo(0.2, 12);
+  });
+});
+
+describe("valuation gaps and drawdown", () => {
+  it("reuses a recent close so one missing print does not drop the session", () => {
+    const report = analyze({
+      transactions: [
+        trade({
+          transactionId: 1,
+          ticker: "KEEP",
+          tradeDate: "2024-06-03",
+          price: 10,
+          quantity: 1,
+          transactionType: "BUY",
+          totalAmount: 10,
+        }),
+        trade({
+          transactionId: 2,
+          ticker: "GAP",
+          tradeDate: "2024-06-03",
+          price: 30,
+          quantity: 1,
+          transactionType: "BUY",
+          totalAmount: 30,
+        }),
+      ],
+      prices: [
+        ...closes("KEEP", [
+          { date: "2024-06-03", close: 10 },
+          { date: "2024-06-04", close: 10 },
+          { date: "2024-06-05", close: 10 },
+          { date: "2024-06-06", close: 10 },
+        ]),
+        ...closes("GAP", [
+          { date: "2024-06-03", close: 30 },
+          { date: "2024-06-04", close: 30 },
+          { date: "2024-06-06", close: 30 },
+        ]),
+      ],
+      listings: [listing("KEEP"), listing("GAP")],
+    });
+    expect(report.performance.status).toBe("ok");
+    if (report.performance.status !== "ok") {
+      return;
+    }
+    const juneFifth = report.performance.series.find((point) => point.date === "2024-06-05");
+    expect(juneFifth?.portfolioValue).toBeCloseTo(40, 8);
+    expect(report.performance.dailyReturns.map((point) => point.date)).toContain("2024-06-05");
+    expect(report.performance.skippedValuationDates).toBe(0);
+    expect(report.performance.valuationGapNote).toMatch(/reused/i);
+  });
+
+  it("does not count a multi-session link as a daily return when one series is missing", () => {
+    const keepDates = [
+      "2024-06-03",
+      "2024-06-04",
+      "2024-06-05",
+      "2024-06-06",
+      "2024-06-07",
+      "2024-06-10",
+      "2024-06-11",
+      "2024-06-12",
+      "2024-06-13",
+      "2024-06-14",
+    ];
+    const report = analyze({
+      transactions: [
+        trade({
+          transactionId: 1,
+          ticker: "KEEP",
+          tradeDate: "2024-06-03",
+          price: 10,
+          quantity: 1,
+          transactionType: "BUY",
+          totalAmount: 10,
+        }),
+        trade({
+          transactionId: 2,
+          ticker: "GAP",
+          tradeDate: "2024-06-05",
+          price: 10,
+          quantity: 1,
+          transactionType: "BUY",
+          totalAmount: 10,
+        }),
+        trade({
+          transactionId: 3,
+          ticker: "GAP",
+          tradeDate: "2024-06-14",
+          price: 10,
+          quantity: 1,
+          transactionType: "SELL",
+          totalAmount: 10,
+        }),
+      ],
+      prices: closes(
+        "KEEP",
+        keepDates.map((date) => ({ date, close: 10 })),
+      ),
+      listings: [listing("KEEP"), listing("GAP")],
+    });
+    expect(report.performance.status).toBe("ok");
+    if (report.performance.status !== "ok") {
+      return;
+    }
+    expect(report.performance.dailyReturns.map((point) => point.date)).toEqual(["2024-06-03", "2024-06-04"]);
+    expect(report.performance.sampleSize).toBe(2);
+    expect(report.performance.skippedValuationDates).toBe(7);
+    expect(report.performance.series.map((point) => point.date)).toContain("2024-06-14");
+    expect(report.performance.valuationGapNote).toContain("Raw close for GAP is missing");
+    expect(report.performance.valuationGapNote).toContain("2024-06-14");
+    expect(report.performance.valuationGapNote).toContain("not counted as a daily return");
+  });
+
+  it("keeps a Friday-to-Monday move as one daily return", () => {
+    const report = analyze({
+      transactions: [
+        trade({
+          transactionId: 1,
+          ticker: "TEST",
+          tradeDate: "2024-06-07",
+          price: 10,
+          quantity: 1,
+          transactionType: "BUY",
+          totalAmount: 10,
+        }),
+      ],
+      prices: closes("TEST", [
+        { date: "2024-06-07", close: 10 },
+        { date: "2024-06-10", close: 11 },
+      ]),
+      listings: [listing("TEST")],
+    });
+    expect(report.performance.status).toBe("ok");
+    if (report.performance.status !== "ok") {
+      return;
+    }
+    expect(report.performance.dailyReturns.map((point) => point.date)).toEqual(["2024-06-07", "2024-06-10"]);
+    expect(report.performance.dailyReturns[1]?.dailyReturn).toBeCloseTo(0.1, 8);
+    expect(report.performance.valuationGapNote).toBeNull();
+  });
+
+  it("measures max drawdown on the growth index when a deposit lifts dollar value", () => {
+    const report = analyze({
+      transactions: [
+        trade({
+          transactionId: 1,
+          ticker: "TEST",
+          tradeDate: "2024-06-03",
+          price: 10,
+          quantity: 10,
+          transactionType: "BUY",
+          totalAmount: 100,
+        }),
+        trade({
+          transactionId: 2,
+          ticker: "TEST",
+          tradeDate: "2024-06-04",
+          price: 6,
+          quantity: 10,
+          transactionType: "BUY",
+          totalAmount: 60,
+        }),
+      ],
+      prices: closes("TEST", [
+        { date: "2024-06-03", close: 10 },
+        { date: "2024-06-04", close: 6 },
+      ]),
+      listings: [listing("TEST")],
+    });
+    expect(report.performance.status).toBe("ok");
+    if (report.performance.status !== "ok") {
+      return;
+    }
+    expect(report.performance.series.map((point) => point.portfolioValue)).toEqual([100, 120]);
+    const dollarDrawdown = maximumDrawdown(
+      report.performance.series.map((point) => ({ date: point.date, value: point.portfolioValue })),
+    );
+    expect(dollarDrawdown?.drawdown).toBe(0);
+    expect(report.performance.maxDrawdown?.peakDate).toBe("2024-06-03");
+    expect(report.performance.maxDrawdown?.troughDate).toBe("2024-06-04");
+    expect(report.performance.maxDrawdown?.drawdown).toBeCloseTo(-0.25, 8);
+  });
+});
+
+describe("sold ticker price coverage", () => {
+  it("restores split-adjusted closes to the ledger print before accepting a listing", () => {
+    const trades = [
+      { tradeDate: "2026-06-05", price: 558.21 },
+      { tradeDate: "2026-06-05", price: 554.5 },
+      { tradeDate: "2026-09-25", price: 572.63 },
+    ];
+    const splitAdjustedCloses = new Map<string, number>([
+      ["2026-06-05", 179.92],
+      ["2026-09-25", 190.89],
+    ]);
+    const splits = [
+      { exDate: "2024-03-07", shareMultiplier: 3 },
+      { exDate: "2026-11-05", shareMultiplier: 3 },
+    ];
+    expect(listingConsistency(trades, splitAdjustedCloses).consistent).toBe(false);
+    const restored = listingConsistency(trades, closesInTradeTerms(splitAdjustedCloses, splits));
+    expect(restored.consistent).toBe(true);
+    expect(restored.medianAbsoluteGap ?? 1).toBeLessThan(0.1);
+  });
+
+  it("does not treat a recent tail as coverage of the dates a sold ticker was held", () => {
+    expect(historyIsComplete(
+      { first_date: "2026-11-05", last_date: "2026-11-10", row_count: 900 },
+      "2026-06-05",
+      "2026-11-08",
+    )).toBe(false);
+    expect(historyIsComplete(
+      { first_date: "2022-09-01", last_date: "2026-11-10", row_count: 900 },
+      "2026-06-05",
+      "2026-11-08",
+    )).toBe(true);
+    expect(historyIsComplete(null, "2026-06-05", "2026-11-08")).toBe(false);
   });
 });
 

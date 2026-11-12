@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { computeAnalytics } from "./compute";
 import type { LedgerTransaction } from "./ledger";
-import { listingConsistency } from "./listingCheck";
+import { closesInTradeTerms, listingConsistency } from "./listingCheck";
 import { INSTRUMENT_LISTINGS } from "./listings";
 import { FUND_SNAPSHOTS } from "./snapshots";
 import { fetchFredDgs3mo, fetchYahooHistory } from "../marketData";
@@ -29,7 +29,7 @@ describe("live ledger", () => {
       const trades = transactions.filter((transaction) => transaction.ticker === ticker);
       const consistency = listingConsistency(
         trades.map((trade) => ({ tradeDate: trade.tradeDate, price: trade.price })),
-        closes,
+        closesInTradeTerms(closes, history.splits),
       );
       listingNotes.push(
         `${ticker} currency=${history.currency} bars=${history.bars.length} splits=${history.splits.length} medianGap=${consistency.medianAbsoluteGap === null ? "none" : (consistency.medianAbsoluteGap * 100).toFixed(2) + "%"} matched=${consistency.matchedTrades} consistent=${consistency.consistent} first=${history.bars[0]?.date}`,
