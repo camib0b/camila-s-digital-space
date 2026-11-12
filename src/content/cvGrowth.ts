@@ -1,11 +1,13 @@
 import type { CvJob, CvLeadership, CvProject } from "@/content/cv";
 import { AVA_WAITLIST_HREF } from "@/content/personalProjects";
 
-export type CvVariant = "analytics" | "growth";
+export type CvVariant = "analytics" | "growth" | "hockey";
 
 export function cvVariantFromPath(pathname: string): CvVariant {
   const normalized = pathname.replace(/\/+$/, "") || "/";
-  return normalized === "/cv/growth" ? "growth" : "analytics";
+  if (normalized === "/cv/growth") return "growth";
+  if (normalized === "/cv/hockey") return "hockey";
+  return "analytics";
 }
 
 /** Growth CV. Tool names stay off each role and live in one skills line. */

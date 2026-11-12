@@ -1,6 +1,7 @@
-import { Github, Languages, Linkedin, Mail, MapPin } from "lucide-react";
+import { Github, Languages, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import AffiliationRail from "@/components/AffiliationRail";
+import CvHockey from "@/components/CvHockey";
 import PageHeader from "@/components/PageHeader";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -8,10 +9,14 @@ import { CONTACT_EMAIL } from "@/content/contact";
 import { SOCIAL_LINKS } from "@/content/social";
 import { cvJobs, cvLeadership, cvProjects, cvTechnologyLabel, type CvProject } from "@/content/cv";
 import { cvGrowthJobs, cvGrowthLeadership, cvGrowthProjects, cvVariantFromPath } from "@/content/cvGrowth";
+import { COACHING_CV_PDF_URL, COACHING_CV_PHONE_DISPLAY, COACHING_CV_PHONE_HREF } from "@/content/cvHockey";
 import type { TranslationKey } from "@/i18n/types";
 
 const variantLinkClassName =
   "inline-flex min-h-11 min-w-11 cursor-pointer items-center px-1 text-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
+
+const quietLinkClassName =
+  "inline-flex min-h-11 cursor-pointer items-center text-muted-foreground link-underline hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
 
 const waitlistLinkClassName =
   "inline-flex min-h-11 cursor-pointer items-center font-medium text-foreground link-underline hover:text-muted-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring";
@@ -109,9 +114,12 @@ const CV = () => {
     ? projects.filter((project) => project.id !== closingProject.id)
     : projects;
   const leadership = variant === "growth" ? cvGrowthLeadership : cvLeadership;
-  const roleKey: TranslationKey = variant === "growth" ? "cv.growth.role" : "cv.role";
-  const summaryKey: TranslationKey = variant === "growth" ? "cv.growth.summary" : "cv.summary";
-  const footerKey: TranslationKey = variant === "growth" ? "cv.growth.footerNote" : "cv.footerNote";
+  const roleKey: TranslationKey =
+    variant === "hockey" ? "cv.hockey.role" : variant === "growth" ? "cv.growth.role" : "cv.role";
+  const summaryKey: TranslationKey =
+    variant === "hockey" ? "cv.hockey.summary" : variant === "growth" ? "cv.growth.summary" : "cv.summary";
+  const footerKey: TranslationKey =
+    variant === "hockey" ? "cv.hockey.footerNote" : variant === "growth" ? "cv.growth.footerNote" : "cv.footerNote";
 
   return (
     <main className="min-h-screen bg-background">
@@ -138,6 +146,13 @@ const CV = () => {
           >
             {t("cv.variant.growth")}
           </Link>
+          <Link
+            to="/cv/hockey"
+            aria-current={variant === "hockey" ? "page" : undefined}
+            className={`${variantLinkClassName} ${variant === "hockey" ? "font-medium text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+          >
+            {t("cv.variant.hockey")}
+          </Link>
         </nav>
         <section className="mb-12">
           <h1 className="text-2xl font-medium text-foreground mb-1">Camila Escudero</h1>
@@ -145,11 +160,24 @@ const CV = () => {
           <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl">
             {t(summaryKey)}
           </p>
+          {variant === "hockey" ? (
+            <p className="mb-4">
+              <a href={COACHING_CV_PDF_URL} download className={`${quietLinkClassName} text-sm`}>
+                {t("cv.hockey.download")}
+              </a>
+            </p>
+          ) : null}
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
               <MapPin className="w-3 h-3" />
               Santiago, Chile
             </span>
+            {variant === "hockey" ? (
+              <a href={COACHING_CV_PHONE_HREF} className="flex items-center gap-1 hover:text-foreground transition-colors">
+                <Phone className="w-3 h-3" />
+                {COACHING_CV_PHONE_DISPLAY}
+              </a>
+            ) : null}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="flex items-center gap-1 hover:text-foreground transition-colors"
@@ -176,20 +204,28 @@ const CV = () => {
               GitHub
             </a>
           </div>
-          <p className="mt-3 flex max-w-xl items-start gap-1.5 text-xs leading-relaxed text-muted-foreground">
-            <Languages className="mt-0.5 h-3 w-3 shrink-0" />
-            <span className="font-medium text-foreground">{t("cv.languages.pair")}</span>
-          </p>
-          <div className="mt-8">
-            <SectionEyebrow as="h2" className="mb-4">
-              {t("cv.affiliations")}
-            </SectionEyebrow>
-            <AffiliationRail />
-          </div>
+          {variant === "hockey" ? null : (
+            <p className="mt-3 flex max-w-xl items-start gap-1.5 text-xs leading-relaxed text-muted-foreground">
+              <Languages className="mt-0.5 h-3 w-3 shrink-0" />
+              <span className="font-medium text-foreground">{t("cv.languages.pair")}</span>
+            </p>
+          )}
+          {variant === "hockey" ? null : (
+            <div className="mt-8">
+              <SectionEyebrow as="h2" className="mb-4">
+                {t("cv.affiliations")}
+              </SectionEyebrow>
+              <AffiliationRail />
+            </div>
+          )}
         </section>
 
         <div className="border-b border-border mb-10" />
 
+        {variant === "hockey" ? (
+          <CvHockey />
+        ) : (
+          <>
         <section className="mb-10">
           <SectionEyebrow as="h2" className="mb-5">
             {t("cv.workExperience")}
@@ -298,6 +334,8 @@ const CV = () => {
             <CvProjectEntry project={closingProject} />
           </section>
         ) : null}
+          </>
+        )}
       </div>
 
       <footer className="border-t border-border py-6">
