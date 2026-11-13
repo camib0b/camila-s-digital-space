@@ -1,5 +1,5 @@
 import dgs3moSnapshot from "../data/dgs3mo.json";
-import { listingConsistency } from "./analytics/listingCheck";
+import { closesInTradeTerms, listingConsistency } from "./analytics/listingCheck";
 import { INSTRUMENT_LISTINGS, listingByTicker } from "./analytics/listings";
 import type { PriceBar } from "./analytics/compute";
 import type { SplitEvent } from "./analytics/ledger";
@@ -299,6 +299,92 @@ export interface SyncedSeries {
   rejectedReason: string | null;
 }
 
+export interface StoredCloseCoverage {
+  first_date: string | null;
+  last_date: string | null;
+  row_count: number;
+}
+
+/**
+ * A recent tail with many rows is not complete when it starts after the ticker
+ * was held. Sold names still need closes for the sessions they were owned.
+ */
+export function historyIsComplete(
+  coverage: StoredCloseCoverage | null,
+  firstHeldDate: string | null,
+  recentEnough: string,
+): boolean {
+  if (
+    coverage === null ||
+    coverage.row_count <= 200 ||
+    coverage.first_date === null ||
+    coverage.last_date === null ||
+    coverage.last_date < recentEnough
+  ) {
+    return false;
+  }
+  if (firstHeldDate !== null && coverage.first_date > firstHeldDate) {
+    return false;
+  }
+  return true;
+}
+
+function earliestHeldDate(trades: readonly LedgerPrint[], ticker: string): string | null {
+  let earliest: string | null = null;
+  for (const trade of trades) {
+    if (trade.ticker !== ticker) {
+      continue;
+    }
+    if (earliest === null || trade.tradeDate < earliest) {
+      earliest = trade.tradeDate;
+    }
+  }
+  return earliest;
+}
+
+function ledgerMismatchReason(
+  listingName: string,
+  exchange: string,
+  trades: readonly LedgerPrint[],
+  ticker: string,
+  bars: readonly StoredPriceBar[],
+  splits: readonly StoredSplit[],
+): string | null {
+  const closes = new Map<string, number>();
+  for (const bar of bars) {
+    if (bar.rawClose !== null) {
+      closes.set(bar.date, bar.rawClose);
+    }
+  }
+  const comparableCloses = closesInTradeTerms(closes, splits);
+  const tickerTrades = trades.filter((trade) => trade.ticker === ticker);
+  const consistency = listingConsistency(
+    tickerTrades.map((trade) => ({ tradeDate: trade.tradeDate, price: trade.price })),
+    comparableCloses,
+  );
+  if (consistency.consistent) {
+    return null;
+  }
+  const gap = consistency.medianAbsoluteGap === null
+    ? "no trade date had a close"
+    : `${(consistency.medianAbsoluteGap * 100).toFixed(1)}% median gap`;
+  return `${listingName} on ${exchange} was not stored. Ledger trade prices do not match this listing (${gap}).`;
+}
+
+function acceptedSeries(
+  ticker: string,
+  bars: readonly StoredPriceBar[],
+  splits: readonly StoredSplit[],
+): SyncedSeries {
+  return {
+    ticker,
+    bars: bars.map((bar) => ({ ...bar, ticker })),
+    splits: splits.map((split) => ({ ...split, ticker })),
+    source: bars[0]?.source ?? "unavailable",
+    rejectedReason: null,
+  };
+}
+
 export async function seriesForListing(
   ticker: string,
   trades: readonly LedgerPrint[],
@@ -310,55 +396,56 @@ export async function seriesForListing(
   if (listing === undefined) {
     return { error: `No listing is configured for ${ticker}, so no price symbol was guessed.` };
   }
-  let selected: { bars: StoredPriceBar[]; splits: StoredSplit[] } | null = null;
+  const rejectionReasons: string[] = [];
   if (finnhubApiKey) {
     const finnhub = await fetchFinnhubHistory(listing.ticker, startDate, endDate, finnhubApiKey);
     if (finnhub !== null && finnhub.bars[0]?.currency === listing.currency) {
-      selected = finnhub;
+      const mismatch = ledgerMismatchReason(
+        listing.name,
+        listing.exchange,
+        trades,
+        ticker,
+        finnhub.bars,
+        finnhub.splits,
+      );
+      if (mismatch === null) {
+        return acceptedSeries(ticker, finnhub.bars, finnhub.splits);
+      }
+      rejectionReasons.push(mismatch);
     }
   }
-  if (selected === null) {
-    const yahoo = await fetchYahooHistory(listing.ticker, startDate, endDate);
-    if ("error" in yahoo) {
-      return { error: yahoo.error };
+  const yahoo = await fetchYahooHistory(listing.ticker, startDate, endDate);
+  if ("error" in yahoo) {
+    if (rejectionReasons.length > 0) {
+      return { error: `${rejectionReasons.join(" ")} Yahoo fallback failed: ${yahoo.error}` };
     }
-    if (yahoo.currency !== listing.currency) {
-      return {
-        error: `Yahoo currency for ${ticker} is ${yahoo.currency || "blank"}, not ${listing.currency}. The series was not stored.`,
-      };
-    }
-    selected = yahoo;
+    return { error: yahoo.error };
   }
-  const closes = new Map<string, number>();
-  for (const bar of selected.bars) {
-    if (bar.rawClose !== null) {
-      closes.set(bar.date, bar.rawClose);
+  if (yahoo.currency !== listing.currency) {
+    const currencyError = `Yahoo currency for ${ticker} is ${yahoo.currency || "blank"}, not ${listing.currency}. The series was not stored.`;
+    if (rejectionReasons.length > 0) {
+      return { error: `${rejectionReasons.join(" ")} ${currencyError}` };
     }
+    return { error: currencyError };
   }
-  const tickerTrades = trades.filter((trade) => trade.ticker === ticker);
-  const consistency = listingConsistency(
-    tickerTrades.map((trade) => ({ tradeDate: trade.tradeDate, price: trade.price })),
-    closes,
+  const mismatch = ledgerMismatchReason(
+    listing.name,
+    listing.exchange,
+    trades,
+    ticker,
+    yahoo.bars,
+    yahoo.splits,
   );
-  if (!consistency.consistent) {
-    const gap = consistency.medianAbsoluteGap === null
-      ? "no trade date had a close"
-      : `${(consistency.medianAbsoluteGap * 100).toFixed(1)}% median gap`;
+  if (mismatch !== null) {
     return {
       ticker,
       bars: [],
       splits: [],
-      source: selected.bars[0]?.source ?? "unavailable",
-      rejectedReason: `${listing.name} on ${listing.exchange} was not stored. Ledger trade prices do not match this listing (${gap}).`,
+      source: yahoo.bars[0]?.source ?? "unavailable",
+      rejectedReason: [...rejectionReasons, mismatch].join(" "),
     };
   }
-  return {
-    ticker,
-    bars: selected.bars.map((bar) => ({ ...bar, ticker })),
-    splits: selected.splits.map((split) => ({ ...split, ticker })),
-    source: selected.bars[0]?.source ?? "unavailable",
-    rejectedReason: null,
-  };
+  return acceptedSeries(ticker, yahoo.bars, yahoo.splits);
 }
 
 export async function syncMarketData(env: Env): Promise<string> {
@@ -381,15 +468,13 @@ export async function syncMarketData(env: Env): Promise<string> {
     }
     const coverage = await env.DB.prepare(
       "SELECT MIN(price_date) AS first_date, MAX(price_date) AS last_date, COUNT(*) AS row_count FROM daily_closes WHERE ticker = ?",
-    ).bind(ticker).first<{ first_date: string | null; last_date: string | null; row_count: number }>();
+    ).bind(ticker).first<StoredCloseCoverage>();
     const recentEnough = new Date(Date.parse(`${endDate}T00:00:00Z`) - 4 * 86_400_000).toISOString().slice(0, 10);
-    if (
-      coverage !== null &&
-      coverage.row_count > 200 &&
-      coverage.last_date !== null &&
-      coverage.last_date >= recentEnough
-    ) {
-      notes.push(`${ticker}: ${coverage.row_count} closes already stored through ${coverage.last_date}.`);
+    const earliestHeld = earliestHeldDate(trades, ticker);
+    if (historyIsComplete(coverage, earliestHeld, recentEnough) && coverage !== null) {
+      notes.push(
+        `${ticker}: ${coverage.row_count} closes already stored from ${coverage.first_date} through ${coverage.last_date}.`,
+      );
       continue;
     }
     const series = await seriesForListing(ticker, trades, startDate, endDate, env.FINNHUB_API_KEY);
@@ -397,12 +482,15 @@ export async function syncMarketData(env: Env): Promise<string> {
       notes.push(`${ticker}: ${series.error}`);
       continue;
     }
-    await env.DB.prepare("DELETE FROM daily_closes WHERE ticker = ?").bind(ticker).run();
-    await env.DB.prepare("DELETE FROM share_splits WHERE ticker = ?").bind(ticker).run();
     if (series.rejectedReason !== null) {
-      notes.push(series.rejectedReason);
+      const preserved = coverage !== null && coverage.row_count > 0
+        ? " Previously stored closes were left in place."
+        : "";
+      notes.push(`${series.rejectedReason}${preserved}`);
       continue;
     }
+    await env.DB.prepare("DELETE FROM daily_closes WHERE ticker = ?").bind(ticker).run();
+    await env.DB.prepare("DELETE FROM share_splits WHERE ticker = ?").bind(ticker).run();
     await insertPrices(env, series.bars);
     await insertSplits(env, series.splits);
     notes.push(`${ticker}: stored ${series.bars.length} closes from ${series.bars[0]?.date ?? "n/a"} (${series.source}).`);

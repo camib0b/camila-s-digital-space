@@ -226,6 +226,11 @@ function unavailable(reasonCode: string, reason: string, sampleSize: number | nu
   return { status: "unavailable", reasonCode, reason, sampleSize };
 }
 
+/** One missing print can be reused this many sessions. A longer hole is not filled. */
+export const MAX_CARRIED_CLOSE_SESSIONS = 3;
+/** A linked step covering more sessions than this is not a daily return. */
+export const MAX_DAILY_RETURN_SPAN_SESSIONS = 4;
+
 function priceKey(ticker: string, date: string): string {
   return `${ticker}|${date}`;
 }
@@ -235,6 +240,7 @@ interface IndexedMarketData {
   adjustedClose: Map<string, number>;
   fx: Map<string, number>;
   dates: string[];
+  dateIndex: Map<string, number>;
 }
 
 function indexMarketData(input: AnalyticsInput): IndexedMarketData {
@@ -254,7 +260,32 @@ function indexMarketData(input: AnalyticsInput): IndexedMarketData {
   for (const rate of input.fxRates) {
     fx.set(priceKey(rate.currency, rate.date), rate.usdPerUnit);
   }
-  return { rawClose, adjustedClose, fx, dates: [...dates].sort() };
+  const sortedDates = [...dates].sort();
+  const dateIndex = new Map(sortedDates.map((date, index) => [date, index]));
+  return { rawClose, adjustedClose, fx, dates: sortedDates, dateIndex };
+}
+
+function priceForHolding(
+  ticker: string,
+  date: string,
+  market: IndexedMarketData,
+): { close: number; currency: string; carriedSessions: number } | undefined {
+  const currentIndex = market.dateIndex.get(date);
+  if (currentIndex === undefined) {
+    return undefined;
+  }
+  const earliestIndex = Math.max(0, currentIndex - MAX_CARRIED_CLOSE_SESSIONS);
+  for (let index = currentIndex; index >= earliestIndex; index -= 1) {
+    const candidateDate = market.dates[index];
+    if (candidateDate === undefined) {
+      return undefined;
+    }
+    const price = market.rawClose.get(priceKey(ticker, candidateDate));
+    if (price !== undefined) {
+      return { close: price.close, currency: price.currency, carriedSessions: currentIndex - index };
+    }
+  }
+  return undefined;
 }
 
 function listingMap(listings: readonly InstrumentListing[]): Map<string, InstrumentListing> {
@@ -277,9 +308,10 @@ function valueOnDate(
   market: IndexedMarketData,
   listings: Map<string, InstrumentListing>,
   previousValuationDate: string | null,
-): { ok: true; day: ValuedDay } | { ok: false; reason: string } {
+): { ok: true; day: ValuedDay; carriedCloses: number } | { ok: false; reason: string } {
   const holdings: ValuedDay["holdings"] = [];
   let investedValue = 0;
+  let carriedCloses = 0;
   for (const [ticker, actualShares] of state.actualSharesByTicker) {
     if (Math.abs(actualShares) <= SHARE_DUST) {
       continue;
@@ -296,9 +328,12 @@ function valueOnDate(
       date,
       input.splits.filter((split) => split.ticker === ticker),
     );
-    const price = market.rawClose.get(priceKey(ticker, date));
+    const price = priceForHolding(ticker, date, market);
     if (price === undefined) {
       return { ok: false, reason: `Raw close for ${ticker} is missing on ${date}.` };
+    }
+    if (price.carriedSessions > 0) {
+      carriedCloses += 1;
     }
     if (price.currency !== listing.currency) {
       return {
@@ -321,6 +356,7 @@ function valueOnDate(
 
   return {
     ok: true,
+    carriedCloses,
     day: {
       date,
       portfolioValue: investedValue + state.cash,
@@ -386,6 +422,7 @@ export function computeAnalytics(input: AnalyticsInput): AnalyticsReport {
   const candidateDates = market.dates.filter((date) => date >= firstTradeDate);
   const valuedDays: ValuedDay[] = [];
   let skippedValuationDates = 0;
+  let carriedCloseCount = 0;
   let previousValuationDate: string | null = null;
   let firstSkipReason: string | null = null;
   for (const date of candidateDates) {
@@ -402,10 +439,19 @@ export function computeAnalytics(input: AnalyticsInput): AnalyticsReport {
       continue;
     }
     valuedDays.push(valued.day);
+    carriedCloseCount += valued.carriedCloses;
     previousValuationDate = date;
   }
 
-  const performance = buildPerformance(valuedDays, ledger, market, input.priceSource, skippedValuationDates, firstSkipReason);
+  const performance = buildPerformance(
+    valuedDays,
+    ledger,
+    market,
+    input.priceSource,
+    skippedValuationDates,
+    firstSkipReason,
+    carriedCloseCount,
+  );
   const lastDay = valuedDays[valuedDays.length - 1];
   const risk = lastDay === undefined
     ? unavailable("missing_price", firstSkipReason ?? "No portfolio valuation date had a complete set of raw closes.", 0)
@@ -418,6 +464,83 @@ export function computeAnalytics(input: AnalyticsInput): AnalyticsReport {
   return { ledger: ledgerSection, performance, risk, sharpe, exposure };
 }
 
+function sessionsCoveredByReturn(
+  marketDates: readonly string[],
+  previousValuationDate: string,
+  date: string,
+): number {
+  let sessions = 0;
+  for (const marketDate of marketDates) {
+    if (marketDate > previousValuationDate && marketDate <= date) {
+      sessions += 1;
+    }
+  }
+  return sessions;
+}
+
+function dailyReturnsWithoutLongSpans(
+  linkedReturns: readonly { date: string; dailyReturn: number }[],
+  marketDates: readonly string[],
+): {
+  dailyReturns: { date: string; dailyReturn: number }[];
+  refusedSpans: { date: string; sessions: number; dailyReturn: number }[];
+} {
+  const dailyReturns: { date: string; dailyReturn: number }[] = [];
+  const refusedSpans: { date: string; sessions: number; dailyReturn: number }[] = [];
+  let previousValuationDate: string | null = null;
+  for (const point of linkedReturns) {
+    if (previousValuationDate === null) {
+      dailyReturns.push(point);
+      previousValuationDate = point.date;
+      continue;
+    }
+    const sessions = sessionsCoveredByReturn(marketDates, previousValuationDate, point.date);
+    if (sessions > MAX_DAILY_RETURN_SPAN_SESSIONS) {
+      refusedSpans.push({ date: point.date, sessions, dailyReturn: point.dailyReturn });
+    } else {
+      dailyReturns.push(point);
+    }
+    previousValuationDate = point.date;
+  }
+  return { dailyReturns, refusedSpans };
+}
+
+function describeValuationGaps(
+  skippedValuationDates: number,
+  carriedCloseCount: number,
+  firstSkipReason: string | null,
+  refusedSpans: readonly { date: string; sessions: number; dailyReturn: number }[],
+): string | null {
+  const sentences: string[] = [];
+  if (skippedValuationDates > 0) {
+    sentences.push(
+      `${skippedValuationDates} sessions were skipped because a raw close or FX rate was missing. Missing prices were not filled across those sessions.`,
+    );
+  }
+  if (firstSkipReason !== null && skippedValuationDates > 0) {
+    sentences.push(firstSkipReason);
+  }
+  if (carriedCloseCount > 0) {
+    sentences.push(
+      `${carriedCloseCount} closes were reused from at most ${MAX_CARRIED_CLOSE_SESSIONS} earlier sessions so one ticker did not drop the portfolio session.`,
+    );
+  }
+  const firstRefused = refusedSpans[0];
+  if (firstRefused !== undefined) {
+    const percent = (firstRefused.dailyReturn * 100).toFixed(1);
+    sentences.push(
+      `A linked return on ${firstRefused.date} covers ${firstRefused.sessions} sessions (${percent}%) and was not counted as a daily return. It stays inside the time-weighted return.`,
+    );
+  }
+  if (refusedSpans.length > 1) {
+    sentences.push(`${refusedSpans.length - 1} other linked returns were also left out of the daily sample.`);
+  }
+  if (sentences.length === 0) {
+    return null;
+  }
+  return sentences.join(" ");
+}
+
 function buildPerformance(
   valuedDays: readonly ValuedDay[],
   ledger: LedgerBuild,
@@ -425,6 +548,7 @@ function buildPerformance(
   priceSource: string,
   skippedValuationDates: number,
   firstSkipReason: string | null,
+  carriedCloseCount: number,
 ): PerformanceBlock {
   if (valuedDays.length === 0) {
     return unavailable(
@@ -498,13 +622,14 @@ function buildPerformance(
     cumulativeTimeWeightedReturn: cumulativeByDate.get(day.date) ?? 0,
     cumulativeBenchmarkReturn: benchmarkPath.get(day.date) ?? null,
   }));
+  const dailySample = dailyReturnsWithoutLongSpans(linked.dailyReturns, market.dates);
 
   return {
     status: "ok",
     asOf: last.date,
     lookbackStart: first.date,
     lookbackEnd: last.date,
-    sampleSize: linked.dailyReturns.length,
+    sampleSize: dailySample.dailyReturns.length,
     source: priceSource,
     timeWeightedReturn: linked.cumulativeReturn,
     annualized: linked.annualizedReturn !== null,
@@ -520,13 +645,20 @@ function buildPerformance(
     excessLabel: "arithmetic difference, percentage points",
     counterfactualValue,
     counterfactualReason,
-    maxDrawdown: maximumDrawdown(valuedDays.map((day) => ({ date: day.date, value: day.portfolioValue }))),
+    maxDrawdown: maximumDrawdown(
+      linked.cumulativePath.map((point) => ({
+        date: point.date,
+        value: 1 + point.cumulativeReturn,
+      })),
+    ),
     skippedValuationDates,
-    valuationGapNote:
-      skippedValuationDates > 0
-        ? `${skippedValuationDates} sessions were skipped because a raw close or FX rate was missing. Missing prices were not filled.`
-        : null,
-    dailyReturns: linked.dailyReturns,
+    valuationGapNote: describeValuationGaps(
+      skippedValuationDates,
+      carriedCloseCount,
+      firstSkipReason,
+      dailySample.refusedSpans,
+    ),
+    dailyReturns: dailySample.dailyReturns,
     series,
   };
 }
