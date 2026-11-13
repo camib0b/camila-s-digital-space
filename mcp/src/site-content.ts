@@ -10,9 +10,9 @@ export const profile = {
   name: "Camila Escudero",
   location: "Santiago, Chile",
   tagline:
-    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA, a native field-hockey video product. Import through export in one program.",
+    "Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for 2 field-hockey teams. AVA is a field-hockey video analysis app.",
   summary:
-    "Analytics products at ACFIN: the platform that presents structured-credit metrics and reports to clients. AVA is a shipped macOS product to import, tag, analyze, present, and export in one program. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
+    "Analytics automation at a structured-credit firm. carpeta.cl is a paid clip service for 2 field-hockey teams. AVA is a field-hockey video analysis app. Ingeniería Civil Industrial at Pontificia Universidad Católica de Chile, with a diploma in information technology; graduating July 2027.",
   siteUrl: SITE_URL,
   social: {
     github: "https://github.com/camib0b",
@@ -34,8 +34,7 @@ export const experience = [
     title: "Analytics products",
     company: "ACFIN",
     period: "Feb 2026 – Present",
-    description:
-      "Investor-facing analytics for structured-credit portfolios: reconciled credit metrics, multi-currency books, self-serve data export, and automated rollout across 8 factoring clients.",
+    description: "",
   },
   {
     id: "finapsys",
@@ -46,10 +45,10 @@ export const experience = [
   },
   {
     id: "a3",
-    title: "Hotel asset reporting",
+    title: "Hotel portfolio",
     company: "A3 Property Investments",
     period: "Summer Internship 2023",
-    description: "Board KPI reporting for a portfolio of eleven hotels.",
+    description: "Automated board KPIs, P&L, and the forecast for an 11-hotel portfolio.",
   },
   {
     id: "visionary",
@@ -63,34 +62,33 @@ export const experience = [
 
 export const projects = [
   {
-    id: "video-analysis",
-    name: "AVA",
-    category: "personal-project",
-    description:
-      "Field-hockey video analysis for macOS. Import and join camera files, then tag, analyze, present, and export in one program.",
-    url: `${SITE_URL}/ava`,
-  },
-  {
     id: "clip-library",
-    name: "Clip library",
+    name: "carpeta.cl",
     category: "personal-project",
     description:
-      "Browsable library of field-hockey match clips for coaching and game analysis. Clips are generated using AVA.",
+      "Founded and run by Camila. Teams needed match clips they could open by concept. She built storage, delivery, and folders filtered by concept. Serves 2 teams, both with her since April 2026.",
     url: "https://carpeta.cl/",
   },
   {
     id: "publishing-pipeline",
-    name: "Agentic publishing pipeline",
+    name: "One pipeline",
     category: "personal-project",
-    description:
-      "Publishing a match went from about 30 minutes to 5 of my time. It used to mean exporting clips one by one, uploading to YouTube, and wiring up the library. Now AVA batch-exports the clips and a separate agent re-encodes them, hosts them natively on carpeta.cl, writes the database, uploads the scouting XML, keeps a YouTube backup, and verifies each step. 23 matches, 175 clips, 3 team libraries so far, roughly 10 hours saved. Time figures are my own estimates.",
+    description: "AVA processes the match. carpeta.cl delivers the clips.",
   },
   {
-    id: "raycast",
-    name: "Raycast extension",
+    id: "video-analysis",
+    name: "AVA",
     category: "personal-project",
-    description: "Raycast extension published as camib0b/zodme.",
-    url: "https://www.raycast.com/camib0b/zodme",
+    description:
+      "Tagging-to-clips step in the same pipeline. Processing went from 30 minutes to 5 per match, across 23 matches and 175 clips. Waitlist open.",
+    url: `${SITE_URL}/ava`,
+  },
+  {
+    id: "acfin",
+    name: "ACFIN",
+    category: "personal-project",
+    description:
+      "Built and automated the analytics layer for 8 factoring clients, with reconciled multi-currency books.",
   },
   {
     id: "capital",
@@ -112,9 +110,15 @@ export const projects = [
     id: "concat",
     name: "Join footage",
     category: "small-tool",
-    description:
-      "Match video split across files, joined in the browser. Nothing is uploaded.",
+    description: "Match video split across files, joined in the browser. Nothing is uploaded.",
     url: `${SITE_URL}/concat`,
+  },
+  {
+    id: "raycast",
+    name: "Raycast extension",
+    category: "personal-project",
+    description: "Raycast extension published as camib0b/zodme.",
+    url: "https://www.raycast.com/camib0b/zodme",
   },
 ] as const;
 

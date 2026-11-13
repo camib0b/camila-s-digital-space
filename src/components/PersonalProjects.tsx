@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import avaProjectFrame from "@/assets/ava/tagging-640.webp";
 import capitalProjectFrame from "@/assets/projects/capital-frame.webp";
 import concatProjectFrame from "@/assets/projects/concat-frame.webp";
@@ -88,6 +89,25 @@ const PublishingPipelineBand = ({ project }: { project: ConnectorPersonalProject
   );
 };
 
+const narrativeLineClassName = "min-w-0 text-base leading-relaxed text-muted-foreground";
+
+const ProjectTitle = ({ project }: { project: LinkedPersonalProject }) => {
+  const { t } = useLanguage();
+
+  if (project.link.kind === "static" || project.destinationKey === undefined) {
+    return <p className="min-w-0 text-base font-medium text-foreground">{t(project.titleKey)}</p>;
+  }
+
+  return (
+    <DestinationHintLink
+      title={t(project.titleKey)}
+      destination={t(project.destinationKey)}
+      target={project.link}
+      className="text-base"
+    />
+  );
+};
+
 const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
   const { t } = useLanguage();
 
@@ -99,10 +119,9 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
         const numberLabel = (
           <span className="shrink-0 font-mono text-[11px] tabular-nums text-muted-foreground">{number}</span>
         );
-
         return (
-          <li key={project.id}>
-            {frame ? (
+          <li key={project.id} className="min-w-0">
+            {frame && project.link.kind !== "static" && project.destinationKey ? (
               <DestinationHintLink
                 title={t(project.titleKey)}
                 destination={t(project.destinationKey)}
@@ -114,17 +133,31 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
             ) : (
               <div className="mb-1.5 flex min-w-0 items-baseline gap-2.5">
                 {numberLabel}
-                <DestinationHintLink
-                  title={t(project.titleKey)}
-                  destination={t(project.destinationKey)}
-                  target={project.link}
-                  className="text-base"
-                />
+                <ProjectTitle project={project} />
               </div>
             )}
-            <p className={frame ? "mt-3 text-base leading-relaxed text-muted-foreground" : "text-base leading-relaxed text-muted-foreground"}>
-              {t(project.descriptionKey)}
-            </p>
+            {project.narrative ? (
+              <div className={frame ? "mt-3 space-y-1" : "space-y-1"}>
+                <p className={narrativeLineClassName}>{t(project.narrative.problemKey)}</p>
+                <p className={narrativeLineClassName}>{t(project.narrative.builtKey)}</p>
+                <p className={narrativeLineClassName}>{t(project.narrative.resultKey)}</p>
+              </div>
+            ) : project.descriptionKey ? (
+              <p className={frame ? "mt-3 text-base leading-relaxed text-muted-foreground" : narrativeLineClassName}>
+                {t(project.descriptionKey)}
+              </p>
+            ) : null}
+            {project.waitlist ? (
+              <p className={`${narrativeLineClassName} mt-2`}>
+                {t(project.waitlist.statusKey)}{" "}
+                <Link
+                  to={project.waitlist.href}
+                  className="inline-flex min-h-11 cursor-pointer items-center text-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                >
+                  {t(project.waitlist.labelKey)}
+                </Link>
+              </p>
+            ) : null}
           </li>
         );
       })}
@@ -134,6 +167,10 @@ const ProjectList = ({ projects, startingNumber = 1 }: ProjectListProps) => {
 
 function isLinkedPersonalProject(project: PersonalProject): project is LinkedPersonalProject {
   return project.link.kind !== "none";
+}
+
+function isConnectorPersonalProject(project: PersonalProject): project is ConnectorPersonalProject {
+  return project.category === "connector";
 }
 
 function splitSectionEntries(entries: PersonalProject[]): SectionEntries {
@@ -149,7 +186,7 @@ function splitSectionEntries(entries: PersonalProject[]): SectionEntries {
   const connector = entries[connectorIndex];
   return {
     projectsBeforeConnector: entries.slice(0, connectorIndex).filter(isLinkedPersonalProject),
-    connector: connector.link.kind === "none" ? connector : undefined,
+    connector: isConnectorPersonalProject(connector) ? connector : undefined,
     projectsAfterConnector: entries.slice(connectorIndex + 1).filter(isLinkedPersonalProject),
   };
 }

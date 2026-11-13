@@ -27,7 +27,7 @@ const Footer = () => {
           <div className="flex flex-wrap items-center justify-between gap-6">
             <nav aria-labelledby="site-footer-name" className="flex max-w-full flex-wrap items-center gap-2">
               <Link
-                to="/cv"
+                to="/cv/growth"
                 className="inline-flex min-h-11 min-w-11 shrink-0 items-center px-1 text-sm text-foreground"
               >
                 <span className="site-footer-cv inline-flex items-center gap-1.5">

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { CONTACT_EMAIL } from "@/content/contact";
 import { SOCIAL_LINKS } from "@/content/social";
 import EmailContactControl from "./EmailContactControl";
 import GitHubContributions from "./GitHubContributions";
@@ -31,18 +31,18 @@ const Hero = () => {
             <h1 className="relative z-10 animate-fade-up">camila escudero</h1>
           </div>
 
-          <div className="mb-10 animate-fade-up-delay-1 space-y-2 max-w-lg">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {t("hero.acfin")}
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              <Link
-                to="/ava"
-                className="cursor-pointer text-inherit no-underline hover:underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          <div className="mb-10 max-w-2xl animate-fade-up-delay-1 space-y-3">
+            <p className="max-w-lg text-lg leading-relaxed text-foreground">{t("hero.lead")}</p>
+            <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">{t("hero.carpeta")}</p>
+            <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">{t("hero.ava")}</p>
+            <p className="flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 text-base leading-relaxed text-muted-foreground">
+              <span>{t("hero.cta.lookout")}</span>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="inline-flex min-h-11 cursor-pointer items-center text-muted-foreground link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ring"
               >
-                AVA
-              </Link>
-              {t("hero.ava.after")}
+                {CONTACT_EMAIL}
+              </a>
             </p>
           </div>
 

@@ -24,8 +24,8 @@ export function cvTechnologyLabel(
 }
 
 export type CvJobId = "acfin" | "finapsys" | "a3" | "visionary";
-export type CvProjectId = "ava" | "carpeta" | "publishingPipeline" | "fleetOptimizer";
-export type CvLeadershipId = "player" | "coaching" | "videoAnalyst";
+export type CvProjectId = "ava" | "carpeta" | "publishingPipeline" | "fleetOptimizer" | "pipeline" | "capital";
+export type CvLeadershipId = "player" | "coaching" | "clubUc" | "fehoch" | "videoAnalyst";
 
 export interface CvProject {
   id: CvProjectId;
@@ -33,9 +33,12 @@ export interface CvProject {
   typeKey: TranslationKey;
   descriptionKey: TranslationKey;
   impactKey?: TranslationKey;
+  bulletKeys?: TranslationKey[];
   technologies: string[];
   href?: string;
   externalHref?: string;
+  waitlistHref?: string;
+  waitlistKey?: TranslationKey;
 }
 
 export interface CvJob {

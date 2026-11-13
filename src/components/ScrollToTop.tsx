@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
+import { browserHashScrollScheduler, elementIdFromHash, scheduleScrollToHash } from "@/lib/hashScroll";
 
 const SCROLL_POSITION_STORAGE_KEY = "camilaescudero:scroll-positions";
 const MAX_SCROLL_RESTORE_ATTEMPTS = 12;
@@ -104,21 +105,6 @@ function ensureHistoryEntryKey(): void {
 if (typeof window !== "undefined") {
   enableManualScrollRestoration();
   ensureHistoryEntryKey();
-}
-
-function scrollToHashElement(hash: string): boolean {
-  const id = decodeURIComponent(hash.replace(/^#/, ""));
-  if (!id) {
-    return false;
-  }
-
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView();
-    return true;
-  }
-
-  return false;
 }
 
 function maximumWindowScrollY(): number {
@@ -300,6 +286,7 @@ const ScrollToTop = () => {
     let animationFrame = 0;
     let scrollSettleTimeout = 0;
     let cancelScrollRestore: (() => void) | null = null;
+    let cancelHashScroll: (() => void) | null = null;
 
     const handleScrollEnd = () => {
       settleProgrammaticScroll();
@@ -326,6 +313,8 @@ const ScrollToTop = () => {
 
     const cancelScheduledScroll = () => {
       cancelled = true;
+      cancelHashScroll?.();
+      cancelHashScroll = null;
       if (animationFrame !== 0) {
         window.cancelAnimationFrame(animationFrame);
         animationFrame = 0;
@@ -361,18 +350,17 @@ const ScrollToTop = () => {
         suppressScrollPersistenceRef.current = false;
       });
     } else if (location.hash) {
-      if (!scrollToHashElement(location.hash)) {
-        animationFrame = window.requestAnimationFrame(() => {
-          animationFrame = 0;
-          if (cancelled) {
-            return;
-          }
-          scrollToHashElement(location.hash);
-          holdUntilScrollSettles();
-        });
-      } else {
-        holdUntilScrollSettles();
+      const hashId = elementIdFromHash(location.hash);
+      if (hashId && !document.getElementById(hashId)) {
+        latestScrollYRef.current = 0;
+        scrollWindowToInstant(0);
       }
+      cancelHashScroll = scheduleScrollToHash(location.hash, browserHashScrollScheduler(), () => {
+        if (cancelled) {
+          return;
+        }
+        holdUntilScrollSettles();
+      });
     } else {
       latestScrollYRef.current = 0;
       rememberScrollPosition(location.key, 0);
